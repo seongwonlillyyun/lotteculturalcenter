@@ -1,0 +1,12 @@
+.sub_visual {
+  padding: 60px 0 80px;
+  background-color: var(--bg-color);
+  text-align: center;
+}
+
+.sub_visual .heading {
+  font-weight: 300;
+  font-size: 54px;
+  line-height: 1.2em;
+  letter-spacing: -0.025em;
+}

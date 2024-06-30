@@ -1,0 +1,72 @@
+/* font */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+/* color */
+:root {
+  --bg-color : #F7F2EF;
+  --point-color : #e0f55c;
+  --basic-padding : 100px;
+  --large-padding : 160px;
+}
+
+body {
+  width: max(100%, 1160px);
+  font-family: "Noto Sans KR", sans-serif;
+  color: #000;
+  background: #fdfaf7;
+}
+
+.wrap {
+  position: relative;
+}
+
+.wrap.main {
+  background-color: var(--bg-color);
+}
+
+/* inner */
+.full_inner {
+  margin: 0 auto;
+  width: clamp(1160px, calc(100% - 200px), 1920px);
+}
+
+.inner {
+  margin: 0 auto;
+  width: clamp(1160px, 100%, 1440px)
+}
+
+.min_inner {
+  margin: 0 auto;
+  width: 1160px;
+}
+
+@media all and (max-width: 1540px) {
+  .inner {
+    padding: 0 25px;
+  }
+}
+
+@media all and (max-width: 1260px) {
+  .full_inner, .min_inner, .custom_inner {
+    padding: 0 25px;
+  }
+}
+
+/* section */
+.no_pb {
+  padding-bottom: 0 !important;
+}
+
+.no_pt {
+  padding-top: 0 !important;
+}
+
+.narrow_page {
+  padding-top: 40px;
+  padding-bottom: 200px;
+}
+
+.basic_page {
+  padding-top: 100px;
+  padding-bottom: 200px;
+}
