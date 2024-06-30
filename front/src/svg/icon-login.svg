@@ -1,0 +1,10 @@
+<svg id="login_32" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <rect id="container" width="32" height="32" fill="#f0f" opacity="0"/>
+  <g id="Icon_Login" transform="translate(-1703.268 -34.889)">
+    <g id="화살표" transform="translate(1711.268 45.754)">
+      <path id="패스_14695" data-name="패스 14695" d="M1712.268,50h13" transform="translate(-1715.268 -44.866)" fill="none" stroke="#222" stroke-linecap="round" stroke-width="2"/>
+      <path id="패스_14696" data-name="패스 14696" d="M1718,45.44l4.02,4-4.02,4" transform="translate(-1710.022 -44.305)" fill="none" stroke="#222" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+    <path id="패스_14789" data-name="패스 14789" d="M926.01,146.491v-2.866a1.1,1.1,0,0,1,1.063-1.134h12.874a1.1,1.1,0,0,1,1.063,1.134v17.733a1.1,1.1,0,0,1-1.063,1.133H927.073a1.1,1.1,0,0,1-1.063-1.133v-2.867" transform="translate(789.258 -101.602)" fill="none" stroke="#222" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+  </g>
+</svg>

@@ -1,0 +1,7 @@
+<svg id="mypage_32" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <rect id="container" width="32" height="32" fill="#f0f" opacity="0"/>
+  <g id="Icon_mypage" transform="translate(6.059 5.057)">
+    <circle id="타원_20" data-name="타원 20" cx="4" cy="4" r="4" transform="translate(5.944 1.943)" fill="none" stroke="#222" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="패스_34" data-name="패스 34" d="M1,20V17a4.24,4.24,0,0,1,4.444-4H16.556A4.24,4.24,0,0,1,21,17v3" transform="translate(-1.058 0.943)" fill="none" stroke="#222" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>
