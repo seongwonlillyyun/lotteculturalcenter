@@ -123,8 +123,8 @@
   scale: 1.0;
 }
 
-@media all and (max-width: 1260px) {
-  .custom_inner {
-    padding: 0 50px;
+@media all and (max-width: 2020px) {
+  .gnb_child .custom_inner {
+    padding: 0 25px;
   }
 }
