@@ -2,54 +2,41 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // svg
-import { ReactComponent as Logo } from "./../svg/logo.svg";
+import { ReactComponent as IconLogo } from "./../svg/logo.svg";
+import { ReactComponent as IconLogIn } from "./../svg/icon-login.svg";
+import { ReactComponent as IconLogOut } from "./../svg/icon-logout.svg";
+import { ReactComponent as IconMyPage } from "./../svg/icon-mypage.svg";
+import { ReactComponent as IconMyCart } from "./../svg/icon-cart.svg";
+import { ReactComponent as IconSearch } from "./../svg/icon-search.svg";
+import { ReactComponent as IconClose } from "./../svg/icon-close-x.svg"; 
 
 // gnb
 import { gnb } from "./gnb.js";
 
+// utils
+import { gnbActiveHandler, headerScroll } from "../utils/headerUtils.js";
+import { openPopup, closePopup } from "../utils/popupUtils.js";
+
 // css
 import "../css/header.css";
+import "../css/popup.css";
 
 export default function Header() {
+  const isLogin = true;
   const [activeDepth, setActiveDepth] = useState("applicate")
-  let prevScrollY = 0;
+  const [prevScrollY, setPrevScrollY] = useState(0);
 
   const scrollHandler = () => {
-    const header = document.querySelector(".header_wrap");
-    const currScrollY = window.scrollY;
- 
-    if(window.scrollY > 100 && !header.classList.contains("hover")){
-      if(prevScrollY > currScrollY){
-        header.classList.remove("hide");
-        header.classList.add("show");
-      } else {
-        header.classList.remove("show");
-        header.classList.add("hide");
-      }
-    } else {
-      header.classList.remove("hide");
-      header.classList.remove("show");
-    }
-
-    prevScrollY = currScrollY;
+    headerScroll(prevScrollY, setPrevScrollY);
   }
-
-  const mouseHandler = (e) => {
-    const header = document.querySelector(".header_wrap");
-    if(e.target.closest(".gnb") || e.target.closest(".gnb_child")){
-      header.classList.add("hover");
-    } else {
-      header.classList.remove("hover");
-    }
-  }
-
+  
   useEffect(()=>{
     window.addEventListener("scroll", scrollHandler);
-    window.addEventListener("mouseover", mouseHandler);
+    window.addEventListener("mouseover", gnbActiveHandler);
 
     return () => {
       window.removeEventListener("scroll", scrollHandler);
-      window.removeEventListener("mouseover", mouseHandler);
+      window.removeEventListener("mouseover", gnbActiveHandler);
     }
   })
 
@@ -60,14 +47,27 @@ export default function Header() {
           <div className="full_inner">
             <h1 className="logo">
               <Link to="/">
-                <Logo />
+                <IconLogo />
               </Link>
             </h1>
             <Gnb setActiveDepth={setActiveDepth}/>
+            <div className="users">
+              <SearchBtn />
+              {
+                isLogin ?
+                <>
+                  <Link className="mypage" to="/"><IconMyPage/></Link>
+                  <Link className="mycart" to="/"><IconMyCart/><span className="cart_num">1</span></Link>
+                  <Link to="/"><IconLogOut /></Link>
+                </>
+                : <Link to="/"><IconLogIn /></Link>
+              }
+            </div>
           </div>
         </div>
         <GnbChild activeDepth={activeDepth}/>
       </div>
+      <SearchPopup />
     </>
   );
 }
@@ -108,5 +108,45 @@ function GnbChild({activeDepth}) {
         </div>
       </div>
     </div>
+  );
+}
+
+function SearchBtn() {
+  return (
+    <div className="search_btn" onClick={()=>{openPopup(".search_popup")}}>
+      <p className="placeholder">관심있는 강좌를 찾아보세요.</p>
+      <IconSearch />
+    </div>
+  );
+}
+
+function SearchPopup() {
+  const [keyword, setKeyWord] = useState("");
+  const clickHandler = () => closePopup(".search_popup");
+
+  const changeHandler = (e) => {
+    const {value} = e.target;
+    setKeyWord(value);
+  }
+
+  const submitHandler = () => {
+    closePopup(".search_popup")
+    setKeyWord("");
+  }
+
+  return (
+    <form className="search_popup" onSubmit={submitHandler}>
+      <div className="search">
+        <div className="full_inner">
+          <button className="close_btn" type="button" onClick={clickHandler}><IconClose /></button>
+          <h2 className="tit">관심있는 강좌를<br />찾아보세요</h2>
+          <div className="form_search">
+            <input type="text" value={keyword} onChange={changeHandler} placeholder="검색어를 입력하세요"/>
+            <button className="search_btn"><IconSearch /></button>
+          </div>
+        </div>
+      </div>
+      <div className="bg" onClick={clickHandler}></div>
+    </form>
   );
 }

@@ -3,6 +3,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 99;
 }
 
 .header_wrap.hide {
@@ -35,6 +36,56 @@
 #header .logo {
   position: relative;
   z-index: 1;
+}
+
+#header .users {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#header .users .search_btn {
+  cursor: pointer;
+}
+
+@media all and (min-width : 1251px) {
+  #header .users .search_btn {
+    display: flex;
+    width: 250px;
+    height: 45px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    border: 1px solid #aa9b90;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.8);
+    padding: 5px 16px;
+    border-radius: 45px;
+  }  
+}
+
+@media all and (max-width: 1250px) {
+  #header .users .placeholder {display: none;}
+}
+
+#header .users .mycart {
+  position: relative;
+}
+
+#header .users .mycart .cart_num {
+  position: absolute;
+  top: 0;
+  right: -5px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  text-align: center;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 50%;
+  background-color: red;
 }
 
 #header .gnb {
