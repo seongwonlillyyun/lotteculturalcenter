@@ -68,6 +68,7 @@ export default function Header() {
         <GnbChild activeDepth={activeDepth}/>
       </div>
       <SearchPopup />
+      <CategoryPopup />
     </>
   );
 }
@@ -91,6 +92,9 @@ function Gnb({setActiveDepth}) {
 }
 
 function GnbChild({activeDepth}) {
+
+  const clickHandler = () => openPopup(".category_popup");
+
   return (
     <div className="gnb_child">
       <div className="custom_inner">
@@ -99,7 +103,7 @@ function GnbChild({activeDepth}) {
             gnb[activeDepth].children.map((link, i) => (
               link.path ?
               <li key={i}><Link to={link.path}>{link.name}</Link></li> :
-              <li key={i}><button type="button">{link.name}</button></li>
+              <li key={i}><button type="button" onClick={clickHandler}>{link.name}</button></li>
             ))
           }
         </ul>
@@ -149,4 +153,17 @@ function SearchPopup() {
       <div className="bg" onClick={clickHandler}></div>
     </form>
   );
+}
+
+function CategoryPopup() {
+
+  const clickHandler = () => closePopup(".category_popup");
+
+  return (
+    <div className="category_popup">
+      <div className="full_inner">
+        <button type="button" className="close_btn" onClick={clickHandler}><IconClose /></button>
+      </div>
+    </div>
+  )
 }
