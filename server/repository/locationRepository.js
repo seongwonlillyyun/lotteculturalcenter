@@ -1,5 +1,14 @@
 import { db } from '../db/database_mysql80.js';
 
+export const getLocation = async () => {
+  const sql = `
+    select * from location
+  `
+
+  return db.execute(sql)
+    .then(([rows]) => rows)
+}
+
 export const setLocation = async (data) => {
   const sql = `
     insert into location(type, name, addr, addr_detail, tel, lat, lng, reg_date)

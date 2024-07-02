@@ -4,12 +4,15 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./Root";
 
 // pages
+import CourseDetail from "./pages/CourseDetail";
 
 export default function App() {
   const router = createBrowserRouter([{
     path : "/",
     element: <Root />,
-    children : []
+    children : [
+      {path : "/course/:id", element : <CourseDetail/> }
+    ]
   }])
 
   return <RouterProvider router={router}/>;
