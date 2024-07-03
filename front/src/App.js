@@ -2,9 +2,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // root
 import Root from "./Root";
-import SearchByCenter from "./components/SearchByCenter";
-import SearchByTopic from "./components/SearchByTopic";
-import SearchByText from "./components/SearchByText";
+import SearchByCenter from "./pages/SearchByCenter";
+import SearchByTopic from "./pages/SearchByTopic";
+import SearchByText from "./pages/SearchByText";
 
 // pages
 
