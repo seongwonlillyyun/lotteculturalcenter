@@ -2,7 +2,25 @@ import { db } from '../db/database_mysql80.js';
 
 export const getLocation = async () => {
   const sql = `
-    select * from location
+    select
+      loc_id,
+      type,
+      name,
+      addr,
+      addr_detail,
+      tel,
+      lat,
+      lng,
+      c_lat,
+      c_lng
+    from (
+      select 
+        (min(lat) + max(lat))/2 c_lat, 
+        (min(lng) + min(lng))/2 c_lng
+      from location
+      where type = "서울점"
+    ) center, location
+    where type = "서울점"
   `
 
   return db.execute(sql)
