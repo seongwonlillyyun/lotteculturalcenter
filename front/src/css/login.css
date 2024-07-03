@@ -1,0 +1,84 @@
+.login{
+    display: flex;
+}
+
+.login_left{
+    background-image: url('../../public/img/login/bg-login.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 571px;
+    width: 651px;
+  
+}
+.login_left_texts{
+    color : white;
+    padding-left : 2rem;
+    border : 1px solid red;
+    margin-top : 3rem;
+}
+
+.login_left_title{
+    font-size : 54px
+}
+
+.login_left_sub{
+    font-size: 0.8rem;
+    padding-top : 0.8rem;
+}
+
+.login_join_btn{
+    color : white;
+    font-size : 0.9rem;
+    padding-top : 3rem;
+}
+
+.login_right{
+    text-align: center;
+    border : 1px solid red;
+}
+
+.login_right_texts{
+    margin-top : 3rem;
+    padding-left : 5rem;
+    padding-right : 5rem;
+}
+.login_right_title{
+    font-size : 54px
+}
+.login_form{
+    padding-top : 3rem;
+}
+.login_input{
+    border-radius: 6rem;
+    border : 1px solid lightgray;
+    height: 60px;
+    font-size: 0.8rem;
+    width: 400px;
+}
+
+.login_input_id{
+    background-image: url('../../public/img/login/icon-login-id.png');
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-position: 20px, center;
+    padding-left: 60px;
+    margin-bottom: 1rem;
+}
+.login_input_pw{
+    background-image: url('../../public/img/login/icon-login-password.png');
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-position: 20px, center;
+    padding-left: 60px;
+    margin-bottom: 2rem;
+}
+.login_btn{
+    background-color: black;
+    color : white;
+    border-radius: 6rem;
+    width: 400px;
+    height: 60px;
+    font-weight: bold;
+
+}
+

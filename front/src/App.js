@@ -4,12 +4,19 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./Root";
 
 // pages
+import Login from "../src/components/Login.jsx"
+import Join from "./pages/Join.jsx";
+
+
 
 export default function App() {
   const router = createBrowserRouter([{
     path : "/",
     element: <Root />,
-    children : []
+    children : [
+      {  path : "/login", element : <Login/> },
+      { path : "/join" , element : <Join/> }
+    ]
   }])
 
   return <RouterProvider router={router}/>;
