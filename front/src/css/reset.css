@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: inherit;
 }
 
 body, h1, h2, h3, h4, h5, h6, p {
@@ -29,7 +30,6 @@ button {
   outline: none;
   cursor: pointer;
   background: none;
-  font-family: inherit;
 }
 
 ul {

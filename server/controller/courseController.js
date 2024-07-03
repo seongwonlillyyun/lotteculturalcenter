@@ -1,0 +1,15 @@
+import * as repository from "../repository/courseRepository.js"
+
+export const getCourse = async (req, res) => {
+  const { id } = req.params;
+  const result = await repository.getCourse(id);
+  res.json(result);
+  res.end();
+}
+
+export const setCourse = async (req, res) => {
+  const data = req.body;
+  const result = await repository.setCourse(data);
+  res.json(result);
+  res.end();
+}
