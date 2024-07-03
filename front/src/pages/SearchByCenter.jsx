@@ -62,11 +62,12 @@ export default function SearchByCenter(){
         setSortView(false)
         setSortStd(value)
     }
-    console.log(center[0])
+    const centerinfo = center[0]
+    
     return(
         <>
             <div className="bycenter_title_part">
-                <p className="bycenter_title" onClick={()=>{setView(!view)}}>{center&&center[0].name}{""}
+                <p className="bycenter_title" onClick={()=>{setView(!view)}}>{center[0]&&centerinfo.name}{""}
                     {view ? '^' : '⌄'}
                     {view && <DropDown/>}
                 </p>
