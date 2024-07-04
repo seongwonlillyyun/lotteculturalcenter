@@ -3,7 +3,8 @@ import * as controller from "../controller/locationController.js"
 
 const router = express.Router();
 
-router.get("/", controller.getLocation);
+router.post("/", controller.getLocation);
+router.get("/:id", controller.getLocationSlide);
 router.post("/add", controller.setLocation)
 
 export default router;

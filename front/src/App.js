@@ -10,8 +10,7 @@ import SearchByText from "./pages/SearchByText";
 import CourseDetail from "./pages/CourseDetail";
 import Login from "../src/components/Login.jsx"
 import Join from "./pages/Join.jsx";
-
-
+import Location from "./pages/Location";
 
 export default function App() {
   const router = createBrowserRouter([{
@@ -19,6 +18,7 @@ export default function App() {
     element: <Root />,
     children : [
       {path : "/course/:id", element : <CourseDetail/> },
+      {path : "/location", element : <Location/> },
       {  path : "/login", element : <Login/> },
       { path : "/join" , element : <Join/> },
       {path:'/center/:id', element:<SearchByCenter/>},

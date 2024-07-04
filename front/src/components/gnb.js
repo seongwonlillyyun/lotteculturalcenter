@@ -8,10 +8,10 @@ export const gnb = {
     imgPath : "/img/img-gnb-application-class-01.jpg"
   },
   information : {
-    path : "/",
+    path : "/location",
     name : "이용안내",
     children : [
-      {path : "/", name : "지점안내"},
+      {path : "/location", name : "지점안내"},
       {path : "/", name : "자주하는 문의"}
     ],
     imgPath : "/img/img-gnb-use-information-01.jpg"
