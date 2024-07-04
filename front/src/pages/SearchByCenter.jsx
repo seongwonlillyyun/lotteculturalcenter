@@ -6,18 +6,47 @@ import {faMagnifyingGlass, faFilter, faX, faRotateRight, faClock, faCartShopping
 import axios from 'axios'
 
 export default function SearchByCenter(){
-    const {id} = useParams();
+    const [showCourse, setShowCourse] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 4;
     const [center,setCenter] = useState({})
-    const [course, setCourse] = useState([])
-    useEffect(()=>{
-        axios.get(`http://127.0.0.1:8080/center/${id}`)
-        .then(response=>setCenter(response.data))
+    const [id, setId] = useState({id: 1, cname : '잠실점'})
+    const cid = id.id
+    
+    console.log('cid', cid)
+    useEffect( ()=>{
+        let startIndex = 0;
+        let endIndex = 0;
+        startIndex = (currentPage-1) * pageSize + 1;
+        endIndex = currentPage * pageSize;
+        const url = `http://127.0.0.1:8080/center/${cid}/course`
+            axios({
+                method:'post',
+                url:url,
+                data : {'id':cid, 'startIndex':startIndex, 'endIndex':endIndex}
+            })
+            .then(response=>setShowCourse([...showCourse, response.data]))
+            .catch(error=>console.log(error))
+    },[cid, currentPage])
+    const handleCenter = (value)=>{
+        setId(value)
+        setCurrentPage(1)
+    }
+    console.log('currentPage =>' , currentPage)
+/*     useEffect(()=>{
+        let startIndex = 0;
+        let endIndex = 0;
+        startIndex = (currentPage-1) * pageSize + 1;
+        endIndex = currentPage * pageSize;
+        const url = `http://127.0.0.1:8080/center/${id}/course`
+        axios({
+            method:'post',
+            url:url,
+            data : {'id':id, 'startIndex':startIndex, 'endIndex':endIndex}
+        })
+        .then(response=>setShowCourse([...showCourse, response.data]))
         .catch(error=>console.log(error))
-        axios.get(`http://127.0.0.1:8080/center/${id}/course`)
-        .then(response=> setCourse(response.data))
-        .catch(error=>console.log(error))
-    },[id])
-    console.log('course',course)
+    },[id, currentPage]) */
     const [view, setView] = useState(false)
     const [middleCategory, setMiddleCategory] = useState("전체")
     const [smallCategory, setSmallCategory] = useState('전체')
@@ -67,15 +96,15 @@ export default function SearchByCenter(){
     return(
         <>
             <div className="bycenter_title_part">
-                <p className="bycenter_title" onClick={()=>{setView(!view)}}>{center[0]&&centerinfo.name}{""}
+                <p className="bycenter_title" onClick={()=>{setView(!view)}}>{id.cname}{""}
                     {view ? '^' : '⌄'}
-                    {view && <DropDown/>}
+                    {view && <DropDown click={handleCenter}/>}
                 </p>
             </div>
             <div className="bycenter_list min_inner">
                 <ul className="middle_category_list">
                     {category.map((item,i)=>(
-                        <li value={i}
+                        <li value={i} key={i}
                             onClick={()=>{setCindex(i) ; setSmallCategory('전체'); setSortStd('강의시작일순')}}
                             className="middle_category_item">
                             <CategoryMiddleMenu item={item}
@@ -116,36 +145,44 @@ export default function SearchByCenter(){
                         </div>
                     </div>
                 </div>
-                <ul>
-                    {course.map((item)=>(
-                        <li>
-                            <CourseItem item={item}/>
-                        </li>
+                <div className="course_list_content">
+                    {showCourse.map((items,index)=>(
+                        <ul className="course_list">
+                            {items.map((item, index)=>(
+                                <li key={index}>
+                                    <CourseItem item={item}/>
+                                </li>
+                            ))}
+                        </ul>
                     ))}
-                </ul>
+                    <button className="morebtn" type="button" onClick={()=>{setCurrentPage(currentPage+1)}}>강좌더보기+</button>
+                </div>
             </div>
         </>
     )
 };
 
-function DropDown(){
+function DropDown({click}){
+    const handleCenter = (value)=>{
+        click(value)
+    }
     return(
         <ul className="dropdown_list">
             <li className="dropdown_list_st st_seoul"><p>서울점</p></li>
-            <li><Link to="/center/1">잠실점</Link></li>
-            <li><Link to="/center/2">본점</Link></li>
-            <li><Link to="/center/3">강남점</Link></li>
-            <li><Link to="/center/4">건대스타시티점</Link></li>
+            <li onClick={()=>handleCenter({id:1, cname:'잠실점'})}>잠실점</li>
+            <li onClick={()=>handleCenter({id:2, cname:'본점'})}>본점</li>
+            <li onClick={()=>handleCenter({id:3, cname:'강남점'})}>강남점</li>
+            <li onClick={()=>handleCenter({id:4, cname:'건대스타시티점'})}>건대스타시티점</li>
             <li className="dropdown_list_st"><p>수도권점</p></li>
-            <li><Link to="/center/5">인천점</Link></li>
-            <li><Link to="/center/6">동탄점</Link></li>
-            <li><Link to="/center/7">구리점</Link></li>
-            <li><Link to="/center/8">분당점</Link></li>
+            <li onClick={()=>handleCenter({id:5, cname:'인천점'})}>인천점</li>
+            <li onClick={()=>handleCenter({id:6, cname:'동탄점'})}>동탄점</li>
+            <li onClick={()=>handleCenter({id:7, cname:'구리점'})}>구리점</li>
+            <li onClick={()=>handleCenter({id:8, cname:'분당점'})}>분당점</li>
             <li className="dropdown_list_st"><p>지방점</p></li>
-            <li><Link to="/center/9">부산본점</Link></li>
-            <li><Link to="/center/10">광복점</Link></li>
-            <li><Link to="/center/11">광주점</Link></li>
-            <li><Link to="/center/12">대구점</Link></li>
+            <li onClick={()=>handleCenter({id:9, cname:'부산점'})}>부산본점</li>
+            <li onClick={()=>handleCenter({id:10, cname:'광복점'})}>광복점</li>
+            <li onClick={()=>handleCenter({id:11, cname:'광주점'})}>광주점</li>
+            <li onClick={()=>handleCenter({id:12, cname:'대구점'})}>대구점</li>
         </ul>
     )
 };
@@ -234,7 +271,7 @@ function CourseItem({item}){
                             className="course_item_img"/>
         <div className="course_item_status">
             <p className="course_item_status_apply">{item.statues}</p>
-            <p className="course_item_status_center">{item.center_name}</p>
+            <p className="course_item_status_center">{item.name}</p>
         </div>
         <p className="course_item_title">{item.course_name}</p>
         <p className="course_item_teacher">{item.teacher_name}</p>
