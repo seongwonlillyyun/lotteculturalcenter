@@ -52,7 +52,6 @@ export default function Header() {
             </h1>
             <Gnb setActiveDepth={setActiveDepth}/>
             <div className="users">
-              <SearchBtn />
               {
                 isLogin ?
                 <>
@@ -67,7 +66,6 @@ export default function Header() {
         </div>
         <GnbChild activeDepth={activeDepth}/>
       </div>
-      <SearchPopup />
       <CategoryPopup />
     </>
   );
