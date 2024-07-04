@@ -113,6 +113,20 @@ function GnbChild({activeDepth}) {
   );
 }
 
+function CategoryPopup() {
+
+  const clickHandler = () => closePopup(".category_popup");
+
+  return (
+    <div className="category_popup">
+      <div className="full_inner">
+        <button type="button" className="close_btn" onClick={clickHandler}><IconClose /></button>
+      </div>
+    </div>
+  )
+}
+
+/*
 function SearchBtn() {
   return (
     <div className="search_btn" onClick={()=>{openPopup(".search_popup")}}>
@@ -152,16 +166,4 @@ function SearchPopup() {
     </form>
   );
 }
-
-function CategoryPopup() {
-
-  const clickHandler = () => closePopup(".category_popup");
-
-  return (
-    <div className="category_popup">
-      <div className="full_inner">
-        <button type="button" className="close_btn" onClick={clickHandler}><IconClose /></button>
-      </div>
-    </div>
-  )
-}
+*/

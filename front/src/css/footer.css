@@ -1,0 +1,86 @@
+#footer {
+  padding: 70px 0 40px;
+  background-color: #382f2d;
+  color: #fff;
+}
+
+#footer .footer_top {
+  display: flex;
+  padding-bottom: 35px;
+}
+
+#footer .footer_bot {
+  display: flex;
+  padding-top: 35px;
+  font-size: 14px;
+  font-weight: 200;
+  color: rgba(255, 255, 255, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+#footer .help h3 {
+  font-size: 40px;
+  line-height: 60px;
+  font-weight: 100;
+}
+
+#footer .help > ul > li {
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+#footer .customer {
+  margin-left: auto;
+  text-align: right;
+}
+
+#footer .customer > li + li {
+  margin-top: 15px;
+}
+
+#footer .customer h4 {
+  font-size: 38px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 100;
+}
+
+#footer .customer p {
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 21px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+#footer .logo {
+  width: 210px;
+  margin-left: auto;
+}
+
+#footer .logo img {
+  width: 100%;
+}
+
+#footer .company_info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer_wrap {
+  position: relative;
+}
+
+.footer_wrap .top_btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid #d8d8d8;
+  background-color: #fff;
+}
