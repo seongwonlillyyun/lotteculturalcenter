@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from "swiper/modules"
+import { Autoplay, Pagination, Navigation } from "swiper/modules"
 import axios from 'axios';
 import KakaoMap from './../components/KakaoMap';
 
@@ -77,20 +77,35 @@ export default function Location() {
               </ul>
               <div className="location_photo">
                 <h3>{location.name} 둘러보기</h3>
-                <Swiper
-                  modules={[Autoplay]}
-                  autoplay={{delay : 5000}}
-                  loop={true}
-                  speed={1000}
-                >
-                  {
-                    slides.map(path => (
-                      <SwiperSlide>
-                        <img src={`//localhost:8080/${path.img_path}`} alt="" />
-                      </SwiperSlide>
-                    ))
-                  }
-                </Swiper>
+                <div className="swiper-container">
+                  <Swiper
+                    modules={[Autoplay, Pagination, Navigation]}
+                    autoplay={{delay : 5000}}
+                    loop={true}
+                    speed={1000}
+                    navigation={{
+                      nextEl : ".swiper-button-next",
+                      prevEl : ".swiper-button-prev"
+                    }}
+                    pagination={{
+                      type : "custom",
+                      renderCustom : (swiper, curr, total) => {
+                        console.log(curr, total);
+                        return "<b>"+curr+"</b>" + " / " + total;
+                      }
+                    }}
+                  >
+                    {
+                      slides.map((path, i) => (
+                        <SwiperSlide key={i}>
+                          <img src={`//localhost:8080/${path.img_path}`} alt="" />
+                        </SwiperSlide>
+                      ))
+                    }
+                  </Swiper>
+                  <div className="swiper-button-next"></div>
+                  <div className="swiper-button-prev"></div>
+                </div>
               </div>
             </>
           }

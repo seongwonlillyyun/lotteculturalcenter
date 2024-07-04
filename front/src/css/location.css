@@ -45,5 +45,68 @@
 }
 
 .location .location_photo .swiper {
+  position: relative;
   border-radius: 10px;
+}
+
+.location .location_photo .swiper-slide {
+  position: relative;
+  padding-top: 67.25%;
+}
+
+.location .location_photo .swiper-slide img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.location .location_photo .swiper-pagination {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: rgba(170, 170, 170, .9);
+  padding: 3px 8px;
+  font-size: 14px;
+  border-radius: 30px;
+}
+
+.location .location_photo .swiper-pagination b {
+  color: #fff;
+}
+
+.location .location_photo [class *= swiper-button]{
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  background: no-repeat center center / contain;
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.25s;
+  cursor: pointer;
+}
+
+.location .location_photo .swiper-container {
+  position: relative;
+}
+
+.location .location_photo .swiper-container:hover [class *= swiper-button]{
+  opacity: 1;
+  visibility: visible;
+}
+
+.location .location_photo .swiper-button-next {
+  background-image: url(../svg/btn-main-pop-slide-next.svg);
+  right: -10px;
+}
+
+.location .location_photo .swiper-button-prev {
+  background-image: url(../svg/btn-main-pop-slide-prev.svg);
+  left: -10px;
 }

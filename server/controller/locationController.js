@@ -2,7 +2,6 @@ import * as repository from "../repository/locationRepository.js";
 
 export const getLocation = async (req, res) => {
   const { type } = req.body;
-  console.log(type);
   const result = await repository.getLocation(type)
   res.json(result);
   res.end();
