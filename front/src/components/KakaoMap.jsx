@@ -1,24 +1,27 @@
 import { useEffect } from "react";
 import { useScript } from "../hooks/useScript";
 
-export default function KakaoMap({data}) {
+export default function KakaoMap({mapData, setActiveLoc}) {
   const kakaoMap = useScript("https://dapi.kakao.com/v2/maps/sdk.js?appkey=ff9b5a4c6e2acd459216a3578f74e604&autoload=false&libraries=services");
 
   useEffect(()=>{
-    if(kakaoMap && data.length > 0){
+    const container = document.createElement("div")
+    container.className = "kakao_map"
+    document.querySelector('.kakao_map_wrap').append(container);
+
+    if(kakaoMap && mapData.list){
       const { kakao } = window;
-      const center = {lat : data[0].c_lat, lng : data[0].c_lng}
+      const center = {lat : mapData.center.lat, lng : mapData.center.lng}
 
       kakao.maps.load(()=>{
-        const container = document.querySelector(".kakao_map");
         const options = {
           center: new kakao.maps.LatLng(center.lat, center.lng), 
-          level: 11
+          level: mapData.level
         }
 
         const map = new kakao.maps.Map(container, options);
 
-        const position = data.map(v => ({
+        const position = mapData.list.map(v => ({
           latlng : new kakao.maps.LatLng(v.lat, v.lng)
         }));
         
@@ -28,23 +31,29 @@ export default function KakaoMap({data}) {
             position : position[i].latlng,
           })
 
-          marker.loc_id = data[i].loc_id;
+          marker.loc_id = mapData.list[i].loc_id;
 
           kakao.maps.event.addListener(marker, 'click', function(){
+            setActiveLoc(marker.loc_id);
             const {Ma, La} = marker.getPosition();
             const moveLatLng = new kakao.maps.LatLng(Ma, La);
             map.setLevel(3, {
               anchor: moveLatLng,
               animate: true
             });
+            map.panTo(moveLatLng);
           });
         }
       })
     }
-  },[kakaoMap])
+
+    return () => {
+      container.remove();
+    }
+  },[kakaoMap, mapData])
 
   return (
-    <div className="kakao_map">
+    <div className="kakao_map_wrap">
     </div>
   );
 }

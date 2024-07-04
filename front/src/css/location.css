@@ -1,4 +1,49 @@
 .location .kakao_map {
   width: 100%;
   height: 600px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.location .location_info {
+  display: flex;
+  padding: 50px 0 60px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.location .location_info > li {
+  position: relative;
+  flex: 1;
+  text-align: center;
+}
+
+.location .location_info > li + li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.location .location_info > li p {
+  margin-top: 5px;
+}
+
+.location .location_photo {
+  margin-top: var(--basic-padding);
+}
+
+.location .location_photo h3 {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  color: rgba(0, 0, 0, 0.9);
+  margin-bottom: 30px;
+}
+
+.location .location_photo .swiper {
+  border-radius: 10px;
 }

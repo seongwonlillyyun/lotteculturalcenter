@@ -1,6 +1,6 @@
 import { db } from '../db/database_mysql80.js';
 
-export const getLocation = async () => {
+export const getLocation = async (type) => {
   const sql = `
     select
       loc_id,
@@ -16,14 +16,14 @@ export const getLocation = async () => {
     from (
       select 
         (min(lat) + max(lat))/2 c_lat, 
-        (min(lng) + min(lng))/2 c_lng
+        (min(lng) + max(lng))/2 c_lng
       from location
-      where type = "서울점"
+      where type = ?
     ) center, location
-    where type = "서울점"
+    where type = ?
   `
 
-  return db.execute(sql)
+  return db.execute(sql, [type, type])
     .then(([rows]) => rows)
 }
 
@@ -63,4 +63,15 @@ export const setLocationSlides = async (loc_id, data) => {
   }
 
   return (count === data.length) ? true : false;
+}
+
+export const getLocationSlide = async (id) => {
+  const sql = `
+    select 
+      img_path
+    from location_slide
+    where loc_id = ?;
+  `;
+
+  return db.execute(sql, [id]).then(([rows]) => rows);
 }
