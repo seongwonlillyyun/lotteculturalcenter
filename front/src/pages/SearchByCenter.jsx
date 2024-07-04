@@ -6,76 +6,85 @@ import {faMagnifyingGlass, faFilter, faX, faRotateRight, faClock, faCartShopping
 import axios from 'axios'
 
 export default function SearchByCenter(){
+    const {id} = useParams();
     const [showCourse, setShowCourse] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 4;
+    const [middle,setMiddle] = useState([]);
+    const [sub, setSub] = useState([]);
     const [center,setCenter] = useState({})
-    const [id, setId] = useState({id: 1, cname : '잠실점'})
-    const cid = id.id
-    
-    console.log('cid', cid)
+    const [cindex, setCindex] = useState(0)
+    const [view, setView] = useState(false)
+    const [smallCategory, setSmallCategory] = useState(0)
     useEffect( ()=>{
         let startIndex = 0;
         let endIndex = 0;
         startIndex = (currentPage-1) * pageSize + 1;
         endIndex = currentPage * pageSize;
-        const url = `http://127.0.0.1:8080/center/${cid}/course`
+
+            axios({
+                method:'get',
+                url:`http://127.0.0.1:8080/center/${id}`,
+                data: id
+            })
+            .then(response=>setCenter(...response.data))
+            .catch(error=>console.log(error))
             axios({
                 method:'post',
-                url:url,
-                data : {'id':cid, 'startIndex':startIndex, 'endIndex':endIndex}
+                url:`http://127.0.0.1:8080/center/${id}/course`,
+                data : {'id': id}
             })
-            .then(response=>setShowCourse([...showCourse, response.data]))
+            .then(response=>setShowCourse([response.data]))
             .catch(error=>console.log(error))
-    },[cid, currentPage])
-    const handleCenter = (value)=>{
-        setId(value)
-        setCurrentPage(1)
-    }
-    console.log('currentPage =>' , currentPage)
-/*     useEffect(()=>{
-        let startIndex = 0;
-        let endIndex = 0;
-        startIndex = (currentPage-1) * pageSize + 1;
-        endIndex = currentPage * pageSize;
-        const url = `http://127.0.0.1:8080/center/${id}/course`
+            setCindex(0)
+    },[id])
+
+    useEffect(()=>{
         axios({
             method:'post',
-            url:url,
-            data : {'id':id, 'startIndex':startIndex, 'endIndex':endIndex}
+            url:`http://127.0.0.1:8080/center/${id}/course/search`,
+            data:{'id':id, 'mid_id':cindex}
         })
-        .then(response=>setShowCourse([...showCourse, response.data]))
+        .then(response=>setMiddle([response.data]))
         .catch(error=>console.log(error))
-    },[id, currentPage]) */
-    const [view, setView] = useState(false)
-    const [middleCategory, setMiddleCategory] = useState("전체")
-    const [smallCategory, setSmallCategory] = useState('전체')
-    const [cindex, setCindex] = useState(0)
+    },[cindex])
+
+/*     useEffect(()=>{
+        axios({
+            method:'post',
+            url:`http://127.0.0.1:8080/center/${id}/course/search/sub`,
+            data:{'id':id, 'mid_id':cindex, 'sub_id':smallCategory}
+        })
+        .then(response=>setSub([response.data]))
+        .catch(error=>console.log(error))
+    },[smallCategory]) */
+
+    
     const category = [
         {
             name:"전체",
             img:"/img/category_img_all.jpg",
-            list:[]
+            list:[],
         },
         {
             name:"공예",
             img:"/img/category_img_crafts.jpg",
-            list:["전체", '플라워', '도예','가죽','캔들/비누']
+            list:["전체", '플라워', '도예','가죽','캔들/비누'],
         },
         {
             name:"노래",
             img:"/img/category_img_sing.jpg",
-            list:['전체','노래교실','보컬트레이닝','성악','기타']
+            list:['전체','노래교실','보컬트레이닝','성악','기타'],
         },
         {
             name:"드로잉",
             img:"/img/category_img_drawing.jpg",
-            list:['전체','유화','마카','색연필','수채화']
+            list:['전체','유화','마카','색연필','수채화'],
         },
         {
             name:"쿠킹",
             img:"/img/category_img_cooking.jpg",
-            list:['전체','한식','일식/중식','양식','다이어트']
+            list:['전체','한식','일식/중식','양식','다이어트'],
         },
     ]
     const [showModal, setShowModal] = useState(false)
@@ -91,21 +100,23 @@ export default function SearchByCenter(){
         setSortView(false)
         setSortStd(value)
     }
-    const centerinfo = center[0]
+    const middleSearch = (value)=>{
     
+    }
+    console.log('small', smallCategory)
     return(
         <>
             <div className="bycenter_title_part">
-                <p className="bycenter_title" onClick={()=>{setView(!view)}}>{id.cname}{""}
+                <p className="bycenter_title" onClick={()=>{setView(!view)}}>{center.center_name}{""}
                     {view ? '^' : '⌄'}
-                    {view && <DropDown click={handleCenter}/>}
+                    {view && <DropDown/>}
                 </p>
             </div>
             <div className="bycenter_list min_inner">
                 <ul className="middle_category_list">
                     {category.map((item,i)=>(
                         <li value={i} key={i}
-                            onClick={()=>{setCindex(i) ; setSmallCategory('전체'); setSortStd('강의시작일순')}}
+                            onClick={()=>{setCindex(i) ; setSmallCategory(0); setSortStd('강의시작일순');middleSearch(i)}}
                             className="middle_category_item">
                             <CategoryMiddleMenu item={item}
                                             cindex={cindex}
@@ -113,14 +124,15 @@ export default function SearchByCenter(){
                         </li>
                     ))}
                 </ul>
+
                 <ul className="small_category_items" 
-                style={{'border-bottom': middleCategory === '전체' ? 
+                style={{'border-bottom': cindex === 0 ? 
                             "none":'1px solid #E3E1DE'}}>
-                    {category[cindex].list.map((item)=>(
-                            <li className="small_category_item" >
-                                <p onClick={()=>setSmallCategory(item)}
+                    {category[cindex].list.map((item,i)=>(
+                            <li className="small_category_item">
+                                <p onClick={()=>setSmallCategory(i)}
                                     value={item}
-                                    className={smallCategory === item?"small_category_name_active":"small_category_name"}
+                                    className={smallCategory === i?"small_category_name_active":"small_category_name"}
                                     >{item}</p>
                             </li>
                     ))}
@@ -146,7 +158,15 @@ export default function SearchByCenter(){
                     </div>
                 </div>
                 <div className="course_list_content">
-                    {showCourse.map((items,index)=>(
+                    {cindex === 0 ? showCourse.map((items,index)=>(
+                        <ul className="course_list">
+                            {items.map((item, index)=>(
+                                <li key={index}>
+                                    <CourseItem item={item}/>
+                                </li>
+                            ))}
+                        </ul>
+                    )):middle.map((items, index)=>(
                         <ul className="course_list">
                             {items.map((item, index)=>(
                                 <li key={index}>
@@ -162,27 +182,24 @@ export default function SearchByCenter(){
     )
 };
 
-function DropDown({click}){
-    const handleCenter = (value)=>{
-        click(value)
-    }
+function DropDown(){
     return(
         <ul className="dropdown_list">
             <li className="dropdown_list_st st_seoul"><p>서울점</p></li>
-            <li onClick={()=>handleCenter({id:1, cname:'잠실점'})}>잠실점</li>
-            <li onClick={()=>handleCenter({id:2, cname:'본점'})}>본점</li>
-            <li onClick={()=>handleCenter({id:3, cname:'강남점'})}>강남점</li>
-            <li onClick={()=>handleCenter({id:4, cname:'건대스타시티점'})}>건대스타시티점</li>
+            <li><Link to ='/center/1' >잠실점</Link></li>
+            <li><Link to ='/center/2'>본점</Link></li>
+            <li><Link to ='/center/3'>강남점</Link></li>
+            <li><Link to ='/center/4'>건대스타시티점</Link></li>
             <li className="dropdown_list_st"><p>수도권점</p></li>
-            <li onClick={()=>handleCenter({id:5, cname:'인천점'})}>인천점</li>
-            <li onClick={()=>handleCenter({id:6, cname:'동탄점'})}>동탄점</li>
-            <li onClick={()=>handleCenter({id:7, cname:'구리점'})}>구리점</li>
-            <li onClick={()=>handleCenter({id:8, cname:'분당점'})}>분당점</li>
+            <li><Link to ='/center/5'>인천점</Link></li>
+            <li><Link to ='/center/6'>동탄점</Link></li>
+            <li><Link to ='/center/7'>구리점</Link></li>
+            <li><Link to ='/center/8'>분당점</Link></li>
             <li className="dropdown_list_st"><p>지방점</p></li>
-            <li onClick={()=>handleCenter({id:9, cname:'부산점'})}>부산본점</li>
-            <li onClick={()=>handleCenter({id:10, cname:'광복점'})}>광복점</li>
-            <li onClick={()=>handleCenter({id:11, cname:'광주점'})}>광주점</li>
-            <li onClick={()=>handleCenter({id:12, cname:'대구점'})}>대구점</li>
+            <li><Link to ='/center/9'>부산본점</Link></li>
+            <li><Link to ='/center/10'>광복점</Link></li>
+            <li><Link to ='/center/11'>광주점</Link></li>
+            <li><Link to ='/center/12'>대구점</Link></li>
         </ul>
     )
 };

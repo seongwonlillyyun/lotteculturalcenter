@@ -13,7 +13,7 @@ export default function App() {
     path : "/",
     element: <Root />,
     children : [
-      {path:'/center', element:<SearchByCenter/>},
+      {path:'/center/:id', element:<SearchByCenter/>},
       {path:'/topic', element:<SearchByTopic/>},
       {path:'/text', element:<SearchByText/>}
     ]
