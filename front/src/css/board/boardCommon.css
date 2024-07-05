@@ -22,7 +22,8 @@
   transition: 0.25s;
 }
 
-.board_tab_wrap.type1 .tap_main_btns .btn.on::before {
+.board_tab_wrap.type1 .tap_main_btns .btn.on::before,
+.board_tab_wrap.type1 .tap_main_btns .btn:hover::before {
   width: 90%;
 }
 
@@ -37,7 +38,8 @@
   padding: 22px 0;
 }
 
-.board_tab_wrap.type1 .tab_sub_btns .btn.on {
+.board_tab_wrap.type1 .tab_sub_btns .btn.on,
+.board_tab_wrap.type1 .tab_sub_btns .btn:hover {
   font-weight: 700;
   color: #222;
 }

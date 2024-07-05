@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   qnaList : [],
+  qnaTabs : [],
 }
 
 const boardReducer = createSlice({
@@ -9,8 +10,9 @@ const boardReducer = createSlice({
   initialState,
   reducers : {
     setQnAList : (state, action) => ({...state, qnaList : action.payload}),
+    setQnATabs : (state, action) => ({...state, qnaTabs : action.payload})
   }
 })
 
-export const {setQnAList} = boardReducer.actions;
+export const {setQnAList, setQnATabs} = boardReducer.actions;
 export default boardReducer.reducer;
