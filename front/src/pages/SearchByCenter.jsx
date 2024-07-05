@@ -29,62 +29,49 @@ export default function SearchByCenter(){
             })
             .then(response=>setCenter(...response.data))
             .catch(error=>console.log(error))
-            axios({
-                method:'post',
-                url:`http://127.0.0.1:8080/center/${id}/course`,
-                data : {'id': id}
-            })
-            .then(response=>setShowCourse([response.data]))
-            .catch(error=>console.log(error))
             setCindex(0)
     },[id])
-
     useEffect(()=>{
         axios({
             method:'post',
-            url:`http://127.0.0.1:8080/center/${id}/course/search`,
-            data:{'id':id, 'mid_id':cindex}
+            url:`http://127.0.0.1:8080/center/${id}/course`,
+            data : {'id': id, 'mid_id':cindex, 'sub_id':smallCategory}
         })
-        .then(response=>setMiddle([response.data]))
+        .then(response=>setShowCourse([response.data]))
         .catch(error=>console.log(error))
-    },[cindex])
+    },[cindex,smallCategory])
 
-/*     useEffect(()=>{
-        axios({
-            method:'post',
-            url:`http://127.0.0.1:8080/center/${id}/course/search/sub`,
-            data:{'id':id, 'mid_id':cindex, 'sub_id':smallCategory}
-        })
-        .then(response=>setSub([response.data]))
-        .catch(error=>console.log(error))
-    },[smallCategory]) */
 
     
     const category = [
         {
             name:"전체",
             img:"/img/category_img_all.jpg",
-            list:[],
+            list:[{id:0}],
         },
         {
             name:"공예",
             img:"/img/category_img_crafts.jpg",
-            list:["전체", '플라워', '도예','가죽','캔들/비누'],
+            list:[
+                    {name:"전체", id:0}, {name:'플라워',id:1}, {name:'도예',id:2},{name:'가죽',id:3},
+                    {name:'캔들/비누',id:4}],
         },
         {
             name:"노래",
             img:"/img/category_img_sing.jpg",
-            list:['전체','노래교실','보컬트레이닝','성악','기타'],
+            list:[  {name:'전체',id:0},{name:'노래교실',id:5},{name:'보컬트레이닝',id:6},
+                    {name:'성악',id:7},{name:'기타',id:8}],
         },
         {
             name:"드로잉",
             img:"/img/category_img_drawing.jpg",
-            list:['전체','유화','마카','색연필','수채화'],
+            list:[  {name:'전체',id:0},{name:'유화',id:9},{name:'마카',id:10},{name:'색연필',id:11},
+                    {name:'수채화',id:12}],
         },
         {
             name:"쿠킹",
             img:"/img/category_img_cooking.jpg",
-            list:['전체','한식','일식/중식','양식','다이어트'],
+            list:[{name:'전체', id:0},{name:'한식',id:13},{name:'일식/중식',id:14},{name:'양식',id:15},{name:'다이어트',id:16}],
         },
     ]
     const [showModal, setShowModal] = useState(false)
@@ -100,10 +87,10 @@ export default function SearchByCenter(){
         setSortView(false)
         setSortStd(value)
     }
-    const middleSearch = (value)=>{
-    
+    const searchDetail = (value)=>{
+        alert(value)
     }
-    console.log('small', smallCategory)
+    console.log('smallcategory=>', smallCategory)
     return(
         <>
             <div className="bycenter_title_part">
@@ -116,7 +103,7 @@ export default function SearchByCenter(){
                 <ul className="middle_category_list">
                     {category.map((item,i)=>(
                         <li value={i} key={i}
-                            onClick={()=>{setCindex(i) ; setSmallCategory(0); setSortStd('강의시작일순');middleSearch(i)}}
+                            onClick={()=>{setCindex(i) ; setSmallCategory(0); setSortStd('강의시작일순')}}
                             className="middle_category_item">
                             <CategoryMiddleMenu item={item}
                                             cindex={cindex}
@@ -130,10 +117,10 @@ export default function SearchByCenter(){
                             "none":'1px solid #E3E1DE'}}>
                     {category[cindex].list.map((item,i)=>(
                             <li className="small_category_item">
-                                <p onClick={()=>setSmallCategory(i)}
+                                <p onClick={()=>setSmallCategory(item.id)}
                                     value={item}
-                                    className={smallCategory === i?"small_category_name_active":"small_category_name"}
-                                    >{item}</p>
+                                    className={smallCategory === item.id?"small_category_name_active":"small_category_name"}
+                                    >{item.name}</p>
                             </li>
                     ))}
                 </ul>
@@ -146,7 +133,8 @@ export default function SearchByCenter(){
                         style={{marginLeft:'.4rem'}}>상세검색</span></button>
                             {showModal === true ?<ModalPage
                                             openModal={openModal}
-                                            closeModal={closeModal}/>:null}
+                                            closeModal={closeModal}
+                                            click={searchDetail}/>:null}
                         <button className="search_part_sort"
                             onClick={()=>{setSortView(!sortview)}}
                         ><FontAwesomeIcon icon={faFilter}/><span
@@ -158,15 +146,7 @@ export default function SearchByCenter(){
                     </div>
                 </div>
                 <div className="course_list_content">
-                    {cindex === 0 ? showCourse.map((items,index)=>(
-                        <ul className="course_list">
-                            {items.map((item, index)=>(
-                                <li key={index}>
-                                    <CourseItem item={item}/>
-                                </li>
-                            ))}
-                        </ul>
-                    )):middle.map((items, index)=>(
+                    {showCourse.map((items,index)=>(
                         <ul className="course_list">
                             {items.map((item, index)=>(
                                 <li key={index}>
@@ -220,7 +200,7 @@ function DropDownSort({click, sortStd}){
                     style={{'color':sortStd === "접수인원순"?"#000":"rgba(0, 0, 0, .6)"}}>접수인원순</p></li>
             <li><p onClick={()=>changeStd("강의시작일순")} 
                     style={{'color':sortStd === "강의시작일순"?"#000":"rgba(0, 0, 0, .6)"}}>강의시작일순</p></li>
-            <li><p onClick={()=>changeStd("가격낮은순")}  
+            <li><p onClick={()=>changeStd("낮은가격순")}  
                     style={{'color':sortStd === "낮은가격순"?"#000":"rgba(0, 0, 0, .6)"}}>낮은가격순</p></li>
             <li><p
                 style={{'color':sortStd === "높은가격순"?"#000":"rgba(0, 0, 0, .6)"}}
@@ -238,12 +218,20 @@ function CategoryMiddleMenu({item, cindex, index}){
     )
 };
 
-function ModalPage({openModal,closeModal}){
+function ModalPage({openModal,closeModal, click}){
+    const [info, setInfo] = useState({day:[], time:""})
+    const handleDetail = (value)=>{
+        click(value)
+    }
+    const getInfo = (value1, value2)=>{
+            setInfo()
+            alert(info)
+    }
     return(
         <div className='modal_out'onClick={closeModal}>
             <div className='modal_container' onClick={(e)=>e.stopPropagation()}>
                 <button className="close" onClick={closeModal}><FontAwesomeIcon icon={faX} /></button>
-                <div className='modal_content_search'>
+                <form className='modal_content_search'>
                     <p className="modal_search_title">상세검색</p>
                     <input type="text"
                         placeholder="강좌명 or 강사명으로 검색"
@@ -256,8 +244,10 @@ function ModalPage({openModal,closeModal}){
                             <p className="std_title">요일</p>
                         </li>
                         <li>
-                            <button className="modal_btn modal_day">평일</button>
-                            <button className="modal_btn modal_weekend">주말</button>
+                            <input className="modal_btn modal_day" 
+                                type="button" value={'평일'} onClick={()=>getInfo([2,3,4,5,6])}/>
+                            <input className="modal_btn modal_weekend" 
+                                    type="button" value={'주말'} onClick={()=>getInfo([1,7])}/>
                         </li>
                     </ul>
                     <ul className="modal_search_std modal_search_time">
@@ -265,17 +255,19 @@ function ModalPage({openModal,closeModal}){
                             <p className="std_title"> 시간</p>
                         </li>
                         <li>
-                            <button className="modal_btn modal_before">오전</button>
-                            <button className="modal_btn modal_after">오후</button>
+                            <input className="modal_btn modal_before" 
+                                    type="button" value={'오전'} onClick={()=>{getInfo('am')}}/>
+                            <input className="modal_btn modal_after" 
+                                    type="button" value={'오후'} onClick={()=>{getInfo('pm')}}/>
                         </li>
                     </ul>
                         <div className="modal_btn_last_list">
                             <button className="modal_btn_last modal_btn_reset">
                                 <FontAwesomeIcon icon={faRotateRight} />
                                 <span className="reset_title">초기화</span></button>
-                            <button className="modal_btn_last modal_btn_result">강좌보기</button>
+                            <button className="modal_btn_last modal_btn_result" type="submit" onSubmit={handleDetail}>강좌보기</button>
                         </div>
-                </div>
+                </form>
             </div>
         </div>
     )
