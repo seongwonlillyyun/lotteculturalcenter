@@ -7,7 +7,7 @@ import KakaoMap from './../components/KakaoMap';
 // css
 import 'swiper/css';
 import "../css/location.css";
-import "../css/boardCommon.css";
+import "../css/board/boardCommon.css";
 
 // svg
 import {ReactComponent as IconAddr} from "../svg/icon-address.svg";

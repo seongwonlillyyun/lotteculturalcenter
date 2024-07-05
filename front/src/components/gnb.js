@@ -12,7 +12,7 @@ export const gnb = {
     name : "이용안내",
     children : [
       {path : "/location", name : "지점안내"},
-      {path : "/", name : "자주하는 문의"}
+      {path : "/board/qna", name : "자주하는 문의"}
     ],
     imgPath : "/img/img-gnb-use-information-01.jpg"
   },

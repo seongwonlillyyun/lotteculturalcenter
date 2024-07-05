@@ -5,14 +5,14 @@ import "../css/footer.css";
 
 export default function Footer() {
   return (
-    <div className='footer_wrap'>
+    <div className="footer_wrap">
       <div id="footer">
         <div className="full_inner">
           <div className="footer_top">
             <div className="help">
               <h3>무엇을 도와드릴까요?</h3>
               <ul>
-                <li><Link to="/">자주하는 문의</Link></li>
+                <li><Link to="/board/qna">자주하는 문의</Link></li>
                 <li><Link to="/">공지사항/이벤트</Link></li>
                 <li><Link to="/">지점안내</Link></li>
               </ul>

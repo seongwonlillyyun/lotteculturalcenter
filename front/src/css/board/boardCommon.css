@@ -1,3 +1,4 @@
+/* board tab */
 .board_tab_wrap.type1 .tap_main_btns {
   display: flex;
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
@@ -43,4 +44,31 @@
 
 .board_tab_wrap.type1 .tab_sub_btns .btn + .btn {
   margin-left: 30px;
+}
+
+.board_page .form_search {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 60px;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.board_page .form_search input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 60px;
+  outline: none;
+  padding: 0 20px;
+  font-size: 18px;
+  border: 1px solid #aa9b90;
+}
+
+.board_page .form_search .search_btn {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
 }

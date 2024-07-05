@@ -6,6 +6,7 @@ import App from './App';
 // redux
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
+import boardReducer from './reducers/boardReducer.js';
 
 // css
 import "./css/reset.css";
@@ -13,7 +14,9 @@ import "./css/style.css";
 import "./css/common.css";
 
 const store = configureStore({
-  reducer : {}
+  reducer : {
+    board : boardReducer,
+  }
 })
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

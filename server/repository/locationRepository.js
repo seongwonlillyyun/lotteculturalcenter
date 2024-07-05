@@ -1,6 +1,8 @@
 import { db } from '../db/database_mysql80.js';
 
 export const getLocation = async (type) => {
+  let typeSql = type ? `where type = "${type}"` : "";
+
   const sql = `
     select
       loc_id,
@@ -18,12 +20,12 @@ export const getLocation = async (type) => {
         (min(lat) + max(lat))/2 c_lat, 
         (min(lng) + max(lng))/2 c_lng
       from location
-      where type = ?
+      ${typeSql}
     ) center, location
-    where type = ?
+    ${typeSql}
   `
 
-  return db.execute(sql, [type, type])
+  return db.execute(sql)
     .then(([rows]) => rows)
 }
 
