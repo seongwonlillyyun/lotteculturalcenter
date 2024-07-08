@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 // redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +10,7 @@ import { SearchVisual } from './../../components/BoardCommon';
 
 // svg
 import {ReactComponent as IconNoSearch} from "../../svg/icon-no-srch.svg";
+import {ReactComponent as IconRightArrow} from "../../svg/icon-right-arrow.svg";
 
 // css
 import "../../css/board/boardCommon.css";
@@ -36,6 +38,7 @@ export default function QnA() {
         <div className="min_inner narrow_page">
           <QnATabs/>
           <QnAList activIdx={activIdx} setActiveIdx={setActiveIdx}/>
+          <PersonalQnA />
         </div>
       </div>
     </div>
@@ -123,6 +126,18 @@ function NoData() {
     <div className="qna_no_data">
       <i><IconNoSearch /></i>
       <h3><b>"{keyword}"</b>에 대한<br/>검색결과가 없어요.</h3>
+    </div>
+  );
+}
+
+function PersonalQnA() {
+  return (
+    <div className="link_personal_qna">
+      <ul>
+        <li>자주하는 문의에서 찾을 수 없는 답변은 <b>1:1 문의</b>를 통해 궁금한 점을 보내 주시기 바랍니다.</li>
+        <li>답변 내용은 마이페이지의 <b>1:1 문의</b>에서 확인하실 수 있습니다.</li>
+      </ul>
+      <Link className='personal_btn' to="/board/personal">1:1문의</Link>
     </div>
   );
 }

@@ -56,17 +56,24 @@ export const getQnATabs = async() => {
     .then(([rows]) => rows);
 }
 
-export const getSearchQnA = async(keyword) => {
+export const setNotiEvent = async(data) => {
+  let result = false;
   const sql = `
-    select 
-      type,
-      title,
-      content
-    from qna
-    where title like "%${keyword}%" 
-      or content like "%${keyword}%"
+    insert into noti_event(loc_id, type, isMust, title, content, reg_date)
+    value(?, ?, ?, ?, ?, now());
   `
+  const params = [
+    data.loc_id, 
+    data.type, 
+    data.isMust, 
+    data.title, 
+    data.content
+  ];
 
-  return db.execute(sql)
-    .then(([rows]) => rows);
+  await db.execute(sql, params)
+    .then(([rows]) => {
+      if(rows.affectedRows === 1) result = true;
+    })
+
+  return result;
 }

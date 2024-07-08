@@ -76,3 +76,47 @@
 .qna_no_data svg {
   margin: auto;
 }
+
+.link_personal_qna {
+  background-color: #f7f2ef;
+  padding: 30px;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.link_personal_qna ul {
+  font-weight: 500;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.link_personal_qna ul > li {
+  position: relative;
+  padding-left: 10px;
+}
+
+.link_personal_qna ul > li + li {
+  margin-top: 10px;
+}
+
+.link_personal_qna ul > li::before {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  top: 10px;
+  left: 0;
+}
+
+.link_personal_qna .personal_btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 15px;
+  font-weight: 700;
+  padding-right: 15px;
+  position: relative;
+  background: url(../../svg/icon-right-arrow.svg) no-repeat center right;
+}

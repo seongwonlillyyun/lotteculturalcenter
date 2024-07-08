@@ -14,3 +14,10 @@ export const getQnaTabs = async(req, res) => {
   res.json(result);
   res.end();
 }
+
+export const setNotiEvent = async(req, res) => {
+  const data = req.body;
+  const result = await repository.setNotiEvent(data);
+  res.json(result);
+  res.end();
+}
