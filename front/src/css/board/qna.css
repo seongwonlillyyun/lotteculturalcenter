@@ -54,3 +54,25 @@
   transform: rotate(180deg);
   opacity: 1;
 }
+
+.qna_no_data {
+  text-align: center;
+  padding-top: var(--basic-padding);
+}
+
+.qna_no_data h3 {
+  margin-top: 20px;
+  color: rgba(0, 0, 0, 0.2);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -0.025em;
+}
+
+.qna_no_data h3 b {
+  color: #222;
+}
+
+.qna_no_data svg {
+  margin: auto;
+}

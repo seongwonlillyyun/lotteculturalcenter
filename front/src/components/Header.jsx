@@ -7,7 +7,7 @@ import { ReactComponent as IconLogIn } from "./../svg/icon-login.svg";
 import { ReactComponent as IconLogOut } from "./../svg/icon-logout.svg";
 import { ReactComponent as IconMyPage } from "./../svg/icon-mypage.svg";
 import { ReactComponent as IconMyCart } from "./../svg/icon-cart.svg";
-import { ReactComponent as IconSearch } from "./../svg/icon-search.svg";
+// import { ReactComponent as IconSearch } from "./../svg/icon-search.svg";
 import { ReactComponent as IconClose } from "./../svg/icon-close-x.svg"; 
 
 // gnb

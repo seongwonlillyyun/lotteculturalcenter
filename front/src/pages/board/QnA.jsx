@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react';
 
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { getQnAList, getQnaTabs } from '../../modules/reduxBoardAxios';
+import { getQnAList, getQnaTabs, updateQnaFilter } from '../../modules/reduxBoardAxios';
 
 // component;
 import { SearchVisual } from './../../components/BoardCommon';
+
+// svg
+import {ReactComponent as IconNoSearch} from "../../svg/icon-no-srch.svg";
 
 // css
 import "../../css/board/boardCommon.css";
@@ -13,7 +16,7 @@ import "../../css/board/qna.css";
 
 export default function QnA() {
   const dispatch = useDispatch();
-  const [filter, setFilter] = useState({type : "", keyword : "", count : 10});
+  const filter = useSelector(state => state.board.qnaFilter)
   const [activIdx, setActiveIdx] = useState();
 
   useEffect(()=>{
@@ -23,7 +26,7 @@ export default function QnA() {
   },[filter])
 
   const searchHandler = (keyword) => {
-    setFilter(prev => ({...prev, type : "", keyword, count : 10}))
+    dispatch(updateQnaFilter({type: "", keyword, count : 10}))
   }
 
   return (
@@ -31,26 +34,28 @@ export default function QnA() {
       <SearchVisual title="자주하는 문의" handler={searchHandler}/>
       <div className="board-qna">
         <div className="min_inner narrow_page">
-          <QnATabs filter={filter} setFilter={setFilter}/>
-          <QnAList activIdx={activIdx} setActiveIdx={setActiveIdx} setFilter={setFilter}/>
+          <QnATabs/>
+          <QnAList activIdx={activIdx} setActiveIdx={setActiveIdx}/>
         </div>
       </div>
     </div>
   );
 }
 
-function QnATabs({filter, setFilter}) {
+function QnATabs() {
+  const dispatch = useDispatch();
   const qnaTabs = useSelector(state => state.board.qnaTabs);
+  const filter = useSelector(state => state.board.qnaFilter);
 
   const clickHandler = (e) => {
     const type = e.target.dataset.type;
     if(type){
-      setFilter(prev => ({...prev, type, count : 10}))
+      dispatch(updateQnaFilter({type, count : 10}))
     } else {
       if(filter.keyword){
-        setFilter(prev => ({...prev, type : "", keyword : "", count : 10}))
+        dispatch(updateQnaFilter({type : "", keyword : "", count : 10}))
       } else {
-        setFilter(prev => ({...prev, type : "", count : 10}))
+        dispatch(updateQnaFilter({type : "", count : 10}))
       }
     }
   }
@@ -75,19 +80,21 @@ function QnATabs({filter, setFilter}) {
   )
 }
 
-function QnAList({activIdx, setActiveIdx, setFilter}){
+function QnAList({activIdx, setActiveIdx}){
+  const dispatch = useDispatch();
   const qnaList = useSelector(state => state.board.qnaList);
   const qnaCount = useSelector(state => state.board.qnaCount);
+  const filter = useSelector(state => state.board.qnaFilter);
 
   const clickHandler = (i) => {
     setActiveIdx(i)
   }
   
   const moreHandler = () => {
-    setFilter(prev => ({...prev, count : prev.count + 10}))
+    dispatch(updateQnaFilter({count : filter.count + 10}))
   }
 
-  return (
+  return qnaList.length > 0 ? (
     <>
       <ul className='qna_list'>
         {
@@ -106,5 +113,16 @@ function QnAList({activIdx, setActiveIdx, setFilter}){
         </div>
       }
     </>
-  ); 
+  ) : <NoData />; 
+}
+
+function NoData() {
+  const {keyword} = useSelector(state => state.board.qnaFilter);
+
+  return(
+    <div className="qna_no_data">
+      <i><IconNoSearch /></i>
+      <h3><b>"{keyword}"</b>에 대한<br/>검색결과가 없어요.</h3>
+    </div>
+  );
 }
