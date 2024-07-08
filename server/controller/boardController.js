@@ -1,8 +1,10 @@
 import * as repository from "../repository/boardRepository.js"
 
 export const getQnA = async(req, res) => {
+  const result = {list : [], count : 0};
   const data = req.body;
-  const result = await repository.getQnA(data);
+  result.list = await repository.getQnA(data);
+  result.count = await repository.getQnACount(data);
   res.json(result);
   res.end();
 }
