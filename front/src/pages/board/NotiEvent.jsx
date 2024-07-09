@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchVisual } from '../../components/BoardCommon';
 import { useNavigate } from 'react-router-dom';
-import { updateFilter, getList } from '../../modules/reduxNotiEvt';
+import { updateFilter, getList, resetData } from '../../modules/reduxNotiEvt';
 
 export default function NotiEvent() {
   const dispatch = useDispatch();
@@ -11,6 +11,12 @@ export default function NotiEvent() {
   useEffect(()=>{
     dispatch(getList(filter))
   },[filter])
+  
+  useEffect(()=> {
+    return () => {
+      dispatch(resetData());
+    }
+  },[])
 
   const searchHandler = (keyword) => {
     dispatch(updateFilter({keyword}))

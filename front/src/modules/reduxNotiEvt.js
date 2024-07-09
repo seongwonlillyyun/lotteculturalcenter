@@ -1,5 +1,5 @@
 import { axiosPost } from "./reduxAxios";
-import { setFilter, setList, setCount } from "../reducers/notievtReducer"
+import { setFilter, setList, setCount, resetInit } from "../reducers/notievtReducer"
 
 export const updateFilter = (filter) => {
   return (dispatch) => dispatch(setFilter(filter))
@@ -16,4 +16,8 @@ export const getList = (filter) => {
       dispatch(setCount(result.count));
     };
   }
+}
+
+export const resetData = () => {
+  return (dispatch) => dispatch(resetInit())
 }
