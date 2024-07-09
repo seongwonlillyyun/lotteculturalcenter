@@ -161,6 +161,12 @@
     margin-right: .5rem;
     border-radius: 4px;
 }
+.modal_btn_active{
+    padding: .5rem 1.2rem;
+    margin-right: .5rem;
+    border-radius: 4px;
+    background-color: var(--point-color);
+}
 .modal_btn_last{
     margin-top: 2.3rem;
     padding: 1.5rem 1.2rem;
@@ -285,4 +291,32 @@
     font-weight: 600;
     margin-top: 2rem;
     margin-bottom: 2rem;
+}
+
+.handle_search_standard{
+    background-color: #F7F2EF;
+    display: flex;
+    margin-top: .5rem;
+    padding: 1rem;
+    align-items: center;
+    gap: 1rem;
+}
+.handle_search_reset{
+    font-size: 1.3rem;
+}
+.handle_search_day, .handle_search_time{
+    border: 1px solid #CAC8C6;
+    width: 75px;
+    height: 30px;
+    background-color: #FDFAF7;
+    border-radius: 20px;
+    font-size: .8rem;
+    text-align: center;
+    padding-left: .5rem;
+    padding-top: .3rem;
+}
+.search_reset_btn{
+    font-size: .7rem;
+    color: #7E7D7B;
+    margin-left: .7rem;
 }

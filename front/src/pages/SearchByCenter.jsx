@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import '../css/yun.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faMagnifyingGlass, faFilter, faX, faRotateRight, faClock, faCartShopping} from '@fortawesome/free-solid-svg-icons'
+import {faMagnifyingGlass, faFilter, faX, faRotateRight, faClock, faCartShopping, faArrowRotateRight,faXmark} from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 
 export default function SearchByCenter(){
@@ -10,18 +10,26 @@ export default function SearchByCenter(){
     const [showCourse, setShowCourse] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 4;
-    const [middle,setMiddle] = useState([]);
-    const [sub, setSub] = useState([]);
+    const [detail,setDetail] = useState({day:[1,2,3,4,5,6,7],time:''});
+    const [sort, setSort] = useState(8);
     const [center,setCenter] = useState({})
     const [cindex, setCindex] = useState(0)
     const [view, setView] = useState(false)
     const [smallCategory, setSmallCategory] = useState(0)
-    useEffect( ()=>{
+    const [selected, setSelected] = useState({day:'',time:''})
+
+    const searchDetail = (value,selected)=>{
+        alert(value)
+        setDetail(value)
+        setSelected(selected)
+    }
+
+
+    useEffect(()=>{
         let startIndex = 0;
         let endIndex = 0;
         startIndex = (currentPage-1) * pageSize + 1;
         endIndex = currentPage * pageSize;
-
             axios({
                 method:'get',
                 url:`http://127.0.0.1:8080/center/${id}`,
@@ -30,16 +38,19 @@ export default function SearchByCenter(){
             .then(response=>setCenter(...response.data))
             .catch(error=>console.log(error))
             setCindex(0)
+            setSmallCategory(0)
+            setDetail({day:[1,2,3,4,5,6,7],time:''})
     },[id])
+
     useEffect(()=>{
         axios({
             method:'post',
             url:`http://127.0.0.1:8080/center/${id}/course`,
-            data : {'id': id, 'mid_id':cindex, 'sub_id':smallCategory}
-        })
+            data : {'id': id, 'mid_id':cindex, 'sub_id':smallCategory,
+                    'day':detail.day, 'time':detail.time, 'sort':sort}})
         .then(response=>setShowCourse([response.data]))
         .catch(error=>console.log(error))
-    },[cindex,smallCategory])
+    },[cindex,smallCategory,detail,sort])
 
 
     
@@ -83,14 +94,26 @@ export default function SearchByCenter(){
     }
     const [sortview, setSortView] = useState(false);
     const [sortStd, setSortStd] = useState('강의시작일순')
-    const handleSort = (value)=>{
+    const handleSort = (value,sort)=>{
         setSortView(false)
         setSortStd(value)
+        setSort(sort)
     }
-    const searchDetail = (value)=>{
-        alert(value)
+    const handledetailReset = ()=>{
+        setSelected({day:'',time:''})
+        setDetail({day:[1,2,3,4,5,6,7],time:''})
     }
-    console.log('smallcategory=>', smallCategory)
+
+    const handleDetailDelete = (value) =>{
+        if(value === 'day'){
+            setSelected({...selected, day:''})
+            setDetail({...detail, day:[1,2,3,4,5,6,7]})
+        } else if(value === 'time') {
+            setSelected({...selected, time:''})
+            setDetail({...detail, time:''})
+        }
+    }
+    console.log(selected)
     return(
         <>
             <div className="bycenter_title_part">
@@ -103,7 +126,7 @@ export default function SearchByCenter(){
                 <ul className="middle_category_list">
                     {category.map((item,i)=>(
                         <li value={i} key={i}
-                            onClick={()=>{setCindex(i) ; setSmallCategory(0); setSortStd('강의시작일순')}}
+                            onClick={()=>{setCindex(i) ; setSmallCategory(0); setSortStd('강의시작일순');}}
                             className="middle_category_item">
                             <CategoryMiddleMenu item={item}
                                             cindex={cindex}
@@ -125,7 +148,7 @@ export default function SearchByCenter(){
                     ))}
                 </ul>
                 <div className="search_part">
-                    <p><span>개</span>의 강좌</p>
+                    <p><span>{center.count}개</span>의 강좌</p>
                     <div className="search_part_btns">
                         <button className="search_part_detail"
                             onClick={openModal}
@@ -134,7 +157,8 @@ export default function SearchByCenter(){
                             {showModal === true ?<ModalPage
                                             openModal={openModal}
                                             closeModal={closeModal}
-                                            click={searchDetail}/>:null}
+                                            click={searchDetail}
+                                            searchstd={selected}/>:null}
                         <button className="search_part_sort"
                             onClick={()=>{setSortView(!sortview)}}
                         ><FontAwesomeIcon icon={faFilter}/><span
@@ -145,6 +169,13 @@ export default function SearchByCenter(){
                         </div>
                     </div>
                 </div>
+                {selected.day !== '' || selected.time !== '' ? 
+                <ul className="handle_search_standard">
+                    <li><button className="handle_search_reset" onClick={handledetailReset}><FontAwesomeIcon icon={faArrowRotateRight} /></button></li>
+                    {selected.day!=='' ? <li><p className="handle_search_day">{selected.day}<button className="search_reset_btn" type="button" onClick={()=>handleDetailDelete('day')}><FontAwesomeIcon icon={faXmark} /></button></p></li>:null}
+                    {selected.time !== ''? <li><p className="handle_search_time">{selected.time}<button className="search_reset_btn"onClick={()=>handleDetailDelete('time')}><FontAwesomeIcon icon={faXmark} /></button></p></li> :null}
+                </ul>:null}
+
                 <div className="course_list_content">
                     {showCourse.map((items,index)=>(
                         <ul className="course_list">
@@ -185,22 +216,22 @@ function DropDown(){
 };
 
 function DropDownSort({click, sortStd}){
-    const changeStd = (e) =>{
-        click(e)
+    const changeStd = (e,sort) =>{
+        click(e,sort)
     }
     return(
         <ul className="sortdropdown_content">
             <li>
                 <p className="sortdropdown_text" 
-                    onClick={()=>changeStd("마감임박순")}
+                    onClick={()=>changeStd("마감임박순",11)}
                     style={{'color':sortStd === "마감임박순"?"#000":"rgba(0, 0, 0, .6)"}}
                     >마감임박순</p>
             </li>
             <li><p onClick={()=>changeStd("접수인원순")}
                     style={{'color':sortStd === "접수인원순"?"#000":"rgba(0, 0, 0, .6)"}}>접수인원순</p></li>
-            <li><p onClick={()=>changeStd("강의시작일순")} 
+            <li><p onClick={()=>changeStd("강의시작일순",8)} 
                     style={{'color':sortStd === "강의시작일순"?"#000":"rgba(0, 0, 0, .6)"}}>강의시작일순</p></li>
-            <li><p onClick={()=>changeStd("낮은가격순")}  
+            <li><p onClick={()=>changeStd("낮은가격순",9)}  
                     style={{'color':sortStd === "낮은가격순"?"#000":"rgba(0, 0, 0, .6)"}}>낮은가격순</p></li>
             <li><p
                 style={{'color':sortStd === "높은가격순"?"#000":"rgba(0, 0, 0, .6)"}}
@@ -218,20 +249,45 @@ function CategoryMiddleMenu({item, cindex, index}){
     )
 };
 
-function ModalPage({openModal,closeModal, click}){
-    const [info, setInfo] = useState({day:[], time:""})
-    const handleDetail = (value)=>{
-        click(value)
+function ModalPage({openModal,closeModal, click, searchstd}){
+    const [info, setInfo] = useState({day:'', time:""})
+    const [isActive, setIsActive] = useState({day:false, time:false})
+    const [selected, setSelected] = useState({day:'',time:''});
+
+
+    const handleActive = (txt,e)=>{
+        const {name,value} = e.target
+        if(selected.day === '' || selected.time === ''){
+            setIsActive({...isActive,[name]:true})
+            setSelected({...selected,[name]:txt})
+            if(name === 'day'){
+                setInfo({...info, [name]:[...value]})
+            } else if (name === 'time'){
+                setInfo({...info, [name]:value})}
+                
+        } else if(selected.day !== '' || selected.time !==''){
+            setIsActive({...isActive,[name]:false})
+            setSelected({...selected,[name]:''})
+            setInfo({...info,[name]:''})
+        } 
     }
-    const getInfo = (value1, value2)=>{
-            setInfo()
-            alert(info)
+    console.log('active=>', isActive)
+    const handleDetail = ()=>{
+        click(info,selected)
+        closeModal()
     }
+    const handleReset = ()=>{
+        setInfo({day:'', time:""})
+        setIsActive({day:false, time:false})
+        setSelected({day:'',time:""})
+    }
+
+    console.log('selected',selected, info)
     return(
         <div className='modal_out'onClick={closeModal}>
             <div className='modal_container' onClick={(e)=>e.stopPropagation()}>
-                <button className="close" onClick={closeModal}><FontAwesomeIcon icon={faX} /></button>
-                <form className='modal_content_search'>
+                <button className="close" onClick={closeModal}><FontAwesomeIcon icon={faX}/></button>
+                <div className='modal_content_search'>
                     <p className="modal_search_title">상세검색</p>
                     <input type="text"
                         placeholder="강좌명 or 강사명으로 검색"
@@ -244,10 +300,10 @@ function ModalPage({openModal,closeModal, click}){
                             <p className="std_title">요일</p>
                         </li>
                         <li>
-                            <input className="modal_btn modal_day" 
-                                type="button" value={'평일'} onClick={()=>getInfo([2,3,4,5,6])}/>
-                            <input className="modal_btn modal_weekend" 
-                                    type="button" value={'주말'} onClick={()=>getInfo([1,7])}/>
+                            <button className={(isActive&&selected.day==='평일')||searchstd.day === '평일' ?"modal_btn_active modal_day":"modal_btn modal_day" }
+                                type="button" name="day" value={[2,3,4,5,6]} onClick={(e)=>handleActive('평일',e)}>평일</button>
+                            <button className={(isActive&&selected.day==='주말')||searchstd.day === '주말' ?"modal_btn_active modal_day":"modal_btn modal_weekend" } 
+                                    type="button" name="day" value={[1,7]} onClick={(e)=>handleActive('주말',e)}>주말</button>
                         </li>
                     </ul>
                     <ul className="modal_search_std modal_search_time">
@@ -255,19 +311,19 @@ function ModalPage({openModal,closeModal, click}){
                             <p className="std_title"> 시간</p>
                         </li>
                         <li>
-                            <input className="modal_btn modal_before" 
-                                    type="button" value={'오전'} onClick={()=>{getInfo('am')}}/>
-                            <input className="modal_btn modal_after" 
-                                    type="button" value={'오후'} onClick={()=>{getInfo('pm')}}/>
+                            <button className={(isActive&&selected.time==='오전')||searchstd.time === '오전' ? "modal_btn_active modal_before":"modal_btn modal_before"} 
+                                    type="button" name="time" value={'am'} onClick={(e)=>handleActive('오전',e)}>오전</button>
+                            <button className={(isActive&&selected.time==='오후')|| searchstd.time ==='오후'?'modal_btn_active modal_after':"modal_btn modal_after"} 
+                                    type="button" name="time" value={'pm'} onClick={(e)=>handleActive('오후',e)}>오후</button>
                         </li>
                     </ul>
                         <div className="modal_btn_last_list">
-                            <button className="modal_btn_last modal_btn_reset">
+                            <button className="modal_btn_last modal_btn_reset" onClick={handleReset}>
                                 <FontAwesomeIcon icon={faRotateRight} />
                                 <span className="reset_title">초기화</span></button>
-                            <button className="modal_btn_last modal_btn_result" type="submit" onSubmit={handleDetail}>강좌보기</button>
+                            <button className="modal_btn_last modal_btn_result" type="button" onClick={handleDetail}>강좌보기</button>
                         </div>
-                </form>
+                </div>
             </div>
         </div>
     )
