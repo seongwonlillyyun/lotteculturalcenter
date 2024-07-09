@@ -144,3 +144,20 @@ export const getNotiEvtCount = async({location, keyword, type}) => {
   return db.execute(sql)
     .then(([rows]) => rows[0].count)
 }
+
+export const getNotiEvt = async(id) => {
+  const sql = `
+    select
+      ne.type,
+      name,
+      title,
+      content,
+      date_format(ne.reg_date, "%Y-%m-%d") date
+    from noti_event ne
+      inner join location l on l.loc_id = ne.loc_id
+    where bid = ?;
+  `
+  
+  return db.execute(sql, [id])
+    .then(([rows]) => rows[0]);
+}

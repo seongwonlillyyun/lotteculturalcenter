@@ -93,14 +93,14 @@ function BoardUtils() {
 }
 
 function BoardList() {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const list = useSelector(state => state.notievt.list);
   const count = useSelector(state => state.notievt.count);
   const filter = useSelector(state => state.notievt.filter);
 
   const clickHandler = (bid) => {
-    console.log(bid);
+    navigate(`/board/notievent/${bid}`);
   }
 
   const moreHandler = () => {

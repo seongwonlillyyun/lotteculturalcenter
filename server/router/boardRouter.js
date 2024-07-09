@@ -7,5 +7,6 @@ router.post("/qna", controller.getQnA)
 router.get("/qna/tabs",controller.getQnaTabs);
 router.post("/evt_noti/add", controller.setNotiEvent);
 router.post("/notievt", controller.getNotiEvtList);
+router.get("/notievt/:id", controller.getNotiEvt);
 
 export default router;

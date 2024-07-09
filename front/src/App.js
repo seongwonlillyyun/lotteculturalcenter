@@ -14,6 +14,7 @@ import Location from "./pages/Location";
 import QnA from "./pages/board/QnA";
 import PersonalQnA from "./pages/board/PersonalQnA";
 import NotiEvent from "./pages/board/NotiEvent";
+import NotiEventDetail from "./pages/board/NotiEventDetail";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ export default function App() {
       {path : "/board/qna", element : <QnA/>},
       {path : "/board/personal", element : <PersonalQnA/>},
       {path : "/board/notievent", element : <NotiEvent/>},
+      {path : "/board/notievent/:id", element : <NotiEventDetail/>}
     ]
   }])
 
