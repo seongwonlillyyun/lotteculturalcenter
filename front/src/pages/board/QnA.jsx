@@ -3,14 +3,13 @@ import { Link } from 'react-router-dom';
 
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { getQnAList, getQnaTabs, updateQnaFilter } from '../../modules/reduxBoardAxios';
+import { getQnAList, getQnaTabs, updateQnaFilter } from '../../modules/reduxQnaAxios';
 
 // component;
 import { SearchVisual } from './../../components/BoardCommon';
 
 // svg
 import {ReactComponent as IconNoSearch} from "../../svg/icon-no-srch.svg";
-import {ReactComponent as IconRightArrow} from "../../svg/icon-right-arrow.svg";
 
 // css
 import "../../css/board/boardCommon.css";
@@ -18,7 +17,7 @@ import "../../css/board/qna.css";
 
 export default function QnA() {
   const dispatch = useDispatch();
-  const filter = useSelector(state => state.board.qnaFilter)
+  const filter = useSelector(state => state.qna.qnaFilter)
   const [activIdx, setActiveIdx] = useState();
 
   useEffect(()=>{
@@ -47,8 +46,8 @@ export default function QnA() {
 
 function QnATabs() {
   const dispatch = useDispatch();
-  const qnaTabs = useSelector(state => state.board.qnaTabs);
-  const filter = useSelector(state => state.board.qnaFilter);
+  const qnaTabs = useSelector(state => state.qna.qnaTabs);
+  const filter = useSelector(state => state.qna.qnaFilter);
 
   const clickHandler = (e) => {
     const type = e.target.dataset.type;
@@ -85,9 +84,9 @@ function QnATabs() {
 
 function QnAList({activIdx, setActiveIdx}){
   const dispatch = useDispatch();
-  const qnaList = useSelector(state => state.board.qnaList);
-  const qnaCount = useSelector(state => state.board.qnaCount);
-  const filter = useSelector(state => state.board.qnaFilter);
+  const qnaList = useSelector(state => state.qna.qnaList);
+  const qnaCount = useSelector(state => state.qna.qnaCount);
+  const filter = useSelector(state => state.qna.qnaFilter);
 
   const clickHandler = (i) => {
     setActiveIdx(i)
@@ -120,7 +119,7 @@ function QnAList({activIdx, setActiveIdx}){
 }
 
 function NoData() {
-  const {keyword} = useSelector(state => state.board.qnaFilter);
+  const {keyword} = useSelector(state => state.qna.qnaFilter);
 
   return(
     <div className="qna_no_data">

@@ -17,10 +17,10 @@ export const gnb = {
     imgPath : "/img/img-gnb-use-information-01.jpg"
   },
   community : {
-    path : "/board/notice",
+    path : "/board/notievent",
     name : "커뮤니티",
     children : [
-      {path : "/board/notice", name : "공지사항/이벤트"},
+      {path : "/board/notievent", name : "공지사항/이벤트"},
       {path : "/", name : "수강후기"}
     ],
     imgPath : "/img/img-gnb-community-01.jpg"

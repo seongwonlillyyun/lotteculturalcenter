@@ -21,3 +21,12 @@ export const setNotiEvent = async(req, res) => {
   res.json(result);
   res.end();
 }
+
+export const getNotiEvtList = async(req, res) => {
+  const data = req.body;
+  const result = {list : [], count : 0}
+  result.list = await repository.getNotiEvtList(data);
+  result.count = await repository.getNotiEvtCount(data);
+  res.json(result);
+  res.end();
+}

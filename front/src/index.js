@@ -6,7 +6,11 @@ import App from './App';
 // redux
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import boardReducer from './reducers/boardReducer.js';
+
+// reducer
+import qnaReducer from './reducers/qnaReducer.js';
+import menuReducer from './reducers/menuReducer.js';
+import notievtReducer from './reducers/notievtReducer.js';
 
 // css
 import "./css/reset.css";
@@ -15,7 +19,9 @@ import "./css/common.css";
 
 const store = configureStore({
   reducer : {
-    board : boardReducer,
+    notievt : notievtReducer,
+    qna : qnaReducer,
+    menu : menuReducer,
   }
 })
 

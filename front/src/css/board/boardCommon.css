@@ -90,3 +90,122 @@
   text-align: center;
   margin-top: 65px;
 }
+/* board util */
+.board_page .board_utils {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: 40px;
+}
+
+/* board util select */
+.board_page .custom_select_wrap {
+  position: relative;
+}
+
+.board_page .custom_select_wrap p {
+  padding-right: 25px;
+  position: relative;
+}
+
+.board_page .custom_select_wrap p::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  background: url(../../../public/img/icon-dropdown-arrow.png) no-repeat center center / 20px auto;
+  transition: 0.25s;
+}
+
+.board_page .on p::after {
+  transform: rotate(180deg);
+}
+
+.board_page .custom_select_wrap p,
+.board_page .custom_select > ul > li.on {
+  font-weight: 500;
+  color: #000;
+}
+
+.board_page .on .custom_select {
+  height: 135px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.board_page .custom_select {
+  background-color: #fff;
+  border: 1px solid #5c4a3e;
+  width: 135px;
+  height: 0;
+  border-radius: 10px;
+  padding: 5px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.35s;
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+}
+
+.board_page .custom_select > ul {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.board_page .custom_select > ul > li {
+  padding: 2px 0;
+  cursor: pointer;
+}
+
+/* board utils count */
+
+.board_page .board_count {
+  margin-right: auto;
+}
+
+.board_page .board_count b {
+  color: #000;
+}
+
+/* board list */
+.board_page .board_list > ul > li {
+  display: flex; 
+  align-items: center;
+  padding: 30px 0;
+  gap: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transition: 0.25s;
+  cursor: pointer;
+}
+
+.board_page .board_list > ul > li:hover {
+  border-color: #aa9b90;
+}
+
+.board_page .board_list .title {
+  flex: 1;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.board_page .board_list .date {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.board_page .board_list .must {
+  display: inline-block;
+  color: #fff;
+  background-color: #000;
+  padding: 1px 8px;
+  font-size: 13px;
+  line-height: 22px;
+  font-weight: 500;
+  border-radius: 12px;
+}

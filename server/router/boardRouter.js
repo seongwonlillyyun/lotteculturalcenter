@@ -6,5 +6,6 @@ const router = express.Router();
 router.post("/qna", controller.getQnA)
 router.get("/qna/tabs",controller.getQnaTabs);
 router.post("/evt_noti/add", controller.setNotiEvent);
+router.post("/notievt", controller.getNotiEvtList);
 
 export default router;
