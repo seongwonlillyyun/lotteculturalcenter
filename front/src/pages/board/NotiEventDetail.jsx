@@ -1,19 +1,35 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 
+import "../../css/board/boardDetailCommon.css";
+
 export default function NotiEventDetail() {
+  const [data, setData] = useState();
   const { id } = useParams();
 
   useEffect(()=>{
     const url = `//localhost:8080/board/notievt/${id}`
     axios.get(url)
-      .then(result => console.log(result.data))
+      .then(result => setData(result.data))
   },[])
 
-  return (
-    <div className="board_detail">
-      {id}
+  return data && (
+    <div className="board_detail basic_page">
+      <div className="min_inner">
+        <div className="detail_top">
+          <p className="label">
+            <span>{data.type}</span>
+            <span>{data.name}</span>
+            <span>{data.date}</span>
+          </p>
+          <h3 className="title">[{data.name}] {data.title}</h3>
+        </div>
+        <div className="detail_content" dangerouslySetInnerHTML={{__html : data.content}}></div>
+        <div className="detail_bot">
+          <Link className="back_btn" to="/board/notievent">목록으로</Link>
+        </div>
+      </div>
     </div>
   );
 }

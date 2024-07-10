@@ -152,7 +152,7 @@ export const getNotiEvt = async(id) => {
       name,
       title,
       content,
-      date_format(ne.reg_date, "%Y-%m-%d") date
+      date_format(ne.reg_date, "%Y.%m.%d") date
     from noti_event ne
       inner join location l on l.loc_id = ne.loc_id
     where bid = ?;
