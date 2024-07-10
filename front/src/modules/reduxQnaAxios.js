@@ -1,5 +1,5 @@
 import { axiosGet, axiosPost } from "./reduxAxios.js"
-import { setQnAList, setQnATabs, setQnaCount, setQnaFilter } from "../reducers/qnaReducer.js";
+import { resetFilter, setQnAList, setQnATabs, setQnaCount, setQnaFilter } from "../reducers/qnaReducer.js";
 
 export function getQnAList (filter) {
   const url = "//localhost:8080/board/qna";
@@ -26,4 +26,8 @@ export function getQnaTabs () {
 
 export function updateQnaFilter (filter) {
   return (dispatch) => dispatch(setQnaFilter(filter));
+}
+
+export function resetInitFilter () {
+  return dispatch => dispatch(resetFilter());
 }

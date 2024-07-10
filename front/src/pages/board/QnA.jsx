@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { getQnAList, getQnaTabs, updateQnaFilter } from '../../modules/reduxQnaAxios';
+import { getQnAList, getQnaTabs, updateQnaFilter, resetInitFilter } from '../../modules/reduxQnaAxios';
 
 // component;
 import { SearchVisual } from './../../components/BoardCommon';
@@ -14,6 +14,7 @@ import {ReactComponent as IconNoSearch} from "../../svg/icon-no-srch.svg";
 // css
 import "../../css/board/boardCommon.css";
 import "../../css/board/qna.css";
+import { getUser } from './../../util/localStorage';
 
 export default function QnA() {
   const dispatch = useDispatch();
@@ -25,6 +26,12 @@ export default function QnA() {
     dispatch(getQnaTabs())
     setActiveIdx();
   },[filter])
+
+  useEffect(()=>{
+    return () => {
+      dispatch(resetInitFilter());
+    }
+  },[])
 
   const searchHandler = (keyword) => {
     dispatch(updateQnaFilter({type: "", keyword, count : 10}))
@@ -122,21 +129,33 @@ function NoData() {
   const {keyword} = useSelector(state => state.qna.qnaFilter);
 
   return(
-    <div className="qna_no_data">
-      <i><IconNoSearch /></i>
+    <div className="board_nodata">
+      <IconNoSearch />
       <h3><b>"{keyword}"</b>에 대한<br/>검색결과가 없어요.</h3>
     </div>
   );
 }
 
 function PersonalQnA() {
+  const navigate = useNavigate();
+  const userId = getUser() ? getUser().userId : "test";
+
+  const linkHandler = () => {
+    if(userId){
+      navigate("/board/personal")
+    } else {
+      window.confirm("로그인 후 이용 가능합니다.") &&
+      navigate("/");
+    }
+  }
+
   return (
     <div className="link_personal_qna">
       <ul>
         <li>자주하는 문의에서 찾을 수 없는 답변은 <b>1:1 문의</b>를 통해 궁금한 점을 보내 주시기 바랍니다.</li>
         <li>답변 내용은 마이페이지의 <b>1:1 문의</b>에서 확인하실 수 있습니다.</li>
       </ul>
-      <Link className='personal_btn' to="/board/personal">1:1문의</Link>
+      <button type="button" className='personal_btn' onClick={linkHandler}>1:1문의</button>
     </div>
   );
 }

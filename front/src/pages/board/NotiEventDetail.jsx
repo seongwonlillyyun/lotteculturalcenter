@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 
+import "../../css/board/boardCommon.css"
 import "../../css/board/boardDetailCommon.css";
 
 export default function NotiEventDetail() {
@@ -15,7 +16,7 @@ export default function NotiEventDetail() {
   },[])
 
   return data && (
-    <div className="board_detail basic_page">
+    <div className="board_page board_detail basic_page">
       <div className="min_inner">
         <div className="detail_top">
           <p className="label">
@@ -27,7 +28,7 @@ export default function NotiEventDetail() {
         </div>
         <div className="detail_content" dangerouslySetInnerHTML={{__html : data.content}}></div>
         <div className="detail_bot">
-          <Link className="back_btn" to="/board/notievent">목록으로</Link>
+          <Link className="basic_btn" to="/board/notievent">목록으로</Link>
         </div>
       </div>
     </div>

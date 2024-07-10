@@ -15,8 +15,9 @@ const qnaReducer = createSlice({
     setQnaCount : (state, action) => ({...state, qnaCount : action.payload}),
     setQnAList : (state, action) => ({...state, qnaList : action.payload}),
     setQnATabs : (state, action) => ({...state, qnaTabs : action.payload}),
+    resetFilter : (state) => ({...state, qnaFilter : initialState.qnaFilter})
   }
 })
 
-export const {setQnAList, setQnATabs, setQnaCount, setQnaFilter } = qnaReducer.actions;
+export const {setQnAList, setQnATabs, setQnaCount, setQnaFilter, resetFilter } = qnaReducer.actions;
 export default qnaReducer.reducer;
