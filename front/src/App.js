@@ -6,6 +6,7 @@ import Root from "./Root";
 // pages
 import Login from "../src/components/Login.jsx"
 import Join from "./pages/Join.jsx";
+import CourseHistory from "./pages/CourseHistory.jsx";
 
 
 
@@ -15,7 +16,8 @@ export default function App() {
     element: <Root />,
     children : [
       {  path : "/login", element : <Login/> },
-      { path : "/join" , element : <Join/> }
+      { path : "/join" , element : <Join/> },
+      {path :"/courseHistory", element : <CourseHistory/>}
     ]
   }])
 
