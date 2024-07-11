@@ -118,7 +118,7 @@ function BoardList() {
                   v.isMust ? <span className='tag'>필독</span> : <></>
                 }
                 <p className='title'>[{v.name}] {v.title}</p>
-                <span className='date'>{v.reg_date}</span>
+                <p className='etc'>{v.reg_date}</p>
               </li>
             ))
           }

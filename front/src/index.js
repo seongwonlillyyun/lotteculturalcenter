@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import qnaReducer from './reducers/qnaReducer.js';
 import menuReducer from './reducers/menuReducer.js';
 import notievtReducer from './reducers/notievtReducer.js';
+import PersonalQnAReducer from "./reducers/personalQnaReducer.js"
 
 // css
 import "./css/reset.css";
@@ -22,6 +23,7 @@ const store = configureStore({
     notievt : notievtReducer,
     qna : qnaReducer,
     menu : menuReducer,
+    personal : PersonalQnAReducer,
   }
 })
 

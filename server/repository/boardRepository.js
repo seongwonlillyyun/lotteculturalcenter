@@ -190,3 +190,24 @@ export const setPersonal = async(data) => {
 
   return result;
 }
+
+export const getPersonal = async({user_id, status}) => {
+  const statusSql = status ? `and status = "${status}"` : "" 
+
+  const sql = `
+    select
+      bid,
+      pq.type,
+      title,
+      status,
+      date_format(pq.reg_date, "%Y-%m-%d") date,
+      name
+    from personalQnA pq
+      inner join location l on l.loc_id = pq.loc_id
+    where user_id = ?
+      ${statusSql}
+  `
+
+  return db.execute(sql, [user_id])
+    .then(([rows]) => rows);
+}

@@ -149,6 +149,7 @@
   position: absolute;
   top: calc(100% + 10px);
   right: 0;
+  z-index: 1;
 }
 
 .board_page .custom_select > ul {
@@ -193,9 +194,26 @@
   line-height: 24px;
 }
 
-.board_page .board_list .date {
+.board_page .board_list .etc {
   font-size: 13px;
   color: rgba(0, 0, 0, 0.5);
+}
+
+.board_page .board_list .etc > * + * {
+  margin-left: 5px;
+  padding-left: 5px;
+  position: relative;
+}
+
+.board_page .board_list .etc > * + *::before {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 10px;
+  background-color: #dfd9d5;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
 }
 
 .board_page .board_list .tag {
@@ -207,6 +225,11 @@
   line-height: 22px;
   font-weight: 500;
   border-radius: 12px;
+}
+
+.board_page .board_list .tag.green {
+  background-color: var(--point-color);
+  color: #222;
 }
 
 .board_page .board_nodata {

@@ -9,5 +9,6 @@ router.post("/evt_noti/add", controller.setNotiEvent);
 router.post("/notievt", controller.getNotiEvtList);
 router.get("/notievt/:id", controller.getNotiEvt);
 router.post("/personal/add", controller.setPersonal);
+router.post("/personal", controller.getPersonal);
 
 export default router;

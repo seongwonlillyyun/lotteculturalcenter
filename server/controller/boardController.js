@@ -44,3 +44,10 @@ export const setPersonal = async(req, res) => {
   res.json(result);
   res.end();
 }
+
+export const getPersonal = async(req, res) => {
+  const data = req.body;
+  const result = await repository.getPersonal(data);
+  res.json(result);
+  res.end();
+}

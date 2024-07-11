@@ -1,7 +1,10 @@
-import { useState } from "react";
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from "axios";
+
+import { getUser } from './../../util/localStorage';
+import { getPersonalList } from './../../modules/reduxPersonalQnA';
 
 // css
 import "../../css/board/boardCommon.css";
@@ -10,9 +13,11 @@ import "../../css/board/personalQna.css";
 // svg
 import {ReactComponent as IconNoData} from "../../svg/icon-no-srch.svg";
 import {ReactComponent as IconClose} from "../../svg/icon-close-x.svg";
-import { getUser } from './../../util/localStorage';
 
 export default function PersonalQnA() {
+  const [status, setStatus] = useState("");
+  const [update, setUpdate] = useState(true);
+
   return (
     <>
       <div className="board_page board_personal">
@@ -21,18 +26,18 @@ export default function PersonalQnA() {
         </div>
         <div className="board_personal narrow_page">
           <div className="min_inner">
-            <BoardUtils />
-            <BoardList />
+            <BoardUtils status={status} setStatus={setStatus}/>
+            <BoardList status={status} update={update}/>
           </div>
         </div>
-        <PopupWrite />
+        <PopupWrite setUpdate={setUpdate} />
       </div>
     </>
   );
 }
 
-function BoardUtils() {
-  const [status, setStatus] = useState("");
+function BoardUtils({status, setStatus}) {
+  const count = useSelector(state => state.personal.count);
   const [active, setActive] = useState(false);
 
   const activeHandler = () => {
@@ -47,7 +52,7 @@ function BoardUtils() {
 
   return (
     <div className="board_utils">
-      <p className="board_count">전체 <b> 10개</b></p>
+      <p className="board_count">전체 <b> {count}개</b></p>
       <div className={active ? "custom_select_wrap on" : "custom_select_wrap"}>
         <p onClick={activeHandler}><span>{status || "전체"}</span></p>
         <div className="custom_select">
@@ -62,8 +67,14 @@ function BoardUtils() {
   );
 }
 
-function BoardList() {
-  const list = [];
+function BoardList({status, update}) {
+  const dispatch = useDispatch();
+  const userId = getUser() ? getUser().userId : "test";
+  const list = useSelector(state => state.personal.list);
+
+  useEffect(()=>{
+    dispatch(getPersonalList({user_id : userId, status}))
+  },[status, update])
 
   const popupOpen = () => {
     document.querySelector(".popup_wrap").classList.add("on");
@@ -76,11 +87,19 @@ function BoardList() {
         {
           list.length > 0 ?
           <ul>
-            <li>
-              <span className='tag'>답변완료</span>
-              <p className='title'>테스트</p>
-              <span className='date'></span>
-            </li>
+            {
+              list.map(v => (
+                <li>
+                  <span className={v.status === "접수중" ? "tag green" : "tag"}>{v.status}</span>
+                  <p className='title'>{v.title}</p>
+                  <p className='etc'>
+                    <span>{v.name}</span>
+                    <span>{v.type}</span>
+                    <span>{v.date}</span>
+                  </p>
+                </li>
+              ))
+            }
           </ul> :
           <NoData />
         }
@@ -102,7 +121,7 @@ function NoData() {
   );
 }
 
-function PopupWrite() {
+function PopupWrite({setUpdate}) {
   const location = useSelector(state => state.menu.locationList);
   const userId = getUser() ? getUser().userId : "test_soo";
   const initData = {
@@ -132,6 +151,7 @@ function PopupWrite() {
         if(result.data){
           alert("정상적으로 등록되었습니다.")
           popupClose();
+          setUpdate(prev => !prev);
         }
       });
   }
