@@ -12,5 +12,6 @@ export const getCoursesByCenter = async(req,res) =>{
     const params = req.body
     const courses = await repository.getCoursesbyCenter(params);
     console.log('params=>', params)
+    console.log('result=>', courses)
     res.json(courses)
 }
