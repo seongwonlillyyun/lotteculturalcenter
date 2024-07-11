@@ -37,3 +37,10 @@ export const getNotiEvt = async(req, res) => {
   res.json(result)
   res.end()
 }
+
+export const setPersonal = async(req, res) => {
+  const data = req.body;
+  const result = await repository.setPersonal(data);
+  res.json(result);
+  res.end();
+}

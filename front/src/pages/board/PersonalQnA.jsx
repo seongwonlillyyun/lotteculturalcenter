@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import axios from "axios";
 
 // css
 import "../../css/board/boardCommon.css";
@@ -9,6 +10,7 @@ import "../../css/board/personalQna.css";
 // svg
 import {ReactComponent as IconNoData} from "../../svg/icon-no-srch.svg";
 import {ReactComponent as IconClose} from "../../svg/icon-close-x.svg";
+import { getUser } from './../../util/localStorage';
 
 export default function PersonalQnA() {
   return (
@@ -75,7 +77,7 @@ function BoardList() {
           list.length > 0 ?
           <ul>
             <li>
-              <span className='must'>답변완료</span>
+              <span className='tag'>답변완료</span>
               <p className='title'>테스트</p>
               <span className='date'></span>
             </li>
@@ -102,14 +104,40 @@ function NoData() {
 
 function PopupWrite() {
   const location = useSelector(state => state.menu.locationList);
+  const userId = getUser() ? getUser().userId : "test_soo";
+  const initData = {
+    user_id : userId,
+    title : "",
+    type : "",
+    loc_id : "",
+    content : "",
+  }
+  const [data, setData] = useState(initData);
+
+  const changeHandler = (e) => {
+    const {name, value} = e.target;
+    setData(prev => ({...prev, [name] : value}));
+  }
 
   const popupClose = () => {
     document.querySelector(".popup_wrap").classList.remove("on");
     document.querySelector("body").classList.remove("popup");
   }
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const url = "//localhost:8080/board/personal/add"
+    axios({method : "post", url, data})
+      .then(result => {
+        if(result.data){
+          alert("정상적으로 등록되었습니다.")
+          popupClose();
+        }
+      });
+  }
+
   return(
-    <div className="popup_wrap">
+    <form className="popup_wrap" onSubmit={submitHandler}>
       <div className="bg"></div>
       <div className="popup">
         <div className="popup_top">
@@ -129,44 +157,44 @@ function PopupWrite() {
               <ul className="data_section">
                 <li>
                   <h4>제목</h4>
-                  <input type="text" placeholder="제목을 입력해 주세요." />
+                  <input type="text" name="title" value={data.title} placeholder="제목을 입력해 주세요." onChange={changeHandler}/>
                 </li>
                 <li>
                   <h4>문의 유형</h4>
-                  <select>
+                  <select name="type" value={data.type} onChange={changeHandler}>
                     <option value="">선택</option>
-                    <option value="">회원가입</option>
-                    <option value="">수강신청</option>
-                    <option value="">강좌/강사</option>
-                    <option value="">환불/취소</option>
-                    <option value="">홈페이지</option>
-                    <option value="">기타</option>
+                    <option value="회원가입">회원가입</option>
+                    <option value="수강신청">수강신청</option>
+                    <option value="강좌/강사">강좌/강사</option>
+                    <option value="환불/취소">환불/취소</option>
+                    <option value="홈페이지">홈페이지</option>
+                    <option value="기타">기타</option>
                   </select>
                 </li>
                 <li>
                   <h4>지점</h4>
-                  <select>
+                  <select name="loc_id" value={data.loc_id} onChange={changeHandler}>
                     <option value="">선택</option>
                     {
                       location.map(loc => (
-                        <option key={loc.loc_id} value="">{loc.name}</option>
+                        <option key={loc.loc_id} value={loc.loc_id}>{loc.name}</option>
                       ))
                     }
                   </select>
                 </li>
                 <li>
                   <h4>문의 내용</h4>
-                  <textarea name="" id="" placeholder="문의 내용을 입력해주세요."></textarea>
+                  <textarea name="content" value={data.content} onChange={changeHandler} placeholder="문의 내용을 입력해주세요."></textarea>
                 </li>
               </ul>
               <div className="btns">
                 <button type="button" className="basic_btn" onClick={popupClose}>취소하기</button>
-                <button className="basic_btn black" type="button">등록하기</button>
+                <button className="basic_btn black">등록하기</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 }

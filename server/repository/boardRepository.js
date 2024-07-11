@@ -161,3 +161,32 @@ export const getNotiEvt = async(id) => {
   return db.execute(sql, [id])
     .then(([rows]) => rows[0]);
 }
+
+export const setPersonal = async(data) => {
+  let result = false;
+  const sql = `
+    insert into personalQnA(
+      user_id,
+      type,
+      loc_id,
+      title,
+      content,
+      reg_date
+    ) values (?, ?, ?, ?, ?, now());
+  `;
+
+  const params = [
+    data.user_id,
+    data.type,
+    data.loc_id,
+    data.title,
+    data.content
+  ]
+
+  await db.execute(sql, params)
+    .then(([rows]) => {
+      if(rows.affectedRows === 1) result = true;
+    })
+
+  return result;
+}

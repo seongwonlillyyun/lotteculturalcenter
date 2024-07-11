@@ -115,7 +115,7 @@ function BoardList() {
             list.map(v => (
               <li key={v.bid} onClick={()=>{clickHandler(v.bid)}}>
                 {
-                  v.isMust ? <span className='must'>필독</span> : <></>
+                  v.isMust ? <span className='tag'>필독</span> : <></>
                 }
                 <p className='title'>[{v.name}] {v.title}</p>
                 <span className='date'>{v.reg_date}</span>

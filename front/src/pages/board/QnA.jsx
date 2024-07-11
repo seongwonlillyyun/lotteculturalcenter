@@ -138,7 +138,7 @@ function NoData() {
 
 function PersonalQnA() {
   const navigate = useNavigate();
-  const userId = getUser() ? getUser().userId : "test";
+  const userId = getUser() ? getUser().userId : "test_soo";
 
   const linkHandler = () => {
     if(userId){
