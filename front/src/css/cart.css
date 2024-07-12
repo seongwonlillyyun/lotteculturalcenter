@@ -1,0 +1,298 @@
+
+.type .min_inner{
+  padding: 40px 0 200px;
+}
+.cart .heading{
+  margin-bottom: 40px;
+}
+.cart .heading_sub{
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: -.45px;
+  font-weight: 600;
+}
+.cart .cart_num{
+  padding: 20px 0;
+  border-bottom: 1px solid #dbdbdb;
+  margin-bottom: 40px;
+}
+.cart .cart_num span{
+  font-size: 13px;
+  line-height: 19px;
+  color: #838383;
+}
+.cart .cart_num .num{
+  color: #000;
+  font-weight: 500;
+}
+.cart .delete_btn{
+  font-size: 0;
+  background: url('../../public/img/cart/cart_delete_btn.png') no-repeat left top 2px/20px auto;
+}
+.cart .utils_box{
+  display: flex;
+  justify-content: space-between;
+}
+.cart .utils_box .delete_btn{
+  font-size: 15px;
+  font-weight: 600;
+  padding-left: 26px;
+}
+
+/* cart, order 공통 */
+/* form - 체크박스 */
+.type .form_checkbox {
+  position: relative;
+}
+.type .form_checkbox input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  opacity: .001;
+}
+.type .form_checkbox input + label {
+  position: relative; 
+  display: inline-block;
+  padding-left: 30px; 
+  min-height: 24px; 
+  width: auto; 
+  color: rgba(0, 0, 0, .9); 
+  font-size: 15px; 
+  font-weight: 400;
+  line-height: 24px; 
+  background: url(../../public/img/cart/icon-checkbox.svg) no-repeat left top/24px auto; 
+  z-index: 1; 
+  cursor: pointer;
+}
+.type .form_checkbox input:checked + label {
+  font-weight: 500;
+  background: url(../../public/img/cart/icon-checkbox-on.svg) left top no-repeat;
+}
+.type .form_checkbox.no_txt input + label {
+  padding-left: 24px;
+}
+.type .form_checkbox input:disabled + label {
+  color: rgba(0, 0, 0, .6); 
+  background: url(../../public/img/cart/icon-checkbox-disabled.svg) left top no-repeat;}
+
+
+/* 리스트 */
+.type .cart_list{
+  position: relative;
+  display: block;
+  padding: 40px;
+  margin: 20px 0;
+  border-radius: 12px;
+  background-color: #fff;
+  border:1px solid #ddcdc5;
+}
+.type .cart_list_box{
+  display: flex;
+}
+.type .cart_list_box > li{
+  position: relative;
+  padding-left: 20px;
+}
+.type .cart_list_box > li:first-child{
+  padding-left: 0;
+}
+.type .cart_list_box > li:nth-child(3){
+  border-left: 1px solid #ededed;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+.type .cart_list_box > li.title{
+  width: 320px;
+  margin-right: 95px;
+}
+.type .cart_list_box > li.title .deco{
+  background-color: var(--point-color);
+  border-radius: 12px;
+  padding: 2px 8px;
+  text-align: center;
+  font-size: 11px;
+}
+.type .cart_list_box > li.title h2{
+  margin-top: 4px;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -.6px;
+  word-break: break-all;
+}
+.type .cart_list_box > li.info dl{
+  display: flex;
+  margin: 0 0 8px 0;
+}
+.type .cart_list_box > li.info dl.total dt,
+.type .cart_list_box > li.info dl.total dd{
+  font-size: 15px;
+  font-weight: 500;
+  color: #111;
+}
+.type .cart_list_box > li.info dl.total .price{
+  font-size: 17px;
+  font-weight: 800;
+}
+.type .cart_list_box > li.info dt,
+.type .cart_list_box > li.info dd{
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 22px;
+  color: #333;
+}
+.type .cart_list_box > li.info dt{
+  width: 120px;
+}
+.type .cart_list_box > li.info dd{
+  width: calc(100% - 120px);
+}
+.type .cart_list .delete_btn{
+  position: absolute;
+  width: 20px;
+  height: 25px;
+  top: 40px;
+  right: 40px;
+}
+.type .remove_btn{
+  text-align: right;
+}
+.type .remove_btn button{
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -.375px;
+}
+/* 알림 */
+.type .text_box{
+  width: 100%;
+  background-color: #f7f2ef;
+  padding: 32px;
+  border-radius: 10px;
+  margin: 4rem 0 5rem;
+}
+.type .text_box h3{
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: -.4px;
+  font-weight: 500;
+  padding-left: 7px;
+}
+.type .text_box_list > li{
+  position: relative;
+  font-size: 14px;
+  line-height: 22px;
+  padding-left: 12px;
+  margin-top: 14px;
+  color: #545454;
+  font-weight: 500;
+}
+.type .text_box_list > li::before{
+  content: '';
+  position: absolute;
+  border-radius: 100%;
+  background-color: #666;
+  width: 4px;
+  height: 4px;
+  top: 10px;
+  left: 0px;
+}
+.type .text_box_lists{
+  padding-left: 10px;
+  margin-top: 0px;
+}
+.type .text_box_lists > li{
+  position: relative;
+  font-size: 14px;
+  line-height: 22px;
+  padding-left: 9px;
+  color: #545454;
+  font-weight: 500;
+  margin-top: 5px;
+}
+.type .text_box_lists > li::before{
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 3px solid transparent;
+  border-top-width: 0;
+  border-bottom-color: #979797;
+  top: 10px;
+  left: -3px;
+  transform: rotate(90deg);
+}
+/* 버튼 */
+.type .basic_btn{
+  text-align: center;
+}
+.type .basic_btn .btn{
+  min-width: 160px;
+  min-height: 60px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 24px;
+  letter-spacing: -.75px;
+  border-radius: 8px;
+}
+.type .basic_btn .btn.btn_white{
+  background-color: #fff;
+  border: 1px solid #ddcdc5;
+}
+.type .basic_btn .btn.btn_black{
+  background-color: #000;
+  border: 1px solid #000;
+  color: #fff;
+}
+.type .basic_btn .small{
+  padding: 15px 20px;
+}
+.type .basic_btn .medium{
+  padding: 15px 30px;
+}
+.type .basic_btn .large{
+  padding: 15px 100px;
+}
+/* 하단고정 결제 */
+.type .bottom-fix{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top: 2px solid #000;
+}
+.type .bottom-fix .min_inner{
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 0;
+}
+.type .bottom-fix .total_price span{
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
+.type .bottom-fix .total_price span.txt{
+  color:#666;
+  margin-left: 5px;
+}
+.type .bottom-fix .total_price span.price{
+  font-size: 32px;
+  font-weight: 800;
+  margin-left: 20px;
+  margin-right: 2px;
+}
+.type .bottom-fix .total_price span.price span{
+  font-size: 15px;
+  letter-spacing: -.4px; 
+}
+
+
+
+
+
+
+
+

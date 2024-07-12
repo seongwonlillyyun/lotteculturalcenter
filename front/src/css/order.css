@@ -1,0 +1,71 @@
+/* tab */
+.order .tab_list {
+  display: flex;
+  justify-content: center;
+  gap: 65px;
+}
+.order .tab_list > li{
+  position: relative;
+  text-align: center;
+}
+.order .tab_list > li:first-child:after{
+  display: block;
+  content: "";
+  position: absolute;
+  left: 70px;
+  top: 20px;
+  width: 76px;
+  height: 1px;
+  background: #dbdbdb;
+}
+.order .tab_list > li span{
+  display: block;
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  border-radius: 100%;
+  background-color: #e8e8e8;
+  font-size: 18px;
+  color: #666;
+  margin: 0 auto;
+}
+.order .tab_list > li h4{
+  margin-top: 10px;
+  color: #666;
+  font-weight: 400;
+  font-size: 13px;
+}
+.order .tab_list > li.active span{
+  background-color: var(--point-color);
+  color: #000;
+  font-weight: 600;
+}
+.order .tab_list > li.active h4{
+  color:#000;
+  font-weight: 600;
+}
+/* 구분선 */
+.order .mid-line{
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 10px;
+  background: #f5eee9;
+  margin-top: 80px;
+}
+/* title */
+.order .htitle{
+  margin: 100px 0 30px;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -.6px;
+  color: #000;
+}
+.order .order_line{
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
+  padding: 30px 40px;
+}
+.order .order_line.check{
+  display: flex;
+}
