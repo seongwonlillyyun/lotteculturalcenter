@@ -1,9 +1,8 @@
 import React from 'react';
 
-export default function CartButtonBlack({name, color}) {
-  return(
-    
-    <button type='button' className={color} >{name}</button>
+export default function ButtonBlack({name, color, onClick}) {
   
+  return(
+    <button type='button' onClick={onClick} className={`btn ${color}`} >{name}</button> 
   );
 }

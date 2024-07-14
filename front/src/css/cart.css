@@ -228,7 +228,6 @@
   text-align: center;
 }
 .type .basic_btn .btn{
-  min-width: 160px;
   min-height: 60px;
   text-align: center;
   font-size: 15px;
@@ -236,6 +235,13 @@
   line-height: 24px;
   letter-spacing: -.75px;
   border-radius: 8px;
+  margin-right: 10px;
+}
+.type .basic_btn .btn:last-child{
+  margin-right: 0;
+}
+.type .basic_btn .btn.btn_border{
+  border: 1px solid #ddcdc5;
 }
 .type .basic_btn .btn.btn_white{
   background-color: #fff;
@@ -250,7 +256,7 @@
   padding: 15px 20px;
 }
 .type .basic_btn .medium{
-  padding: 15px 30px;
+  padding: 15px 40px;
 }
 .type .basic_btn .large{
   padding: 15px 100px;
@@ -268,6 +274,7 @@
   display: flex;
   justify-content: space-between;
   padding: 24px 0;
+  align-items: center;
 }
 .type .bottom-fix .total_price span{
   font-size: 14px;

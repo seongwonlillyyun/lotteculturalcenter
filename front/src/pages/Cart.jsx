@@ -3,10 +3,16 @@ import Checkbox from '../components/cart/Checkbox';
 import CartList from '../components/cart/CartList';
 import ButtonWhite from '../components/cart/ButtonWhite';
 import PayBottom from '../components/cart/PayBottom';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export default function Carts() {
+  const navigate = useNavigate();
+  const handleMore = () => {
+    navigate('/'); //상품상세로 이동
+  }
+
   return(
     <div className='cart type'>
         <div className="sub_visual">
@@ -35,7 +41,7 @@ export default function Carts() {
             </ul>
           </div>
           <div className='basic_btn'>
-            <ButtonWhite name='강좌 더보기' color='btn btn_white medium'/>     
+            <ButtonWhite name='강좌 더보기' color='btn_border medium' onClick={handleMore}/>     
           </div>
           
         </div>    

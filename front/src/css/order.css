@@ -1,4 +1,19 @@
 /* tab */
+.order .tab_list_box{
+  width: 100%;
+  padding: 3rem;
+  background-color: #fff;
+  text-align: center;
+}
+.order .tab_list_box h2{
+  font-size: 28px;
+  margin: 30px 0 20px;
+}
+.order .tab_list_box p{
+  font-size: 15px;
+  color: #666;
+  line-height: 22px;
+}
 .order .tab_list {
   display: flex;
   justify-content: center;
@@ -68,4 +83,68 @@
 }
 .order .order_line.check{
   display: flex;
+}
+/* 총 결제금액 */
+.order .all_pay{
+  display: flex;
+  gap: 80px;
+  justify-content: space-between;
+}
+.order .all_pay > li{
+  text-align: left;
+}
+.order .all_pay > li h4{
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+.order .all_pay > li h4.bold{
+  font-weight: 600;
+}
+.order .all_pay > li span{
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: -.4px;
+}
+.order .all_pay > li p{
+  font-size: 13px;
+  line-height: 19px;
+  letter-spacing: -.325px;
+  color: #666;
+  word-break: break-all;
+}
+.order .all_pay > li:not(.cir){
+  flex: 1 1 0;
+}
+.order .all_pay > li.cir{
+  position: relative;
+  display: block;
+  margin-top: 20px;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border: 1px solid #ddcdc5;
+  border-radius: 100%;
+}
+.order .all_pay > li.cir .minus::before,
+.order .all_pay > li.cir .plus::before,
+.order .all_pay > li.cir .plus::after{
+  content: '';
+  position: absolute;
+  display: block;
+  width: 12px;
+  height: 2px;
+  background-color: #000;
+}
+.order .all_pay > li.cir .minus::before{
+  top: 19px;
+  left: 13px;
+}
+.order .all_pay > li.cir .plus::before{
+  top: 17px;
+  left: 14px;
+}
+.order .all_pay > li.cir .plus::after{
+  top: 22px;
+  left: 14px;
 }

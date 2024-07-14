@@ -1,7 +1,8 @@
 import React from 'react';
 
-export default function CartButtonWhite({name, color}) {
+export default function ButtonWhite({name, color, onClick}) {
+
   return(
-      <button type='button' className={color} >{name}</button>
+      <button type='button' onClick={onClick} className={`btn ${color}`} >{name}</button>
   );
 }
