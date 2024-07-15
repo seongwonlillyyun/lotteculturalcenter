@@ -1,3 +1,4 @@
+/* 지점별 강좌 찾기  */
 .bycenter_title_part{
     margin: 0 auto;
     background-color: #F7F2EF;
@@ -16,11 +17,28 @@
     border-radius: 10px;
     background-color: white;
     width: 350px;
+    max-height: 460px;
     padding: 1rem 2rem;
     font-size: 1rem;
     line-height: 1.7rem;
     z-index: 99999;
     cursor: pointer;
+    transition:all 300ms all;
+}
+.dropdown_list_unactive{
+    position:relative;
+    margin: 0 auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+    width: 350px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    line-height: 1.7rem;
+    z-index: 99999;
+    cursor: pointer;
+    height: 0;
+    opacity: 0;
 }
 .dropdown_list li{
     text-align: center;
@@ -120,6 +138,7 @@
 .modal_content_search{
     background-color: white;
     width: 400px;
+    max-height: 100%;
     padding: 1.5rem 1.4rem;
 }
 .modal_search_title{
@@ -161,6 +180,12 @@
     margin-right: .5rem;
     border-radius: 4px;
 }
+.modal_btn_active{
+    padding: .5rem 1.2rem;
+    margin-right: .5rem;
+    border-radius: 4px;
+    background-color: var(--point-color);
+}
 .modal_btn_last{
     margin-top: 2.3rem;
     padding: 1.5rem 1.2rem;
@@ -190,14 +215,12 @@
     cursor: pointer;
 }
 .course_item{
-    padding: .5rem;
-    margin-top: 2rem;
-    width: 300px;
+    margin-top: 1rem;
+    width: 283px;
     height: 480px;
     position: relative;
     /* border: 1px solid red; */
     align-items: end;
-    overflow: hidden;
 }
 .course_item_img{
     width: 280px;
@@ -274,8 +297,9 @@
 }
 .course_list{
     display: flex;
-
-
+    gap: .5rem;
+    flex-wrap: wrap;
+    /* border: 1px solid red; */
 }
 .morebtn{
     border: 1px solid #000;
@@ -285,4 +309,32 @@
     font-weight: 600;
     margin-top: 2rem;
     margin-bottom: 2rem;
+}
+
+.handle_search_standard{
+    background-color: #F7F2EF;
+    display: flex;
+    margin-top: .5rem;
+    padding: 1rem;
+    align-items: center;
+    gap: 1rem;
+}
+.handle_search_reset{
+    font-size: 1.3rem;
+}
+.handle_search_day, .handle_search_time, .handle_search_text{
+    border: 1px solid #CAC8C6;
+    width: 75px;
+    height: 30px;
+    background-color: #FDFAF7;
+    border-radius: 20px;
+    font-size: .8rem;
+    text-align: center;
+    padding-left: .5rem;
+    padding-top: .3rem;
+}
+.search_reset_btn{
+    font-size: .7rem;
+    color: #7E7D7B;
+    margin-left: .7rem;
 }

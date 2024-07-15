@@ -9,9 +9,10 @@ import { getLocationList } from "./modules/reduxMenuAxios";
 import Root from "./Root";
 import SearchByCenter from "./pages/SearchByCenter";
 import SearchByTopic from "./pages/SearchByTopic";
-import SearchByText from "./pages/SearchByText";
+import Test from "./pages/Test";
 import Cart from "./pages/Cart";
 import Order from "./pages/Order";
+
 
 // pages
 import CourseDetail from "./pages/CourseDetail";
@@ -44,10 +45,10 @@ export default function App() {
       {  path : "/login", element : <Login/> },
       { path : "/join" , element : <Join/> },
       {path:'/center/:id', element:<SearchByCenter/>},
-      {path:'/topic', element:<SearchByTopic/>},
-      {path:'/text', element:<SearchByText/>},
+      {path:'/topic/:id', element:<SearchByTopic/>},
+      {path:'/test', element:<Test/>},
       {path : "/cart", element : <Cart/> },
-      {path : "/order", element : <Order/> }
+      {path : "/order", element : <Order/> },
     ]
   }])
 
