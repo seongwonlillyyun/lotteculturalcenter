@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 
 // svg
@@ -20,7 +21,6 @@ import { openPopup, closePopup } from "../utils/popupUtils.js";
 // css
 import "../css/header.css";
 import "../css/popup.css";
-import { useSelector } from 'react-redux';
 
 export default function Header() {
   const isLogin = true;
@@ -115,7 +115,7 @@ function GnbChild({activeDepth}) {
 }
 
 function CategoryPopup() {
-  let locationList = useSelector(state => state.menu.categoryList);
+  let locationList = useSelector(state => state.menu.locationList);
   let categoryList = useSelector(state => state.menu.categoryList);
 
   categoryList = categoryList.reduce((acc, cur) => {
@@ -125,6 +125,15 @@ function CategoryPopup() {
       return {...acc, [cur.name] : [{csid : cur.csid, sub_name : cur.sub_name}]}
     }
   }, {})
+
+  locationList = locationList.reduce((acc, cur) => {
+    if(acc[cur.type]){
+      return {...acc, [cur.type] : [...acc[cur.type], {name : cur.name, loc_id : cur.loc_id}]}
+    } else {
+      return {...acc, [cur.type] : [{name : cur.name, loc_id : cur.loc_id}]}
+    }
+  },{})
+
 
   const clickHandler = () => closePopup(".category_popup");
 
@@ -139,7 +148,21 @@ function CategoryPopup() {
               <ul>
                 {
                   categoryList[key].map(v => (
-                    <li key={v.csid}>{v.sub_name}</li>
+                    <li key={v.csid}><Link to={`/topic/${v.csid}`}>{v.sub_name}</Link></li>
+                  ))
+                }
+              </ul>
+            </>
+          ))
+        }
+        {
+          Object.keys(locationList).map(key => (
+            <>
+              <h4>{key}</h4>
+              <ul>
+                {
+                  locationList[key].map(v => (
+                    <li key={v.loc_id}><Link to={`/center/${v.loc_id}`}>{v.name}</Link></li>
                   ))
                 }
               </ul>
