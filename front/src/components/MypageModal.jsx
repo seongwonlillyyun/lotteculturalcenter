@@ -8,14 +8,15 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons/faArrowLeft";
 
 
 //! Mypage 모달! 
-export function MypageModal({next, close}){
+export function MypageModal({next, close,modalState}){
     
-    return(
+    return modalState ? (
 <div className="mypage_modal_out">
     <div className="mypage_modal">
         <div className="mypage_head">
         <button type='button' className="mypage_logout">로그아웃</button>
-        <button className="mypage_close_btn" onClick={close}>×</button>
+        <button className="mypage_close_btn" 
+            onClick={close}>×</button>
         </div>
 
     <div className="mypage_member">
@@ -66,7 +67,7 @@ export function MypageModal({next, close}){
 </div>
     </div>
 </div>
-    )
+    ) : <></>
 }
 
 

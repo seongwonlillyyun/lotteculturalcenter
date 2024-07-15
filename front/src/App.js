@@ -20,16 +20,24 @@ const [step, setStep] =useState(1)
 const nextStep = () => {setStep(step+1)}
 const preStep = () => {setStep(step-1)}
 
+const [mypageModalOpen, setMypageModalOpen]=useState(false);
+const openMypage=()=>{
+  setMypageModalOpen(true)
+}
+const closeMypage=()=>{
+  setMypageModalOpen(false)
+}
+
 
   const router = createBrowserRouter([{
     path : "/",
     element: <Root />,
     children : [
-      {  path : "/login", element : <Login/> },
-      { path : "/join" , element : <Join/> },
+      {path : "/login", element : <Login/> },
+      {path : "/join" , element : <Join/> },
       {path :"/courseHistory", element : <CourseHistory/>},
       {path :"/detailHistory", element : <DetailHistory/>}, // path 변경예정
-      {path :"/mypage", element : <MypageModal/>} // path 변경예정
+      {path :"/mypage", element : <MypageModal modalState={mypageModalOpen} next={nextStep} close={closeMypage}/>} // path 변경예정
     ]
   }])
 
