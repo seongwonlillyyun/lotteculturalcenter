@@ -8,3 +8,11 @@ export const getLocationList = () => {
     if(result) dispatch(setLocationList(result))
   }
 }
+
+export const getCategoryList = () => {
+  const url = "//localhost:8080/category";
+  return async (dispatch) => {
+    const result = await axiosGet(url);
+    if(result) dispatch(setCategoryList(result));
+  }
+}

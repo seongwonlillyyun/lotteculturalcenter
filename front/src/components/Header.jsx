@@ -20,6 +20,7 @@ import { openPopup, closePopup } from "../utils/popupUtils.js";
 // css
 import "../css/header.css";
 import "../css/popup.css";
+import { useSelector } from 'react-redux';
 
 export default function Header() {
   const isLogin = true;
@@ -114,6 +115,16 @@ function GnbChild({activeDepth}) {
 }
 
 function CategoryPopup() {
+  let locationList = useSelector(state => state.menu.categoryList);
+  let categoryList = useSelector(state => state.menu.categoryList);
+
+  categoryList = categoryList.reduce((acc, cur) => {
+    if(acc[cur.name]){
+      return {...acc, [cur.name] : [...acc[cur.name], {csid : cur.csid, sub_name : cur.sub_name}]}
+    } else {
+      return {...acc, [cur.name] : [{csid : cur.csid, sub_name : cur.sub_name}]}
+    }
+  }, {})
 
   const clickHandler = () => closePopup(".category_popup");
 
@@ -121,6 +132,20 @@ function CategoryPopup() {
     <div className="category_popup">
       <div className="full_inner">
         <button type="button" className="close_btn" onClick={clickHandler}><IconClose /></button>
+        {
+          Object.keys(categoryList).map(key => (
+            <>
+              <h4>{key}</h4>
+              <ul>
+                {
+                  categoryList[key].map(v => (
+                    <li key={v.csid}>{v.sub_name}</li>
+                  ))
+                }
+              </ul>
+            </>
+          ))
+        }
       </div>
     </div>
   )

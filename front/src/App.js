@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 // redux
 import { useDispatch } from "react-redux";
-import { getLocationList } from "./modules/reduxMenuAxios";
+import { getCategoryList, getLocationList } from "./modules/reduxMenuAxios";
 
 // root
 import Root from "./Root";
@@ -20,7 +20,8 @@ export default function App() {
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    dispatch(getLocationList());    
+    dispatch(getLocationList());
+    dispatch(getCategoryList());
   },[])
 
   const router = createBrowserRouter([{
