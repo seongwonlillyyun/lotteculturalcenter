@@ -7,7 +7,7 @@ import { ReactComponent as IconLogIn } from "./../svg/icon-login.svg";
 import { ReactComponent as IconLogOut } from "./../svg/icon-logout.svg";
 import { ReactComponent as IconMyPage } from "./../svg/icon-mypage.svg";
 import { ReactComponent as IconMyCart } from "./../svg/icon-cart.svg";
-import { ReactComponent as IconSearch } from "./../svg/icon-search.svg";
+// import { ReactComponent as IconSearch } from "./../svg/icon-search.svg";
 import { ReactComponent as IconClose } from "./../svg/icon-close-x.svg"; 
 
 // gnb
@@ -52,7 +52,6 @@ export default function Header() {
             </h1>
             <Gnb setActiveDepth={setActiveDepth}/>
             <div className="users">
-              <SearchBtn />
               {
                 isLogin ?
                 <>
@@ -67,7 +66,6 @@ export default function Header() {
         </div>
         <GnbChild activeDepth={activeDepth}/>
       </div>
-      <SearchPopup />
       <CategoryPopup />
     </>
   );
@@ -115,6 +113,20 @@ function GnbChild({activeDepth}) {
   );
 }
 
+function CategoryPopup() {
+
+  const clickHandler = () => closePopup(".category_popup");
+
+  return (
+    <div className="category_popup">
+      <div className="full_inner">
+        <button type="button" className="close_btn" onClick={clickHandler}><IconClose /></button>
+      </div>
+    </div>
+  )
+}
+
+/*
 function SearchBtn() {
   return (
     <div className="search_btn" onClick={()=>{openPopup(".search_popup")}}>
@@ -154,16 +166,4 @@ function SearchPopup() {
     </form>
   );
 }
-
-function CategoryPopup() {
-
-  const clickHandler = () => closePopup(".category_popup");
-
-  return (
-    <div className="category_popup">
-      <div className="full_inner">
-        <button type="button" className="close_btn" onClick={clickHandler}><IconClose /></button>
-      </div>
-    </div>
-  )
-}
+*/

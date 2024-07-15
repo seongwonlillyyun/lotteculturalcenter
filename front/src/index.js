@@ -7,13 +7,24 @@ import App from './App';
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 
+// reducer
+import qnaReducer from './reducers/qnaReducer.js';
+import menuReducer from './reducers/menuReducer.js';
+import notievtReducer from './reducers/notievtReducer.js';
+import PersonalQnAReducer from "./reducers/personalQnaReducer.js"
+
 // css
 import "./css/reset.css";
 import "./css/style.css";
 import "./css/common.css";
 
 const store = configureStore({
-  reducer : {}
+  reducer : {
+    notievt : notievtReducer,
+    qna : qnaReducer,
+    menu : menuReducer,
+    personal : PersonalQnAReducer,
+  }
 })
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

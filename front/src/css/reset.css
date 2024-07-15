@@ -12,7 +12,7 @@ iframe {
   border: none;
 }
 
-img {
+img, svg {
   display: block;
 }
 

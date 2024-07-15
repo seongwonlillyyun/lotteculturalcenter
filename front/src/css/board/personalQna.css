@@ -1,0 +1,94 @@
+.board_personal .popup_wrap .bg {
+  cursor: default;
+}
+
+.board_personal .popup_top {
+  display: flex;
+  padding: 20px 40px;
+}
+
+.board_personal .popup_top h3 {
+  flex: 1;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.3em;
+}
+
+.board_personal .popup_content_wrap {
+  flex: 1;
+  padding: 30px 10px 60px 30px;
+  overflow: hidden;
+}
+
+.board_personal .scroll_wrap {
+  padding-left: 10px;
+  padding-right: 30px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.board_personal .popup_content .notice {
+  padding: 30px;
+  background-color: #f8f8f8;
+  font-size: 14px;
+  line-height: 1.55em;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.board_personal .popup_content .notice li {
+  position: relative;
+  padding-left: 10px;
+}
+
+.board_personal .popup_content .notice li + li {
+  margin-top: 10px;
+}
+
+.board_personal .popup_content .notice li::before {
+  content: '';
+  position: absolute;
+  top: 9px;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.board_personal .popup_content .data_section {
+  margin-top: 60px;
+}
+
+.board_personal .data_section > li + li {
+  margin-top: 40px;
+}
+
+.board_personal .data_section h4 {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.75em;
+  margin-bottom: 10px;
+}
+
+.board_personal .data_section input[type = "text"],
+.board_personal .data_section select,
+.board_personal .data_section textarea {
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.board_personal .data_section input[type = "text"]:focus,
+.board_personal .data_section select:focus,
+.board_personal .data_section textarea:focus {
+  border: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+.board_personal .data_section textarea {
+  resize: none;
+  height: 150px;
+}

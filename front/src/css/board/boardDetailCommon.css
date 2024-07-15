@@ -1,0 +1,47 @@
+.board_detail .detail_top {
+  padding-bottom: 40px;
+  border-bottom: 1px solid #e3e1de;
+}
+
+.board_detail .detail_top .label {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.board_detail .detail_top .label span:not(:last-child) {
+  position: relative;
+  padding-right: 8px;
+  margin-right: 8px;
+}
+
+.board_detail .detail_top .label span:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 10px;
+  background-color: #dfd9d5;
+}
+
+.board_detail .detail_top .title {
+  font-size: 32px;
+  line-height: 1.25em;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.board_detail .detail_content {
+  padding: 80px 60px 100px;
+}
+
+.board_detail .detail_content img {
+  display: inline;
+}
+
+.board_detail .detail_bot {
+  padding-top: 40px;
+  border-top: 1px solid #e3e1de;
+  text-align: center;
+}

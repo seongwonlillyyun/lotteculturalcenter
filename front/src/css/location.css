@@ -11,6 +11,10 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+.location .location_info svg {
+  margin: auto;
+}
+
 .location .location_info > li {
   position: relative;
   flex: 1;
