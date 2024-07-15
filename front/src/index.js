@@ -17,6 +17,9 @@ import PersonalQnAReducer from "./reducers/personalQnaReducer.js"
 import "./css/reset.css";
 import "./css/style.css";
 import "./css/common.css";
+import './css/cart.css';
+import './css/order.css';
+
 
 const store = configureStore({
   reducer : {

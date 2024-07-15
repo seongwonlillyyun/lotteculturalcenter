@@ -10,6 +10,8 @@ import Root from "./Root";
 import SearchByCenter from "./pages/SearchByCenter";
 import SearchByTopic from "./pages/SearchByTopic";
 import SearchByText from "./pages/SearchByText";
+import Cart from "./pages/Cart";
+import Order from "./pages/Order";
 
 // pages
 import CourseDetail from "./pages/CourseDetail";
@@ -43,7 +45,9 @@ export default function App() {
       { path : "/join" , element : <Join/> },
       {path:'/center/:id', element:<SearchByCenter/>},
       {path:'/topic', element:<SearchByTopic/>},
-      {path:'/text', element:<SearchByText/>}
+      {path:'/text', element:<SearchByText/>},
+      {path : "/cart", element : <Cart/> },
+      {path : "/order", element : <Order/> }
     ]
   }])
 
