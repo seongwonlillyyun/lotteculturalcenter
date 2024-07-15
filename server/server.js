@@ -18,6 +18,7 @@ server.use(express.urlencoded());
 server.use(cors());
 server.use('/uploads', express.static(path.join('uploads')));
 
+<<<<<<< HEAD
 // soo
 server.use("/file", fileRouter);
 server.use("/location", locationRouter);
@@ -25,6 +26,10 @@ server.use("/category", categoryRouter);
 server.use("/course", courseRouter);
 
 server.use('/center', CourseCenterRouter);
+=======
+server.use('/cart', cartRouter);
+
+>>>>>>> choi
 
 server.listen(port, ()=>{
   console.log("server start");
