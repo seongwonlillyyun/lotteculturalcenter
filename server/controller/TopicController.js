@@ -12,6 +12,5 @@ export const getCoursesByTopic = async(req,res) =>{
     const params = req.body
     const courses = await repository.getCoursesbyTopic(params);
     console.log('params=>', params)
-    console.log('result=>', courses)
     res.json(courses)
 }

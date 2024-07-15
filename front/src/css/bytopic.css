@@ -136,18 +136,55 @@
     right: 2.4rem;
     font-size: 1.2rem;
 }
-.modal_search_std{
+.modal_search_std_topic{
     border-top: 1px solid #F7F2EF;
     border-bottom: 1px solid #F7F2EF;
-    padding: 2rem 0;
+    padding: 1.2rem 0;
 }
 .std_title{
     font-size: 1.1rem;
 }
-.modal_search_std_title{
+.topic_cnt{
+    font-size: .8rem;
+    background-color: black;
+    color: var(--point-color);
+    font-weight: 600;
+    padding: .2rem .5rem;
+    border-radius: 100%;
+    visibility: hidden;
+}
+.topic_cnt_active{
+    font-size: .8rem;
+    background-color: black;
+    color: var(--point-color);
+    font-weight: 600;
+    padding: .2rem .5rem;
+    border-radius: 100%;
+    visibility: visible;
+}
+.center_btn_list{
+    display: flex;
+    gap: .5rem;
+    /* border: 1px solid red; */
+    margin-bottom: 1.5rem;
+}
+.center_btn{
+    background-color: rgb(245, 245, 245);
+    padding: .4rem .8rem;
+    border-radius: 4px;
+    margin: 6px 6px 0 0;
+}
+.center_btn_active{
+    background-color: var(--point-color);
+    padding: .4rem .8rem;
+    border-radius: 4px;
+    margin: 6px 6px 0 0;
+}
+.modal_search_std_title_topic{
     display: flex;
     justify-content: space-between;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: 13px;
 }
 .modal_btn{
     background-color: #F7F2EF;

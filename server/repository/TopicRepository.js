@@ -30,7 +30,7 @@ export const getCoursesbyTopic = async(params) =>{
                         where c.loc_id = l.loc_id and c.sub_id = s.sub_id) t1 
                         where mid_id = all (select distinct mid_id from sub_category where mid_id = ?) and
                             sub_id = all (select distinct sub_id from sub_category where sub_id = ?) and
-                            loc_id = all(select distinct loc_id from location where loc_id = ?) and
+                            loc_id in (select distinct loc_id from location where loc_id in (?)) and
                             dayofweek(course_start) in (select distinct dayofweek(course_start) from course where dayofweek(course_start) in (?)) and 
                             date_format(start_time, '%p') = all(select distinct date_format(start_time,'%p') from course where date_format(start_time,'%p') = ?) and
                             (course_name,teacher_name) in (select distinct course_name, teacher_name from course where course_name like ? or teacher_name like ?)
@@ -59,7 +59,7 @@ export const getCoursesbyTopic = async(params) =>{
                         where c.loc_id = l.loc_id and c.sub_id = s.sub_id) t1 
                         where mid_id = all (select distinct mid_id from sub_category where mid_id = ?) and
                             sub_id = all (select distinct sub_id from sub_category where sub_id = ?) and
-                            loc_id = all(select distinct loc_id from location where loc_id = ?) and
+                            loc_id in (select distinct loc_id from location where loc_id in (?)) and
                             dayofweek(course_start) in (select distinct dayofweek(course_start) from course where dayofweek(course_start) in (?)) and 
                             date_format(start_time, '%p') = all(select distinct date_format(start_time,'%p') from course where date_format(start_time,'%p') = ?) and
                             (course_name,teacher_name) in (select distinct course_name, teacher_name from course where course_name like ? or teacher_name like ?)

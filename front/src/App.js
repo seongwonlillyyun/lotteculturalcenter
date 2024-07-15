@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./Root";
 import SearchByCenter from "./pages/SearchByCenter";
 import SearchByTopic from "./pages/SearchByTopic";
+import Test from "./pages/Test";
 
 
 // pages
@@ -15,6 +16,7 @@ export default function App() {
     children : [
       {path:'/center/:id', element:<SearchByCenter/>},
       {path:'/topic/:id', element:<SearchByTopic/>},
+      {path:'/test', element:<Test/>},
     ]
   }])
 

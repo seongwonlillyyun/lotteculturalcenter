@@ -9,8 +9,7 @@ import {
   faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 
-
-export function DropDown({className}) {
+export function DropDown({ className }) {
   return (
     <ul className={className}>
       <li className="dropdown_list_st st_seoul">
@@ -73,71 +72,110 @@ export function DropDownSort({ click, sortStd }) {
 }
 
 export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
-  const [info, setInfo] = useState({ day: [1,2,3,4,5,6,7], time: "" });
-  const [isActive, setIsActive] = useState({ day: false, time: false });
-  const [selected, setSelected] = useState({ day: "", time: "" });
+  const [info, setInfo] = useState({
+    day: [1, 2, 3, 4, 5, 6, 7],
+    time: "",
+    center: [],
+  });
+  const [isActive, setIsActive] = useState({
+    day: false,
+    time: false,
+    center: false,
+  });
+  const [selected, setSelected] = useState({ day: "", time: "", center: [] });
   const [searchText, setSearchText] = useState("");
+  const [addCenter, setAddCenter] = useState("");
 
   const center = [
-                    { sort:'서울점', 
-                      list:[  {name:'잠실점', id:1},
-                              {name: '본점', id:2},
-                              {name:'강남점', id:3},
-                              {name:'건대스타시티점', id:4},
-                      ]
-                    },
-                    { sort:'수도권점', 
-                      list:[  {name:'인천점', id:5},
-                              {name: '동탄점', id:6},
-                              {name:'구리점', id:7},
-                              {name:'분당점', id:8},
-                      ]
-                    },
-                    { sort:'지방점', 
-                      list:[  {name:'부산본점', id:9},
-                              {name: '광복점', id:10},
-                              {name:'광주점', id:11},
-                              {name:'대구점', id:12},
-                      ]
-                    }
-                  ]
+    {
+      sort: "서울점",
+      list: [
+        { name: "잠실점", id: 1 },
+        { name: "본점", id: 2 },
+        { name: "강남점", id: 3 },
+        { name: "건대스타시티점", id: 4 },
+      ],
+    },
+    {
+      sort: "수도권점",
+      list: [
+        { name: "인천점", id: 5 },
+        { name: "동탄점", id: 6 },
+        { name: "구리점", id: 7 },
+        { name: "분당점", id: 8 },
+      ],
+    },
+    {
+      sort: "지방점",
+      list: [
+        { name: "부산본점", id: 9 },
+        { name: "광복점", id: 10 },
+        { name: "광주점", id: 11 },
+        { name: "대구점", id: 12 },
+      ],
+    },
+  ];
 
   const handleActive = (txt, e) => {
     const { name, value } = e.target;
+    console.log(name,value,txt)
+    console.log('include=>,' , info.center.includes(value))
     if (selected.day === "" || selected.time === "") {
       setIsActive({ ...isActive, [name]: true });
-      setSelected({ ...selected, [name]: txt });
       if (name === "day") {
         setInfo({ ...info, [name]: [...value] });
+        setSelected({ ...selected, [name]: txt })
       } else if (name === "time") {
         setInfo({ ...info, [name]: value });
-      }
+        setSelected({ ...selected, [name]: txt })
+      } else if(name === 'center'){
+        if(info.center.length !== 0 && info.center.includes(value)){
+          let result = info.center.filter(item=>item !== value)
+        setInfo({...info, center:result})
+          let centertxt = selected.center.filter(item=> item !== txt)
+        setSelected({ ...selected, center:centertxt});
+        } else{
+          setInfo({...info, [name]:[...info.center, value]})
+          setSelected({ ...selected, [name]: [...selected.center,txt]});
+        }
+      } 
     } else if (selected.day !== "" || selected.time !== "") {
-      setIsActive({ ...isActive, [name]: false });
-      setSelected({ ...selected, [name]: "" });
-      setInfo({ ...info, [name]: "" });
+        if(info.center.length !== 0 && info.center.includes(value)){
+        let result = info.center.filter(item=>item !== value)
+        setInfo({...info, center:result})
+        let centertxt = selected.center.filter(item=>item !== txt)
+        setSelected({...selected, center:centertxt})
+      } else{
+        setIsActive({ ...isActive, [name]: false });
+        setSelected({ ...selected, [name]: "" }); 
+        setInfo({ ...info, [name]:''})
+      }
     }
   };
+
   const handleDetail = () => {
     click(info, selected, searchText);
     closeModal();
   };
   const handleReset = () => {
-    setInfo({ day: "", time: "" });
-    setIsActive({ day: false, time: false });
-    setSelected({ day: "", time: "" });
-    setSearchText('')
+    setInfo({ day: "", time: "", center: [] });
+    setIsActive({ day: false, time: false, center: false });
+    setSelected({ day: "", time: "", center: [] });
+    setSearchText("");
   };
   const writingText = (e) => {
     const { name, value } = e.target;
     setSearchText(value);
   };
-  console.log('test=>',searchText);
   const handleSearch = () => {
     search(searchText);
     closeModal();
   };
 
+  console.log("selected=>", selected);
+  console.log("info=>", info);
+  console.log(addCenter);
+  console.log('이게모야', searchstd)
   return (
     <div className="modal_out" onClick={closeModal}>
       <div className="modal_container" onClick={(e) => e.stopPropagation()}>
@@ -161,37 +199,42 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
           >
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </button>
-          <ul className="modal_search_std modal_search_day">
-            <li className="modal_search_std_title">
-              <p className="std_title">지점</p>
+          <ul className="modal_search_std_topic modal_search_center">
+            <li className="modal_search_std_title_topic">
+              <p className="std_title">
+                지점
+                {/*  <span className={info.center.length !== 0?'topic_cnt_active':'topic_cnt'}>{info.center.length}</span> */}
+              </p>
             </li>
-            <li><p>서울점</p>
-              <ul>
-                <li><button>잠실점</button></li>
-                <li><button>본점</button></li>
-                <li><button>강남점</button></li>
-                <li><button>건대스타시티점</button></li>
-              </ul>
-            </li>
-            <li><p>수도권점</p>
-              <ul>
-                <li><button>인천점</button></li>
-                <li><button>동탄점</button></li>
-                <li><button>구리점</button></li>
-                <li><button>분당점</button></li>
-              </ul>
-            </li>
-            <li>지방점
-              <ul>
-                <li><button>부산본점</button></li>
-                <li><button>광복점</button></li>
-                <li><button>광주점</button></li>
-                <li><button>대구점</button></li>
-              </ul>
-            </li>
+            {center.map((items) => (
+              <li className="test">
+                <p>{items.sort}</p>
+                <ul className="center_btn_list">
+                  {items.list.map((item) => (
+                    <li>
+                      <button
+                        name="center"
+                        value={item.id}
+                        className={
+                          selected.center.includes(item.name)|| searchstd.center.includes(item.name)
+                            ? "center_btn_active"
+                            : "center_btn"
+                        }
+                        onClick={(e) => {
+                          setAddCenter(item.name);
+                          handleActive(item.name, e);
+                        }}
+                      >
+                        {item.name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
           </ul>
-          <ul className="modal_search_std modal_search_day">
-            <li className="modal_search_std_title">
+          <ul className="modal_search_std_topic modal_search_day">
+            <li className="modal_search_std_title_topic">
               <p className="std_title">요일</p>
             </li>
             <li>
@@ -225,8 +268,8 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
               </button>
             </li>
           </ul>
-          <ul className="modal_search_std modal_search_time">
-            <li className="modal_search_std_title">
+          <ul className="modal_search_std_topic modal_search_time">
+            <li className="modal_search_std_title_topic">
               <p className="std_title"> 시간</p>
             </li>
             <li>

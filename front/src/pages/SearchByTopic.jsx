@@ -11,25 +11,25 @@ export default function SearchByTopic(){
     const [showCourse, setShowCourse] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 8;
-    const [detail,setDetail] = useState({day:[1,2,3,4,5,6,7],time:''});
+    const [detail,setDetail] = useState({day:[1,2,3,4,5,6,7], time:'', center:[1,2,3,4,5,6,7,8,9,10,11,12]});
     const [sort, setSort] = useState(8);
     const [topic,setTopic] = useState({})
     const [cindex, setCindex] = useState('')
     const [view, setView] = useState(false)
     const [smallCategory, setSmallCategory] = useState(0)
-    const [selected, setSelected] = useState({day:'',time:''})
+    const [selected, setSelected] = useState({day:'',time:'', center:[]})
     const [test, setTest] = useState('')
     const [searchText, setSearchText] = useState('%%')
 
-    const searchDetail = (value,selected)=>{
+    const searchDetail = (value,selected)=>{    
         setDetail(value)
         setSelected(selected)
     }
 
+
     useEffect(()=>{
-        setCindex(0)
         setSmallCategory(0)
-        setDetail({day:[1,2,3,4,5,6,7],time:''})
+        setDetail({day:[1,2,3,4,5,6,7],time:'', center:[1,2,3,4,5,6,7,8,9,10,11,12]})
         setCurrentPage(1)
         setSearchText('%%')
             axios({
@@ -47,12 +47,12 @@ export default function SearchByTopic(){
         axios({
             method:'post',
             url:`http://127.0.0.1:8080/topic/${id}/course`,
-            data : {'id': id, 'sub_id':smallCategory, 'loc_id':cindex,
+            data : {'id': id, 'sub_id':smallCategory, 'loc_id':detail.center,
                     'day':detail.day, 'time':detail.time,'text':searchText,
                     'end':endIndex,'sort':sort}})
         .then(response=>setShowCourse([response.data]))
         .catch(error=>console.log(error))
-    },[cindex,smallCategory,detail,searchText,endIndex,sort])
+    },[smallCategory,detail,searchText,endIndex,sort])
 
     console.log('text=>',test)
 
@@ -157,11 +157,14 @@ export default function SearchByTopic(){
                         </div>
                     </div>
                 </div>
-                {selected.day !== '' || selected.time !== '' || test !== "" ? 
+                {selected.day !== '' || selected.time !== '' || test !== "" || selected.center.length !== 0 ? 
                 <ul className="handle_search_standard">
                     <li><button className="handle_search_reset" onClick={handledetailReset}><FontAwesomeIcon icon={faArrowRotateRight} /></button></li>
                     {selected.day!=='' ? <li><p className="handle_search_day">{selected.day}<button className="search_reset_btn" type="button" onClick={()=>handleDetailDelete('day')}><FontAwesomeIcon icon={faXmark} /></button></p></li>:null}
                     {selected.time !== ''? <li><p className="handle_search_time">{selected.time}<button className="search_reset_btn"onClick={()=>handleDetailDelete('time')}><FontAwesomeIcon icon={faXmark} /></button></p></li> :null}
+                    {selected.center.map((item)=>(
+                        <li><p className="handle_search_center">{item}</p><button className="search_reset_btn"onClick={()=>handleDetailDelete('time')}><FontAwesomeIcon icon={faXmark} /></button></li>
+                    ))}
                     {test !== '' ? <li><p className="handle_search_text">{test}<button className="search_reset_btn" onClick={()=>handleDetailDelete('text')}><FontAwesomeIcon icon={faXmark} /></button></p></li> :null}
                     
                 </ul>:null}
