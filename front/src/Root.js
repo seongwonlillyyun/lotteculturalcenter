@@ -1,10 +1,24 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { Outlet, useLocation } from "react-router-dom"
 import Header from './components/Header';
 import Footer from "./components/Footer";
+import { MypageModal, MyBranchModal } from "./components/MypageModal";
 
 export default function Root() {
-  const location = useLocation();
+
+    //! Mypage Model용
+const [step, setStep] =useState(1)
+const nextStep = () => {setStep(step+1)}
+const preStep = () => {setStep(step-1)}
+
+const [modalOpen, setModalOepn] = useState(false)
+const openModal = () => {
+  setModalOepn(true)
+}
+const closeModal = () => {
+  setModalOepn(false)}
+
+const location = useLocation();
 
   useEffect(()=>{
     window.scrollTo(0, 0);
@@ -12,6 +26,13 @@ export default function Root() {
 
   return (
     <>
+    {step ===1 && (
+      <MypageModal next={nextStep} close={closeModal} />
+    )}
+    {step===2 && (
+      <MyBranchModal pre={preStep} close={closeModal}/>
+    )}
+
       <Header />
       <Outlet/>
       <Footer />

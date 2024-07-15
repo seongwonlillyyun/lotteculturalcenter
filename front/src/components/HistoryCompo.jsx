@@ -1,5 +1,6 @@
 
 import React, {useState, useEffect} from 'react'
+import DetailHistory from '../pages/DetailHistory'
 
 export function TopInfo(){
 
@@ -68,9 +69,8 @@ for(let i=0; i<itemList.length; i+=2){
 </div>
     <div className="history_content">
         {tab === 'register' && <> 수강내역 content
-            <HistoryItem />
-            <HistoryItem />
-            <HistoryItem />
+            <HistoryItem tab={tab}/>
+            <HistoryItem tab={tab}/>
             {/* <ul>
                 {rows.map((items)=>(
                     <li>
@@ -81,17 +81,23 @@ for(let i=0; i<itemList.length; i+=2){
                 ))}
             </ul> */}
             </>}
-        {tab === 'cancel' && <div> 취소내역 content</div>}
+        {tab === 'cancel' && <div> 취소내역 content
+            <HistoryItem tab={tab}/>
+            </div>}
     </div>
 </div>
         </>
     )
 }
 
-export function HistoryItem(){
-    // const handleDetail = () => (
+export function HistoryItem({tab}){
 
-    // )
+    // 이방법 아닌거 같음..
+    // const handleDetail = () => {
+    // <DetailHistory/>
+    // }
+
+
     return(
         <>
         <div className="history_item">
@@ -109,9 +115,7 @@ export function HistoryItem(){
                 </ul>
                 </div>
                 <button type="button" className="history_detail_btn"
-                    // onClick={handleDetail}
-                >
-                    내역보기</button>
+                        /*onClick={handleDetail} */ >내역보기</button>
             </div>
             <div className="history_item_mid">
                 <ul>
@@ -128,18 +132,39 @@ export function HistoryItem(){
                 </ul>
             </div>
             <div className="history_item_bottom">
+
+{tab === 'register' && 
+        <ul className="history_item_bottom_ul">
+            <li className="history_item_bottom_name">김미성</li>
+            <li className="history_item_bottom_state">
+            <span>접수상태</span>
+            <span>결제완료</span>
+            </li>
+            <li className="history_item_bottom_price">
+            <span>주문금액</span>
+            <span>10,000원</span>
+            </li>
+                            </ul>
+            }
+
+{tab === 'cancel' && 
                 <ul className="history_item_bottom_ul">
-<li className="history_item_bottom_name">김미성</li>
-<li className="history_item_bottom_state">
-<span>접수상태</span>
-<span>결제완료</span>
-</li>
-<li className="history_item_bottom_price">
-<span>주문금액</span>
-<span>10,000원</span>
-</li>
-                </ul>
+        <li className="history_item_bottom_name">김미성</li>
+        <li className="history_item_bottom_state">
+        <span>접수상태</span>
+        <span>취소완료</span>
+        </li>
+        <li className="history_item_bottom_price">
+        <span>취소(환불)금액</span>
+        <span>10,000원</span>
+        </li>
+                        </ul>
+                    }
                 
+
+
+
+
             </div>
         </div>
         

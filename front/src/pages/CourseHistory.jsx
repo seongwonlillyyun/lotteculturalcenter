@@ -12,9 +12,9 @@ export default function CourseHistory(){
             <div className="courserHistory_topinfo">
             <TopInfo/>
             </div>
-<div className="narrow_page inner">
-    <HistoryForm />
-</div>
+                <div className="narrow_page inner">
+                    <HistoryForm />
+                </div>
 
         </div>
     ) 
