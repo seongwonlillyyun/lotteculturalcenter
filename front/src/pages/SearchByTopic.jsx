@@ -47,7 +47,7 @@ export default function SearchByTopic(){
         axios({
             method:'post',
             url:`http://127.0.0.1:8080/topic/${id}/course`,
-            data : {'id': id, 'sub_id':smallCategory, 'loc_id':detail.center,
+            data : {'id': id, 'csid':smallCategory, 'loc_id':detail.center,
                     'day':detail.day, 'time':detail.time,'text':searchText,
                     'end':endIndex,'sort':sort}})
         .then(response=>setShowCourse([response.data]))
@@ -90,9 +90,9 @@ export default function SearchByTopic(){
         
     }
     const handledetailReset = ()=>{
-        setSelected({day:'',time:''})
+        setSelected({day:'',time:'', center:[]})
         setTest('')
-        setDetail({day:[1,2,3,4,5,6,7],time:''})
+        setDetail({day:[1,2,3,4,5,6,7],time:'', center:[1,2,3,4,5,6,7,8,9,10,11,12]})
     }
 
     const handleDetailDelete = (value) =>{
@@ -102,7 +102,11 @@ export default function SearchByTopic(){
         } else if(value === 'time') {
             setSelected({...selected, time:''})
             setDetail({...detail, time:''})
-        } else if (value === 'text'){
+        } else if(value === 'center'){
+            setDetail({...detail, center:[1,2,3,4,5,6,7,8,9,10,11,12]});
+            setSelected({...selected, center:[]})
+        }
+            else if (value === 'text'){
             setTest('')
             setSearchText('%%')
         }
@@ -163,7 +167,7 @@ export default function SearchByTopic(){
                     {selected.day!=='' ? <li><p className="handle_search_day">{selected.day}<button className="search_reset_btn" type="button" onClick={()=>handleDetailDelete('day')}><FontAwesomeIcon icon={faXmark} /></button></p></li>:null}
                     {selected.time !== ''? <li><p className="handle_search_time">{selected.time}<button className="search_reset_btn"onClick={()=>handleDetailDelete('time')}><FontAwesomeIcon icon={faXmark} /></button></p></li> :null}
                     {selected.center.map((item)=>(
-                        <li><p className="handle_search_center">{item}</p><button className="search_reset_btn"onClick={()=>handleDetailDelete('time')}><FontAwesomeIcon icon={faXmark} /></button></li>
+                        <li className="handle_search_li"><p className="handle_search_center">{item}</p><button className="search_reset_btn"onClick={()=>handleDetailDelete('center')}><FontAwesomeIcon icon={faXmark} /></button></li>
                     ))}
                     {test !== '' ? <li><p className="handle_search_text">{test}<button className="search_reset_btn" onClick={()=>handleDetailDelete('text')}><FontAwesomeIcon icon={faXmark} /></button></p></li> :null}
                     

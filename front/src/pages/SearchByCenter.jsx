@@ -42,12 +42,11 @@ export default function SearchByCenter(){
     },[id])
     let endIndex = 0;
     endIndex = currentPage * pageSize;
-    
     useEffect(()=>{
         axios({
             method:'post',
             url:`http://127.0.0.1:8080/center/${id}/course`,
-            data : {'id': id, 'mid_id':cindex, 'sub_id':smallCategory,
+            data : {'id': id, 'cid':cindex, 'csid':smallCategory,
                     'day':detail.day, 'time':detail.time,'text':searchText,
                     'end':endIndex,'sort':sort}})
         .then(response=>setShowCourse([response.data]))

@@ -346,8 +346,23 @@
     padding-left: .5rem;
     padding-top: .3rem;
 }
-.search_reset_btn{
-    font-size: .7rem;
-    color: #7E7D7B;
-    margin-left: .7rem;
+.handle_search_li{
+    position: relative;
 }
+.handle_search_center{
+    
+    border: 1px solid #CAC8C6;
+    width: 80px;
+    height: 30px;
+    background-color: #FDFAF7;
+    border-radius: 20px;
+    font-size: .8rem;
+    text-align: center;
+    padding-top: .3rem;
+}
+.search_reset_btn{
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    font-size: .7rem;
+    color: #7E7D7B;}
