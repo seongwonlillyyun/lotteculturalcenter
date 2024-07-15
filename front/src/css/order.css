@@ -1,3 +1,6 @@
+.order .red{
+  color: #ff5050;
+}
 /* tab */
 .order .tab_list_box{
   width: 100%;
@@ -84,6 +87,9 @@
 .order .order_line.check{
   display: flex;
 }
+.order .order_line.step2{
+  margin-bottom: 80px;
+}
 /* 총 결제금액 */
 .order .all_pay{
   display: flex;
@@ -93,18 +99,28 @@
 .order .all_pay > li{
   text-align: left;
 }
+.order .all_pay > li:last-child{
+  text-align: right;
+}
 .order .all_pay > li h4{
   font-size: 15px;
   font-weight: 400;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 .order .all_pay > li h4.bold{
   font-weight: 600;
 }
 .order .all_pay > li span{
   font-size: 16px;
+  font-weight: 600;
   line-height: 26px;
   letter-spacing: -.4px;
+}
+.order .all_pay > li span .num{
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 32px;
+  letter-spacing: -.6px;
 }
 .order .all_pay > li p{
   font-size: 13px;
@@ -112,6 +128,7 @@
   letter-spacing: -.325px;
   color: #666;
   word-break: break-all;
+  margin-top: 18px;
 }
 .order .all_pay > li:not(.cir){
   flex: 1 1 0;

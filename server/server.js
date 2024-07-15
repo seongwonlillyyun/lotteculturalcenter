@@ -11,6 +11,9 @@ server.use(express.urlencoded());
 server.use(cors());
 server.use('/uploads', express.static(path.join('uploads')));
 
+server.use('/cart', cartRouter);
+
+
 server.listen(port, ()=>{
   console.log("server start");
 });

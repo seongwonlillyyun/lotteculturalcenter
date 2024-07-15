@@ -1,8 +1,16 @@
 import React from 'react';
 import Tab from './Tab';
+import ButtonWhite from './ButtonWhite';
+import ButtonBlack from './ButtonBlack';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function OrderStep2({step}) {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/')
+  }
+
   return(
     <div className='order type'>
       <div className="sub_visual">
@@ -19,11 +27,11 @@ export default function OrderStep2({step}) {
         </div>
        
         <h2 className='htitle'>총 결제금액</h2>
-        <div className='order_line'>
+        <div className='order_line step2'>
           <ul className='all_pay'>
             <li>
                 <h4>강좌료 합계</h4>
-                <span><span className='num'>45000</span>원</span>
+                <span><span className=''>45000</span>원</span>
                 <p>* 재료비 또는 대여료 옵션 금액을 제외한 원 강좌료 금액이 표시 됩니다.</p>
             </li>
             <li className='cir'>
@@ -31,7 +39,7 @@ export default function OrderStep2({step}) {
             </li>
             <li>
                 <h4>할인금액 합계</h4>
-                <span>(<span className='num'>1000</span>) 원</span>
+                <span className='red'>(-)<span className=''> 1000</span> 원</span>
                 <p>* 강좌료에서 할인받은 할인금액이 표시 됩니다.</p>
             </li>
             <li className='cir'>
@@ -39,12 +47,14 @@ export default function OrderStep2({step}) {
             </li>
             <li>
                 <h4 className='bold'>총 결제금액</h4>
-                <span><span>45000</span>원</span>
+                <span><span className='num'>45000</span>원</span>
             </li>
           </ul>
         </div>
-
-
+        <div className='basic_btn'>
+          <ButtonWhite name='홈으로' color='btn_white medium' onClick={handleClick} />
+          <ButtonBlack name='수강내역 조회' color='btn_black medium' onClick={handleClick} /> {/* 수강내역이동 */}
+        </div>
       </div>
     </div>
   );

@@ -33,7 +33,7 @@ export default function OrderStep1({next, step}) {
           <ul className='all_pay'>
             <li>
                 <h4>강좌료 합계</h4>
-                <span><span className='num'>45000</span>원</span>
+                <span><span className=''>45000</span>원</span>
                 <p>* 재료비 또는 대여료 옵션 금액을 제외한 원 강좌료 금액이 표시 됩니다.</p>
             </li>
             <li className='cir'>
@@ -41,7 +41,7 @@ export default function OrderStep1({next, step}) {
             </li>
             <li>
                 <h4>할인금액 합계</h4>
-                <span>(<span className='num'>1000</span>) 원</span>
+                <span className='red'>(-)<span className=''> 1000</span> 원</span>
                 <p>* 강좌료에서 할인받은 할인금액이 표시 됩니다.</p>
             </li>
             <li className='cir'>
@@ -49,7 +49,7 @@ export default function OrderStep1({next, step}) {
             </li>
             <li>
                 <h4 className='bold'>총 결제금액</h4>
-                <span><span>45000</span>원</span>
+                <span><span className='num'>45000</span>원</span>
             </li>
           </ul>
         </div>

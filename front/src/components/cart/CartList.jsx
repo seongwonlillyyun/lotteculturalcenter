@@ -1,10 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import Checkbox from './Checkbox';
+import { Link } from 'react-router-dom';
+
+import { cartListAxios } from '../../modules/reduxCartAxios';
+
+
 
 
 export default function CartList({cname}) {
-  // console.log('cname=>', cname);
+
+
+
   return(
     <div className='cart_list'> {/* map으로 돌림 */}
       <ul className='cart_list_box'>
