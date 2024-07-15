@@ -69,7 +69,7 @@ function BoardUtils({status, setStatus}) {
 
 function BoardList({status, update}) {
   const dispatch = useDispatch();
-  const userId = getUser() ? getUser().userId : "test";
+  const userId = getUser() ? getUser().userId : "test_soo";
   const list = useSelector(state => state.personal.list);
 
   useEffect(()=>{
