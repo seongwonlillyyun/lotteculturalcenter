@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 // redux
 import { useDispatch } from "react-redux";
@@ -18,6 +18,9 @@ import Order from "./pages/Order";
 import CourseDetail from "./pages/CourseDetail";
 import Login from "../src/components/Login.jsx"
 import Join from "./pages/Join.jsx";
+import CourseHistory from "./pages/CourseHistory.jsx";
+import DetailHistory from "./pages/DetailHistory.jsx";
+import {MypageModal}  from "./components/MypageModal.jsx";
 import Location from "./pages/Location";
 import QnA from "./pages/board/QnA";
 import PersonalQnA from "./pages/board/PersonalQnA";
@@ -30,6 +33,13 @@ export default function App() {
   useEffect(()=>{
     dispatch(getLocationList());    
   },[])
+
+
+  //! Mypage Model용
+const [step, setStep] =useState(1)
+const nextStep = () => {setStep(step+1)}
+const preStep = () => {setStep(step-1)}
+
 
   const router = createBrowserRouter([{
     path : "/",
@@ -49,6 +59,9 @@ export default function App() {
       {path:'/test', element:<Test/>},
       {path : "/cart", element : <Cart/> },
       {path : "/order", element : <Order/> },
+      {path :"/courseHistory", element : <CourseHistory/>},
+      {path :"/detailHistory", element : <DetailHistory/>}, // path 변경예정
+      {path :"/mypage", element : <MypageModal/>} // path 변경예정
     ]
   }])
 

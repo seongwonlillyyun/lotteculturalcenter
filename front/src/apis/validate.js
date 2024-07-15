@@ -2,10 +2,10 @@
 
 export const validateCheckStep1 =(next, formData) => {
     if(!formData.membership){
-        alert('회원약관에 동의해주세요')
+        alert('필수항목인 회원약관에 동의해주세요')
         document.getElementById('membership').style.outline="1px solid red"
     }else if(!formData.personal){
-        alert('개인정보 수집 및 이용 약관에 동의해 주세요')
+        alert('필수항목인 개인정보 필수항목에 대한 수집 및 이용 약관에 동의해 주세요')
         document.getElementById('personal').style.outline="1px solid red"
     }else{
         next()
@@ -62,10 +62,26 @@ export const pwCheck =(refs) => {
     const repw = refs.repwRef.current
 
     if(pw.value !== repw.value){
-        alert('암호가 불일치 하니 재확인해주세요')
-        pw.valule=''
-        repw.value =''
-        pw.focus()
+        alert('암호가 불일치하니 재확인해주세요')
+        pw.value='';
+        repw.value ='';
+        pw.focus();
         checkFlag=false;
     }
+    return checkFlag
+}
+
+//! 이메일 도메인 관련 
+// 옵션선택하면 input란에 나오게 하는 방법 
+export const changeEmailDomain = (e, refs, handleChange) => {
+    // const name = e.target.name;
+    const value = e.target.value;
+if(value === 'self'){
+    refs.emailDomainRef.current.value = ''
+    refs.emailDomainRef.current.focus()
+}else{
+    refs.emailDomainRef.current.value=value; 
+    handleChange(e)
+}
+
 }

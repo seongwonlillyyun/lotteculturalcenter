@@ -12,6 +12,8 @@ import CourseCenterRouter from './router/CourseCenterRouter.js'
 import cartRouter from "./router/cartRouter.js"
 import TopicRouter from './router/TopicRouter.js'
 
+import memberRouter from './router/memberRouter.js'
+
 const server = express();
 const port = 8080;
 
@@ -30,6 +32,10 @@ server.use('/center', CourseCenterRouter);
 server.use('/cart', cartRouter);
 server.use("/board", boardRouter);
 server.use('/topic', TopicRouter);
+
+
+server.use('/member',memberRouter)
+
 
 server.listen(port, ()=>{
   console.log("server start");

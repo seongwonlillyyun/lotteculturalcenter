@@ -2,7 +2,7 @@
     font-size: 2rem;
     font-weight: bold;
 }
-.join_step1_next_btn{
+.join_next_btn{
     background-color: var(--point-color);
     width: 7rem;
     height: 2.5rem;
@@ -10,10 +10,140 @@
     font-weight: 500;
     color :black;
 }
-.join_step1_pre_btn{
+.join_pre_btn{
     background-color: gray;
     width: 7rem;
     height: 2.5rem;
     border-radius: 1rem;
-    color : white
+    color : white;
+    margin-right : 1rem
+}
+
+.join_step_title{
+    font-size: 1rem;
+}
+.join_step_desc{
+    font-size : 1.5rem;
+}
+
+.join_icon{
+    color : white;
+}
+
+.join_ess{
+    color : red;
+    font-weight: 500;
+}
+
+.join_step1_allagree{
+   font-weight: 700;
+}
+.step1_desc_btn{
+    text-decoration: underline;
+    padding-left:2rem;
+}
+
+.join_step1{
+    /* border : 2px solid purple */
+}
+
+.join_step1_top{
+    /* border : 1px solid red; */
+    margin-bottom: 1.5rem;
+}
+.join_step1_form{
+    /* border : 1px dotted blue; */
+    padding-left : 1.5rem;
+}
+.join_step1_item:first-child{
+    border-bottom: 1px solid gray;
+    padding-bottom: 1rem;
+}
+
+
+.join_step1_item{
+    display: flex;
+    margin-bottom: 1.5rem;
+
+}
+
+.join_step1_text{
+    width: 450px;
+    /* height: 50px; */
+    /* line-height: 50px; */
+    /* border: 1px solid orange; */
+    font-weight: 500;
+    padding-left: 0.6rem;
+
+}
+.join_point{
+    color : red;
+    /* border: 1px solid blue; */
+    font-weight: 600;
+}
+
+.join_step1_term{
+    border : 1px solid gray;
+    /* padding: 1.5rem 2.2rem 1rem 2.2rem; */
+    margin-top : 1rem;
+}
+.join_step1_term_textarea{
+    height: 20rem;
+    width: 60rem;
+}
+
+
+/*  주소검색 모달 위치 조정하기  */
+.join_postmodal{
+    position: fixed;
+    left : 40%;
+    top : 20%;
+}
+
+.join_step2_total{
+    border : 1px solid red;
+    padding : 1rem 3rem 1rem 3rem;
+}
+.join_step2_item{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.join_step2_input{
+    width: 14rem;
+    height: 2.2rem;
+}
+
+.join_step2_dupli_btn, .join_addr_btn{
+color : white;
+background-color: gray;
+width: 8rem;
+border-radius: 5rem;
+padding : 0.3rem 0.7rem 0.3rem 0.7rem;
+margin-left: 1rem
+}
+
+.join_step2_categories{
+    margin-bottom: 0.7rem;
+}
+
+.join_step2_category{
+    font-weight: 500;
+    font-size : 1.2rem;
+    margin-bottom: 0.7rem;
+}
+
+.join_step2_select{
+    width: 6rem;
+    height: 2rem;
+    text-align: center;
+}
+
+.join_step2_adddress_text{
+ margin-right: 2rem;   
+}
+
+.addr_text_add{
+margin-right: 3.8rem;
 }

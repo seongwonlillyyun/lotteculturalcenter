@@ -43,7 +43,7 @@ const handleSubmit =(e) =>{
     }
 
 return(
-<div className="login">
+<div className="login main wrap">
     <div className ='login_left'>
     <div className="login_left_texts">
         <p className="login_left_title">롯데백화점 문화센터에 <br/>처음 오셨나요?</p>

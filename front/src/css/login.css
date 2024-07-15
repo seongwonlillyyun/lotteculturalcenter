@@ -6,14 +6,15 @@
     background-image: url('../../public/img/login/bg-login.jpg');
     background-repeat: no-repeat;
     background-size: contain;
-    height: 571px;
-    width: 651px;
+    height: 700px;
+    width: 100%
+    /* position: relative; */
   
 }
 .login_left_texts{
     color : white;
     padding-left : 2rem;
-    border : 1px solid red;
+    /* border : 1px solid red; */
     margin-top : 3rem;
 }
 
@@ -34,11 +35,12 @@
 
 .login_right{
     text-align: center;
-    border : 1px solid red;
+    /* border : 1px solid red; */
+    /* height : 570px */
 }
 
 .login_right_texts{
-    margin-top : 3rem;
+    margin-top : 5rem;
     padding-left : 5rem;
     padding-right : 5rem;
 }
