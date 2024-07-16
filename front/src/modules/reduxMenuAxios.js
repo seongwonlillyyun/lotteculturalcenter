@@ -1,5 +1,5 @@
 import { axiosPost, axiosGet } from "./reduxAxios";
-import { setLocationList, setCategoryList } from "../reducers/menuReducer.js"
+import { setLocationList, setCategoryList, setActive } from "../reducers/menuReducer.js"
 
 export const getLocationList = () => {
   const url = "//localhost:8080/location"
@@ -15,4 +15,8 @@ export const getCategoryList = () => {
     const result = await axiosGet(url);
     if(result) dispatch(setCategoryList(result));
   }
+}
+
+export const updateActive = (text) => {
+  return (dispatch) => dispatch(setActive(text))
 }
