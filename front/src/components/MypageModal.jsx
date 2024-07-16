@@ -1,4 +1,5 @@
 import React,{useState} from "react";
+import { useNavigate } from "react-router-dom";
 import '../css/mypagemodal.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
@@ -8,9 +9,16 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons/faArrowLeft";
 
 
 //! Mypage 모달! 
-export function MypageModal({next, close,modalState}){
+export function MypageModal({next, close}){
+
+    const navigate = useNavigate()
+    // const modalClose = {close}
+    const handleClickMember= ()=>{
+        navigate('/changememberinfo');
+        close;
+    }
     
-    return modalState ? (
+    return (
 <div className="mypage_modal_out">
     <div className="mypage_modal">
         <div className="mypage_head">
@@ -20,8 +28,9 @@ export function MypageModal({next, close,modalState}){
         </div>
 
     <div className="mypage_member">
-    <p className="mypage_name">김미성</p>
-    <FontAwesomeIcon icon={faAngleRight} />
+        <button type="button" onClick={handleClickMember} className="member_change_btn">
+        <p className="mypage_name">김미성</p>
+        <FontAwesomeIcon icon={faAngleRight} className="mypage_name_arrow" /></button>
     </div>
 <div className="mypage_middle">
     <div className="mypage_middle_top">
@@ -67,7 +76,7 @@ export function MypageModal({next, close,modalState}){
 </div>
     </div>
 </div>
-    ) : <></>
+    )
 }
 
 

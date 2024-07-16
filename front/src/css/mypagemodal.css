@@ -45,6 +45,7 @@
 
 .mypage_name, .mybranch_title{
 font-size: 2rem;
+/* border: 1px solid red; */
 }
 
 .mypage_middle{
@@ -127,6 +128,17 @@ color : black
 .mypage_arrow{
     color : gray;
     font-size: 15px;
+
+}
+
+.member_change_btn{
+    display: flex;
+    align-items: center;
+}
+
+.mypage_name_arrow{
+    margin-left: 1rem;
+    text-align: center;
 }
 
 /* MyBranch */

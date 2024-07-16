@@ -92,10 +92,10 @@ for(let i=0; i<itemList.length; i+=2){
 
 export function HistoryItem({tab}){
 
-    // 이방법 아닌거 같음..
-    // const handleDetail = () => {
-    // <DetailHistory/>
-    // }
+    const handleDetail = (e) => {
+    <DetailHistory/>
+    console.log(e.target);
+    }
 
 
     return(
@@ -115,7 +115,7 @@ export function HistoryItem({tab}){
                 </ul>
                 </div>
                 <button type="button" className="history_detail_btn"
-                        /*onClick={handleDetail} */ >내역보기</button>
+                        onClick={(e)=>handleDetail(e)} >내역보기</button>
             </div>
             <div className="history_item_mid">
                 <ul>
