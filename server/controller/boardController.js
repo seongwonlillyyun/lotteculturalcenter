@@ -45,9 +45,36 @@ export const setPersonal = async(req, res) => {
   res.end();
 }
 
-export const getPersonal = async(req, res) => {
+export const getNoReplyList = async(req, res) => {
+  const result = await repository.getNoReplyList();
+  res.json(result);
+  res.end();
+}
+
+export const getPersonalList = async(req, res) => {
   const data = req.body;
-  const result = await repository.getPersonal(data);
+  const result = await repository.getPersonalList(data);
+  res.json(result);
+  res.end();
+}
+
+export const getPersonal = async (req, res) => {
+  const {id} = req.params;
+  const result = await repository.getPersonal(id);
+  res.json(result);
+  res.end();
+}
+
+export const removePersonal = async (req, res) => {
+  const {id} = req.params;
+  const result = await repository.removePersonal(id);
+  res.json(result);
+  res.end();
+}
+
+export const updatePersonal = async(req, res) => {
+  const data = req.body;
+  const result = await repository.updatePersonal(data);
   res.json(result);
   res.end();
 }
