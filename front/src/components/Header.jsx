@@ -58,10 +58,10 @@ export default function Header() {
                 isLogin ?
                 <>
                   <Link className="mypage" to="/"><IconMyPage/></Link>
-                  <Link className="mycart" to="/"><IconMyCart/><span className="cart_num">1</span></Link>
+                  <Link className="mycart" to="/cart"><IconMyCart/><span className="cart_num">1</span></Link>
                   <Link to="/"><IconLogOut /></Link>
                 </>
-                : <Link to="/"><IconLogIn /></Link>
+                : <Link to="/login"><IconLogIn /></Link>
               }
             </div>
           </div>
