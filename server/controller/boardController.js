@@ -31,6 +31,12 @@ export const getNotiEvtList = async(req, res) => {
   res.end();
 }
 
+export const getAllNotiEvtList = async(req, res) => {
+  const result = await repository.getAllNotiEvtList();
+  res.json(result);
+  res.end();
+}
+
 export const getNotiEvt = async(req, res) => {
   const {id} = req.params;
   const result = await repository.getNotiEvt(id);

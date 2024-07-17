@@ -8,6 +8,7 @@ import locationRouter from "./router/locationRouter.js";
 import categoryRouter from "./router/categoryRouter.js";
 import courseRouter from "./router/courseRouter.js";
 import boardRouter from "./router/boardRouter.js";
+import mainRouter from "./router/mainRouter.js";
 
 const server = express();
 const port = 8080;
@@ -24,6 +25,7 @@ server.use("/location", locationRouter);
 server.use("/category", categoryRouter);
 server.use("/course", courseRouter);
 server.use("/board", boardRouter);
+server.use("/main", mainRouter);
 
 server.listen(port, ()=>{
   console.log("server start");

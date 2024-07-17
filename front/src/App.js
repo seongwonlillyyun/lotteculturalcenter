@@ -16,6 +16,7 @@ import PersonalQnA from "./pages/board/PersonalQnA";
 import NotiEvent from "./pages/board/NotiEvent";
 import NotiEventDetail from "./pages/board/NotiEventDetail";
 import PersonalDetail from "./pages/board/PersonalDetail";
+import Main from './pages/Main';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ export default function App() {
     path : "/",
     element: <Root />,
     children : [
+      {path : "/", element : <Main/>},
       {path : "/course/:id", element : <CourseDetail/> },
       {path : "/location", element : <Location/> },
       {path : "/board/qna", element : <QnA/>},

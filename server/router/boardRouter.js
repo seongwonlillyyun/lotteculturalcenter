@@ -7,6 +7,7 @@ router.post("/qna", controller.getQnA)
 router.get("/qna/tabs",controller.getQnaTabs);
 router.post("/evt_noti/add", controller.setNotiEvent);
 router.post("/notievt", controller.getNotiEvtList);
+router.get("/notievt/all", controller.getAllNotiEvtList);
 router.get("/notievt/:id", controller.getNotiEvt);
 router.post("/personal", controller.getPersonalList);
 router.get("/personal/no_reply", controller.getNoReplyList);

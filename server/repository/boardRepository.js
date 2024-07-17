@@ -118,6 +118,19 @@ export const getNotiEvtList = async({location, keyword, type, count}) => {
     .then(([rows]) => rows)
 }
 
+export const getAllNotiEvtList = async() => {
+  const sql = `
+    select
+      bid,
+      type,
+      title
+    from noti_event
+  `
+
+  return db.execute(sql)
+    .then(([rows]) => rows);
+}
+
 export const getNotiEvtCount = async({location, keyword, type}) => {
   let filterSql = "";
   let changeLoc = (location === "전체지점") ? "" : location;
