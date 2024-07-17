@@ -39,7 +39,7 @@ export const getCoursesbyTopic = async(params) =>{
                             limit ?`
                         return db
                             .query(sql,[params.id, params.csid, params.loc_id, params.day, params.time,
-                                        params.text, params.text,params.end])
+                                        params.text,params.end])
                             .then(result=>result[0])
     } else {
         sql = `select course_id, statues, loc_id, cid, csid,
@@ -70,7 +70,7 @@ export const getCoursesbyTopic = async(params) =>{
                             limit ?`
                         return db
                             .query(sql,[params.id, params.csid, params.loc_id, params.day, params.time, 
-                                        params.text,params.text,params.sort, params.end])
+                                        params.text,params.sort,params.end])
                             .then(result=>result[0])
     }
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import {Link, useParams } from "react-router-dom"
 import '../css/bytopic.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faMagnifyingGlass, faFilter, faArrowRotateRight,faXmark,faAngleUp, faAngleDown} from '@fortawesome/free-solid-svg-icons'
+import {faMagnifyingGlass, faFilter, faArrowRotateRight,faXmark,faAngleUp, faAngleDown, faExclamation} from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import { DropDown, DropDownSort, ModalPage, CourseItem} from "../components/SearchByTopicComponents"
 
@@ -12,7 +12,7 @@ export default function SearchByTopic(){
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 8;
     const [detail,setDetail] = useState({day:[1,2,3,4,5,6,7], time:'', center:[1,2,3,4,5,6,7,8,9,10,11,12]});
-    const [sort, setSort] = useState(8);
+    const [sort, setSort] = useState(7);
     const [topic,setTopic] = useState({})
     const [cindex, setCindex] = useState('')
     const [view, setView] = useState(false)
@@ -53,8 +53,6 @@ export default function SearchByTopic(){
         .then(response=>setShowCourse([response.data]))
         .catch(error=>console.log(error))
     },[smallCategory,detail,searchText,endIndex,sort])
-
-    console.log('text=>',test)
 
     const category = [
         {
@@ -116,7 +114,8 @@ export default function SearchByTopic(){
         setSearchText(`%${value}%`)
         setTest(value)
     }
-
+    let cntarr = showCourse[0]
+    console.log(cntarr&&cntarr.length)
     return(
         <>
             <div className="bycenter_title_part">
@@ -139,7 +138,7 @@ export default function SearchByTopic(){
                 </ul>
 
                 <div className="search_part">
-                    <p><span>1개</span>의 강좌</p>
+                    {/* <p><span>1개</span>의 강좌</p> */}
                     <div className="search_part_btns">
                         <button className="search_part_detail"
                             onClick={openModal}
@@ -185,7 +184,10 @@ export default function SearchByTopic(){
                             ))}
                         </ul>
                     ))}
-                    <button className="morebtn" type="button" onClick={()=>{setCurrentPage(currentPage+1)}}>강좌더보기+</button>
+                    {cntarr&&cntarr.length !== 0 ? 
+                            <button className="morebtn" type="button" onClick={()=>{setCurrentPage(currentPage+1)}}>강좌더보기+</button>
+                        :   <div><FontAwesomeIcon className='nocourse_icon' icon={faExclamation} /><p className="nocourse_text">진행중인 강좌가 없습니다.</p></div>
+                    }
                 </div>
             </div>
         </>
