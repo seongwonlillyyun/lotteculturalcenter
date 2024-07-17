@@ -13,10 +13,13 @@ import "./css/style.css";
 import "./css/common.css";
 import './css/cart.css';
 import './css/order.css';
+import cartReducer from './reducers/cartReducer';
 
 
 const store = configureStore({
-  reducer : {}
+  reducer : {
+    cart : cartReducer
+  }
 })
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

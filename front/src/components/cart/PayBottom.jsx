@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ButtonBlack from './ButtonBlack';
 import ButtonWhite from './ButtonWhite';
@@ -8,6 +8,7 @@ import Checkbox from './Checkbox';
 
 export default function PaymentBottom({cname, next}) {
   const navigate = useNavigate();
+
   const handlePrev = () => {
     navigate('/cart')
   }
@@ -20,7 +21,7 @@ export default function PaymentBottom({cname, next}) {
   }
 
   return(
-    <div className='bottom-fix'>
+    <div className='bottom-fix '>
       <div className='min_inner'>
           <div className='total_price'>
             {

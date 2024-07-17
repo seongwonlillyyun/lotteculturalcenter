@@ -1,6 +1,7 @@
 import express from "express";
 import cors from 'cors';
 import path from "path";
+import cartRouter from './router/cartRouter.js';
 
 const server = express();
 const port = 8080;

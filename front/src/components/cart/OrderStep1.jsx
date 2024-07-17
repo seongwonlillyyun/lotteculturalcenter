@@ -16,14 +16,16 @@ export default function OrderStep1({next, step}) {
         <Tab step={step} />  
         <h2 className='htitle'>수강자 정보</h2>
         <CartList cname={'order'}/>
+        <CartList cname={'order'}/>
+        <CartList cname={'order'}/>
 
         <div className='mid-line'></div>
 
         <h2 className='htitle'>할인혜택</h2>
         <div className='order_line'>
-            <h3>L.POINT<span>1000원</span></h3>
+            <h3>L.POINT<span>보유 :<span className='num'>47</span>점</span></h3>
             <label htmlFor=''></label>
-            <input type='text' id='' name='' />
+            <input type='text' id='' name='' placeholder='0점' />
             <button type='submit' className='submit_btn' >사용</button>
             <p>포인트 사용은 10점 단위로 사용 가능합니다.</p>
         </div>

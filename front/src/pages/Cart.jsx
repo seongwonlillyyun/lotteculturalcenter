@@ -48,6 +48,7 @@ export default function Carts() {
 
         {/* 하단고정 */}
         <PayBottom />
+        
     </div>
   );
 }

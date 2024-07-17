@@ -13,7 +13,7 @@ export default function Root() {
   return (
     <>
       <Header />
-      <Outlet/>
+      <Outlet />
       <Footer />
     </>
   );

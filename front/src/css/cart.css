@@ -79,6 +79,11 @@
 
 
 /* 리스트 */
+.type .cart_bin{
+  text-align: center;
+  height: 200px;
+  border: 1px solid red;
+}
 .type .cart_list{
   position: relative;
   display: block;
@@ -263,7 +268,7 @@
 }
 /* 하단고정 결제 */
 .type .bottom-fix{
-  position: fixed;
+  position: sticky;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -297,9 +302,22 @@
 }
 
 
+/* 상품 */
+.product{
+  margin-top: 2rem;
+}
+.product .list{
+  display: flex;
+  gap: 10px;
+  border: 1px solid #000;
+  padding: 3rem;
 
-
-
+}
+.header-count{
+  margin-top: 2rem;
+  border: 1px solid red;
+  height: 100px;
+}
 
 
 

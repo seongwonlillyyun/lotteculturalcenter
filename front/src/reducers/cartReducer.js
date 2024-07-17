@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
  const initialState = {
-    list : [] 
+    list : [],
+    count : 0
  };
 
 
@@ -12,9 +13,13 @@ import { createSlice } from '@reduxjs/toolkit';
     // 리스트
     setCartList(state, action) {
       state.list = action.payload.clist;
+    },
+    // 카운트
+    setCount(state, action) {
+      state.count = action.payload.count;
     }
   }
  })
 
- export const { setCartList } = cartReducer.actions;
+ export const { setCartList, setCount } = cartReducer.actions;
  export default cartReducer.reducer;
