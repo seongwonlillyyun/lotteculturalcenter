@@ -12,7 +12,7 @@ export default function SearchByCenter(){
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 8;
     const [detail,setDetail] = useState({day:[1,2,3,4,5,6,7],time:''});
-    const [sort, setSort] = useState(7);
+    const [sort, setSort] = useState(8);
     const [center,setCenter] = useState({})
     const [cindex, setCindex] = useState(0)
     const [view, setView] = useState(false)
