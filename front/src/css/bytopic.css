@@ -27,6 +27,7 @@
     z-index: 99999;
     cursor: pointer;
     transition:all 300ms all;
+    visibility: visible;
 }
 .dropdown_list_unactive{
     position:relative;
@@ -42,6 +43,7 @@
     cursor: pointer;
     height: 0;
     opacity: 0;
+    visibility: hidden;
 }
 .dropdown_list li{
     text-align: center;
@@ -78,7 +80,7 @@
 }
 .search_part{
     display: flex;
-    justify-content: space-between;
+    justify-content: right;
     font-size: .9rem;
     margin-top: 1rem;
     /* border: 1px solid blue; */
@@ -308,7 +310,7 @@
     margin-top: 1rem;
     text-align: center;
 }
-.course_list{
+.topic_course_list{
     display: flex;
     gap: .5rem;
     flex-wrap: wrap;
@@ -346,8 +348,34 @@
     padding-left: .5rem;
     padding-top: .3rem;
 }
+.handle_search_li{
+    position: relative;
+}
+.handle_search_center{
+    border: 1px solid #CAC8C6;
+    width: 80px;
+    height: 30px;
+    background-color: #FDFAF7;
+    border-radius: 20px;
+    font-size: .8rem;
+    text-align: center;
+    padding-top: .3rem;
+}
 .search_reset_btn{
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
     font-size: .7rem;
     color: #7E7D7B;
-    margin-left: .7rem;
+}
+
+.nocourse_icon{
+    font-size: 3rem;
+    color:  rgb(221,205,197);
+}
+
+.nocourse_text{
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 1rem;
 }
