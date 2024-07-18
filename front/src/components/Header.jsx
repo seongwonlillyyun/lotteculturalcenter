@@ -175,7 +175,7 @@ function CategoryPopup() {
           <div className={`tab_con ${active === "지점" && "on"}`}>
             {
               Object.keys(locationList).map(key => (
-                <div className="tab_menu">
+                <div className="tab_menu" key={key}>
                   <h4>{key}</h4>
                   <ul>
                     {
@@ -197,7 +197,7 @@ function CategoryPopup() {
           <div className={`tab_con ${active === "강좌" && "on"}`}>
             {
               Object.keys(categoryList).map(key => (
-                <div className="tab_menu">
+                <div className="tab_menu" key={key}>
                   <h4>{key}</h4>
                   <ul>
                     {

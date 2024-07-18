@@ -201,4 +201,14 @@
 .course_detail .course_content img {
   border-radius: 10px;
   margin: auto;
+  width: 100%;
+}
+
+.course_detail .course_content .only_mobile {
+  display: none;
+}
+
+.course_detail .course_content .txt_box {
+  margin-top: 30px;
+  text-align: center;
 }

@@ -44,8 +44,8 @@ function MainVisual() {
           speed={2000}
         >
           {
-            list.map(v => (
-              <SwiperSlide onClick={() => clickHandler(v.bid)}>
+            list.map((v, i) => (
+              <SwiperSlide key={i} onClick={() => clickHandler(v.bid)}>
                 <img className="bg" src={`//localhost:8080/${v.img_path}`} alt="" />
                 <div className="txt_box">
                   <h2>{v.title}</h2>
@@ -130,9 +130,40 @@ function NewCourse() {
 }
 
 function NotiEvent() {
+  const navigate = useNavigate();
+  const [list, setList] = useState([]);
+
+  useEffect(()=>{
+    const url = "//localhost:8080/board/notievt/all";
+    axios.get(url)
+      .then(result => setList(result.data.slice(0, 4)))
+  },[])
+
+  const tagRemover = (html) => {
+    const div = document.createElement('div');
+    div.innerHTML = html.replaceAll("&nbsp;", "");
+
+    return div.textContent;
+  }
+
+  const clickHandler = (id) => {
+    navigate(`/board/notievent/${id}`);
+  }
+
   return(
     <div className="main_notiEvent">
       <div className="inner">
+        <ul>
+          {
+            list.map(v => (
+              <li onClick={()=>{clickHandler(v.bid)}}>
+                <h3>[{v.type}] {v.title}</h3>
+                <p>{tagRemover(v.content)}</p>
+                <span>{v.date}</span>
+              </li>
+            ))
+          }
+        </ul>
         <Link className="notice_btn" to="/board/notievent">롯데문화센터의 다양한 소식을 확인해보세요!</Link>
       </div>
     </div>

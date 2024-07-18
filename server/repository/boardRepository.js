@@ -123,8 +123,11 @@ export const getAllNotiEvtList = async() => {
     select
       bid,
       type,
-      title
+      title,
+      content,
+      date_format(reg_date, "%Y-%m-%d") date
     from noti_event
+    order by reg_date desc;
   `
 
   return db.execute(sql)
