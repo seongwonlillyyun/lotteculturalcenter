@@ -14,7 +14,7 @@ const tvalue =  location.state;
         <div className="sub_visual">
             <h2 className="heading">수강내역조회</h2>
             </div>
-            <div className="narrow_page full_inner">
+            <div className="narrow_page min_inner">
             <div className="courserHistory_topinfo">
             <TopInfo/>
             </div>

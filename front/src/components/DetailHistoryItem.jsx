@@ -8,7 +8,7 @@ export function DetailHistoryItem(){
     <div className='detailhistory_item_top'>
     <div className='detailhistory_item_top_left'>
         <ul>
-            <li className="detailhistory_item_branch">중동점</li>
+            <li className="detailhistory_item_branch">강남점</li>
             <li className="detailhistory_item_course">[7/13]윤주코치의 바른 자세를 만드는 다리 찢기 스트레칭</li>
         </ul>
                 </div>
@@ -37,14 +37,14 @@ export function DetailHistoryItem(){
 <div className='detailhistory_item_bottom'>
 <div className="detailhistory_item_bottom_left">
     {/* <input type="checkbox" checked={isChecked} /> */}
-    <span className="detailhistory_bottom_name">김미성</span>
+    <span className="detailhistory_bottom_name">테스트씨</span>
     </div>
 
 <div className="detailhistory_item_bottom_right">
 <ul>
     <li>
     <p className="detailhistory_item_bottom_right_subject">접수상태</p>
-    <p>결제완료</p>
+    <p className='detailhistory_item_bottom_right_value'>결제완료</p>
     </li>
     <li>
     <p className="detailhistory_item_bottom_right_subject">주문금액</p>

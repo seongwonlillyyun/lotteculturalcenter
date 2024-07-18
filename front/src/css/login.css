@@ -1,13 +1,14 @@
 .login{
     display: flex;
+    max-width: 1920px;
 }
 
 .login_left{
     background-image: url('../../public/img/login/bg-login.jpg');
     background-repeat: no-repeat;
     background-size: contain;
-    height: 700px;
-    width: 100%
+    min-height: 600px;
+    width: 50%;
     /* position: relative; */
   
 }
@@ -35,6 +36,7 @@
 
 .login_right{
     text-align: center;
+    width: 50%;
     /* border : 1px solid red; */
     /* height : 570px */
 }

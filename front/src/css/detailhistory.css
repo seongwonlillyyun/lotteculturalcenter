@@ -123,7 +123,7 @@ width: 120px;
 }
 
 .detailhistory_item_bottom{
-    padding-top: 32px;
+    padding-top: 40px;
 }
 
 .detailhistory_bottom_name{
@@ -138,7 +138,6 @@ width: 120px;
     font-size: 15px;
     font-weight: bold;
     padding-left: 20px;
-    
 
 }
 
@@ -146,13 +145,18 @@ width: 120px;
     margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
-}
+}  
 
 
 .detailhistory_item_bottom_right_subject{
-    width: 150px;
+    width: 120px;
+    margin-right: 20px;
+
 }
 
+/* .detailhistory_item_bottom_right_value{
+border: 1px solid blue;
+} */
 .detailhistory_item_branch{
     border : 1px solid rgb(34, 34, 34);
     border-radius: 0.6rem;

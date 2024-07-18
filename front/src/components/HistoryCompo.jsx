@@ -67,7 +67,7 @@ for(let i=0; i<itemList.length; i+=2){
     <div className="history_mid">
         <div>        
             <span>전체</span>
-            <span>0</span>
+            <span>1</span>
             <span>개</span></div>
         <select className="history_yearfilter">
             <option value="all">전체연도</option>
@@ -79,7 +79,7 @@ for(let i=0; i<itemList.length; i+=2){
     <div className="history_content">
         {tab.value === 'register' && <div> 수강내역 content
             <HistoryItem tab={tab}/>
-            <HistoryItem tab={tab}/>
+            {/* <HistoryItem tab={tab}/> */}
             {/* <ul>
                 {rows.map((items)=>(
                     <li>
@@ -128,7 +128,7 @@ export function HistoryItem({tab}){
             </div>
             <div className="history_item_mid">
                 <ul>
-                    <li className="history_item_branch">중동점</li>
+                    <li className="history_item_branch">강남점</li>
                     <li className="history_item_coursename">[7/13]윤주코치의 바른자세를 만드는 다리 찢기 스트레칭</li>
                     <li className="history_item_info">
                         <span>옥윤주</span> / 
@@ -144,7 +144,7 @@ export function HistoryItem({tab}){
 
     {tab.value === 'register' && 
         <ul className="history_item_bottom_ul">
-            <li className="history_item_bottom_name">김미성</li>
+            <li className="history_item_bottom_name">테스트씨</li>
             <li className="history_item_bottom_state">
             <span>접수상태</span>
             <span>결제완료</span>
@@ -158,7 +158,7 @@ export function HistoryItem({tab}){
 
     {tab.value === 'cancel' && 
                 <ul className="history_item_bottom_ul">
-        <li className="history_item_bottom_name">김미성</li>
+        <li className="history_item_bottom_name">테스트씨</li>
         <li className="history_item_bottom_state">
         <span>접수상태</span>
         <span>취소완료</span>
