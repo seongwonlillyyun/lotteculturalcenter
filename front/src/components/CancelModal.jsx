@@ -8,7 +8,8 @@ export function CancelModal({closeModal, handleChange, selectValue}){
     const navigate = useNavigate()
     const handleSubmit = () => {
         alert('선택하신 강좌의 결제가 취소되었습니다.')
-        navigate('/courseHistory')
+        navigate('/courseHistory',{state:  {"title": "취소내역 조회",
+                                                 "value" : "cancel"}})
     }
 
     return(

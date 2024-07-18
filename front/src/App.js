@@ -39,7 +39,7 @@ export default function App() {
       {path : "/changememberinfo" , element : <ChangeMemberInfo/> },
       {path :"/courseHistory", element : <CourseHistory/>},
       {path :"/detailHistory", element : <DetailHistory/>}, // path 변경예정
-      // {path :"/mypage", element : <MypageModal modalState={mypageModalOpen} next={nextStep} close={closeMypage}/>} // path 변경예정
+
     ]
   }])
 

@@ -18,12 +18,21 @@ return(
 }
 
 export function HistoryForm(){
-
+// console.log('tvalue->',tvalue);
 const [itemList, setItemList] = useState([])
-const [tab, setTab] = useState('수강내역 조회')
-// const [tab, setTab] = useState({title : '수강내역 조회', value : 'register'})
-const handleTabClick = (tab) => {
-    setTab(tab)
+const [tab, setTab]=useState({"title": "수강내역 조회",
+                                "value" : "register"})
+// const [tab, setTab] = useState(tvalue)
+
+const handleTabClick = (value) => {
+  if(value==='register'){
+    setTab( {"title": "수강내역 조회",
+        "value" : "register"
+        })
+  }else{
+      setTab(   {"title": "취소내역 조회",
+        "value" : "cancel"})
+  }
     console.log('tab->', tab);
 }
 
@@ -34,27 +43,27 @@ const typeList = [
             {"title": "취소내역 조회",
             "value" : "cancel"}]
 
-// console.log('typeList.value->', typeList.value);
-// console.log('typeList.title->', typeList.title);
 
+//todo 이것도 안먹혔음^^ 해결하세요
 const rows = [] 
 for(let i=0; i<itemList.length; i+=2){
     rows.push(itemList.slice(i,i+2))
 }
 
-    return(
-        <>
-        <nav className="history_btns">
+    return(<div className="coursehistory_form">
+<div className='history_mid_center'>
+<nav className="history_btns">
 {typeList.map(item=>(
-<button className={typeList.value === item.value ?'history_btn_active' :'history_btn'}
+<button className={item.value === tab.value ?'history_btn_active' :'history_btn'}
         type='button' value={item.value} onClick={()=>handleTabClick(item.value)}>
             {item.title}</button>
 ))}
-
-        </nav>
-<div className="inner">
+</nav>
 <input type="text" className="history_search" 
     placeholder="주문번호/강좌명으로 검색하세요"/>
+</div>
+
+<div className="">
     <div className="history_mid">
         <div>        
             <span>전체</span>
@@ -68,7 +77,7 @@ for(let i=0; i<itemList.length; i+=2){
         </select>
 </div>
     <div className="history_content">
-        {tab === 'register' && <> 수강내역 content
+        {tab.value === 'register' && <div> 수강내역 content
             <HistoryItem tab={tab}/>
             <HistoryItem tab={tab}/>
             {/* <ul>
@@ -80,13 +89,13 @@ for(let i=0; i<itemList.length; i+=2){
                     </li>
                 ))}
             </ul> */}
-            </>}
-        {tab === 'cancel' && <div> 취소내역 content
+            </div>}
+        {tab.value === 'cancel' && <div> 취소내역 content
             <HistoryItem tab={tab}/>
             </div>}
     </div>
 </div>
-        </>
+        </div>
     )
 }
 
@@ -99,7 +108,7 @@ export function HistoryItem({tab}){
 
 
     return(
-        <>
+        // <>
         <div className="history_item">
             <div className="history_item_top">
                 <div className="history_item_top_left">
@@ -133,7 +142,7 @@ export function HistoryItem({tab}){
             </div>
             <div className="history_item_bottom">
 
-{tab === 'register' && 
+    {tab.value === 'register' && 
         <ul className="history_item_bottom_ul">
             <li className="history_item_bottom_name">김미성</li>
             <li className="history_item_bottom_state">
@@ -144,10 +153,10 @@ export function HistoryItem({tab}){
             <span>주문금액</span>
             <span>10,000원</span>
             </li>
-                            </ul>
+        </ul>
             }
 
-{tab === 'cancel' && 
+    {tab.value === 'cancel' && 
                 <ul className="history_item_bottom_ul">
         <li className="history_item_bottom_name">김미성</li>
         <li className="history_item_bottom_state">
@@ -158,17 +167,12 @@ export function HistoryItem({tab}){
         <span>취소(환불)금액</span>
         <span>10,000원</span>
         </li>
-                        </ul>
+    </ul>
                     }
-                
-
-
-
 
             </div>
         </div>
-        
-        </>
+        // </>
     )
 }
 

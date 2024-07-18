@@ -12,12 +12,30 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons/faArrowLeft";
 export function MypageModal({next, close}){
 
     const navigate = useNavigate()
-    // const modalClose = {close}
+
     const handleClickMember= ()=>{
         navigate('/changememberinfo');
-        close;
+        close()
     }
-    
+    const handleClickCart =()=>{
+        navigate('/cart')
+        close()
+    }
+    const handleClickHistory =()=>{
+        navigate('/coursehistory')
+        close()
+    }
+
+    const handleClickReview =()=>{
+        navigate('/review')
+        close()
+    }
+
+    const handleClickQna = () =>{
+        navigate('/board/personal')
+        close()
+    }
+
     return (
 <div className="mypage_modal_out">
     <div className="mypage_modal">
@@ -45,34 +63,41 @@ export function MypageModal({next, close}){
     </div>
     <div className="mypage_blocks">
     <div className="mypage_block">
+    <button type="button" onClick={handleClickCart}  className="mypage_block_btns">
     <img src='/img/mypage/icon-mypage-class-cart.png' 
             className="mypage_img"/>
     <p className="mypage_block_subject">장바구니</p>
     <p className="mypage_block_value">0</p>
+    </button>
 </div>
 <div className="mypage_block">
+    <button type="button" onClick={handleClickHistory} className="mypage_block_btns">
     <img src='/img/mypage/icon-mypage-class-history.png' 
             className="mypage_img"/>
     <p className="mypage_block_subject">수강내역</p>
     <p className="mypage_block_value">0</p>
+            </button>
 </div>
 <div className="mypage_block">
+ <button type="button" onClick={handleClickReview} className="mypage_block_btns">
     <img src='/img/mypage/icon-mypage-class-review-course.png' 
             className="mypage_img"/>
- 
     <p className="mypage_block_subject">수강후기</p>
     <p className="mypage_block_value">0</p>
+ </button>
 </div>
 
 
     </div>
     </div>
 <div className="mypage_bottom">
-    <div className="mypage_bottom_left">
-    <FontAwesomeIcon icon={faPenToSquare} />
-    <p className="mypage_bottom_text">1대1문의</p>
-    </div>
-    <FontAwesomeIcon icon={faChevronRight} className="mypage_arrow" />
+    <button type='button' onClick={handleClickQna} className="mypage_qna_btn">
+        <div className="mypage_bottom_left">
+        <FontAwesomeIcon icon={faPenToSquare} />
+        <p className="mypage_bottom_text">1대1문의</p>
+        </div>
+         <FontAwesomeIcon icon={faChevronRight} className="mypage_arrow" />
+    </button>
 </div>
     </div>
 </div>
@@ -153,13 +178,13 @@ return(
     {isOpen.metro && (
         <div className="branchs">
         <div className="branch_name">
-        <button onClick={()=>handleClick()}></button>인천점</div>
+        <button onClick={()=>handleClick()}>인천점</button></div>
         <div className="branch_name">
-        <button onClick={()=>handleClick()}></button>동탄점</div>
+        <button onClick={()=>handleClick()}>동탄점</button></div>
         <div className="branch_name">
-        <button onClick={()=>handleClick()}></button>구리점</div>
+        <button onClick={()=>handleClick()}>구리점</button></div>
         <div className="branch_name">
-        <button onClick={()=>handleClick()}></button>분당점</div>
+        <button onClick={()=>handleClick()}>분당점</button></div>
         </div>
     )}
 
@@ -174,13 +199,13 @@ return(
             {isOpen.etc &&(
                 <div className="branchs">
                 <div className="branch_name">
-                <button onClick={()=>handleClick()}></button>부산본점</div>
+                <button onClick={()=>handleClick()}>부산본점</button></div>
                 <div className="branch_name">
-                <button onClick={()=>handleClick()}></button>광복점</div>
+                <button onClick={()=>handleClick()}>광복점</button></div>
                 <div className="branch_name">
-                <button onClick={()=>handleClick()}></button>광주점</div>
+                <button onClick={()=>handleClick()}>광주점</button></div>
                 <div className="branch_name">
-                <button onClick={()=>handleClick()}></button>대구점</div>
+                <button onClick={()=>handleClick()}>대구점</button></div>
                 </div>
             )}
 

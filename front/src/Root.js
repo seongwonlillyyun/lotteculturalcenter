@@ -27,7 +27,7 @@ const location = useLocation();
   return (
     <>
     { modalOpen === true && step ===1  
-    ?<MypageModal next={nextStep} close={closeModal} />
+    ?<MypageModal next={nextStep} close={closeModal} modalState={modalOpen}/>
     :null}
 
     {modalOpen ===true && step===2 

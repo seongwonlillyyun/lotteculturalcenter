@@ -86,11 +86,14 @@ margin-bottom :4rem;
     width: 33%;
     border-radius: 8px;
     text-align: center;
-    /*justify-content: center; */
     height: 120px;
     padding: 0.5rem;
 }
-
+/* 왜안돼!!! */
+.mypage_block_btns:hover .mypage_block_value::after{
+    color: red;
+content: '';
+}
 .mypage_img{
     display: inline;
     width: 40px;
@@ -100,6 +103,7 @@ margin-bottom :4rem;
 .mypage_block_subject{
     font-size: 14px;
     margin-bottom: 0.2rem;
+    /* border: 1px solid red; */
 }
 .mypage_block_value{
 font-weight: 600;
@@ -108,18 +112,22 @@ color : black
 
 }
 
-.mypage_bottom, .mypage_bottom_left{
+.mypage_bottom_left{
     display: flex;
-    
 }
 
 .mypage_bottom{
-    justify-content: space-between;
-   align-items: center;
+    /* justify-content: space-between; */
+   /* align-items: center; */
     padding-bottom: 1rem;
     border-bottom: 1px solid rgba(0, 0, 0, .14)
-    
 }
+.mypage_qna_btn{
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+
 .mypage_bottom_text{
     font-size: 16px;
     margin-left: 1rem;

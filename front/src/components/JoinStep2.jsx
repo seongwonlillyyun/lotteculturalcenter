@@ -3,6 +3,10 @@ import axios from 'axios';
 import{useState, useRef} from 'react'
 import { validateCheckStep2,pwCheck, changeEmailDomain } from "../apis/validate.js";
 import DaumPostCode from 'react-daum-postcode'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHandPeace } from "@fortawesome/free-solid-svg-icons/faHandPeace";
+
+
 
 //! step2 정보입력 
 export default function JoinStep2({next,pre,formData,handleChange, handleAddress}){
@@ -77,27 +81,36 @@ const refs = {
 } // Ref앞에 이름 formdata이름이랑 맞춰야하나? 
 
     return(
-        <div className="join_step2_total">
-        <div className="join_step2_top">
-            <p className="join_step_title">STEP2 회원정보입력</p>
-            <p className="join_step_desc">짠! 벌써 마지막 단계입니다!</p>
-            <p className="join_step_text">회원가입에 필요한 정보를 입력해주세요</p>
-            </div>
+<div className="join_step2_total">
+        
+<div className="join_step2_top">
+        <div className="join_titles">
+        <img src="/img/join/step2.png" alt="join_img" className="join_img"/>
+        <p className="join_step_title">회원정보입력</p>
+        </div>
+
+        <p className="join_step_desc">짠! 벌써 마지막 단계입니다!</p>
+        <p className="join_step_text">회원가입에 필요한 정보를 입력해주세요</p>
+</div>
             
+
 <form className="join_step2_form">
-<p>회원정보입력 <span className="join_ess">(*는 필수입력 항목입니다.)</span></p>
+        <div className="join_step2_subtitles">
+<p className="join_step2_subtitle">회원정보입력 <span className="join_ess">(*는 필수입력 항목입니다.)</span></p>
+        </div>
 <ul>
-<li className="join_step2_item">
-<div className="join_step2_categories">
-                <span className="join_ess">*</span>
-        <label className="join_step2_category">아이디</label></div>
+        <li className="join_step2_item">
+        <div className="join_step2_categories">
+        <span className="join_ess">*</span>
+        <p className="join_step2_category">아이디</p>
+        </div>
         <div>
         <input type="text" name="user_id" placeholder="4~12자, 영어, 숫자" 
                 className="join_step2_input"
                 value={formData.user_id} onChange={handleChange} ref={refs.idRef}/>
         <button type="button" className="join_step2_dupli_btn" >중복확인</button> {/* 아이디 중복 체크 관련 */}
         </div>
-</li>
+        </li>
 
 <li className="join_step2_item">
          <div className="join_step2_categories">
@@ -107,9 +120,17 @@ const refs = {
         <input type="password" name="user_pw" placeholder="비밀번호를 입력해주세요"  
         className="join_step2_input"
         value={formData.user_pw} onChange={handleChange} ref={refs.pwRef}/>
+        </li>
+
+        <li className="join_step2_item">
+         <div className="join_step2_categories">
+        <span className="join_ess">*</span>
+        <label className="join_step2_category">비밀번호 확인</label>
+        </div>
         <input type="password" name="user_repw" placeholder="비밀번호를 다시한번 입력해주세요"  
         className="join_step2_input"
-        value={formData.user_repw} onChange={handleChange} ref={refs.repwRef}/></li>
+        value={formData.user_repw} onChange={handleChange} ref={refs.repwRef}/>
+        </li>
 
 <li className="join_step2_item">
 <div className="join_step2_categories">
@@ -124,17 +145,18 @@ const refs = {
 <div className="join_step2_categories">
         <span className="join_ess">*</span><label className="join_step2_category">이메일</label>
         </div>
-<div>
+<div className="join_step2_email">
 <input type="text" name="emailId" placeholder="이메일을 입력해주세요"  
         className="join_step2_input"
         value={formData.emailId} onChange={handleChange} ref={refs.emailIdRef}/>
-@
+        <p className="join_dat">@</p>
 <input type="text" name="emailDomain" value={formData.emailDomain} 
         className="join_step2_input"
         onChange={handleChange} ref={refs.emailDomainRef} />
 
 
-<select name="emailDomain" className="join_step2_select"
+<select name="emailDomain" 
+        className="join_step2_select join_stpe2_select_domain"
         onChange={(e)=>changeEmailDomain(e, refs, handleChange)}>
     <option value="self">직접입력</option>
     <option value="naver.com">네이버</option>
@@ -153,15 +175,15 @@ const refs = {
         </div>
         
 <div>
-<select name="phoneNo1" className="join_step2_select">
+<select name="phoneNo1" className="join_step2_select join_stpe2_select_phone">
     <option>010</option>
     <option>011</option>
     <option>016</option>
     <option>018</option>
     <option>019</option>
 </select>
-<span>-</span>
-<input type="text" placeholder="0000-0000" name="phoneNo2" 
+<span className="join_step2_telbar">-</span>
+<input type="text" placeholder="휴대폰번호 뒷자리를 입력해주세요" name="phoneNo2" 
         className="join_step2_input"
         value={formData.phoneNo2} onChange={handleChange} ref={refs.phoneNo2Ref}/>
 </div>        
@@ -170,25 +192,24 @@ const refs = {
 <li className="join_step2_item">    
 <label className="join_step2_category">주소</label>
 <ul>
-        <li>
-        <span className="join_step2_adddress_text">우편번호</span>
-<input type="text" name="zipcode"  className="join_step2_input"
+<li>
+<span className="join_step2_address_text">우편번호</span>
+<input type="text" name="zipcode"  className="join_step2_input join_stpe2_input_addr"
         value={formData.zipcode} onChange={handleChange} 
         ref={refs.zipcodeRef} placeholder="우편번호"/>
         <button type='button' onClick={handleToggle} className="join_addr_btn">우편번호 검색</button>
         </li>
-        <li>
-        <span className="join_step2_adddress_text addr_text_add">주소</span>
-
-<input type="text" name="address" 
-value={formData.address} ref={refs.addressRef} className="join_step2_input"/>
-        </li>
-        <li>
-        <span className="join_step2_adddress_text">상세주소</span>
+<li>
+<span className="join_step2_address_text addr_text_add">주소</span>
+<input type="text" name="address" className="join_step2_input join_stpe2_input_addr"
+        value={formData.address} ref={refs.addressRef} />
+</li>
+<li>
+<span className="join_step2_address_text">상세주소</span>
 <input type="text" name="detailAddress" value={formData.detailAddress} 
-        className="join_step2_input" ref={refs.detailAddressRef} 
+        className="join_step2_input join_stpe2_input_addr" ref={refs.detailAddressRef} 
         onChange={handleChange} placeholder="상세주소"/>
-        </li>
+</li>
 </ul>
 {isOpen &&
         <div>
@@ -227,12 +248,12 @@ value={formData.address} ref={refs.addressRef} className="join_step2_input"/>
 </ul>
 
 
-<div>
+
+</form>
+<div className="join_btns">
         <button onClick={pre} className="join_pre_btn">이전</button>
         <button onClick={handleSubmit} type='button' className="join_next_btn">가입완료</button>
 </div>
-
-</form>
         </div>
     )
 
