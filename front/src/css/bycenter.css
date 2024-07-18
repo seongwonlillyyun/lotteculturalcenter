@@ -72,19 +72,34 @@
 }
 .middle_category_txt{
     margin-top: 1rem;
-    font-size: 13px;
+    font-size: 15px;
     width: 90px;
     text-align: center;
     color: rgba(0, 0, 0, .6);
+}
+.middle_category_div{
+    position: relative;
 }
 .middle_category_img_active {
     border-radius: 100%;
     width: 90px;
     height: 90px;
 }
+.test_active::after{
+    display: block;
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    border-radius: 100%;
+    top: 0;
+    left: 0;
+    content: '';
+    background: url('../../public/img/middle_category_active_img.svg') no-repeat center center rgba(224, 245, 92, .9);
+};
+
 .middle_category_txt_active{
     margin-top: 1rem;
-    font-size: 13px;
+    font-size: 15px;
     width: 90px;
     text-align: center;
     color:black;
@@ -299,7 +314,7 @@
 .course_list_content{
     text-align: center;
 }
-.course_list{
+.center_course_list{
     display: flex;
     gap: .5rem;
     flex-wrap: wrap;

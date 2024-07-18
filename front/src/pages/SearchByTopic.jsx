@@ -26,7 +26,7 @@ export default function SearchByTopic(){
         setSelected(selected)
     }
 
-
+    console.log('detail=>',detail)
     useEffect(()=>{
         setSmallCategory(0)
         setDetail({day:[1,2,3,4,5,6,7],time:'', center:[1,2,3,4,5,6,7,8,9,10,11,12]})
@@ -174,7 +174,7 @@ export default function SearchByTopic(){
 
                 <div className="course_list_content">
                     {showCourse.map((items,index)=>(
-                        <ul className="course_list">
+                        <ul className="topic_course_list">
                             {items.map((item, index)=>(
                                 <li key={index}>
                                     <Link to={`course/${item.course_id}`}>

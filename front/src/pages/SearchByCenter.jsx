@@ -191,7 +191,7 @@ export default function SearchByCenter(){
 
                 <div className="course_list_content">
                     {showCourse.map((items,index)=>(
-                        <ul className="course_list">
+                        <ul className="center_course_list">
                             {items.map((item, index)=>(
                                 <li key={index}>
                                     <Link to={`course/${item.course_id}`}>

@@ -13,16 +13,16 @@ export const getCenter = async(id)=>{
 export const getCoursesbyCenter = async(params) =>{
     let sql = '';
     if(params.sort === 10){
-        sql = ` select course_id, statues, loc_id, cid, csid,
-                course_name, course_start, price, course_sum, teacher_name, left(start_time,5) start_time, 
+        sql = ` select course_id, status, loc_id, cid, csid,course_img,
+                course_name, course_start, price, course_summary, teacher_name, left(start_time,5) start_time, 
                 left(end_time,5) end_time, course_week, num_of_course, num_of_people,
                 format(price, '#,#') as price, name , dayofweek(course_start) , date_format(start_time,'%p')
                 from (	select 
                         c.course_id, 
-                        c.statues, c.loc_id, 
-                        c.csid, c.course_name, c.course_sum, 
+                        c.status, c.loc_id, c.course_img,
+                        c.csid, c.course_name, c.course_summary, 
                         c.teacher_name, c.start_time,
-                        c.end_time,
+                        c.end_time, c.course_img
                         c.course_week, 
                         c.num_of_course, c.num_of_people, c.price, 
                         l.name as center_name,
@@ -44,14 +44,14 @@ export const getCoursesbyCenter = async(params) =>{
                                         params.text,params.end])
                             .then(result=>result[0])
     } else {
-        sql = ` select course_id, statues, loc_id, cid, csid,
-                course_name, course_start, price, course_sum, teacher_name, left(start_time,5) start_time, 
+        sql = ` select course_id, status, loc_id, cid, csid,course_img,
+                course_name, course_start, price, course_summary, teacher_name, left(start_time,5) start_time, 
                 left(end_time,5) end_time, course_week, num_of_course, num_of_people,
                 format(price, '#,#') as price, name , dayofweek(course_start) , date_format(start_time,'%p')
                 from (	select 
                         c.course_id, 
-                        c.statues, c.loc_id, 
-                        c.csid, c.course_name, c.course_sum, 
+                        c.status, c.loc_id, c.course_img,
+                        c.csid, c.course_name, c.course_summary, 
                         c.teacher_name, c.start_time,
                         c.end_time,
                         c.course_week, 
