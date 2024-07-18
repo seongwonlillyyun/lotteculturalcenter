@@ -266,12 +266,13 @@
 .type .basic_btn .large{
   padding: 15px 100px;
 }
+
 /* 하단고정 결제 */
 .type .bottom-fix{
   position: sticky;
   bottom: 0;
   left: 0;
-  width: 100%;
+  width: 100%;  
   background-color: #fff;
   border-top: 2px solid #000;
 }
