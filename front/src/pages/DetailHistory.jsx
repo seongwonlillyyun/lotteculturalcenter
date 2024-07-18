@@ -51,7 +51,7 @@ const handleChange = (e) => {
     return(
         <div>
         <div className="sub_visual"><h2 className="heading">수강내역조회</h2></div>
-        <div className='section narrow_page full_inner'>
+        <div className='section narrow_page min_inner'>
         <div className=''>
         <p className='detailhistory_subtitle'>주문정보</p>
         <table border='1' className='detailHistory_table'>
@@ -80,7 +80,7 @@ const handleChange = (e) => {
     </div>
     <DetailHistoryItem />
 <div className='detailhistory_pre_btn_div full_inner'>
-<button className='detailhistory_pre_btn' type='button' 
+<button className='detailhistory_pre_btn' type='button'
             onClick={handleClick}>이전</button>
 
 </div>

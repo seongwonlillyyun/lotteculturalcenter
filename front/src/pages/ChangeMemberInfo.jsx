@@ -10,13 +10,13 @@ export default function ChangeMemberInfo(){
             <h2 className="heading">회원정보변경</h2>
             </div>
 
-<div className="section basic_page full_inner">
+<div className="section basic_page min_inner">
     <p className='member_info_title'>회원정보</p>
     <div className='member_info'>
     <div className='member_info_left'>
         <ul>
         <li><span className='member_info_subject'>이름</span>
-        <span className='member_info_value'>홍길동</span></li>
+        <span className='member_info_value'>테스트씨</span></li>
         <li><p className='member_info_subject'>생년월일</p>
         <span className='member_info_value'>2000.01.01</span></li>
         <li><p className='member_info_subject'>휴대전화</p>

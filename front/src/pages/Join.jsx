@@ -44,7 +44,7 @@ export default function Join(){
             </div>
             {/* <p className='join_title'>회원가입</p> */}
 
-            <div className='section narrow_page full_inner'>
+            <div className='section narrow_page min_inner'>
 
 
             {step===1 && (

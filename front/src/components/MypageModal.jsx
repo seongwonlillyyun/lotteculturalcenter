@@ -47,14 +47,14 @@ export function MypageModal({next, close}){
 
     <div className="mypage_member">
         <button type="button" onClick={handleClickMember} className="member_change_btn">
-        <p className="mypage_name">김미성</p>
+        <p className="mypage_name">테스트씨</p>
         <FontAwesomeIcon icon={faAngleRight} className="mypage_name_arrow" /></button>
     </div>
 <div className="mypage_middle">
     <div className="mypage_middle_top">
     <div className="mypage_mybranch" onClick={next}>
         <p className="mypage_middle_top_subject">관심지점</p>
-        <button className="mypage_middle_top_value" onClick={next}>중동점</button>
+        <button className="mypage_middle_top_value" onClick={next}>강남점</button>
     </div>
     <div>
         <p className="mypage_middle_top_subject">POINT</p>
