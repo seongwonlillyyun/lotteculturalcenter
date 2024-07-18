@@ -12,9 +12,9 @@ export default function CartList({cname}) {
   // const dispatch = useDispatch();
   // const cartList = useSelector(state => state.cart.list);
 
-  const [user, setUser] =useState('');
+
   const [productList, setProductList] = useState([])
-  const [userId, setUserId] = useState('');
+
 
     // 체크박스 유효성검사
     const validateCheck = () => {

@@ -17,9 +17,17 @@ import { createSlice } from '@reduxjs/toolkit';
     // 카운트
     setCount(state, action) {
       state.count = action.payload.count;
+    },
+    // 카트 추가
+    setCartItem(state, action) {
+      if(action.payload.cnt === 1) {
+        alert('장바구니에 추가되었습니다.');
+       } else{
+         alert('동일한 상품이 장바구니에 있습니다.')
+       }
     }
   }
  })
 
- export const { setCartList, setCount } = cartReducer.actions;
+ export const { setCartList, setCount, setCartItem } = cartReducer.actions;
  export default cartReducer.reducer;

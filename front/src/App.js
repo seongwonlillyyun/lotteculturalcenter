@@ -20,11 +20,6 @@ export default function App() {
   }
 
 
-  // console.log('count->',count);
-
-
-
-
   
   const router = createBrowserRouter([{
     path : "/",

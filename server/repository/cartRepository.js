@@ -4,6 +4,7 @@ import { db } from '../db/database_mysql80.js';
 // 리스트
 export const getCart = async(cart) => {
   const sql = `
+
   `
   return db
           .execute(sql, [cart])
@@ -21,9 +22,37 @@ export const getCount = async(userId) => {
           .then(result => result[0][0]) // {count:1}
 }
 
+// 장바구니 체크 : 상품id랑 같은지 체크 -> 동일상품 없으면 카트에 추가
+export const cartCheck = async(items) => {
+  const sql = `
+      select count(cart_id) cnt, cart_id cid, course_id id  from cart
+	      where course_id = ? 
+        group by cart_id
+  `;
+  return db
+          .execute(sql, [items.id]) 
+          .then(result => result[0][0])
+}
 
 
+// 카트 추가
+export const insert = async(items) => {
+  const checkResult = await cartCheck(items);
+  
+  let result_rows = 0;
+  let sql = ``;
 
+    if(checkResult === undefined){
+      sql = `
+          insert into cart(course_id, user_id, cdate) values(? , ? ,now())
+        `
+      const [result] = await db
+                            .execute(sql, [items.id, items.userId])
+              result_rows = result.affectedRows;
+    }
+
+    return {cnt : result_rows};
+}
 
 
 

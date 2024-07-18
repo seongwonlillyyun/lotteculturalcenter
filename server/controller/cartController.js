@@ -14,13 +14,17 @@ export const getCart = async(req, res) => {
 export const getCount = async(req, res) => {
   const {userId} = req.body;
   const result = await repository.getCount(userId);
-  // console.log('userid->', userId);
   res.json(result);
   res.end();
 }
 
-
-
+// 카트 추가
+export const insert = async(req, res) => {
+  const items = req.body;
+  const result = await repository.insert(items);
+  res.json(result);
+  res.end();
+}
 
 
 

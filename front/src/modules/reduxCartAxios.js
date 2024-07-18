@@ -1,5 +1,5 @@
 import { axiosGet, axiosPost} from './reduxAxios';
-import { setCartList, setCount} from '../reducers/cartReducer';
+import { setCartList, setCount, setCartItem } from '../reducers/cartReducer';
 
 
 
@@ -23,6 +23,20 @@ export function getCount(userId){
     const carts = await axiosPost(url, data);
     const count = carts.count;
     dispatch(setCount({count}));
-    console.log('count->', count);
+    // console.log('count->', count);
+  }
+}
+
+// 카트 추가
+export function cartItemAdd({id, userId}){
+  const url =`http://127.0.0.1:8080/cart/add`;
+  const data = {
+    id : id, userId: userId
+  }
+
+  return async(dispatch) => {
+    const cnt = await axiosPost(url, data);
+    dispatch(setCartItem(cnt));
+    
   }
 }
