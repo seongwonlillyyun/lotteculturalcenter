@@ -13,8 +13,8 @@ export default function Footer() {
               <h3>무엇을 도와드릴까요?</h3>
               <ul>
                 <li><Link to="/board/qna">자주하는 문의</Link></li>
-                <li><Link to="/">공지사항/이벤트</Link></li>
-                <li><Link to="/">지점안내</Link></li>
+                <li><Link to="/board/notievent">공지사항/이벤트</Link></li>
+                <li><Link to="/location">지점안내</Link></li>
               </ul>
             </div>
             <ul className="customer">

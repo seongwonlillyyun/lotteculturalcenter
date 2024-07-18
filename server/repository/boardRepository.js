@@ -118,6 +118,22 @@ export const getNotiEvtList = async({location, keyword, type, count}) => {
     .then(([rows]) => rows)
 }
 
+export const getAllNotiEvtList = async() => {
+  const sql = `
+    select
+      bid,
+      type,
+      title,
+      content,
+      date_format(reg_date, "%Y-%m-%d") date
+    from noti_event
+    order by reg_date desc;
+  `
+
+  return db.execute(sql)
+    .then(([rows]) => rows);
+}
+
 export const getNotiEvtCount = async({location, keyword, type}) => {
   let filterSql = "";
   let changeLoc = (location === "전체지점") ? "" : location;
@@ -191,7 +207,20 @@ export const setPersonal = async(data) => {
   return result;
 }
 
-export const getPersonal = async({user_id, status}) => {
+export const getNoReplyList = async() => {
+  const sql = `
+    select
+      bid,
+      title
+    from personalqna
+    where status = "접수중"
+  `;
+
+  return db.execute(sql)
+    .then(([rows]) => rows)
+}
+
+export const getPersonalList = async({user_id, status}) => {
   const statusSql = status ? `and status = "${status}"` : "" 
 
   const sql = `
@@ -210,4 +239,43 @@ export const getPersonal = async({user_id, status}) => {
 
   return db.execute(sql, [user_id])
     .then(([rows]) => rows);
+}
+
+export const getPersonal = async(id) => {
+  const sql = `
+    select
+      bid,
+      p.type,
+      title,
+      content,
+      status,
+      date_format(p.reg_date, "%Y-%m-%d %T") date,
+      name,
+      answer
+    from personalqna p
+      inner join location l on l.loc_id = p.loc_id
+    where bid = ?
+  `
+  return db.execute(sql, [id])
+    .then(([rows]) => rows[0]);
+}
+
+export const removePersonal = async (id) => {
+  const sql = `
+    delete from personalqna
+    where bid = ?;
+  `;
+
+  return db.execute(sql, [id])
+    .then(([rows]) => rows.affectedRows)
+}
+
+export const updatePersonal = async ({bid, answer}) => {
+  const sql = `
+    update personalqna set status = "답변완료", answer = ?
+    where bid = ?;
+  `
+
+  return db.execute(sql, [answer, bid])
+    .then(([rows]) => rows.affectedRows)
 }

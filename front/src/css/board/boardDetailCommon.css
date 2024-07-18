@@ -38,10 +38,52 @@
 
 .board_detail .detail_content img {
   display: inline;
+  max-width: 100%;
+}
+
+.board_detail .detail_answer {
+  margin-bottom: 80px;
+  background-color: #f7f2ef;
+  padding: 40px 60px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.board_detail .detail_answer .tag {
+  display: inline-block;
+  background-color: #000;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1.625em;
+  font-weight: 500;
+  padding: 3px 10px 5px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.board_detail .detail_answer .answer {
+  flex: 1;
+  font-size: 16px;
+  line-height: 1.625em;
+  letter-spacing: -0.025em;
 }
 
 .board_detail .detail_bot {
   padding-top: 40px;
   border-top: 1px solid #e3e1de;
   text-align: center;
+}
+
+.board_detail .delete_btn {
+  padding-left: 25px;
+  background: url(../../../public/img/icon-garbage.png) no-repeat center left / 20px auto;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.6em;
+  letter-spacing: -0.025em;
+  display: block;
+  width: fit-content;
+  margin: auto;
+  margin-bottom: 80px;
 }

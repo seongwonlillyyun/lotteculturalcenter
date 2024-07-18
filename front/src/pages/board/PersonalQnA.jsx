@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 import { getUser } from './../../util/localStorage';
@@ -69,6 +69,7 @@ function BoardUtils({status, setStatus}) {
 
 function BoardList({status, update}) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userId = getUser() ? getUser().userId : "test_soo";
   const list = useSelector(state => state.personal.list);
 
@@ -81,6 +82,10 @@ function BoardList({status, update}) {
     document.querySelector("body").classList.add("popup");
   }
 
+  const clickHanlder = (id) => {
+    navigate(`/board/personal/${id}`)
+  }
+
   return (
     <>
       <div className="board_list">
@@ -89,7 +94,7 @@ function BoardList({status, update}) {
           <ul>
             {
               list.map(v => (
-                <li>
+                <li onClick={()=> clickHanlder(v.bid)}>
                   <span className={v.status === "접수중" ? "tag green" : "tag"}>{v.status}</span>
                   <p className='title'>{v.title}</p>
                   <p className='etc'>
@@ -152,6 +157,7 @@ function PopupWrite({setUpdate}) {
           alert("정상적으로 등록되었습니다.")
           popupClose();
           setUpdate(prev => !prev);
+          setData(initData);
         }
       });
   }

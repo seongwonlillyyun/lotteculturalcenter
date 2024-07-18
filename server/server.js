@@ -13,6 +13,7 @@ import cartRouter from "./router/cartRouter.js"
 import TopicRouter from './router/TopicRouter.js'
 
 import memberRouter from './router/memberRouter.js'
+import mainRouter from "./router/mainRouter.js";
 
 const server = express();
 const port = 8080;
@@ -36,6 +37,7 @@ server.use('/topic', TopicRouter);
 
 server.use('/member',memberRouter)
 
+server.use("/main", mainRouter);
 
 server.listen(port, ()=>{
   console.log("server start");

@@ -7,6 +7,13 @@ export const getCourse = async (req, res) => {
   res.end();
 }
 
+export const getCategoryCourse = async(req, res) => {
+  const data = req.body;
+  const result = await repository.getCategoryCourse(data);
+  res.json(result);
+  res.end();
+}
+
 export const setCourse = async (req, res) => {
   const data = req.body;
   const result = await repository.setCourse(data);

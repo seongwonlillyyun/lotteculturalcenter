@@ -13,6 +13,20 @@ export const getCategory = async () => {
   return db.execute(sql).then(([rows]) => rows);
 }
 
+export const getCategoryTheme = async () => {
+  const sql = `
+    select
+      cid,
+      name,
+      bg_color,
+      img_path
+    from category;
+  `
+
+  return db.execute(sql)
+    .then(([rows]) => rows);
+}
+
 export const setCategory = async (data) => {
   const sql = `
     insert into category(name, bg_color, img_path)

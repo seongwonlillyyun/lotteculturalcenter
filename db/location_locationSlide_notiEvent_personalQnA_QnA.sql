@@ -16,59 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `category`
---
-
-DROP TABLE IF EXISTS `category`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `category` (
-  `cid` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) NOT NULL,
-  `bg_color` char(7) NOT NULL,
-  `img_path` varchar(100) NOT NULL,
-  PRIMARY KEY (`cid`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `category`
---
-
-LOCK TABLES `category` WRITE;
-/*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'쿠킹','#de9d54','uploads\\category\\1720429954109_cooking.jpg'),(2,'공예','#9d9690','uploads\\category\\1720016485209_making.jpg'),(3,'노래','#33596e','uploads\\category\\1720703727415_singing.jpg'),(4,'드로잉','#53534e','uploads\\category\\1720616997157_drawing.jpg');
-/*!40000 ALTER TABLE `category` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `category_sub`
---
-
-DROP TABLE IF EXISTS `category_sub`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `category_sub` (
-  `csid` int NOT NULL AUTO_INCREMENT,
-  `cid` int DEFAULT NULL,
-  `name` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`csid`),
-  KEY `fk_category_sub_cid` (`cid`),
-  CONSTRAINT `fk_category_sub_cid` FOREIGN KEY (`cid`) REFERENCES `category` (`cid`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `category_sub`
---
-
-LOCK TABLES `category_sub` WRITE;
-/*!40000 ALTER TABLE `category_sub` DISABLE KEYS */;
-INSERT INTO `category_sub` VALUES (1,1,'한식'),(2,1,'일식/중식'),(3,1,'양식'),(4,2,'플라워'),(5,2,'도예'),(6,2,'가죽'),(7,3,'노래교실'),(8,3,'보컬트레이닝'),(9,3,'성악'),(10,4,'유화'),(11,4,'마카'),(12,4,'색연필');
-/*!40000 ALTER TABLE `category_sub` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `location`
 --
 
@@ -173,10 +120,11 @@ CREATE TABLE `personalqna` (
   `content` varchar(5000) NOT NULL,
   `status` varchar(10) NOT NULL DEFAULT '접수중',
   `reg_date` datetime NOT NULL,
+  `answer` varchar(5000) DEFAULT NULL,
   PRIMARY KEY (`bid`),
   KEY `fk_personalQnA_loc_id` (`loc_id`),
   CONSTRAINT `fk_personalQnA_loc_id` FOREIGN KEY (`loc_id`) REFERENCES `location` (`loc_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -185,7 +133,7 @@ CREATE TABLE `personalqna` (
 
 LOCK TABLES `personalqna` WRITE;
 /*!40000 ALTER TABLE `personalqna` DISABLE KEYS */;
-INSERT INTO `personalqna` VALUES (1,'test_soo','회원가입',1,'테스트','테스트 문의','답변완료','2024-07-11 11:05:06'),(2,'test_soo','강좌/강사',5,'테스트2','테스트2','접수중','2024-07-11 13:33:10'),(3,'test_soo','회원가입',6,'test','test','접수중','2024-07-11 14:02:58'),(4,'test_soo','강좌/강사',4,'테스트','테스트','접수중','2024-07-11 14:07:48'),(5,'test_soo','회원가입',6,'테스트 1:1문의','테스트 문의','접수중','2024-07-15 15:05:58');
+INSERT INTO `personalqna` VALUES (1,'test_soo','회원가입',1,'테스트','테스트\n\n테스트\n\n테스트','답변완료','2024-07-16 15:17:33','답변 테스트'),(2,'test_soo','수강신청',3,'답변 테스트용','답변 테스트용','답변완료','2024-07-16 16:16:17','관리자단에서\n답변달기 테스트'),(3,'test_soo','환불/취소',7,'테스트','ㅁㄴㅁㄴㅇ림ㄴ어리ㅓ;ㅣㅁㄴ\n\nㅁㄴ얾;ㅣㄴㅇ러ㅏ\nㅁㄴ이ㅏ럼ㄴ;이러ㅣ;ㅁㄴ\n\n\nㅁ닝러ㅣㅁ나러ㅣㅏㄴ멍라ㅣ','접수중','2024-07-16 16:22:54',NULL),(4,'test_soo','수강신청',1,'1:1문의 테스트~~~~~','1:1문의 테스트~~~~~\n1:1문의 테스트~~~~~\n1:1문의 테스트~~~~~\n1:1문의 테스트~~~~~\n1:1문의 테스트~~~~~\n1:1문의 테스트~~~~~\n1:1문의 테스트~~~~~','답변완료','2024-07-16 16:24:15','관리자단에서\n답변달기 테스트\n\n관리자단에서\n답변달기 테스트\n관리자단에서\n답변달기 테스트\n관리자단에서\n답변달기 테스트\n\n\n관리자단에서\n답변달기 테스트관리자단에서\n답변달기 테스트');
 /*!40000 ALTER TABLE `personalqna` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -225,4 +173,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-15 16:14:04
+-- Dump completed on 2024-07-18 15:24:50

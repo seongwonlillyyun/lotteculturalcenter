@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
+import { updateActive } from "../modules/reduxMenuAxios.js";
 
 // svg
 import { ReactComponent as IconLogo } from "./../svg/logo.svg";
@@ -56,10 +58,10 @@ export default function Header() {
                 isLogin ?
                 <>
                   <Link className="mypage" to="/"><IconMyPage/></Link>
-                  <Link className="mycart" to="/"><IconMyCart/><span className="cart_num">1</span></Link>
+                  <Link className="mycart" to="/cart"><IconMyCart/><span className="cart_num">1</span></Link>
                   <Link to="/"><IconLogOut /></Link>
                 </>
-                : <Link to="/"><IconLogIn /></Link>
+                : <Link to="/login"><IconLogIn /></Link>
               }
             </div>
           </div>
@@ -90,8 +92,15 @@ function Gnb({setActiveDepth}) {
 }
 
 function GnbChild({activeDepth}) {
+  const dispatch = useDispatch();
 
-  const clickHandler = () => openPopup(".category_popup");
+  const clickHandler = (e) => {
+    const text = e.currentTarget.innerText
+    text === "지점으로 찾기" ? 
+      dispatch(updateActive("지점")) :
+      dispatch(updateActive("강좌"));
+    openPopup(".category_popup")
+  };
 
   return (
     <div className="gnb_child">
@@ -114,13 +123,100 @@ function GnbChild({activeDepth}) {
 }
 
 function CategoryPopup() {
+  const dispatch = useDispatch();
+  const active = useSelector(state => state.menu.active);
+  let locationList = useSelector(state => state.menu.locationList);
+  let categoryList = useSelector(state => state.menu.categoryList);
 
-  const clickHandler = () => closePopup(".category_popup");
+  categoryList = categoryList.reduce((acc, cur) => {
+    if(acc[cur.name]){
+      return {...acc, [cur.name] : [...acc[cur.name], {csid : cur.csid, sub_name : cur.sub_name}]}
+    } else {
+      return {...acc, [cur.name] : [{csid : cur.csid, sub_name : cur.sub_name}]}
+    }
+  }, {})
+
+  locationList = locationList.reduce((acc, cur) => {
+    if(acc[cur.type]){
+      return {...acc, [cur.type] : [...acc[cur.type], {name : cur.name, loc_id : cur.loc_id}]}
+    } else {
+      return {...acc, [cur.type] : [{name : cur.name, loc_id : cur.loc_id}]}
+    }
+  },{})
+
+
+  const closeHandler = () => closePopup(".category_popup");
+  const enterHandler = (e) => {
+    document.querySelectorAll('.tab_menu li a').forEach(e => e.classList.add("off"))
+    e.currentTarget.classList.remove("off");
+  }
+
+  const leaveHandler = () => {
+    document.querySelectorAll(".tab_menu li a").forEach(e => e.classList.remove("off"));
+  }
+
+  const activeHandler = (text) => dispatch(updateActive(text));
 
   return (
     <div className="category_popup">
-      <div className="full_inner">
-        <button type="button" className="close_btn" onClick={clickHandler}><IconClose /></button>
+      <div className="inner">
+        <button type="button" className="close_btn" onClick={closeHandler}><IconClose /></button>
+        <div className="tab_btns">
+          <h3 
+            className={`btn ${active === "지점" && "on"}`}
+            onMouseOver={() => activeHandler("지점")}
+          >지점으로 찾기</h3>
+          <h3 
+            className={`btn ${active === "강좌" && "on"}`}
+            onMouseOver={() => activeHandler("강좌")}
+          >강좌로 찾기</h3>
+        </div>
+        <div className="tab_cons">
+          <div className={`tab_con ${active === "지점" && "on"}`}>
+            {
+              Object.keys(locationList).map(key => (
+                <div className="tab_menu" key={key}>
+                  <h4>{key}</h4>
+                  <ul>
+                    {
+                      locationList[key].map(v => (
+                        <li key={v.loc_id}>
+                          <Link 
+                            to={`/center/${v.loc_id}`}
+                            onMouseEnter={enterHandler}
+                            onMouseLeave={leaveHandler}
+                          >{v.name}</Link>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </div>
+              ))
+            }
+          </div>
+          <div className={`tab_con ${active === "강좌" && "on"}`}>
+            {
+              Object.keys(categoryList).map(key => (
+                <div className="tab_menu" key={key}>
+                  <h4>{key}</h4>
+                  <ul>
+                    {
+                      categoryList[key].map(v => (
+                        <li key={v.csid}>
+                          <Link 
+                            to={`/topic/${v.csid}`}
+                            onMouseEnter={enterHandler}
+                            onMouseLeave={leaveHandler}
+                          >{v.sub_name}</Link>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </div>
+              ))
+            }
+          </div>
+        </div>
       </div>
     </div>
   )
