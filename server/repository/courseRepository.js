@@ -1,5 +1,30 @@
 import { db } from "../db/database_mysql80.js";
 
+export const getCategoryCourse = async (data) => {
+  const sql = `
+    select 
+      course_id,
+      course_img,
+      status,
+      l.name,
+      course_name,
+      teacher_name,
+      course_week,
+      time_format(start_time, "%H:%i") start_time,
+      time_format(end_time, "%H:%i") end_time,
+      num_of_course,
+      format(price, 0) price
+    from course p
+      inner join category_sub cs on cs.csid = p.csid
+      inner join category c on c.cid = cs.cid
+      inner join location l on l.loc_id = p.loc_id
+    where c.cid = ${data.cid};
+  `
+
+  return db.execute(sql)
+    .then(([rows]) => rows);
+}
+
 export const getCourse = async (id) => {
   const sql = `
     select
