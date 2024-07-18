@@ -75,7 +75,7 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
   const [info, setInfo] = useState({
     day: [1, 2, 3, 4, 5, 6, 7],
     time: "",
-    center: [],
+    center: [1,2,3,4,5,6,7,8,9,10,11,12],
   });
   const [isActive, setIsActive] = useState({
     day: false,
@@ -123,10 +123,10 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
     if (selected.day === "" || selected.time === "") {
       setIsActive({ ...isActive, [name]: true });
       if (name === "day") {
-        setInfo({ ...info, [name]: [...value] });
+        setInfo({ ...info, day: [...value] });
         setSelected({ ...selected, [name]: txt });
       } else if (name === "time") {
-        setInfo({ ...info, [name]: value });
+        setInfo({ ...info, time: value });
         setSelected({ ...selected, [name]: txt });
       } else if (name === "center") {
         if (info.center.length !== 0 && info.center.includes(value)) {

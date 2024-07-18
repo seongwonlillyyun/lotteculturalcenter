@@ -69,7 +69,7 @@ export function DropDownSort({ click, sortStd }) {
     <ul className="sortdropdown_content">
       <li>
         <p
-          onClick={() => changeStd("강의시작일순", 7)}
+          onClick={() => changeStd("강의시작일순", 8)}
           style={{
             color: sortStd === "강의시작일순" ? "#000" : "rgba(0, 0, 0, .6)",
           }}
@@ -79,7 +79,7 @@ export function DropDownSort({ click, sortStd }) {
       </li>
       <li>
         <p
-          onClick={() => changeStd("낮은가격순", 8)}
+          onClick={() => changeStd("낮은가격순", 9)}
           style={{
             color: sortStd === "낮은가격순" ? "#000" : "rgba(0, 0, 0, .6)",
           }}
@@ -112,7 +112,6 @@ export function CategoryMiddleMenu({ item, cindex, index }) {
         src={item.img}
         alt="middle_sub_img"
       /> 
-      <span className={cindex == index? 'test_active':'test_unactive'}></span>
       <p
         className={
           cindex === index

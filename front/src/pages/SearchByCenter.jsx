@@ -12,7 +12,7 @@ export default function SearchByCenter(){
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 8;
     const [detail,setDetail] = useState({day:[1,2,3,4,5,6,7],time:''});
-    const [sort, setSort] = useState(7);
+    const [sort, setSort] = useState(8);
     const [center,setCenter] = useState({})
     const [cindex, setCindex] = useState(0)
     const [view, setView] = useState(false)
@@ -194,7 +194,7 @@ export default function SearchByCenter(){
                         <ul className="center_course_list">
                             {items.map((item, index)=>(
                                 <li key={index}>
-                                    <Link to={`course/${item.course_id}`}>
+                                    <Link to={`/course/${item.course_id}`}>
                                         <CourseItem item={item}/>
                                     </Link>
                                 </li>

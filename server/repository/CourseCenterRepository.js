@@ -13,16 +13,16 @@ export const getCenter = async(id)=>{
 export const getCoursesbyCenter = async(params) =>{
     let sql = '';
     if(params.sort === 10){
-        sql = ` select course_id, status, loc_id, cid, csid,course_img,
+        sql = ` select course_id, status, loc_id, cid, csid, course_img,
                 course_name, course_start, price, course_summary, teacher_name, left(start_time,5) start_time, 
                 left(end_time,5) end_time, course_week, num_of_course, num_of_people,
                 format(price, '#,#') as price, name , dayofweek(course_start) , date_format(start_time,'%p')
                 from (	select 
                         c.course_id, 
-                        c.status, c.loc_id, c.course_img,
+                        c.status, c.loc_id,
                         c.csid, c.course_name, c.course_summary, 
                         c.teacher_name, c.start_time,
-                        c.end_time, c.course_img
+                        c.end_time, c.course_img,
                         c.course_week, 
                         c.num_of_course, c.num_of_people, c.price, 
                         l.name as center_name,
@@ -37,7 +37,7 @@ export const getCoursesbyCenter = async(params) =>{
                             dayofweek(course_start) in (select distinct dayofweek(course_start) from course where dayofweek(course_start) in (?)) and 
                             date_format(start_time, '%p') = all(select distinct date_format(start_time,'%p') from course where date_format(start_time,'%p') =? ) and
                             (course_name,teacher_name) in (select distinct course_name, teacher_name from course where course_name or teacher_name like ?) 
-                            order by 8 desc
+                            order by 9 desc
                             limit ?`
                         return db
                             .query(sql,[params.id, params.cid, params.csid, params.day, params.time,

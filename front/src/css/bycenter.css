@@ -79,14 +79,20 @@
 }
 .middle_category_div{
     position: relative;
+    /* border: 1px solid red; */
+    height: 128px;
+    text-align: center;
 }
+
 .middle_category_img_active {
     border-radius: 100%;
     width: 90px;
     height: 90px;
+    margin-bottom: .8rem;
 }
-.test_active::after{
-    display: block;
+
+.middle_category_txt_active::before{
+    display: inline-block;
     width: 90px;
     height: 90px;
     position: absolute;
