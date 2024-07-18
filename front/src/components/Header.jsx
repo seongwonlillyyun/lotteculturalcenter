@@ -208,6 +208,7 @@ function CategoryPopup() {
                             to={`/topic/${v.csid}`}
                             onMouseEnter={enterHandler}
                             onMouseLeave={leaveHandler}
+                            onClick={closeHandler}
                           >{v.sub_name}</Link>
                         </li>
                       ))
