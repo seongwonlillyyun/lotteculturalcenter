@@ -8,7 +8,8 @@ export function CancelModal({closeModal, handleChange, selectValue}){
     const navigate = useNavigate()
     const handleSubmit = () => {
         alert('선택하신 강좌의 결제가 취소되었습니다.')
-        navigate('/courseHistory')
+        navigate('/courseHistory',{state:  {"title": "취소내역 조회",
+                                                 "value" : "cancel"}})
     }
 
     return(
@@ -18,7 +19,8 @@ export function CancelModal({closeModal, handleChange, selectValue}){
     <div className='cancel_modal_top'>
         <div className='cancel_modal_head'>
         <h3>결제취소</h3> 
-        <span className="cancel_modal_close_btn" onClick={closeModal}>×</span>
+        <span className="cancel_modal_close_btn" 
+            onClick={closeModal}>×</span>
         </div>
         <div className='cancel_modal_top_info'>
         <p>환불 규정에 따라 환불처리 됩니다.</p>

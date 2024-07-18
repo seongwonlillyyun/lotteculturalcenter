@@ -21,6 +21,7 @@ import Join from "./pages/Join.jsx";
 import CourseHistory from "./pages/CourseHistory.jsx";
 import DetailHistory from "./pages/DetailHistory.jsx";
 import {MypageModal}  from "./components/MypageModal.jsx";
+import ChangeMemberInfo from "./pages/ChangeMemberInfo.jsx";
 import Location from "./pages/Location";
 import QnA from "./pages/board/QnA";
 import PersonalQnA from "./pages/board/PersonalQnA";
@@ -39,9 +40,17 @@ export default function App() {
 
 
   //! Mypage Model용
-const [step, setStep] =useState(1)
-const nextStep = () => {setStep(step+1)}
-const preStep = () => {setStep(step-1)}
+// const [step, setStep] =useState(1)
+// const nextStep = () => {setStep(step+1)}
+// const preStep = () => {setStep(step-1)}
+
+// const [mypageModalOpen, setMypageModalOpen]=useState(false);
+// const openMypage=()=>{
+//   setMypageModalOpen(true)
+// }
+// const closeMypage=()=>{
+//   setMypageModalOpen(false)
+// }
 
 
   const router = createBrowserRouter([{
@@ -57,16 +66,17 @@ const preStep = () => {setStep(step-1)}
       {path : "/board/notievent", element : <NotiEvent/>},
       {path : "/board/notievent/:id", element : <NotiEventDetail/>},
       {path : "/location", element : <Location/> },
-      {  path : "/login", element : <Login/> },
-      { path : "/join" , element : <Join/> },
+      {path : "/login", element : <Login/> },
+      {path : "/join" , element : <Join/> },
       {path:'/center/:id', element:<SearchByCenter/>},
       {path:'/topic/:id', element:<SearchByTopic/>},
       {path:'/test', element:<Test/>},
       {path : "/cart", element : <Cart/> },
       {path : "/order", element : <Order/> },
+      {path : "/changememberinfo" , element : <ChangeMemberInfo/> },
       {path :"/courseHistory", element : <CourseHistory/>},
       {path :"/detailHistory", element : <DetailHistory/>}, // path 변경예정
-      {path :"/mypage", element : <MypageModal/>} // path 변경예정
+
     ]
   }])
 

@@ -1,0 +1,56 @@
+.member_info_title{
+    font-size : 26px;
+    font-weight: bolder;
+    margin-bottom: 2.5rem;
+}
+
+.member_info{
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-between;
+    width: 1118px;
+    height:  200px;
+    border-bottom: 1px solid rgba(0, 0, 0, .14);
+}
+
+.member_info_subject{
+    display: inline-block;
+    font-size : 15px;
+    width: 120px;
+    margin-bottom: 1.5rem;
+    color: rgba(0, 0, 0, .9);
+    /* border : 1px solid blue; */
+}
+
+
+.member_info_value{
+    font-size : 15px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, .9);
+}
+
+
+
+.member_info_left{
+margin-left: 1rem;
+}
+
+.member_info_right{
+    margin-right: 3.5rem;
+}
+
+.change_member_btn_div{
+    display: flex;
+    justify-content: right;
+    width: 1118px;
+}
+
+.change_memeber_btn{
+    border: 2px solid rgba(0, 0, 0, .14);
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    padding: .6rem 1.3rem 0.6rem 1.3rem;
+    margin-top: 2rem;
+    /* margin-right: 10rem; */
+}

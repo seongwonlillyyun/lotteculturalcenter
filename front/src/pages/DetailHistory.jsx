@@ -1,25 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import '../css/detailhistory.css'
 import { DetailHistoryItem } from '../components/DetailHistoryItem.jsx';
 import { CancelModal } from '../components/CancelModal.jsx';
-// import { CancelModalStep1, CancelModalStep2, CancelModalStep3 } from '../components/CancelModal.jsx';
 
 
 //! 전체페이지에서 내역보기 눌렀을때 나오는 상세페이지
 // 여기서 결제 취소 가능 
 export default function DetailHistory(){
 
-    // //todo. 버튼 클릭시 체크박스 체크 
-    // const [isChecked, setIsChecked] = useState(false)
-    // const handleCheck= ()=>{
-    //     setIsChecked(!isChecked)
-    // }
-
     //todo. 이전버튼 눌렀을때
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate('/courseHistory')
+        // navigate('/courseHistory')
+        window.history.back() // 취소내역으로는 안가는거 같은데..?
     }
 
     //todo. 모달 오픈 
@@ -32,10 +27,7 @@ export default function DetailHistory(){
         setModalOpen(false)
         document.body.style.overflow ='unset'
     }
-    // //todo. 모달 페이지 앞뒤로 
-    // const [step, setStep] = useState(1)
-    // const nextStep = () => {setStep(step+1)}
-    // const preStep = () => {setStep(step-1)}
+
 
 //! Cancel Modal 이벤트 부모가 받기 
 const [selectValue, setSelectValue]= useState('')
@@ -44,10 +36,17 @@ const handleChange = (e) => {
     console.log(e.target.value);
 }
 
-    // 주문아이디? 확인하기
-const {orderId} = useParams();
+//! 주문아이디 확인하기
+// const {orderid} = useParams();
 
-// db 연동 
+// // 서버랑연동 
+// const [courseHistory, setCourseHistory]=useState({})
+
+// useEffect(()=>{
+//     axios.get('http://127.0.0.1:8080/courseHistory/${orderid}')
+//         .then(res=>setCourseHistory(res.data))
+//     },[])  
+
 
     return(
         <div>
@@ -78,21 +77,6 @@ const {orderId} = useParams();
                 handleChange={handleChange} selectValue={selectValue}/>
 )}
 </div>
-{/* 
-    { modalOpen ===true && step === 1
-    ?<CancelModalStep1 closeModal={closeModal} next={nextStep}/>
-    :null} */}
-
-    {/* { modalOpen ===true && step === 2
-    ?<CancelModalStep2 handleChange={handleChange} 
-        closeModal={closeModal} next={nextStep} pre={preStep}/>
-    :null}
-
-    { modalOpen ===true && step === 3
-    ?<CancelModalStep3 selectValue={selectValue}
-        closeModal={closeModal} pre={preStep}/>
-    :null} */}
-
     </div>
     <DetailHistoryItem />
 <div className='detailhistory_pre_btn_div full_inner'>
@@ -100,11 +84,8 @@ const {orderId} = useParams();
             onClick={handleClick}>이전</button>
 
 </div>
-
         </div>
-
         </div>
-
 
     )
 }

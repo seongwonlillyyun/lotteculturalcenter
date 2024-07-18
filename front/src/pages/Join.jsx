@@ -39,7 +39,14 @@ export default function Join(){
 
     return (
         <div>
-            <p className='join_title'>회원가입</p>
+            <div className='sub_visual'>
+            <h2 className="heading">회원가입</h2>
+            </div>
+            {/* <p className='join_title'>회원가입</p> */}
+
+            <div className='section narrow_page full_inner'>
+
+
             {step===1 && (
                 <JoinStep1 next={nextStep} formData= {formData} handleCheck={handleCheck} />
             )}
@@ -47,6 +54,7 @@ export default function Join(){
                 <JoinStep2 next={nextStep} pre={preStep} formData={formData} handleChange={handleChange}
                  handleAddress={handleAddress}/>
             )}
+        </div>
         </div>
     )
 }

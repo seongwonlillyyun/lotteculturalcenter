@@ -33,7 +33,11 @@ const [toggleType, setToggleType] = useState('')
     return(
     <div className="join_step1">
         <div className="join_step1_top">
-        <p className="join_step_title">STEP1 약관동의</p>
+            <div className="join_titles">
+        <img src="/img/join/step1.png" alt="join_img" className="join_img"/>
+        <p className="join_step_title">약관동의</p>
+        </div>
+        
         <p className="join_step_desc">필수 약관에 동의해주세요
         <FontAwesomeIcon icon={faFaceSmile} />
         <FontAwesomeIcon icon={faFaceLaughWink} className="join_icon"/>
@@ -45,7 +49,7 @@ const [toggleType, setToggleType] = useState('')
             <input type="checkbox" 
                 onChange={(e)=>handleCheck('all', e.target.checked)} 
                 onFocus={()=>handleFocus('all')} /> 
-                <p className="join_step1_text">전체 동의</p></div>
+                <p className="join_step1_text step1_all">전체 동의</p></div>
 
         <div className="join_step1_item">
             <input type="checkbox" name="membership" id="membership" 
@@ -75,7 +79,7 @@ const [toggleType, setToggleType] = useState('')
             }
         <div className="join_step1_item">
         <input type="checkbox" checked={formData.optional}/>
-        <p className="join_step1_text"><span>[선택]</span>  test</p> 
+        <p className="join_step1_text"><span>[선택]</span>  </p> 
            <button className="step1_desc_btn" type='button' onClick={()=>handleToggle('optional')}>자세히</button>
         </div>
         {isOpen === true && toggleType ==='optional'
@@ -83,12 +87,12 @@ const [toggleType, setToggleType] = useState('')
             <Term3 /></div>
             : null 
         }
-                <div>
+                </div>
+                <div className="join_btns">
                     <button type="button" className="join_pre_btn">취소</button>
                     <button type='button' className="join_next_btn"
                             onClick={()=>validateCheckStep1(next, formData)}>
                         다음단계</button>
-                </div>
                 </div>
 
         </div>

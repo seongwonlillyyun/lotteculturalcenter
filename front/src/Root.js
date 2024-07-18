@@ -26,15 +26,17 @@ const location = useLocation();
 
   return (
     <>
-    {step ===1 && (
-      <MypageModal next={nextStep} close={closeModal} />
-    )}
-    {step===2 && (
-      <MyBranchModal pre={preStep} close={closeModal}/>
-    )}
+    { modalOpen === true && step ===1  
+    ?<MypageModal next={nextStep} close={closeModal} modalState={modalOpen}/>
+    :null}
+
+    {modalOpen ===true && step===2 
+    ?<MyBranchModal pre={preStep} close={closeModal}/>
+    :null}
 
       <Header />
       <Outlet/>
+      <button type="button" onClick={openModal}>Mypage이동 임시버튼</button>
       <Footer />
     </>
   );
