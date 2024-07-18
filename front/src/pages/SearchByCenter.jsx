@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import {Link, useParams } from "react-router-dom"
 import '../css/bycenter.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faMagnifyingGlass, faFilter, faArrowRotateRight,faXmark,faChevronUp, faChevronDown} from '@fortawesome/free-solid-svg-icons'
+import {faMagnifyingGlass, faFilter, faArrowRotateRight,faXmark,faChevronUp, faChevronDown, faExclamation} from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import { DropDown, DropDownSort, CategoryMiddleMenu, ModalPage, CourseItem } from "../components/SearchByCenterComponents"
 
@@ -12,7 +12,7 @@ export default function SearchByCenter(){
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 8;
     const [detail,setDetail] = useState({day:[1,2,3,4,5,6,7],time:''});
-    const [sort, setSort] = useState(8);
+    const [sort, setSort] = useState(7);
     const [center,setCenter] = useState({})
     const [cindex, setCindex] = useState(0)
     const [view, setView] = useState(false)
@@ -42,19 +42,16 @@ export default function SearchByCenter(){
     },[id])
     let endIndex = 0;
     endIndex = currentPage * pageSize;
-    
     useEffect(()=>{
         axios({
             method:'post',
             url:`http://127.0.0.1:8080/center/${id}/course`,
-            data : {'id': id, 'mid_id':cindex, 'sub_id':smallCategory,
+            data : {'id': id, 'cid':cindex, 'csid':smallCategory,
                     'day':detail.day, 'time':detail.time,'text':searchText,
                     'end':endIndex,'sort':sort}})
         .then(response=>setShowCourse([response.data]))
         .catch(error=>console.log(error))
     },[cindex,smallCategory,detail,searchText,endIndex,sort])
-
-    console.log('text=>',test)
 
     const category = [
         {
@@ -125,13 +122,14 @@ export default function SearchByCenter(){
         setSearchText(`%${value}%`)
         setTest(value)
     }
-
+    let cntarr = showCourse[0]
+  
     return(
         <>
             <div className="bycenter_title_part">
                 <p className="bycenter_title" onClick={()=>{setView(!view)}}>{center.center_name}{""}
                     {view ? <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />}
-                    {view === true ? <DropDown className='dropdown_list' />:<DropDown className='dropdown_list_unactive'/>}
+                    {view === true ? <DropDown className='dropdown_list_center'/>:<DropDown className='dropdown_list_unactive_center'/>}
                 </p>
             </div>
             <div className="bycenter_list min_inner">
@@ -160,7 +158,7 @@ export default function SearchByCenter(){
                     ))}
                 </ul>
                 <div className="search_part">
-                    <p><span>{center.count}개</span>의 강좌</p>
+                    {/* <p><span>{center.count}개</span>의 강좌</p> */}
                     <div className="search_part_btns">
                         <button className="search_part_detail"
                             onClick={openModal}
@@ -184,16 +182,16 @@ export default function SearchByCenter(){
                 </div>
                 {selected.day !== '' || selected.time !== '' || test !== "" ? 
                 <ul className="handle_search_standard">
-                    <li><button className="handle_search_reset" onClick={handledetailReset}><FontAwesomeIcon icon={faArrowRotateRight} /></button></li>
-                    {selected.day!=='' ? <li><p className="handle_search_day">{selected.day}<button className="search_reset_btn" type="button" onClick={()=>handleDetailDelete('day')}><FontAwesomeIcon icon={faXmark} /></button></p></li>:null}
-                    {selected.time !== ''? <li><p className="handle_search_time">{selected.time}<button className="search_reset_btn"onClick={()=>handleDetailDelete('time')}><FontAwesomeIcon icon={faXmark} /></button></p></li> :null}
-                    {test !== '' ? <li><p className="handle_search_text">{test}<button className="search_reset_btn" onClick={()=>handleDetailDelete('text')}><FontAwesomeIcon icon={faXmark} /></button></p></li> :null}
+                    <li className="handle_search_li_ct"><button className="handle_search_reset_ct" onClick={handledetailReset}><FontAwesomeIcon icon={faArrowRotateRight} /></button></li>
+                    {selected.day!=='' ? <li><p className="handle_search_day_ct">{selected.day}<button className="search_reset_btn_ct" type="button" onClick={()=>handleDetailDelete('day')}><FontAwesomeIcon icon={faXmark} /></button></p></li>:null}
+                    {selected.time !== ''? <li><p className="handle_search_time_ct">{selected.time}<button className="search_reset_btn_ct"onClick={()=>handleDetailDelete('time')}><FontAwesomeIcon icon={faXmark} /></button></p></li> :null}
+                    {test !== '' ? <li><p className="handle_search_text_ct">{test}<button className="search_reset_btn_ct" onClick={()=>handleDetailDelete('text')}><FontAwesomeIcon icon={faXmark} /></button></p></li> :null}
                     
                 </ul>:null}
 
                 <div className="course_list_content">
                     {showCourse.map((items,index)=>(
-                        <ul className="course_list">
+                        <ul className="center_course_list">
                             {items.map((item, index)=>(
                                 <li key={index}>
                                     <Link to={`course/${item.course_id}`}>
@@ -203,7 +201,11 @@ export default function SearchByCenter(){
                             ))}
                         </ul>
                     ))}
-                    <button className="morebtn" type="button" onClick={()=>{setCurrentPage(currentPage+1)}}>강좌더보기+</button>
+
+                    {cntarr&&cntarr.length !== 0 ? 
+                            <button className="morebtn" type="button" onClick={()=>{setCurrentPage(currentPage+1)}}>강좌더보기+</button>
+                        :   <div><FontAwesomeIcon className='nocourse_icon' icon={faExclamation} /><p className="nocourse_text">진행중인 강좌가 없습니다.</p></div>
+                    }
                 </div>
             </div>
         </>

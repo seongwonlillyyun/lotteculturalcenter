@@ -104,13 +104,15 @@ export function DropDownSort({ click, sortStd }) {
 export function CategoryMiddleMenu({ item, cindex, index }) {
   return (
     <>
+    <div className="middle_category_div">
       <img
         className={
           cindex == index ? "middle_category_img_active" : "middle_category_img"
         }
         src={item.img}
         alt="middle_sub_img"
-      />
+      /> 
+      <span className={cindex == index? 'test_active':'test_unactive'}></span>
       <p
         className={
           cindex === index
@@ -120,6 +122,8 @@ export function CategoryMiddleMenu({ item, cindex, index }) {
       >
         {item.name}
       </p>
+    </div>
+      
     </>
   );
 }
@@ -285,12 +289,12 @@ export function CourseItem({ item }) {
   return (
     <div className="course_item">
       <img
-        src="https://culture.lotteshopping.com/files/CUL_ONL/2024/6/202406140430462580.jpg"
+        src={`//localhost:8080/${item.course_img}`}
         alt="course_img"
         className="course_item_img"
       />
       <div className="course_item_status">
-        <p className="course_item_status_apply">{item.statues}</p>
+        <p className="course_item_status_apply">{item.status}</p>
         <p className="course_item_status_center">{item.name}</p>
       </div>
       <p className="course_item_title">{item.course_name}</p>

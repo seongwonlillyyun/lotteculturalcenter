@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import {Link, useParams } from "react-router-dom"
 import '../css/bytopic.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faMagnifyingGlass, faFilter, faArrowRotateRight,faXmark,faAngleUp, faAngleDown} from '@fortawesome/free-solid-svg-icons'
+import {faMagnifyingGlass, faFilter, faArrowRotateRight,faXmark,faAngleUp, faAngleDown, faExclamation} from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import { DropDown, DropDownSort, ModalPage, CourseItem} from "../components/SearchByTopicComponents"
 
@@ -12,7 +12,7 @@ export default function SearchByTopic(){
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 8;
     const [detail,setDetail] = useState({day:[1,2,3,4,5,6,7], time:'', center:[1,2,3,4,5,6,7,8,9,10,11,12]});
-    const [sort, setSort] = useState(8);
+    const [sort, setSort] = useState(7);
     const [topic,setTopic] = useState({})
     const [cindex, setCindex] = useState('')
     const [view, setView] = useState(false)
@@ -26,7 +26,7 @@ export default function SearchByTopic(){
         setSelected(selected)
     }
 
-
+    console.log('detail=>',detail)
     useEffect(()=>{
         setSmallCategory(0)
         setDetail({day:[1,2,3,4,5,6,7],time:'', center:[1,2,3,4,5,6,7,8,9,10,11,12]})
@@ -47,14 +47,12 @@ export default function SearchByTopic(){
         axios({
             method:'post',
             url:`http://127.0.0.1:8080/topic/${id}/course`,
-            data : {'id': id, 'sub_id':smallCategory, 'loc_id':detail.center,
+            data : {'id': id, 'csid':smallCategory, 'loc_id':detail.center,
                     'day':detail.day, 'time':detail.time,'text':searchText,
                     'end':endIndex,'sort':sort}})
         .then(response=>setShowCourse([response.data]))
         .catch(error=>console.log(error))
     },[smallCategory,detail,searchText,endIndex,sort])
-
-    console.log('text=>',test)
 
     const category = [
         {
@@ -90,9 +88,9 @@ export default function SearchByTopic(){
         
     }
     const handledetailReset = ()=>{
-        setSelected({day:'',time:''})
+        setSelected({day:'',time:'', center:[]})
         setTest('')
-        setDetail({day:[1,2,3,4,5,6,7],time:''})
+        setDetail({day:[1,2,3,4,5,6,7],time:'', center:[1,2,3,4,5,6,7,8,9,10,11,12]})
     }
 
     const handleDetailDelete = (value) =>{
@@ -102,7 +100,11 @@ export default function SearchByTopic(){
         } else if(value === 'time') {
             setSelected({...selected, time:''})
             setDetail({...detail, time:''})
-        } else if (value === 'text'){
+        } else if(value === 'center'){
+            setDetail({...detail, center:[1,2,3,4,5,6,7,8,9,10,11,12]});
+            setSelected({...selected, center:[]})
+        }
+            else if (value === 'text'){
             setTest('')
             setSearchText('%%')
         }
@@ -112,7 +114,8 @@ export default function SearchByTopic(){
         setSearchText(`%${value}%`)
         setTest(value)
     }
-
+    let cntarr = showCourse[0]
+    console.log(cntarr&&cntarr.length)
     return(
         <>
             <div className="bycenter_title_part">
@@ -135,7 +138,7 @@ export default function SearchByTopic(){
                 </ul>
 
                 <div className="search_part">
-                    <p><span>1개</span>의 강좌</p>
+                    {/* <p><span>1개</span>의 강좌</p> */}
                     <div className="search_part_btns">
                         <button className="search_part_detail"
                             onClick={openModal}
@@ -163,7 +166,7 @@ export default function SearchByTopic(){
                     {selected.day!=='' ? <li><p className="handle_search_day">{selected.day}<button className="search_reset_btn" type="button" onClick={()=>handleDetailDelete('day')}><FontAwesomeIcon icon={faXmark} /></button></p></li>:null}
                     {selected.time !== ''? <li><p className="handle_search_time">{selected.time}<button className="search_reset_btn"onClick={()=>handleDetailDelete('time')}><FontAwesomeIcon icon={faXmark} /></button></p></li> :null}
                     {selected.center.map((item)=>(
-                        <li><p className="handle_search_center">{item}</p><button className="search_reset_btn"onClick={()=>handleDetailDelete('time')}><FontAwesomeIcon icon={faXmark} /></button></li>
+                        <li className="handle_search_li"><p className="handle_search_center">{item}</p><button className="search_reset_btn"onClick={()=>handleDetailDelete('center')}><FontAwesomeIcon icon={faXmark} /></button></li>
                     ))}
                     {test !== '' ? <li><p className="handle_search_text">{test}<button className="search_reset_btn" onClick={()=>handleDetailDelete('text')}><FontAwesomeIcon icon={faXmark} /></button></p></li> :null}
                     
@@ -171,7 +174,7 @@ export default function SearchByTopic(){
 
                 <div className="course_list_content">
                     {showCourse.map((items,index)=>(
-                        <ul className="course_list">
+                        <ul className="topic_course_list">
                             {items.map((item, index)=>(
                                 <li key={index}>
                                     <Link to={`course/${item.course_id}`}>
@@ -181,7 +184,10 @@ export default function SearchByTopic(){
                             ))}
                         </ul>
                     ))}
-                    <button className="morebtn" type="button" onClick={()=>{setCurrentPage(currentPage+1)}}>강좌더보기+</button>
+                    {cntarr&&cntarr.length !== 0 ? 
+                            <button className="morebtn" type="button" onClick={()=>{setCurrentPage(currentPage+1)}}>강좌더보기+</button>
+                        :   <div><FontAwesomeIcon className='nocourse_icon' icon={faExclamation} /><p className="nocourse_text">진행중인 강좌가 없습니다.</p></div>
+                    }
                 </div>
             </div>
         </>

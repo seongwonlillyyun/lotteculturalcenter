@@ -118,37 +118,37 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
 
   const handleActive = (txt, e) => {
     const { name, value } = e.target;
-    console.log(name,value,txt)
-    console.log('include=>,' , info.center.includes(value))
+    console.log(name, value, txt);
+    console.log("include=>,", info.center.includes(value));
     if (selected.day === "" || selected.time === "") {
       setIsActive({ ...isActive, [name]: true });
       if (name === "day") {
         setInfo({ ...info, [name]: [...value] });
-        setSelected({ ...selected, [name]: txt })
+        setSelected({ ...selected, [name]: txt });
       } else if (name === "time") {
         setInfo({ ...info, [name]: value });
-        setSelected({ ...selected, [name]: txt })
-      } else if(name === 'center'){
-        if(info.center.length !== 0 && info.center.includes(value)){
-          let result = info.center.filter(item=>item !== value)
-        setInfo({...info, center:result})
-          let centertxt = selected.center.filter(item=> item !== txt)
-        setSelected({ ...selected, center:centertxt});
-        } else{
-          setInfo({...info, [name]:[...info.center, value]})
-          setSelected({ ...selected, [name]: [...selected.center,txt]});
+        setSelected({ ...selected, [name]: txt });
+      } else if (name === "center") {
+        if (info.center.length !== 0 && info.center.includes(value)) {
+          let result = info.center.filter((item) => item !== value);
+          setInfo({ ...info, center: result });
+          let centertxt = selected.center.filter((item) => item !== txt);
+          setSelected({ ...selected, center: centertxt });
+        } else {
+          setInfo({ ...info, [name]: [...info.center, value] });
+          setSelected({ ...selected, [name]: [...selected.center, txt] });
         }
-      } 
+      }
     } else if (selected.day !== "" || selected.time !== "") {
-        if(info.center.length !== 0 && info.center.includes(value)){
-        let result = info.center.filter(item=>item !== value)
-        setInfo({...info, center:result})
-        let centertxt = selected.center.filter(item=>item !== txt)
-        setSelected({...selected, center:centertxt})
-      } else{
+      if (info.center.length !== 0 && info.center.includes(value)) {
+        let result = info.center.filter((item) => item !== value);
+        setInfo({ ...info, center: result });
+        let centertxt = selected.center.filter((item) => item !== txt);
+        setSelected({ ...selected, center: centertxt });
+      } else {
         setIsActive({ ...isActive, [name]: false });
-        setSelected({ ...selected, [name]: "" }); 
-        setInfo({ ...info, [name]:''})
+        setSelected({ ...selected, [name]: "" });
+        setInfo({ ...info, [name]: "" });
       }
     }
   };
@@ -175,7 +175,7 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
   console.log("selected=>", selected);
   console.log("info=>", info);
   console.log(addCenter);
-  console.log('이게모야', searchstd)
+  console.log("이게모야", searchstd);
   return (
     <div className="modal_out" onClick={closeModal}>
       <div className="modal_container" onClick={(e) => e.stopPropagation()}>
@@ -216,7 +216,8 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
                         name="center"
                         value={item.id}
                         className={
-                          selected.center.includes(item.name)|| searchstd.center.includes(item.name)
+                          selected.center.includes(item.name) ||
+                          searchstd.center.includes(item.name)
                             ? "center_btn_active"
                             : "center_btn"
                         }
@@ -329,12 +330,12 @@ export function CourseItem({ item }) {
   return (
     <div className="course_item">
       <img
-        src="https://culture.lotteshopping.com/files/CUL_ONL/2024/6/202406140430462580.jpg"
+        src={`//localhost:8080/${item.course_img}`}
         alt="course_img"
         className="course_item_img"
       />
       <div className="course_item_status">
-        <p className="course_item_status_apply">{item.statues}</p>
+        <p className="course_item_status_apply">{item.status}</p>
         <p className="course_item_status_center">{item.name}</p>
       </div>
       <p className="course_item_title">{item.course_name}</p>
