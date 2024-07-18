@@ -128,8 +128,8 @@ export default function CourseDetail() {
               </div>
             </div>
             <div className="course_btns">
-              <Link to="/" className="cart_btn"><IconCart /></Link>
-              <Link to="/" className="purchase_btn">수강신청</Link>
+              <Link to="/cart" className="cart_btn"><IconCart /></Link>
+              <Link to="/order" className="purchase_btn">수강신청</Link>
             </div>
           </div>
         </div>
