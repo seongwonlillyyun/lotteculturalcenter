@@ -79,7 +79,7 @@ const [toggleType, setToggleType] = useState('')
             }
         <div className="join_step1_item">
         <input type="checkbox" checked={formData.optional}/>
-        <p className="join_step1_text"><span>[선택]</span>  </p> 
+        <p className="join_step1_text"><span>[선택]</span> 개인정보 선택항목에 대한 수집 및 이용동의</p> 
            <button className="step1_desc_btn" type='button' onClick={()=>handleToggle('optional')}>자세히</button>
         </div>
         {isOpen === true && toggleType ==='optional'

@@ -1,17 +1,18 @@
 .login{
     display: flex;
     max-width: 1920px;
+    margin: auto;
 }
 
 .login_left{
     background-image: url('../../public/img/login/bg-login.jpg');
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     min-height: 600px;
     width: 50%;
     /* position: relative; */
-  
 }
+
 .login_left_texts{
     color : white;
     padding-left : 2rem;
