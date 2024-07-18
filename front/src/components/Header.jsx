@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { updateActive } from "../modules/reduxMenuAxios.js";
+import { MypageModal, MyBranchModal } from "./MypageModal";
 
 // svg
 import { ReactComponent as IconLogo } from "./../svg/logo.svg";
@@ -27,6 +28,16 @@ export default function Header() {
   const isLogin = true;
   const [activeDepth, setActiveDepth] = useState("applicate")
   const [prevScrollY, setPrevScrollY] = useState(0);
+  const [step, setStep] =useState(1)
+  const nextStep = () => {setStep(step+1)}
+  const preStep = () => {setStep(step-1)}
+  const [modalOpen, setModalOepn] = useState(false)
+
+  const openModal = () => {
+    setModalOepn(true)
+  }
+  const closeModal = () => {
+    setModalOepn(false)}
 
   const scrollHandler = () => {
     headerScroll(prevScrollY, setPrevScrollY);
@@ -57,7 +68,17 @@ export default function Header() {
               {
                 isLogin ?
                 <>
-                  <Link className="mypage" to="/"><IconMyPage/></Link>
+                  {
+                    modalOpen === true && step ===1  
+                    ?<MypageModal next={nextStep} close={closeModal} modalState={modalOpen}/>
+                    :null
+                  }
+                  {
+                    modalOpen ===true && step===2 
+                    ? <MyBranchModal pre={preStep} close={closeModal}/>
+                    :null
+                  }
+                  <button type="button" onClick={openModal}><IconMyPage/></button>
                   <Link className="mycart" to="/cart"><IconMyCart/><span className="cart_num">0</span></Link>
                   <Link to="/login"><IconLogOut /></Link>
                 </>
