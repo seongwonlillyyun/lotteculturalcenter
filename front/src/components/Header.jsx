@@ -185,6 +185,7 @@ function CategoryPopup() {
                             to={`/center/${v.loc_id}`}
                             onMouseEnter={enterHandler}
                             onMouseLeave={leaveHandler}
+                            onClick={closeHandler}
                           >{v.name}</Link>
                         </li>
                       ))
