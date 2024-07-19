@@ -19,13 +19,13 @@ export function DropDown({ className }) {
         <Link to="/topic/1">공예</Link>
       </li>
       <li>
-        <Link to="/topic/2">노래</Link>
+        <Link to="/topic/5">노래</Link>
       </li>
       <li>
-        <Link to="/topic/3">드로잉</Link>
+        <Link to="/topic/9">드로잉</Link>
       </li>
       <li>
-        <Link to="/topic/4">쿠킹</Link>
+        <Link to="/topic/13">쿠킹</Link>
       </li>
     </ul>
   );

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import {Link, useParams } from "react-router-dom"
+import {Link, useNavigate, useParams } from "react-router-dom"
 import '../css/bytopic.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faMagnifyingGlass, faFilter, faArrowRotateRight,faXmark,faAngleUp, faAngleDown, faExclamation} from '@fortawesome/free-solid-svg-icons'
@@ -14,12 +14,13 @@ export default function SearchByTopic(){
     const [detail,setDetail] = useState({day:[1,2,3,4,5,6,7], time:'', center:[1,2,3,4,5,6,7,8,9,10,11,12]});
     const [sort, setSort] = useState(7);
     const [topic,setTopic] = useState({})
-    const [cindex, setCindex] = useState('')
+    const [cindex, setCindex] = useState(1)
     const [view, setView] = useState(false)
-    const [smallCategory, setSmallCategory] = useState(0)
+    const [smallCategory, setSmallCategory] = useState(id)
     const [selected, setSelected] = useState({day:'',time:'', center:[]})
     const [test, setTest] = useState('')
     const [searchText, setSearchText] = useState('%%')
+    const navigate = useNavigate()
 
     const searchDetail = (value,selected)=>{    
         setDetail(value)
@@ -28,26 +29,27 @@ export default function SearchByTopic(){
 
     console.log('detail=>',detail)
     useEffect(()=>{
-        setSmallCategory(0)
         setDetail({day:[1,2,3,4,5,6,7],time:'', center:[1,2,3,4,5,6,7,8,9,10,11,12]})
         setCurrentPage(1)
+        setSmallCategory(id)
         setSearchText('%%')
             axios({
                 method:'get',
                 url:`http://127.0.0.1:8080/topic/${id}`,
                 data: id
             })
-            .then(response=>setTopic(...response.data))
+            .then(response=>{setTopic(...response.data); setCindex(response.data[0].cid);})
             .catch(error=>console.log(error))
     },[id])
     let endIndex = 0;
     endIndex = currentPage * pageSize;
+
     
     useEffect(()=>{
         axios({
             method:'post',
             url:`http://127.0.0.1:8080/topic/${id}/course`,
-            data : {'id': id, 'csid':smallCategory, 'loc_id':detail.center,
+            data : {'csid':smallCategory, 'loc_id':detail.center,
                     'day':detail.day, 'time':detail.time,'text':searchText,
                     'end':endIndex,'sort':sort}})
         .then(response=>setShowCourse([response.data]))
@@ -57,19 +59,19 @@ export default function SearchByTopic(){
     const category = [
         {
             list:[
-                    {name:"전체", id:0}, {name:'플라워',id:1}, {name:'도예',id:2},{name:'가죽',id:3},
-                    {name:'캔들/비누',id:4}],
+                    {name:'플라워', id:1}, {name:'도예', id:2},{name:'가죽', id:3},
+                    {name:'캔들/비누', id:4}],
         },
         {
-            list:[  {name:'전체',id:0},{name:'노래교실',id:5},{name:'보컬트레이닝',id:6},
-                    {name:'성악',id:7},{name:'기타',id:8}],
+            list:[  {name:'노래교실', id:5},{name:'보컬트레이닝', id:6},
+                    {name:'성악', id:7},{name:'기타', id:8}],
         },
         {
-            list:[  {name:'전체',id:0},{name:'유화',id:9},{name:'마카',id:10},{name:'색연필',id:11},
-                    {name:'수채화',id:12}],
+            list:[{name:'유화', id:9},{name:'마카', id:10},{name:'색연필', id:11},
+                    {name:'수채화', id:12}],
         },
         {
-            list:[{name:'전체', id:0},{name:'한식',id:13},{name:'일식/중식',id:14},{name:'양식',id:15},{name:'다이어트',id:16}],
+            list:[{name:'한식', id:13},{name:'일식/중식', id:14},{name:'양식', id:15},{name:'다이어트', id:16}],
         },
     ]
     const [showModal, setShowModal] = useState(false)
@@ -115,11 +117,11 @@ export default function SearchByTopic(){
         setTest(value)
     }
     let cntarr = showCourse[0]
-    console.log(cntarr&&cntarr.length)
+    console.log('id=>', id, 'smallcategory=>', smallCategory)
     return(
         <>
             <div className="bycenter_title_part">
-                <p className="bycenter_title" onClick={()=>{setView(!view)}}>{topic.name}{""}
+                <p className="bycenter_title" onClick={()=>{setView(!view)}}>{topic.middlename}{""}
                     {view ? <FontAwesomeIcon icon={faAngleUp} className="title_arrow"/> : <FontAwesomeIcon icon={faAngleDown} className="title_arrow" />}
                     {view === true ? <DropDown className='dropdown_list' />:<DropDown className='dropdown_list_unactive'/>}
                 </p>
@@ -127,9 +129,9 @@ export default function SearchByTopic(){
             <div className="bycenter_list min_inner">
 
                 <ul className="small_category_items_topic" >
-                    {category[(id-1)].list.map((item,i)=>(
-                            <li className={smallCategory === item.id?"small_category_item_topic_active":"small_category_item_topic"}>
-                                <p onClick={()=>setSmallCategory(item.id)}
+                    {category[(cindex-1)].list.map((item,i)=>(
+                            <li className={smallCategory === item.name ?"small_category_item_topic_active":"small_category_item_topic"}>
+                                <p onClick={()=>{navigate(`/topic/${item.id}`);}}
                                     value={item}
                                     className={smallCategory === item.id?"small_category_name_active":"small_category_name"}
                                     >{item.name}</p>
