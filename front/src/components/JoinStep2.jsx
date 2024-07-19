@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import{useState, useRef} from 'react'
+import { useNavigate } from "react-router-dom";
 import { validateCheckStep2,pwCheck, changeEmailDomain } from "../apis/validate.js";
 import DaumPostCode from 'react-daum-postcode'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,11 +18,15 @@ export default function JoinStep2({next,pre,formData,handleChange, handleAddress
 // console.log('edate->', e.target.value);
 // }
 
+const navigate = useNavigate();
+
         const handleSubmit =() =>{
         if(validateCheckStep2(refs)){
                 if(pwCheck(refs)){
                 console.log('submit->', formData);
                 alert('임시회원가입완료')
+                navigate('/login')
+                
         //todo. 서버연동 추가 
 
                 }
