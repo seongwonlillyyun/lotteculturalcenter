@@ -34,6 +34,8 @@ const handleSubmit =(e) =>{
         userPwRef.current.focus()
         checkFlag=false
     }else{
+        alert('임시로그인완료!')
+        navigate('/')
         return checkFlag}
     }
 
@@ -59,7 +61,7 @@ return(
                  <li><input type="text" name="user_id" className="login_input login_input_id"
                  ref={userIdRef} value={formData.user_id} onChange={handleChange}
                  placeholder="아이디를 입력해주세요."/></li>
-                 <li><input type="text" name="user_pw" className="login_input login_input_pw"
+                 <li><input type="password" name="user_pw" className="login_input login_input_pw"
                  ref={userPwRef} value={formData.user_pw} onChange={handleChange}
                  placeholder="비밀번호를 입력해주세요."/></li>
                  <li><button className="login_btn">로그인</button></li>

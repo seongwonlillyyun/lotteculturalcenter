@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export default function OrderStep2({step}) {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate('/')
+    navigate('/courseHistory')
   }
 
   return(
