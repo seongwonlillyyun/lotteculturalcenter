@@ -67,6 +67,14 @@ function MainVisual() {
 }
 
 function Recommend() {
+  const [list, setList] = useState([]);
+  useEffect(()=>{
+    const url = "//localhost:8080/course/best";
+
+    axios.get(url)
+      .then(result => setList(result.data))
+  },[])
+
   return(
     <div className="main_recommend">
       <div className="inner">
@@ -77,12 +85,27 @@ function Recommend() {
             소개합니다
           </h3>
         </div>
+        <Swiper
+          className="course_swiper"
+          slidesPerView={4}
+          spaceBetween={10}
+        >
+          {
+            list.map(v => (
+              <SwiperSlide className="course_item" key={v.course_id}>
+                <CourseItem target={v}/>
+              </SwiperSlide>
+            ))
+          }
+        </Swiper>
+        <CourseItem componentName={"test"}/>
       </div>
     </div>
   );
 }
 
 function Category() {
+  const navigate = useNavigate();
   const [active, setActive] = useState(0);
   const [data, setData] = useState();
   const [list, setList] = useState([]);
@@ -114,6 +137,10 @@ function Category() {
       .then(result => setList(result.data.slice(0, 4)))
   }
 
+  const clickHandler = (id) => {
+    navigate(`/course/${id}`);
+  }
+
   return data && (
     <div className="main_category_wrap" style={{"--bg" : data[active].bg_color}}>
       <div className="main_title">
@@ -142,7 +169,7 @@ function Category() {
           <ul className="course_list">
             {
               list.map(v => (
-                <li key={v.course_id}>
+                <li className="course_item" key={v.course_id} onClick={() => clickHandler(v.course_id)}>
                   <div className="img_box">
                     <img src={`//localhost:8080/${v.course_img}`} alt="" />
                   </div>
@@ -151,13 +178,13 @@ function Category() {
                       <span className="point">{v.status}</span>
                       <span>{v.name}</span>
                     </div>
-                    <h4>{v.course_name}</h4>
+                    <h4 className="title">{v.course_name}</h4>
                     <div className="info">
                       <p className="teacher">{v.teacher_name}</p>
                       <p className="time">{v.course_week} {v.start_time} ~ {v.end_time}, 총 {v.num_of_course}회</p>
                     </div>
                     <div className="price">
-                      <p>{v.price}</p>
+                      <p>{v.price}원</p>
                     </div>
                   </div>
                 </li>
@@ -224,5 +251,29 @@ function NotiEvent() {
         <Link className="notice_btn" to="/board/notievent">롯데문화센터의 다양한 소식을 확인해보세요!</Link>
       </div>
     </div>
+  );
+}
+
+function CourseItem({target}) {
+  return target && (
+    <>
+      <div className="img_box">
+        <img src={`//localhost:8080/${target.course_img}`} alt="" />
+      </div>
+      <div className="txt_box">
+        <div className="tags">
+          <span className="point">{target.status}</span>
+          <span>{target.name}</span>
+        </div>
+        <h4 className="title">{target.course_name}</h4>
+        <div className="info">
+          <p className="teacher">{target.teacher_name}</p>
+          <p className="time">{target.course_week} {target.start_time} ~ {target.end_time}, 총 {target.num_of_course}회</p>
+        </div>
+        <div className="price">
+          <p>{target.format_price}원</p>
+        </div>
+      </div>
+    </>
   );
 }
