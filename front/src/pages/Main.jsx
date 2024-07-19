@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation } from "swiper/modules"
+import { Autoplay, Navigation, Pagination } from "swiper/modules"
 import axios from 'axios';
 
 import 'swiper/css';
+import 'swiper/css/pagination';
 import "../css/main.css";
 
 export default function Main() {
@@ -38,7 +39,7 @@ function MainVisual() {
     <div className="main_visual">
       <div className="full_inner">
         <Swiper
-          modules={[Autoplay, Navigation]}
+          modules={[Autoplay]}
           autoplay={{delay : 5000}}
           loop={true}
           speed={2000}
@@ -85,20 +86,27 @@ function Recommend() {
             소개합니다
           </h3>
         </div>
-        <Swiper
-          className="course_swiper"
-          slidesPerView={4}
-          spaceBetween={10}
-        >
-          {
-            list.map(v => (
-              <SwiperSlide className="course_item" key={v.course_id}>
-                <CourseItem target={v}/>
-              </SwiperSlide>
-            ))
-          }
-        </Swiper>
-        <CourseItem componentName={"test"}/>
+        <div className="course_swiper_wrapper">
+          <Swiper
+            modules={[Pagination]}
+            className="course_swiper"
+            slidesPerView={4}
+            spaceBetween={30}
+            pagination={{
+              el : ".main_recommend .pagination",
+              type : "progressbar",
+            }}
+          >
+            {
+              list.map(v => (
+                <SwiperSlide className="course_item" key={v.course_id}>
+                  <CourseItem target={v}/>
+                </SwiperSlide>
+              ))
+            }
+          </Swiper>
+          <div className="pagination"></div>
+        </div>
       </div>
     </div>
   );

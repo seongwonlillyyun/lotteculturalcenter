@@ -3,6 +3,17 @@
   background-color: var(--bg-color);
 }
 
+.main_page .course_swiper_wrapper .swiper-pagination-progressbar{
+  position: relative;
+  margin-top: 65px;
+  background-color: #ede7e2;
+  height: 2px;
+}
+
+.main_page .course_swiper_wrapper .swiper-pagination-progressbar-fill {
+  background-color: #aa9b90;
+}
+
 .main_page .course_item {
   cursor: pointer;
   overflow: hidden;
