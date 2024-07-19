@@ -312,7 +312,7 @@
 }
 .topic_course_list{
     display: flex;
-    gap: .5rem;
+    gap: 8px;
     flex-wrap: wrap;
     /* border: 1px solid red; */
 }

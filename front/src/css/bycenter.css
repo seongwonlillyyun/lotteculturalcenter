@@ -18,7 +18,6 @@
     border-radius: 10px;
     background-color: white;
     width: 350px;
-    height: 460px;
     padding: 1rem 2rem;
     font-size: 1rem;
     line-height: 1.7rem;
@@ -322,7 +321,7 @@
 }
 .center_course_list{
     display: flex;
-    gap: .5rem;
+    gap: 8px;
     flex-wrap: wrap;
     /* border: 1px solid red; */
 }

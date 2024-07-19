@@ -2,7 +2,8 @@ import {promises as fsPromises} from 'fs';
 import {db} from '../db/database_mysql80.js'
 
 export const getTopic = async(id)=>{
-    const sql = `select cid, name from category where cid = ?`
+    const sql = `select s.csid, c.cid, s.name as smallname, c.name as middlename 
+                from category_sub s, category c where c.cid = s.cid and s.csid = ?`
     return db  
             .execute(sql,[id])
             .then(result=>result[0])
@@ -29,7 +30,6 @@ export const getCoursesbyTopic = async(params) =>{
                         from course c, location l, category_sub s 
                         where c.loc_id = l.loc_id and c.csid = s.csid) t1 
                         where
-                            cid = all (select distinct cid from category_sub where cid = ?) and 
                             csid = all (select distinct csid from category_sub where csid = ?) and
 							loc_id in (select distinct loc_id from location where loc_id in (?)) and
                             dayofweek(course_start) in (select distinct dayofweek(course_start) from course where dayofweek(course_start) in (?)) and 
@@ -38,7 +38,7 @@ export const getCoursesbyTopic = async(params) =>{
                             order by 8 desc
                             limit ?`
                         return db
-                            .query(sql,[params.id, params.csid, params.loc_id, params.day, params.time,
+                            .query(sql,[params.csid, params.loc_id, params.day, params.time,
                                         params.text,params.end])
                             .then(result=>result[0])
     } else {
@@ -60,7 +60,6 @@ export const getCoursesbyTopic = async(params) =>{
                         from course c, location l, category_sub s 
                         where c.loc_id = l.loc_id and c.csid = s.csid) t1 
                         where
-                            cid = all (select distinct cid from category_sub where cid = ?) and 
                             csid = all (select distinct csid from category_sub where csid = ?) and
 							loc_id in (select distinct loc_id from location where loc_id in (?)) and
                             dayofweek(course_start) in (select distinct dayofweek(course_start) from course where dayofweek(course_start) in (?)) and 
@@ -69,7 +68,7 @@ export const getCoursesbyTopic = async(params) =>{
                             order by ?
                             limit ?`
                         return db
-                            .query(sql,[params.id, params.csid, params.loc_id, params.day, params.time, 
+                            .query(sql,[params.csid, params.loc_id, params.day, params.time, 
                                         params.text,params.sort,params.end])
                             .then(result=>result[0])
     }
