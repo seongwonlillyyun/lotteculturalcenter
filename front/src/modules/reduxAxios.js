@@ -1,11 +1,12 @@
 import axios from "axios";
 
-// get method
+//! get method
 export const axiosGet = async(url) => {
   let result = false;
 
   try {
-    result = await axios.get(url).then(res => res.data)    
+    result = await axios.get(url)
+            .then(res => res.data)    
   } catch (error) {
     
   }
