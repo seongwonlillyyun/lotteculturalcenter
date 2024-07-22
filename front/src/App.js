@@ -8,7 +8,6 @@ import Product from "./pages/Product";
 import ProductDetail from "./pages/ProductDetail";
 import { useEffect, useState } from "react";
 
-
 // pages
 
 export default function App() {

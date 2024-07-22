@@ -4,12 +4,12 @@ import { setCartList, setCount, setCartItem } from '../reducers/cartReducer';
 
 
 // 리스트
-export function cartListAxios() {
+export function cartListAxios(userId) {
   const url = 'http://127.0.0.1:8080/cart';
-  const data = {'test':test};
+  const data = {'userId':userId};
 
   return async(dispatch) => {
-    const clist = await axiosPost({url, data});
+    const clist = await axiosPost(url, data);
     dispatch(setCartList({clist}));
   }
 }

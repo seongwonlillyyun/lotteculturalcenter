@@ -2,13 +2,21 @@ import { db } from '../db/database_mysql80.js';
 
 
 // 리스트
-export const getCart = async(cart) => {
+export const getCart = async(userId) => {
   const sql = `
-
+   select row_number() over(order by c.cdate desc) as rno, c.user_id,
+      c.cart_id,l.loc_id,c.course_id,l.name loc,p.status, p.course_name, p.teacher_name,
+      left(p.course_start, 10) course_start, left(p.course_end, 10) course_end, p.course_week,
+        left(p.start_time, 5) start_time, left(p.end_time, 5) end_time, p.num_of_course, format(p.price, 0) as price
+        from product p, location l , cart c, member m
+          where p.loc_id = l.loc_id
+                and p.course_id = c.course_id
+                and c.user_id = m.user_id
   `
   return db
-          .execute(sql, [cart])
-          .then(result => result[0])
+          .execute(sql, [userId])
+          .then(result =>result[0])
+
 }
 
 // 카운트

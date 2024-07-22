@@ -2,50 +2,63 @@ import React, { useEffect, useState } from 'react';
 import Checkbox from './Checkbox';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch} from 'react-redux';
-// import { getUser } from '../../util/localStorage.js';
+import { getUser } from '../../util/localStorage.js';
 import { cartListAxios } from '../../modules/reduxCartAxios';
 
 
-
 export default function CartList({cname}) {
-  // const userId = getUser().userId;
-  // const dispatch = useDispatch();
-  // const cartList = useSelector(state => state.cart.list);
+  const userId = getUser().userId;
+  const dispatch = useDispatch();
+  const cartList = useSelector(state => state.cart.list);
+  const [checkItems, setCheckItems] = useState(new Set) // 체크 리스트
 
 
-  const [productList, setProductList] = useState([])
+  useEffect(()=>{
+    dispatch(cartListAxios({userId}))
+  },[])
 
+  // console.log('체크박스 값->',checkList);  
 
-    // 체크박스 유효성검사
-    const validateCheck = () => {
+  const checkItemHandler = (value, isChecked) => {
+    const newCheckItems = new Set(checkItems); // 기존 상태 복사
 
-
+    if (isChecked) {
+      newCheckItems.add(value);
+    } else {
+      newCheckItems.delete(value);
     }
+  
+    setCheckItems(newCheckItems); // 새로운 상태로 업데이트
+    console.log(newCheckItems)
+  }
 
-
-
-
-
-
+ 
 
   return(
     <>
     {
-      productList.length === 0 ? (
+        cartList.length === 0 ? (
           <div className='cart_bin'>
-            <h1>장바구니가 비었습니다.</h1>
+            <spna className='icon'></spna>
+            <h3>장바구니가 비었습니다.</h3>
           </div>
       ): (
-        productList.map((item, index) => (
+        cartList && cartList.map((item, index) => (
           <div className='cart_list' key={item.course_id}>
           <ul className='cart_list_box'>
             <li>
               {
-                cname === 'order' ? '' : <Checkbox id={`list${index}`} name={`list${index}`} />
+                cname === 'order' ? '' : 
+                  <Checkbox id={`list${index}`} 
+                            name={`list${index}`}
+                            value={`${index}`}      
+                            checkItemHandler ={checkItemHandler}
+                            />
               }
             </li>
             <li className='title'>
               <span className='deco'>{item.status}</span>
+              <span className='deco loc'>{item.loc}</span>
               <Link to={'/'}>
                 <h2>{item.course_name}</h2>
               </Link>

@@ -16,8 +16,6 @@ export default function OrderStep1({next, step}) {
         <Tab step={step} />  
         <h2 className='htitle'>수강자 정보</h2>
         <CartList cname={'order'}/>
-        <CartList cname={'order'}/>
-        <CartList cname={'order'}/>
 
         <div className='mid-line'></div>
 
