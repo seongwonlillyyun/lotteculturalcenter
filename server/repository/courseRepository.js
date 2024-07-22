@@ -135,3 +135,28 @@ export const getBestCourse = async () => {
   return db.execute(sql)
     .then(([rows]) => rows);
 }
+
+export const getNewCourse = async () => {
+  const sql = `
+    select
+      course_id,
+      course_img,
+      status,
+      l.name,
+      course_name,
+      teacher_name,
+      course_week,
+      time_format(start_time, "%H:%i") start_time,
+      time_format(end_time, "%H:%i") end_time,
+      num_of_course,
+      format(price, 0) format_price
+    from course p
+      inner join category_sub cs on cs.csid = p.csid
+      inner join category c on c.cid = cs.cid
+      inner join location l on l.loc_id = p.loc_id
+    order by p.reg_date;
+  `;
+
+  return db.execute(sql)
+    .then(([rows]) => rows);
+}

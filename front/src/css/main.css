@@ -3,6 +3,10 @@
   background-color: var(--bg-color);
 }
 
+.main_page .course_swiper_wrapper {
+  position: relative;
+}
+
 .main_page .course_swiper_wrapper .swiper-pagination-progressbar{
   position: relative;
   margin-top: 65px;
@@ -12,6 +16,32 @@
 
 .main_page .course_swiper_wrapper .swiper-pagination-progressbar-fill {
   background-color: #aa9b90;
+}
+
+.main_page .course_swiper_wrapper .prev_btn,
+.main_page .course_swiper_wrapper .next_btn {
+  position: absolute;
+  top: 50%;
+  background-color: red;
+  z-index: 10;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  background: no-repeat center center / contain;
+}
+
+.main_page .course_swiper_wrapper .prev_btn {
+  background-image: url(../svg/btn-slide-prev.svg);
+  left: -55px;
+}
+
+.main_page .course_swiper_wrapper .next_btn {
+  background-image: url(../svg/btn-slide-next.svg);
+  right: -55px;
+}
+
+.main_page .course_swiper_wrapper .swiper-button-disabled {
+  opacity: 0.5;
 }
 
 .main_page .course_item {
@@ -170,6 +200,72 @@
   font-weight: 500;
   color: #fff;
   margin-top: 40px;
+}
+
+/* main_visaul pagination */
+.main_visual .pagination_wrapper {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: auto;
+  --progress : 300px;
+}
+
+.main_visual .pagination {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  gap: 20px;
+}
+
+.main_visual .pagination_wrapper .progress{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--progress);
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: 1;
+}
+
+.main_visual .pagination_wrapper .progress_blank {
+  width: var(--progress);
+  height: 2px;
+}
+
+.main_visual .pagination_wrapper .progress_content {
+  width: var(--width);
+  height: 100%;
+  background-color: #fff;
+}
+
+/* main_visual btns */
+.main_visual .btns {
+  position: absolute;
+  bottom: 40px;
+  right: 30px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.main_visual .btns [class *= btn] {
+  width: 32px;
+  height: 32px;
+  background: no-repeat center center / contain;
+  cursor: pointer;
+}
+
+.main_visual .btns .prev_btn {
+  background-image: url(../svg/btn-main-visual-prev.svg);
+}
+
+.main_visual .btns .next_btn {
+  background-image: url(../svg/btn-main-visual-next.svg);
 }
 
 /* recommend */

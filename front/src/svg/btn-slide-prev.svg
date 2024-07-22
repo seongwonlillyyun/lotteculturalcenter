@@ -1,0 +1,9 @@
+<svg id="list_prev" xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44">
+  <g id="Button_arrow_list_prev" data-name="Button / arrow / list_prev" transform="translate(46.113 -938) rotate(90)">
+    <g id="타원_1304" data-name="타원 1304" transform="translate(938 2.113)" fill="#fff" stroke="#000" stroke-width="2">
+      <circle cx="22" cy="22" r="22" stroke="none"/>
+      <circle cx="22" cy="22" r="21" fill="none"/>
+    </g>
+    <path id="패스_29" data-name="패스 29" d="M-13078.406-19950.879l6,6,5.5-5.5.5-.5" transform="translate(14032.906 19973.492)" fill="none" stroke="#222" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>

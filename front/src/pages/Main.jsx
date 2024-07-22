@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from "swiper/modules"
@@ -21,6 +21,7 @@ export default function Main() {
 }
 
 function MainVisual() {
+  const progressRef = useRef();
   const navigate = useNavigate();
   const [list, setList] = useState([]);
 
@@ -35,14 +36,38 @@ function MainVisual() {
     navigate(`/board/notievent/${id}`)
   }
 
+  const onAutoplayTimeLeft = (s, time, percent) => {
+    progressRef.current.style.setProperty("--width", `${(1 - percent) * 100}%`);
+  };
+
   return (
     <div className="main_visual">
       <div className="full_inner">
         <Swiper
-          modules={[Autoplay]}
+          modules={[Autoplay, Pagination, Navigation]}
           autoplay={{delay : 5000}}
           loop={true}
           speed={2000}
+          navigation={
+            {
+              prevEl : ".main_visual .prev_btn",
+              nextEl : ".main_visual .next_btn"
+            }
+          }
+          pagination={
+            {
+              type : "custom",
+              el : ".main_visual .pagination",
+              renderCustom : (swiper, curr, total) => {
+                return `
+                  <span>${curr}</span>
+                  <div class="progress_blank"></div>
+                  <span>${total}</span>
+                `
+              }
+            }
+          }
+          onAutoplayTimeLeft={onAutoplayTimeLeft}
         >
           {
             list.map((v, i) => (
@@ -61,10 +86,54 @@ function MainVisual() {
               </SwiperSlide>
             ))
           }
+          <div className="pagination_wrapper">
+            <div className="pagination"></div>
+            <div className="progress">
+              <div className="progress_content" ref={progressRef}></div>
+            </div>
+          </div>
+          <div className="btns">
+            <div className="prev_btn"></div>
+            <div className="next_btn"></div>
+          </div>
         </Swiper>
       </div>
     </div>
   )
+}
+
+function CourseSwiper({className, list}) {
+  return (
+    <div className="course_swiper_wrapper">
+      <Swiper
+        modules={[Pagination, Navigation]}
+        className="course_swiper"
+        slidesPerView={4}
+        spaceBetween={30}
+        pagination={{
+          el : `${className} .pagination`,
+          type : "progressbar",
+        }}
+        navigation={
+          {
+            prevEl : `${className} .prev_btn`,
+            nextEl : `${className} .next_btn`
+          }
+        }
+      >
+        {
+          list.map(v => (
+            <SwiperSlide className="course_item" key={v.course_id}>
+              <CourseItem target={v}/>
+            </SwiperSlide>
+          ))
+        }
+      </Swiper>
+      <div className="prev_btn"></div>
+      <div className="next_btn"></div>
+      <div className="pagination"></div>
+    </div>
+  );
 }
 
 function Recommend() {
@@ -86,27 +155,7 @@ function Recommend() {
             소개합니다
           </h3>
         </div>
-        <div className="course_swiper_wrapper">
-          <Swiper
-            modules={[Pagination]}
-            className="course_swiper"
-            slidesPerView={4}
-            spaceBetween={30}
-            pagination={{
-              el : ".main_recommend .pagination",
-              type : "progressbar",
-            }}
-          >
-            {
-              list.map(v => (
-                <SwiperSlide className="course_item" key={v.course_id}>
-                  <CourseItem target={v}/>
-                </SwiperSlide>
-              ))
-            }
-          </Swiper>
-          <div className="pagination"></div>
-        </div>
+        <CourseSwiper className=".main_recommend" list={list}/>
       </div>
     </div>
   );
@@ -206,6 +255,15 @@ function Category() {
 }
 
 function NewCourse() {
+  const [list, setList] = useState([]);
+
+  useEffect(()=>{
+    const url = "//localhost:8080/course/new";
+
+    axios.get(url)
+      .then(result => setList(result.data))
+  },[])
+
   return (
     <div className="new_course">
       <div className="inner">
@@ -216,6 +274,7 @@ function NewCourse() {
             지금 확인해보세요
           </h3>
         </div>
+        <CourseSwiper className=".new_course" list={list}/>
       </div>
     </div>
   );

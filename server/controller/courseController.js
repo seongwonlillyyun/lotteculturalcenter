@@ -23,7 +23,12 @@ export const setCourse = async (req, res) => {
 
 export const getBestCourse = async (req, res) => {
   const result = await repository.getBestCourse();
-  console.log(result);
+  res.json(result);
+  res.end();
+}
+
+export const getNewCourse = async (req, res) => {
+  const result = await repository.getNewCourse();
   res.json(result);
   res.end();
 }
