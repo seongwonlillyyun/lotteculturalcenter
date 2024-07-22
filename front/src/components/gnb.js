@@ -21,7 +21,7 @@ export const gnb = {
     name : "커뮤니티",
     children : [
       {path : "/board/notievent", name : "공지사항/이벤트"},
-      {path : "/", name : "수강후기"}
+      {path : "/board/review", name : "수강후기"}
     ],
     imgPath : "/img/img-gnb-community-01.jpg"
   }
