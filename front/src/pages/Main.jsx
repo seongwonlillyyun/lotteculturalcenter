@@ -43,97 +43,66 @@ function MainVisual() {
   return (
     <div className="main_visual">
       <div className="full_inner">
-        <Swiper
-          modules={[Autoplay, Pagination, Navigation]}
-          autoplay={{delay : 5000}}
-          loop={true}
-          speed={2000}
-          navigation={
-            {
-              prevEl : ".main_visual .prev_btn",
-              nextEl : ".main_visual .next_btn"
-            }
-          }
-          pagination={
-            {
-              type : "custom",
-              el : ".main_visual .pagination",
-              renderCustom : (swiper, curr, total) => {
-                return `
-                  <span>${curr}</span>
-                  <div class="progress_blank"></div>
-                  <span>${total}</span>
-                `
+        {
+          list.length > 0 && 
+          <Swiper
+            modules={[Autoplay, Pagination, Navigation]}
+            autoplay={{delay : 5000}}
+            loop={true}
+            speed={2000}
+            navigation={
+              {
+                prevEl : ".main_visual .prev_btn",
+                nextEl : ".main_visual .next_btn"
               }
             }
-          }
-          onAutoplayTimeLeft={onAutoplayTimeLeft}
-        >
-          {
-            list.map((v, i) => (
-              <SwiperSlide key={i} onClick={() => clickHandler(v.bid)}>
-                <img className="bg" src={`//localhost:8080/${v.img_path}`} alt="" />
-                <div className="txt_box">
-                  <h2>{v.title}</h2>
-                  {
-                    v.summary && 
-                    <p>
-                      {v.summary}
-                    </p>
-                  }
-                  <p>[자세히보기]</p>
-                </div>
-              </SwiperSlide>
-            ))
-          }
-          <div className="pagination_wrapper">
-            <div className="pagination"></div>
-            <div className="progress">
-              <div className="progress_content" ref={progressRef}></div>
+            pagination={
+              {
+                type : "custom",
+                el : ".main_visual .pagination",
+                renderCustom : (swiper, curr, total) => {
+                  return `
+                    <span>${curr}</span>
+                    <div class="progress_blank"></div>
+                    <span>${total}</span>
+                  `
+                }
+              }
+            }
+            onAutoplayTimeLeft={onAutoplayTimeLeft}
+          >
+            {
+              list.map((v, i) => (
+                <SwiperSlide key={i} onClick={() => clickHandler(v.bid)}>
+                  <img className="bg" src={`//localhost:8080/${v.img_path}`} alt="" />
+                  <div className="txt_box">
+                    <h2>{v.title}</h2>
+                    {
+                      v.summary && 
+                      <p>
+                        {v.summary}
+                      </p>
+                    }
+                    <p>[자세히보기]</p>
+                  </div>
+                </SwiperSlide>
+              ))
+            }
+            <div className="pagination_wrapper">
+              <div className="pagination"></div>
+              <div className="progress">
+                <div className="progress_content" ref={progressRef}></div>
+              </div>
             </div>
-          </div>
-          <div className="btns">
-            <div className="prev_btn"></div>
-            <div className="next_btn"></div>
-          </div>
-        </Swiper>
+            <div className="btns">
+              <div className="prev_btn"></div>
+              <div className="next_btn"></div>
+            </div>
+          </Swiper>
+        }
       </div>
     </div>
   )
-}
-
-function CourseSwiper({className, list}) {
-  return (
-    <div className="course_swiper_wrapper">
-      <Swiper
-        modules={[Pagination, Navigation]}
-        className="course_swiper"
-        slidesPerView={4}
-        spaceBetween={30}
-        pagination={{
-          el : `${className} .pagination`,
-          type : "progressbar",
-        }}
-        navigation={
-          {
-            prevEl : `${className} .prev_btn`,
-            nextEl : `${className} .next_btn`
-          }
-        }
-      >
-        {
-          list.map(v => (
-            <SwiperSlide className="course_item" key={v.course_id}>
-              <CourseItem target={v}/>
-            </SwiperSlide>
-          ))
-        }
-      </Swiper>
-      <div className="prev_btn"></div>
-      <div className="next_btn"></div>
-      <div className="pagination"></div>
-    </div>
-  );
 }
 
 function Recommend() {
@@ -342,5 +311,39 @@ function CourseItem({target}) {
         </div>
       </div>
     </>
+  );
+}
+
+function CourseSwiper({className, list}) {
+  return (
+    <div className="course_swiper_wrapper">
+      <Swiper
+        modules={[Pagination, Navigation]}
+        className="course_swiper"
+        slidesPerView={4}
+        spaceBetween={30}
+        pagination={{
+          el : `${className} .pagination`,
+          type : "progressbar",
+        }}
+        navigation={
+          {
+            prevEl : `${className} .prev_btn`,
+            nextEl : `${className} .next_btn`
+          }
+        }
+      >
+        {
+          list.map(v => (
+            <SwiperSlide className="course_item" key={v.course_id}>
+              <CourseItem target={v}/>
+            </SwiperSlide>
+          ))
+        }
+      </Swiper>
+      <div className="prev_btn"></div>
+      <div className="next_btn"></div>
+      <div className="pagination"></div>
+    </div>
   );
 }
