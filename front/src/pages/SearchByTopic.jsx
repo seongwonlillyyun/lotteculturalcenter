@@ -26,8 +26,8 @@ export default function SearchByTopic(){
         setDetail(value)
         setSelected(selected)
     }
-
-    console.log('detail=>',detail)
+    console.log('selected=>',selected)
+    console.log('detail=>', detail)
     useEffect(()=>{
         setDetail({day:[1,2,3,4,5,6,7],time:'', center:[1,2,3,4,5,6,7,8,9,10,11,12]})
         setCurrentPage(1)
@@ -89,6 +89,19 @@ export default function SearchByTopic(){
         setSort(sort)
         
     }
+    const center = [
+            { name: "잠실점", id: 1 },
+            { name: "본점", id: 2 },
+            { name: "강남점", id: 3 },
+            { name: "건대스타시티점", id: 4 },
+            { name: "인천점", id: 5 },
+            { name: "동탄점", id: 6 },
+            { name: "구리점", id: 7 },
+            { name: "분당점", id: 8 },
+            { name: "부산본점", id: 9 },
+            { name: "광복점", id: 10 },
+            { name: "광주점", id: 11 },
+            { name: "대구점", id: 12 } ];
     const handledetailReset = ()=>{
         setSelected({day:'',time:'', center:[]})
         setTest('')
@@ -96,28 +109,43 @@ export default function SearchByTopic(){
     }
 
     const handleDetailDelete = (value) =>{
+        function searchId(item){
+            if(item.name === value){
+                return true;
+            }
+        }
         if(value === 'day'){
             setSelected({...selected, day:''})
             setDetail({...detail, day:[1,2,3,4,5,6,7]})
         } else if(value === 'time') {
             setSelected({...selected, time:''})
             setDetail({...detail, time:''})
-        } else if(value === 'center'){
-            setDetail({...detail, center:[1,2,3,4,5,6,7,8,9,10,11,12]});
-            setSelected({...selected, center:[]})
+        } else if (value === 'text'){
+                setTest('')
+                setSearchText('%%')
+        } else {
+            let centerList = selected.center.filter(item=>item !== value) 
+            setSelected({...selected, center:centerList})
+            let centerId = center.find(searchId)
+            let centerarr = detail.center.filter(item=>item !== centerId)
+            console.log(centerarr)
+            /* setDetail({...detail, center:centerNumber}) */
+           /*  let centerNumber = center.filter(item=>item.name === centerList.item)
+            console.log(centerNumber)  */
+            /* let centerList = selected.center.filter(item=>item !== value)
+            setSelected({...selected, center:centerList}) */
+    /*             let centerNumber = center.filter(item=>item.name !== value)
+            console.log(centerNumber) */
+            /* setDetail({...detail, center:[1,2,3,4,5,6,7,8,9,10,11,12]}) */;
         }
-            else if (value === 'text'){
-            setTest('')
-            setSearchText('%%')
         }
-    }
 
     const handleSearchText = (value)=>{
         setSearchText(`%${value}%`)
         setTest(value)
     }
     let cntarr = showCourse[0]
-    console.log('id=>', id, 'smallcategory=>', smallCategory)
+
     return(
         <>
             <div className="bycenter_title_part">
@@ -166,9 +194,9 @@ export default function SearchByTopic(){
                 <ul className="handle_search_standard">
                     <li><button className="handle_search_reset" onClick={handledetailReset}><FontAwesomeIcon icon={faArrowRotateRight} /></button></li>
                     {selected.day!=='' ? <li><p className="handle_search_day">{selected.day}<button className="search_reset_btn" type="button" onClick={()=>handleDetailDelete('day')}><FontAwesomeIcon icon={faXmark} /></button></p></li>:null}
-                    {selected.time !== ''? <li><p className="handle_search_time">{selected.time}<button className="search_reset_btn"onClick={()=>handleDetailDelete('time')}><FontAwesomeIcon icon={faXmark} /></button></p></li> :null}
+                    {selected.time !== ''? <li><p className="handle_search_time">{selected.time}<button className="search_reset_btn"  onClick={()=>handleDetailDelete('time')}><FontAwesomeIcon icon={faXmark} /></button></p></li> :null}
                     {selected.center.map((item)=>(
-                        <li className="handle_search_li"><p className="handle_search_center">{item}</p><button className="search_reset_btn"onClick={()=>handleDetailDelete('center')}><FontAwesomeIcon icon={faXmark} /></button></li>
+                        <li className="handle_search_li"><p className="handle_search_center">{item}</p><button className="search_reset_btn" onClick={()=>handleDetailDelete(item)}><FontAwesomeIcon icon={faXmark} /></button></li>
                     ))}
                     {test !== '' ? <li><p className="handle_search_text">{test}<button className="search_reset_btn" onClick={()=>handleDetailDelete('text')}><FontAwesomeIcon icon={faXmark} /></button></p></li> :null}
                     

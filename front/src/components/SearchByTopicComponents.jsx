@@ -39,7 +39,7 @@ export function DropDownSort({ click, sortStd }) {
     <ul className="sortdropdown_content">
       <li>
         <p
-          onClick={() => changeStd("강의시작일순", 7)}
+          onClick={() => changeStd("강의시작일순", 8)}
           style={{
             color: sortStd === "강의시작일순" ? "#000" : "rgba(0, 0, 0, .6)",
           }}
@@ -49,7 +49,7 @@ export function DropDownSort({ click, sortStd }) {
       </li>
       <li>
         <p
-          onClick={() => changeStd("낮은가격순", 8)}
+          onClick={() => changeStd("낮은가격순", 9)}
           style={{
             color: sortStd === "낮은가격순" ? "#000" : "rgba(0, 0, 0, .6)",
           }}
@@ -75,7 +75,7 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
   const [info, setInfo] = useState({
     day: [1, 2, 3, 4, 5, 6, 7],
     time: "",
-    center: [1,2,3,4,5,6,7,8,9,10,11,12],
+    center: []
   });
   const [isActive, setIsActive] = useState({
     day: false,
@@ -85,6 +85,7 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
   const [selected, setSelected] = useState({ day: "", time: "", center: [] });
   const [searchText, setSearchText] = useState("");
   const [addCenter, setAddCenter] = useState("");
+  const [centerList, setCenterList] = useState([])
 
   const center = [
     {
@@ -123,10 +124,10 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
     if (selected.day === "" || selected.time === "") {
       setIsActive({ ...isActive, [name]: true });
       if (name === "day") {
-        setInfo({ ...info, day: [...value] });
+        setInfo({ ...info, center:[1,2,3,4,5,6,7,8,9,10,11,12],  day: [...value] });
         setSelected({ ...selected, [name]: txt });
       } else if (name === "time") {
-        setInfo({ ...info, time: value });
+        setInfo({ ...info, center:[1,2,3,4,5,6,7,8,9,10,11,12], time: value });
         setSelected({ ...selected, [name]: txt });
       } else if (name === "center") {
         if (info.center.length !== 0 && info.center.includes(value)) {
@@ -175,7 +176,6 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
   console.log("selected=>", selected);
   console.log("info=>", info);
   console.log(addCenter);
-  console.log("이게모야", searchstd);
   return (
     <div className="modal_out" onClick={closeModal}>
       <div className="modal_container" onClick={(e) => e.stopPropagation()}>
