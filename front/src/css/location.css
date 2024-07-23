@@ -67,6 +67,15 @@
   object-fit: cover;
 }
 
+.location .swiper-pagination-custom
+{
+  bottom: unset;
+  right: unset;
+  top: unset;
+  left: unset;
+  width: auto;
+}
+
 .location .location_photo .swiper-pagination {
   position: absolute;
   top: 20px;
