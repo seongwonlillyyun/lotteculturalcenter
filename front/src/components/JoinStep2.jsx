@@ -4,8 +4,8 @@ import{useState, useRef} from 'react'
 import { useNavigate } from "react-router-dom";
 import { validateCheckStep2,pwCheck, changeEmailDomain } from "../apis/validate.js";
 import DaumPostCode from 'react-daum-postcode'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHandPeace } from "@fortawesome/free-solid-svg-icons/faHandPeace";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faHandPeace } from "@fortawesome/free-solid-svg-icons/faHandPeace";
 
 
 
@@ -20,20 +20,56 @@ export default function JoinStep2({next,pre,formData,handleChange, handleAddress
 
 const navigate = useNavigate();
 
-        const handleSubmit =() =>{
+const handleSubmit =() =>{
         if(validateCheckStep2(refs)){
                 if(pwCheck(refs)){
                 console.log('submit->', formData);
-                alert('임시회원가입완료')
-                navigate('/login')
+
                 
         //todo. 서버연동 추가 
-
+        const url = 'http://127.0.0.1:8080/member/join'
+        axios({
+                method : 'post',
+                url : url,
+                data : formData 
+                })
+        .then(res=>{
+                if(res.data.cnt ===1){
+                alert('회원가입이 완료되었습니다.')
+                navigate('/login')
+                }else{alert('회원가입에 실패하셨습니다')
+                }
+        }).catch(error=>console.log(error))
                 }
                 }
         }
 
-       //todo. ID 중복체크 하려면 또 서버연동.. {cnt :1 } 
+//todo. ID 중복체크 하려면 또 서버연동.. {cnt :1 } 
+const handleIdCheck = ()=>{
+if(refs.idRef.current.value ===''){
+alert('아이디를 입력해주세요')
+refs.idRef.current.focus()
+}else{
+const user_id = refs.idRef.current.value;
+axios({
+        method : 'post',
+        url: 'http://127.0.0.1:8080/member/idCheck',
+        data : {user_id: user_id}
+})
+.then((res)=>{
+        console.log(res.data);
+
+        if(res.data.cnt ===1){
+        alert('중복된 아이디이니 다른아이디를 사용해주세요')
+        refs.idRef.current.value=''
+        refs.idRef.current.focus()
+        }else{alert('사용가능합니다!')
+        refs.pwRef.current.focus()
+        }
+}).catch(error=>console.log(error))
+}
+}
+
 
 const [isOpen, setIsOpen] = useState(false)
 const handleToggle =() => {setIsOpen(!isOpen)}
@@ -80,6 +116,7 @@ const refs = {
     emailIdRef : useRef(null), 
     emailDomainRef :useRef(null), 
     phoneNo2Ref : useRef(null), 
+    phoneNo3Ref : useRef(null), 
     zipcodeRef : useRef(null), 
     addressRef : useRef(null), 
     detailAddressRef : useRef(null)
@@ -113,7 +150,8 @@ const refs = {
         <input type="text" name="user_id" placeholder="4~12자, 영어, 숫자" 
                 className="join_step2_input"
                 value={formData.user_id} onChange={handleChange} ref={refs.idRef}/>
-        <button type="button" className="join_step2_dupli_btn" >중복확인</button> {/* 아이디 중복 체크 관련 */}
+        <button type="button" className="join_step2_dupli_btn" onClick={handleIdCheck}
+         >중복확인</button> 
         </div>
         </li>
 
@@ -122,7 +160,7 @@ const refs = {
         <span className="join_ess">*</span>
         <label className="join_step2_category">비밀번호</label>
         </div>
-        <input type="password" name="user_pw" placeholder="비밀번호를 입력해주세요"  
+        <input type="password" name="user_pw" placeholder="비밀번호를 입력"  
         className="join_step2_input"
         value={formData.user_pw} onChange={handleChange} ref={refs.pwRef}/>
         </li>
@@ -132,7 +170,7 @@ const refs = {
         <span className="join_ess">*</span>
         <label className="join_step2_category">비밀번호 확인</label>
         </div>
-        <input type="password" name="user_repw" placeholder="비밀번호를 다시한번 입력해주세요"  
+        <input type="password" name="user_repw" placeholder="비밀번호를 다시한번 입력"  
         className="join_step2_input"
         value={formData.user_repw} onChange={handleChange} ref={refs.repwRef}/>
         </li>
@@ -142,7 +180,7 @@ const refs = {
         <span className="join_ess">*</span>
         <label className="join_step2_category">이름</label>
         </div>        
-<input type="text" name="user_name" placeholder="이름을 입력해주세요"  
+<input type="text" name="user_name" placeholder="이름"  
         className="join_step2_input"
         value={formData.user_name} onChange={handleChange} ref={refs.nameRef}/></li>
 
@@ -151,7 +189,7 @@ const refs = {
         <span className="join_ess">*</span><label className="join_step2_category">이메일</label>
         </div>
 <div className="join_step2_email">
-<input type="text" name="emailId" placeholder="이메일을 입력해주세요"  
+<input type="text" name="emailId" placeholder="이메일"  
         className="join_step2_input"
         value={formData.emailId} onChange={handleChange} ref={refs.emailIdRef}/>
         <p className="join_dat">@</p>
@@ -188,9 +226,13 @@ const refs = {
     <option>019</option>
 </select>
 <span className="join_step2_telbar">-</span>
-<input type="text" placeholder="휴대폰번호 뒷자리를 입력해주세요" name="phoneNo2" 
+<input type="text" placeholder="가운데 4자리" name="phoneNo2" 
         className="join_step2_input"
         value={formData.phoneNo2} onChange={handleChange} ref={refs.phoneNo2Ref}/>
+<span className="join_step2_telbar">-</span>
+<input type="text" placeholder="뒷 4자리" name="phoneNo3" 
+        className="join_step2_input"
+        value={formData.phoneNo3} onChange={handleChange} ref={refs.phoneNo3Ref}/>
 </div>        
         </li>
 

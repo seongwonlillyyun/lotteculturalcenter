@@ -9,7 +9,7 @@ export default function Join(){
     const [formData, setFormData] =useState({
         membership: false, personal : false, optional: false, // step1 용 
         user_name : '', user_id : '' , user_pw : '', user_repw: '', emailId : '' , emailDomain : '', 
-        phoneNo1 : '010', phoneNo2 : '', birth: '', zipcode : '' , address : '' , detailAddress : '' 
+        phoneNo1 : '010', phoneNo2 : '', phoneNo3: '',  birth: '', zipcode : '' , address : '' , detailAddress : '' 
         }
     )
 

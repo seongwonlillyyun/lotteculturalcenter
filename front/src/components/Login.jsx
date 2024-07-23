@@ -18,15 +18,15 @@ export default function Login(){
     const dispatch = useDispatch();
 
 //! 로그인 결과 받아오기 
-const isLogin = useSelector(state => state.memeber.isLogin )
-console.log('isLogin->', isLogin);
+// const isLogin = useSelector(state => state.memeber.isLogin )
+// console.log('isLogin->', isLogin);
 
-useEffect(()=>{
-    if(isLogin){
-    alert('로그인이 성공하셨습니다.')
-    navigate('/')
-    }
-},[isLogin])
+// useEffect(()=>{
+//     if(isLogin){
+//     alert('로그인이 성공하셨습니다.')
+//     navigate('/')
+//     }
+// },[isLogin])
 
 //! 로그인버튼클릭 -> 서버연동 
     const handleChange =(event) => {
@@ -47,17 +47,18 @@ const handleSubmit =(e) =>{
             data : formData,
         })
         .then((res)=>{
-            console.log('res->', res.data);
+            console.log('res.data->', res.data);
             if(res.data.cnt ===1){
                 console.log('token->', res.data.token)
 
                 cookie.setCookie('x-auto-jwt', res.data.token)
+                
                 const userInfo = jwtDecode(res.data.token)
                 localStorage.setItem('userInfo', JSON.stringify(userInfo))
-
                 alert('로그인 성공')
+                navigate('/')
             }else{
-                alert('아이디와 비밀번화를 재확인해 주세요')
+                alert('아이디와 비밀번호를 재확인해 주세요')
                 setFormData({user_id: '', user_pw:''})
                 userIdRef.current.focus();
             }
