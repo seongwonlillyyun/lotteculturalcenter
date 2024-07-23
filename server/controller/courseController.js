@@ -20,3 +20,15 @@ export const setCourse = async (req, res) => {
   res.json(result);
   res.end();
 }
+
+export const getBestCourse = async (req, res) => {
+  const result = await repository.getBestCourse();
+  res.json(result);
+  res.end();
+}
+
+export const getNewCourse = async (req, res) => {
+  const result = await repository.getNewCourse();
+  res.json(result);
+  res.end();
+}

@@ -39,7 +39,7 @@ export function DropDownSort({ click, sortStd }) {
     <ul className="sortdropdown_content">
       <li>
         <p
-          onClick={() => changeStd("강의시작일순", 7)}
+          onClick={() => changeStd("강의시작일순", 8)}
           style={{
             color: sortStd === "강의시작일순" ? "#000" : "rgba(0, 0, 0, .6)",
           }}
@@ -49,7 +49,7 @@ export function DropDownSort({ click, sortStd }) {
       </li>
       <li>
         <p
-          onClick={() => changeStd("낮은가격순", 8)}
+          onClick={() => changeStd("낮은가격순", 9)}
           style={{
             color: sortStd === "낮은가격순" ? "#000" : "rgba(0, 0, 0, .6)",
           }}
@@ -75,7 +75,7 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
   const [info, setInfo] = useState({
     day: [1, 2, 3, 4, 5, 6, 7],
     time: "",
-    center: [1,2,3,4,5,6,7,8,9,10,11,12],
+    center: []
   });
   const [isActive, setIsActive] = useState({
     day: false,
@@ -85,6 +85,7 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
   const [selected, setSelected] = useState({ day: "", time: "", center: [] });
   const [searchText, setSearchText] = useState("");
   const [addCenter, setAddCenter] = useState("");
+  const [centerList, setCenterList] = useState([])
 
   const center = [
     {
@@ -123,10 +124,10 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
     if (selected.day === "" || selected.time === "") {
       setIsActive({ ...isActive, [name]: true });
       if (name === "day") {
-        setInfo({ ...info, day: [...value] });
+        setInfo({ ...info, center:[1,2,3,4,5,6,7,8,9,10,11,12],  day: [...value] });
         setSelected({ ...selected, [name]: txt });
       } else if (name === "time") {
-        setInfo({ ...info, time: value });
+        setInfo({ ...info, center:[1,2,3,4,5,6,7,8,9,10,11,12], time: value });
         setSelected({ ...selected, [name]: txt });
       } else if (name === "center") {
         if (info.center.length !== 0 && info.center.includes(value)) {
@@ -175,7 +176,6 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
   console.log("selected=>", selected);
   console.log("info=>", info);
   console.log(addCenter);
-  console.log("이게모야", searchstd);
   return (
     <div className="modal_out" onClick={closeModal}>
       <div className="modal_container" onClick={(e) => e.stopPropagation()}>
@@ -328,28 +328,28 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
 
 export function CourseItem({ item }) {
   return (
-    <div className="course_item">
+    <div className="topic_course_item">
       <img
         src={`//localhost:8080/${item.course_img}`}
         alt="course_img"
-        className="course_item_img"
+        className="topic_course_item_img"
       />
-      <div className="course_item_status">
-        <p className="course_item_status_apply">{item.status}</p>
-        <p className="course_item_status_center">{item.name}</p>
+      <div className="topic_course_item_status">
+        <p className="topic_course_item_status_apply">{item.status}</p>
+        <p className="topic_course_item_status_center">{item.name}</p>
       </div>
-      <p className="course_item_title">{item.course_name}</p>
-      <p className="course_item_teacher">{item.teacher_name}</p>
-      <div className="course_item_info">
+      <p className="topic_course_item_title">{item.course_name}</p>
+      <p className="topic_course_item_teacher">{item.teacher_name}</p>
+      <div className="topic_course_item_info">
         <FontAwesomeIcon icon={faClock} />
         <p>
           {item.course_week} {item.start_time}~{item.end_time}, 총{" "}
           {item.num_of_course}회
         </p>
       </div>
-      <div className="course_item_price">
+      <div className="topic_course_item_price">
         <p>{item.price}원</p>
-        <button className="course_item_cart">
+        <button className="topic_course_item_cart">
           <FontAwesomeIcon icon={faCartShopping} />
         </button>
       </div>

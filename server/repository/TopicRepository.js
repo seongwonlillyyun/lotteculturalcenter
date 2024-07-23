@@ -35,7 +35,7 @@ export const getCoursesbyTopic = async(params) =>{
                             dayofweek(course_start) in (select distinct dayofweek(course_start) from course where dayofweek(course_start) in (?)) and 
                             date_format(start_time, '%p') = all(select distinct date_format(start_time,'%p') from course where date_format(start_time,'%p') = ? ) and
                             (course_name,teacher_name) in (select distinct course_name, teacher_name from course where course_name or teacher_name like ?) 
-                            order by 8 desc
+                            order by 9 desc
                             limit ?`
                         return db
                             .query(sql,[params.csid, params.loc_id, params.day, params.time,

@@ -129,14 +129,16 @@ export function CategoryMiddleMenu({ item, cindex, index }) {
 
 export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
   const [info, setInfo] = useState({ day: [1,2,3,4,5,6,7], time: "" });
-  const [isActive, setIsActive] = useState({ day: false, time: false });
+/*   const [isActive, setIsActive] = useState({ day: false, time: false }); */
   const [selected, setSelected] = useState({ day: "", time: "" });
   const [searchText, setSearchText] = useState("");
+  const [dayActive, setDayActive] = useState({weekday:false, weekend:false });
+  const [timeActive, setTimeActive] = useState({am:false,pm:false})
 
   const handleActive = (txt, e) => {
     const { name, value } = e.target;
     if (selected.day === "" || selected.time === "") {
-      setIsActive({ ...isActive, [name]: true });
+     /*  setIsActive({ ...isActive, [name]: true }); */
       setSelected({ ...selected, [name]: txt });
       if (name === "day") {
         setInfo({ ...info, [name]: [...value] });
@@ -144,9 +146,14 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
         setInfo({ ...info, [name]: value });
       }
     } else if (selected.day !== "" || selected.time !== "") {
-      setIsActive({ ...isActive, [name]: false });
-      setSelected({ ...selected, [name]: "" });
-      setInfo({ ...info, [name]: "" });
+      if(selected.day === txt || selected.time === txt){
+        setSelected({ ...selected, [name]: "" });
+        setInfo({ ...info, [name]: "" });
+      } else{
+        setSelected({ ...selected, [name]: txt });
+        setInfo({ ...info, [name]: value });
+      }
+      /* setIsActive({ ...isActive, [name]: false }); */
     }
   };
   const handleDetail = () => {
@@ -155,7 +162,7 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
   };
   const handleReset = () => {
     setInfo({ day: "", time: "" });
-    setIsActive({ day: false, time: false });
+   /*  setIsActive({ day: false, time: false }); */
     setSelected({ day: "", time: "" });
     setSearchText('')
   };
@@ -163,12 +170,13 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
     const { name, value } = e.target;
     setSearchText(value);
   };
-  console.log('test=>',searchText);
   const handleSearch = () => {
     search(searchText);
     closeModal();
   };
-
+  console.log('select=>', selected)
+  console.log('info=>', info)
+  console.log('dayactive=>', dayActive)
   return (
     <div className="modal_out" onClick={closeModal}>
       <div className="modal_container" onClick={(e) => e.stopPropagation()}>
@@ -199,7 +207,7 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
             <li>
               <button
                 className={
-                  (isActive && selected.day === "평일") ||
+                  (/* isActive && */ selected.day === "평일") ||
                   searchstd.day === "평일"
                     ? "modal_btn_active modal_day"
                     : "modal_btn modal_day"
@@ -213,7 +221,7 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
               </button>
               <button
                 className={
-                  (isActive && selected.day === "주말") ||
+                  (/* isActive && */ selected.day === "주말") ||
                   searchstd.day === "주말"
                     ? "modal_btn_active modal_day"
                     : "modal_btn modal_weekend"
@@ -234,7 +242,7 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
             <li>
               <button
                 className={
-                  (isActive && selected.time === "오전") ||
+                  (/* isActive &&  */selected.time === "오전") ||
                   searchstd.time === "오전"
                     ? "modal_btn_active modal_before"
                     : "modal_btn modal_before"
@@ -248,7 +256,7 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
               </button>
               <button
                 className={
-                  (isActive && selected.time === "오후") ||
+                  (/* isActive &&  */selected.time === "오후") ||
                   searchstd.time === "오후"
                     ? "modal_btn_active modal_after"
                     : "modal_btn modal_after"
@@ -286,28 +294,28 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
 
 export function CourseItem({ item }) {
   return (
-    <div className="course_item">
+    <div className="center_course_item">
       <img
         src={`//localhost:8080/${item.course_img}`}
         alt="course_img"
-        className="course_item_img"
+        className="center_course_item_img"
       />
-      <div className="course_item_status">
-        <p className="course_item_status_apply">{item.status}</p>
-        <p className="course_item_status_center">{item.name}</p>
+      <div className="center_course_item_status">
+        <p className="center_course_item_status_apply">{item.status}</p>
+        <p className="center_course_item_status_center">{item.name}</p>
       </div>
-      <p className="course_item_title">{item.course_name}</p>
-      <p className="course_item_teacher">{item.teacher_name}</p>
-      <div className="course_item_info">
+      <p className="center_course_item_title">{item.course_name}</p>
+      <p className="center_course_item_teacher">{item.teacher_name}</p>
+      <div className="center_course_item_info">
         <FontAwesomeIcon icon={faClock} />
         <p>
           {item.course_week} {item.start_time}~{item.end_time}, 총{" "}
           {item.num_of_course}회
         </p>
       </div>
-      <div className="course_item_price">
+      <div className="center_course_item_price">
         <p>{item.price}원</p>
-        <button className="course_item_cart">
+        <button className="center_course_item_cart">
           <FontAwesomeIcon icon={faCartShopping} />
         </button>
       </div>

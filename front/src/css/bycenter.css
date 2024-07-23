@@ -238,7 +238,7 @@
     line-height: 1.5rem;
     cursor: pointer;
 }
-.course_item{
+.center_course_item{
     margin-top: 1rem;
     width: 283px;
     height: 480px;
@@ -246,7 +246,7 @@
     /* border: 1px solid red; */
     align-items: end;
 }
-.course_item_img{
+.center_course_item_img{
     width: 280px;
     height: 280px;
     border-radius: 4px;
@@ -256,36 +256,36 @@
     width: 280px;
     height: 280px;
 } */
-.course_item_status{
+.center_course_item_status{
     display: flex;
     font-size: .8rem;
     gap: .5rem;
     margin-top: 1rem;
 }
-.course_item_status_apply{
+.center_course_item_status_apply{
     font-size: .7rem;
     background-color: var(--point-color);
     padding: .1rem .5rem;
     border-radius: 10px;
 }
-.course_item_status_center{
+.center_course_item_status_center{
     background-color: #E6E6E6;
     font-size: .7rem;
     padding: .1rem .5rem;
     border-radius: 10px;
 }
-.course_item_title{
+.center_course_item_title{
     text-align: left;
     margin-top: .3rem;
     font-size: 16px;
     font-weight: 800;
 }
-.course_item_teacher{
+.center_course_item_teacher{
     text-align: left;
     margin-top: .3rem;
     font-size: .9rem;
 }
-.course_item_info{
+.center_course_item_info{
     position: absolute;
     bottom: 3rem;
     /* border: 1px solid blue; */
@@ -295,10 +295,10 @@
     gap: .5rem;
     font-size: .9rem;
 }
-.course_item_info p{
+.center_course_item_info p{
     font-size: .9rem;
 }
-.course_item_price{
+.center_course_item_price{
     position: absolute;
     /* border: 1px solid blue; */
     width: 280px;
@@ -308,15 +308,15 @@
     justify-content: space-between;
     align-items: center;
 }
-.course_item_cart{
+.center_course_item_cart{
     font-size: 1.2rem;
     transition: 300ms ease;
 }
-.course_item_cart:hover{
+.center_course_item_cart:hover{
     color:red;
     transition: 300ms ease;
 }
-.course_list_content{
+.center_course_list_content{
     text-align: center;
 }
 .center_course_list{
