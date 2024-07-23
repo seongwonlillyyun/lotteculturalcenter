@@ -1,35 +1,57 @@
-import React, { useState } from 'react';
-import Checkbox from '../components/cart/Checkbox';
-import CartList from '../components/cart/CartList';
-import ButtonWhite from '../components/cart/ButtonWhite';
+import React, {useState, useEffect } from 'react';
 import PayBottom from '../components/cart/PayBottom';
-import { useNavigate } from 'react-router-dom';
-import { useSelector} from 'react-redux';
-import CheckContext, {CheckboxProvider} from '../components/cart/CheckboxContext';
+import { useNavigate, Link } from 'react-router-dom';
+import { getUser } from '../util/localStorage.js';
+import { useSelector, useDispatch} from 'react-redux';
+import { cartListAxios } from '../modules/reduxCartAxios';
+
 
 
 export default function Cart() {
-  const cartList = useSelector(state => state.cart.list);
+  // const userId = getUser().userId;
+  const userId = 'test';
+  const cartList = useSelector(state => state.cart.list); // db리스트
+  const [checkedItems, setCheckedItems] = useState(new Array(cartList.length).fill(false) );
   
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
   const handleMore = () => {
     navigate('/'); //상품상세로 이동
   }
 
-  
-  // 체크박스 유효성검사
-  const validateCheck = () => {
-
-
-
-
+  // 전체 체크박스  
+  const handleAllCheck = () => {
+    console.log('isallchecked=>', isAllChecked);
+    setCheckedItems(new Array(cartList.length).fill(!isAllChecked))
+    setIsAllChecked(!isAllChecked)
   }
 
+  // 개별 체크박스
+  const handleCheck = (id, index) => {
+    setCheckedItems((preCheckedItems)=>{
+        const updateCheckedItems = [...preCheckedItems]
+        updateCheckedItems[index] = !updateCheckedItems[index];
+        
+        return updateCheckedItems;
+    })
+  }
+  const [isAllChecked, setIsAllChecked] = useState(!checkedItems.every((item)=> item));
+  // let isAllChecked = cartList.length === 0 ? checkedItems.every((item)=> item): 
+  //  false;
 
+  console.log('isAllChecked', isAllChecked);
+
+  useEffect(()=>{
+    dispatch(cartListAxios({userId}))
+  },[userId])
+
+  console.log('cartlist',cartList);
 
   return(
-    <CheckboxProvider>
+
       <div className='cart type'>
         <div className="sub_visual">
           <h2 className="heading">장바구니</h2>
@@ -38,14 +60,80 @@ export default function Cart() {
 
         <div className='min_inner'>
           <div className='cart_num'><span>목록</span><span className='num'>{cartList.length}개</span></div>
-          <div class="utils_box">
-            <Checkbox title='전체선택' id='all' name='all' value='all' />
+          <div className="utils_box">
+          <div class="form_checkbox">
+  
+              <input type='checkbox' 
+                     id='all'
+                     name='all'
+                     value='all' 
+                     checked={isAllChecked}
+                     onChange={handleAllCheck} 
+              />
+              <label htmlFor='all' >전체선택</label>
+            
+            </div>
             <button type='button' class="delete_btn"><span>선택삭제</span></button>
           </div>
 
-          <CartList />
+    {/* 장바구니 리스트 시작 */}
+        {
+        cartList.length === 0 ? (
+          <div className='cart_bin'>
+            <spna className='icon'></spna>
+            <h3>장바구니가 비었습니다.</h3>
+          </div>
+         ): (
+        cartList && cartList.map((item, index) => (
+          <div className='cart_list' key={item.course_id}>
+          <ul className='cart_list_box'>
+            <li className=''>
+            <div class="form_checkbox">
+                <input type='checkbox' id={`${item.course_id}`} 
+                          name={`list${index}`}
+                          value={`${index}`}
+                          onChange={()=>handleCheck(item.course_id, index)}
+                          checked={checkedItems[index]}               
+                />  
+                <label htmlFor={`${item.course_id}`}></label>   
+                </div>
+            </li>
+            <li className='title'>
+              <span className='deco'>{item.status}</span>
+              <span className='deco loc'>{item.loc}</span>
+              <Link to={'/'}>
+                <h2>{item.course_name}</h2>
+              </Link>
+            </li>
+            <li className='info'>
+              <dl>
+                <dt>강사명</dt>
+                <dd>{item.teacher_name}</dd>
+              </dl>  
+              <dl> 
+                <dt>강좌정보</dt>
+                <dd>{item.course_start} ~ {item.course_end} <span>({item.course_week})</span> {item.start_time} ~ {item.end_time} / <span>{item.num_of_course}</span>회</dd>
+              </dl>
+              <dl>  
+                <dt>강좌료</dt>
+                <dd>{item.price}</dd>
+              </dl>
+              <dl className='total'>  
+                <dt>총금액</dt>
+                <dd><span className='price'>{item.price}</span>원</dd>
+              </dl>
+            </li>
+          </ul>
+           
+        </div>
+        
+        ))
+      )
+    }
+    {/* 장바구니 리스트 끝 */}
 
-          <div class="remove_btn">
+
+          <div className="remove_btn">
             <button type='button'>장바구니 비우기</button>
           </div>
           <div className='text_box'>
@@ -57,7 +145,7 @@ export default function Cart() {
             </ul>
           </div>
           <div className='basic_btn'>
-            <ButtonWhite name='강좌 더보기' color='btn_border medium' onClick={handleMore}/>     
+            <button type='button' className='btn_border medium' >강좌 더보기</button>  
           </div>
           
         </div>    
@@ -66,7 +154,7 @@ export default function Cart() {
         <PayBottom />
         
       </div>
-    </CheckboxProvider>
+
     
   );
 }

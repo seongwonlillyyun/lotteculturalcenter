@@ -5,8 +5,8 @@ import * as repository from '../repository/cartRepository.js';
 // 리스트
 export const getCart = async(req, res) => {
   const {userId} = req.body;
-  const cartList = await repository.getCart(userId);
-  res.json(cartList);
+  const result = await repository.getCart(userId);
+  res.json(result);
   res.end();
 }
 

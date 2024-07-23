@@ -15,8 +15,7 @@ export const getCart = async(userId) => {
   `
   return db
           .execute(sql, [userId])
-          .then(result =>result[0])
-
+          .then(result => result[0])
 }
 
 // 카운트
@@ -61,6 +60,8 @@ export const insert = async(items) => {
 
     return {cnt : result_rows};
 }
+
+
 
 
 

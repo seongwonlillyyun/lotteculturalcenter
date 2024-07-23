@@ -1,41 +1,100 @@
 import React, { useEffect, useState } from 'react';
-import Checkbox from './Checkbox';
+import CartCheckbox from './CartCheckbox.jsx';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch} from 'react-redux';
 import { getUser } from '../../util/localStorage.js';
 import { cartListAxios } from '../../modules/reduxCartAxios';
 
 
-export default function CartList({cname}) {
+
+export default function CartList() {
   const userId = getUser().userId;
   const dispatch = useDispatch();
   const cartList = useSelector(state => state.cart.list);
-  const [checkItems, setCheckItems] = useState(new Set) // 체크 리스트
+  // const [isItemChecked, setIsItemChecked] = useState(new Array(cartList.length).fill(false) );
+  // const [checkList, setCheckList] = useState([]);
+  // const { checkList } = useContext(CheckContext);
+  // const checkboxList = new Array(cartList.length)
+  // 개별체크
+//   const handleCheck = (id, isChecked) => {
+//     alert(id+isChecked)
+//     if(isChecked){
+//       setCheckList((cartList => [...cartList, id]));
+//     }else{
+//       setCheckList(checkList.filter(item => item !== id))
+//     }
+// };
 
+  const checkboxList = []
+  // console.log('checkboxList->',checkboxList);
+  // const handleCheck = (id, isChecked, i) => {
+  //   alert(id+isChecked+i)
+    // setIsItemChecked(updateCheck(i)) 
+
+  //   cartList.map((item, index)=>{
+
+  //     if(parseInt(item.course_id) === parseInt(id)){
+  //       alert('111')
+  //       updateCheck(index, true)
+  //     }else if(parseInt(item.course_id) !== parseInt(id)){
+  //       alert('2222')
+  //       updateCheck(index, false)
+
+  //     }
+  // }
+  
+    // for(let i =0; i < cartList.length; i++ ){
+    //   alert('000')
+    //   if(cartList[i].course_id === id){
+    //     alert('1111')
+    //     // setIsItemChecked[i] = true
+    //     updateCheck(i, true)
+    //   }else{
+    //     // setIsItemChecked[i] =false
+    //     updateCheck(i, false)
+    //   }
+    // }
+    
+  //}
+
+  // const updateCheck = (index) =>{
+  //   setIsItemChecked((preChecked)=>{
+  //     alert(preChecked)
+  //     const updateItemCheck = [...preChecked]
+  //     updateItemCheck[index] = !preChecked;
+  //     return updateItemCheck;
+  //   })
+
+
+  // }
+  // for(let i=0; i  < cartList.length; i++){
+  //   checkboxList[i] =  <input type='checkbox' id={`${cartList[i].course_id}`} 
+  //             name={`list${i}`}
+  //             value={`${i}`}
+  //             onChange={(e)=>handleCheck(`${cartList[i].course_id}`, e.target.checked)}
+  //             // checked={updateCheck(index, false)}
+  //             /> ;
+  // }
+  // useEffect(()=>{
+    
+  // },[isItemChecked])
+ 
+//  checkAll(checkboxList)
+//   checkboxList.map((item, index)=>{
+//     item[index] = <CartCheckbox/>;
+//     console.log('checkboxList->',checkboxList);
+// })
+// console.log('checkboxList->',checkboxList);
 
   useEffect(()=>{
     dispatch(cartListAxios({userId}))
   },[])
 
-  // console.log('체크박스 값->',checkList);  
-
-  const checkItemHandler = (value, isChecked) => {
-    const newCheckItems = new Set(checkItems); // 기존 상태 복사
-
-    if (isChecked) {
-      newCheckItems.add(value);
-    } else {
-      newCheckItems.delete(value);
-    }
-  
-    setCheckItems(newCheckItems); // 새로운 상태로 업데이트
-    console.log(newCheckItems)
-  }
-
- 
+  // console.log('checkList', checkList);
 
   return(
     <>
+  
     {
         cartList.length === 0 ? (
           <div className='cart_bin'>
@@ -46,14 +105,20 @@ export default function CartList({cname}) {
         cartList && cartList.map((item, index) => (
           <div className='cart_list' key={item.course_id}>
           <ul className='cart_list_box'>
-            <li>
+            <li className=''>
               {
-                cname === 'order' ? '' : 
-                  <Checkbox id={`list${index}`} 
+              
+                  <input type='checkbox' id={`${item.course_id}`} 
                             name={`list${index}`}
-                            value={`${index}`}      
-                            checkItemHandler ={checkItemHandler}
-                            />
+                            value={`${index}`}
+                            onChange={(e)=>handleCheck(`${cartList[index].course_id}`, e.target.checked, index)}
+                            // checked={isItemChecked[index]}  
+                            
+                            // checked={checkList.includes(item.course_id) ? true : false}
+                  />
+      
+                  
+                 
               }
             </li>
             <li className='title'>
@@ -82,9 +147,7 @@ export default function CartList({cname}) {
               </dl>
             </li>
           </ul>
-            {
-              cname === 'order' ? '' : <button type='button' className='delete_btn'>휴지통</button>
-            }
+         
         </div>
         
         ))

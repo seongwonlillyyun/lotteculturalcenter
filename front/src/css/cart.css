@@ -290,6 +290,7 @@
   width: 100%;  
   background-color: #fff;
   border-top: 2px solid #000;
+  z-index: 99;
 }
 .type .bottom-fix .min_inner{
   display: flex;
