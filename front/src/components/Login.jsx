@@ -3,10 +3,30 @@ import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 import "../css/login.css"
 
+//! 나중에 다른대로 이동?
+import * as cookie from '../util/cookies.js'
+import {jwtDecode} from 'jwt-decode'
+
+//! 리덕스 용 
+import {useSelector, useDispatch} from 'react-redux';
+
 export default function Login(){
     const userIdRef = useRef(null)
     const userPwRef = useRef(null)
     const [formData, setFormData] = useState({user_id: '', user_pw:''})
+
+    const dispatch = useDispatch();
+
+//! 로그인 결과 받아오기 
+// const isLogin = useSelector(state => state.memeber.isLogin )
+// console.log('isLogin->', isLogin);
+
+// useEffect(()=>{
+//     if(isLogin){
+//     alert('로그인이 성공하셨습니다.')
+//     navigate('/')
+//     }
+// },[isLogin])
 
 //! 로그인버튼클릭 -> 서버연동 
     const handleChange =(event) => {
@@ -16,8 +36,35 @@ export default function Login(){
 
 const handleSubmit =(e) =>{
     e.preventDefault() 
-    validationCheck()
-    console.log('formData->', formData);
+    // 리덕스연동 전 code 
+    if(validationCheck()){
+        console.log('formData->', formData);
+        const url = "http://127.0.0.1:8080/member/login"
+    
+        axios({
+            method : "POST",
+            url : url, 
+            data : formData,
+        })
+        .then((res)=>{
+            console.log('res.data->', res.data);
+            if(res.data.cnt ===1){
+                console.log('token->', res.data.token)
+
+                cookie.setCookie('x-auto-jwt', res.data.token)
+                
+                const userInfo = jwtDecode(res.data.token)
+                localStorage.setItem('userInfo', JSON.stringify(userInfo))
+                alert('로그인 성공')
+                navigate('/')
+            }else{
+                alert('아이디와 비밀번호를 재확인해 주세요')
+                setFormData({user_id: '', user_pw:''})
+                userIdRef.current.focus();
+            }
+        })
+.catch((error)=>console.log(error))
+    }
 }
 
  //! validationCheck 추후 이동예정  
@@ -34,8 +81,9 @@ const handleSubmit =(e) =>{
         userPwRef.current.focus()
         checkFlag=false
     }else{
-        alert('임시로그인완료!')
-        navigate('/')
+  
+        // alert('임시로그인완료!')
+        // navigate('/')
         return checkFlag}
     }
 
