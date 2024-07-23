@@ -237,15 +237,26 @@
     align-items: end;
 }
 .topic_course_item_img{
-    width: 280px;
-    height: 280px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     border-radius: 4px;
+    object-fit: cover;
+    object-position: center;
+    transition: 0.35s;
 }
-/* .course_item_img:hover{
-    transform: scale(1.1);
+.topic_course_item:hover img{
+    transform: scale(1.2);
+}
+.topic_course_img_box{
+    position: relative;
     width: 280px;
     height: 280px;
-} */
+    overflow: hidden;
+}
+
 .topic_course_item_status{
     display: flex;
     font-size: .8rem;
@@ -353,7 +364,7 @@
 }
 .handle_search_center{
     border: 1px solid #CAC8C6;
-    width: 80px;
+    padding: 1.2rem;
     height: 30px;
     background-color: #FDFAF7;
     border-radius: 20px;
@@ -364,11 +375,13 @@
 .search_reset_btn{
     position: absolute;
     top: .4rem;
-    right: .7rem;
+    right: .5rem;
     font-size: .7rem;
     color: #7E7D7B;
 }
-
+.nomorecourse_div{
+    text-align: center;
+}
 .nocourse_icon{
     font-size: 3rem;
     color:  rgb(221,205,197);
