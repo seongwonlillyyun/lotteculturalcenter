@@ -123,7 +123,6 @@ export default function SearchByCenter(){
         setTest(value)
     }
     let cntarr = showCourse[0]
-  
     return(
         <>
             <div className="bycenter_title_part">

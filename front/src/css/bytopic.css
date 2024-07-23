@@ -338,6 +338,7 @@
     font-size: 1.3rem;
 }
 .handle_search_day, .handle_search_time, .handle_search_text{
+    position: relative;
     border: 1px solid #CAC8C6;
     width: 75px;
     height: 30px;
@@ -345,7 +346,6 @@
     border-radius: 20px;
     font-size: .8rem;
     text-align: center;
-    padding-left: .5rem;
     padding-top: .3rem;
 }
 .handle_search_li{
@@ -363,8 +363,8 @@
 }
 .search_reset_btn{
     position: absolute;
-    top: .5rem;
-    right: .5rem;
+    top: .4rem;
+    right: .7rem;
     font-size: .7rem;
     color: #7E7D7B;
 }
