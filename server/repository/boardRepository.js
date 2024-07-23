@@ -279,3 +279,21 @@ export const updatePersonal = async ({bid, answer}) => {
   return db.execute(sql, [answer, bid])
     .then(([rows]) => rows.affectedRows)
 }
+
+export const getMyReview = async (data) => {
+  const sql = `
+    select
+      *
+    from payment
+    where user_id = ?
+      and status = "결제완료"
+      and isReviewed = false
+  `
+
+  const params = [
+    data.userId,
+  ]
+
+  return db.execute(sql, params)
+    .then(([rows]) => rows)
+}

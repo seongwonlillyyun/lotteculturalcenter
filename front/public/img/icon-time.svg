@@ -1,0 +1,8 @@
+<svg id="icon-time" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+  <g id="타원_1324" data-name="타원 1324" fill="none" stroke="#333" stroke-width="1">
+    <circle cx="6" cy="6" r="6" stroke="none"/>
+    <circle cx="6" cy="6" r="5.5" fill="none"/>
+  </g>
+  <rect id="사각형_2626" data-name="사각형 2626" width="1" height="4" transform="translate(5.5 3)" fill="#333"/>
+  <rect id="사각형_2627" data-name="사각형 2627" width="1" height="3" transform="translate(9 6) rotate(90)" fill="#333"/>
+</svg>

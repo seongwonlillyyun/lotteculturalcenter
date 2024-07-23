@@ -29,6 +29,8 @@ import NotiEvent from "./pages/board/NotiEvent";
 import NotiEventDetail from "./pages/board/NotiEventDetail";
 import PersonalDetail from "./pages/board/PersonalDetail";
 import Main from './pages/Main';
+import Review from './pages/board/Review';
+import PersonalReview from "./pages/board/PersonalReview";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -64,19 +66,22 @@ export default function App() {
       {path : "/board/personal", element : <PersonalQnA/>},
       {path : "/board/personal/:id", element : <PersonalDetail/>},
       {path : "/board/notievent", element : <NotiEvent/>},
-      {path : "/board/notievent/:id", element : <NotiEventDetail/>},
       {path : "/location", element : <Location/> },
       {path : "/login", element : <Login/> },
       {path : "/join" , element : <Join/> },
-      {path:'/center/:id', element:<SearchByCenter/>},
-      {path:'/topic/:id', element:<SearchByTopic/>},
-      {path:'/test', element:<Test/>},
+      {path : '/center/:id', element:<SearchByCenter/>},
+      {path : '/center/:id', element:<SearchByCenter/>},
+      {path : '/center/:id', element:<SearchByCenter/>},
+      {path : '/topic/:id', element:<SearchByTopic/>},
+      {path : '/test', element:<Test/>},
       {path : "/cart", element : <Cart/> },
       {path : "/order", element : <Order/> },
       {path : "/changememberinfo" , element : <ChangeMemberInfo/> },
       {path :"/courseHistory", element : <CourseHistory/>},
       {path :"/detailHistory", element : <DetailHistory/>}, // path 변경예정
-
+      {path : "/board/notievent/:id", element : <NotiEventDetail/>},
+      {path : "/board/review", element : <Review/>},
+      {path : "/review", element : <PersonalReview />}
     ]
   }])
 

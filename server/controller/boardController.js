@@ -84,3 +84,10 @@ export const updatePersonal = async(req, res) => {
   res.json(result);
   res.end();
 }
+
+export const getMyReview = async(req, res) => {
+  const data = req.body;
+  const result = await repository.getMyReview(data);
+  res.json(result);
+  res.end();
+}
