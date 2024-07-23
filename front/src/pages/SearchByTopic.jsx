@@ -130,7 +130,7 @@ export default function SearchByTopic(){
             let centerarr = detail.center.filter(item=>item !== centerId)
             console.log(centerarr)
             /* setDetail({...detail, center:centerNumber}) */
-           /*  let centerNumber = center.filter(item=>item.name === centerList.item)
+            /*  let centerNumber = center.filter(item=>item.name === centerList.item)
             console.log(centerNumber)  */
             /* let centerList = selected.center.filter(item=>item !== value)
             setSelected({...selected, center:centerList}) */
