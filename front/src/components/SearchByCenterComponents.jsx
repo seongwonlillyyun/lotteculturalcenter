@@ -298,7 +298,7 @@ export function CourseItem({ item }) {
       <img
         src={`//localhost:8080/${item.course_img}`}
         alt="course_img"
-        className="course_item_img"
+        className="center_course_item_img"
       />
       <div className="center_course_item_status">
         <p className="center_course_item_status_apply">{item.status}</p>
