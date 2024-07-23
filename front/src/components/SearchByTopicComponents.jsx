@@ -328,28 +328,28 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
 
 export function CourseItem({ item }) {
   return (
-    <div className="course_item">
+    <div className="topic_course_item">
       <img
         src={`//localhost:8080/${item.course_img}`}
         alt="course_img"
         className="course_item_img"
       />
-      <div className="course_item_status">
-        <p className="course_item_status_apply">{item.status}</p>
-        <p className="course_item_status_center">{item.name}</p>
+      <div className="topic_course_item_status">
+        <p className="topic_course_item_status_apply">{item.status}</p>
+        <p className="topic_course_item_status_center">{item.name}</p>
       </div>
-      <p className="course_item_title">{item.course_name}</p>
-      <p className="course_item_teacher">{item.teacher_name}</p>
-      <div className="course_item_info">
+      <p className="topic_course_item_title">{item.course_name}</p>
+      <p className="topic_course_item_teacher">{item.teacher_name}</p>
+      <div className="topic_course_item_info">
         <FontAwesomeIcon icon={faClock} />
         <p>
           {item.course_week} {item.start_time}~{item.end_time}, 총{" "}
           {item.num_of_course}회
         </p>
       </div>
-      <div className="course_item_price">
+      <div className="topic_course_item_price">
         <p>{item.price}원</p>
-        <button className="course_item_cart">
+        <button className="topic_course_item_cart">
           <FontAwesomeIcon icon={faCartShopping} />
         </button>
       </div>
