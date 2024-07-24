@@ -6,9 +6,18 @@ import { getUser } from './../../util/localStorage';
 // svg
 import {ReactComponent as IconClose} from "../../svg/icon-close-x.svg";
 
+import "../../css/board/personalReview.css"
+
 export default function PersonalReview() {
   const [target, setTarget] = useState();
   const [list, setList] = useState([]);
+  const initData = {
+    orderId : 0,
+    star : 5,
+    title : "",
+    content : "",
+  }
+  const [formData, setFormData] = useState(initData);
   const userId = getUser() ? getUser().userId : "test_soo";
   const data = {
     userId,
@@ -24,11 +33,11 @@ export default function PersonalReview() {
   const popupOpen = (id) => {
     document.querySelector(".popup_wrap").classList.add("on");
     document.querySelector("body").classList.add("popup");
-    setTarget(id)
+    setFormData(prev => ({...prev, orderId : id}))
   }
 
   return (
-    <div className='personalReview'>
+    <div className='board_page personalReview'>
       <div className="sub_visual">
         <h2 className="heading">나의 수강후기</h2>
       </div>
@@ -37,7 +46,7 @@ export default function PersonalReview() {
           {
             list.map(v => (
               <div className="box">
-                {v.order_no}
+                {v.orderId}
                 {v.course_name}
                 {
                   Boolean(v.isReviewed)
@@ -49,23 +58,16 @@ export default function PersonalReview() {
           }
         </div>
       </div>
-      <PopupWrite orderId={target}/>
+      <PopupWrite initData={initData} data={formData} setData={setFormData}/>
     </div>
   );
 }
 
-function PopupWrite ({orderId}) {
-  const initData = {
-    orderId,
-    title : "",
-    content : "",
-  }
-  console.log(initData);
-  const [data, setData] = useState(initData);
+function PopupWrite ({initData, data, setData}) {
 
   const changeHandler = (e) => {
-    const [name, value] = e.target;
-    setData(prev => ({...prev, [name] : value}))
+    const {name, value} = e.target;
+    setData(prev => ({...prev, [name] : value}));
   }
 
   const popupClose = () => {
@@ -76,6 +78,15 @@ function PopupWrite ({orderId}) {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    const url = "//localhost:8080/board/review/add"
+    axios.post(url, data)
+      .then(result => {
+        if(result.data){
+          alert("정상적으로 등록되었습니다.");
+          setData(initData);
+          popupClose();
+        }
+      })
   }
 
   return (
@@ -93,6 +104,16 @@ function PopupWrite ({orderId}) {
                 <li>
                   <h4>제목</h4>
                   <input type="text" name="title" value={data.title} placeholder="제목을 입력해 주세요." onChange={changeHandler}/>
+                </li>
+                <li>
+                  <h4>별점</h4>
+                  <select name="star" value={data.star} onChange={changeHandler}>
+                    <option value="1">★☆☆☆☆</option>
+                    <option value="2">★★☆☆☆</option>
+                    <option value="3">★★★☆☆</option>
+                    <option value="4">★★★★☆</option>
+                    <option value="5">★★★★★</option>
+                  </select>
                 </li>
                 <li>
                   <h4>문의 내용</h4>

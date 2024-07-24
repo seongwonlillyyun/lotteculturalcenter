@@ -19,6 +19,7 @@ import PersonalDetail from "./pages/board/PersonalDetail";
 import Main from './pages/Main';
 import Review from './pages/board/Review';
 import PersonalReview from "./pages/board/PersonalReview";
+import ReviewDetail from "./pages/board/ReviewDetail";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ export default function App() {
       {path : "/board/notievent", element : <NotiEvent/>},
       {path : "/board/notievent/:id", element : <NotiEventDetail/>},
       {path : "/board/review", element : <Review/>},
+      {path : "/board/review/:id", element : <ReviewDetail/>},
       {path : "/review", element : <PersonalReview />}
     ]
   }])

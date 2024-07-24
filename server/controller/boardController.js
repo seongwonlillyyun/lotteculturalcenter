@@ -91,3 +91,22 @@ export const getMyReview = async(req, res) => {
   res.json(result);
   res.end();
 }
+
+export const setReview = async (req, res) => {
+  const data = req.body;
+  const result = await repository.setReview(data);
+  res.json(result);
+  res.end();
+}
+
+export const getHitsReview = async (req, res) => {
+  const result = await repository.getHitsReview();
+  res.json(result);
+  res.end();
+}
+
+export const getReview = async (req, res) => {
+  const {id} = req.params;
+  const result = await repository.getReview(id);
+  res.json(result).end();
+}
