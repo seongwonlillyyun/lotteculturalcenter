@@ -10,10 +10,11 @@ export default function Product() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userInfo = getUser();
+
   const count = useSelector(state => state.cart.count);
 
   const [productList, setProductList] = useState([])
-
+  
 
    // 상품리스트
    useEffect(()=> {
@@ -36,12 +37,15 @@ export default function Product() {
 
 
 
-
-
+  // const userInfo = {
+  //   userId : 'test',
+  //   pw : 1
+  // }
+  
   // 로컬스토리지 저장 
-  // localStorage.setItem('userTest', JSON.stringify(userTest));
+  // localStorage.setItem('userInfo', JSON.stringify(userInfo));
   // 로컬스토리지 삭제 
-  // localStorage.removeItem('userTest')
+  // localStorage.removeItem('userInfo')
 
 
 

@@ -1,11 +1,9 @@
 import React from 'react';
 import Tab from './Tab';
-import ButtonWhite from './ButtonWhite';
-import ButtonBlack from './ButtonBlack';
 import { useNavigate } from 'react-router-dom';
 
 
-export default function OrderStep2({step}) {
+export default function OrderStep2({stepOrder}) {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate('/')
@@ -18,7 +16,7 @@ export default function OrderStep2({step}) {
       </div>
       <div className='min_inner'>
         <div className='tab_list_box'>
-          <Tab step={step} />
+          <Tab stepOrder={stepOrder} />
           <h2>수강신청이 정상적으로 완료되었습니다.</h2>
           <p>
             결제하신 강좌내역은 MY문화센터 - 수강내역 조회에서<br/> 
@@ -52,8 +50,8 @@ export default function OrderStep2({step}) {
           </ul>
         </div>
         <div className='basic_btn'>
-          <ButtonWhite name='홈으로' color='btn_white medium' onClick={handleClick} />
-          <ButtonBlack name='수강내역 조회' color='btn_black medium' onClick={handleClick} /> {/* 수강내역이동 */}
+          <button type='button' className='btn btn_white medium' onClick={handleClick}>홈으로</button>
+          <button type='button' className='btn btn_black medium' onClick={handleClick}>수강내역 조회</button>
         </div>
       </div>
     </div>

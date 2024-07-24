@@ -6,17 +6,16 @@ import { useSelector, useDispatch} from 'react-redux';
 import { cartListAxios } from '../modules/reduxCartAxios';
 
 
-
 export default function Cart() {
-  // const userId = getUser().userId;
-  const userId = 'test';
-  const cartList = useSelector(state => state.cart.list); // db리스트
-  const [checkedItems, setCheckedItems] = useState(new Array(cartList.length).fill(false) );
-  
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userId = getUser().userId;
 
+  const cartList = useSelector(state => state.cart.list); // db리스트
+  const [checkedItems, setCheckedItems] = useState(new Array(cartList.length).fill(false) ); // 개별체크
+  const [checkPrice, setCheckPrice] = useState(0) 
+
+  // console.log('checkedItems->', checkedItems);
 
   const handleMore = () => {
     navigate('/'); //상품상세로 이동
@@ -24,31 +23,44 @@ export default function Cart() {
 
   // 전체 체크박스  
   const handleAllCheck = () => {
-    console.log('isallchecked=>', isAllChecked);
     setCheckedItems(new Array(cartList.length).fill(!isAllChecked))
     setIsAllChecked(!isAllChecked)
   }
 
   // 개별 체크박스
   const handleCheck = (id, index) => {
+    const checkCartList = [...cartList];
+
     setCheckedItems((preCheckedItems)=>{
         const updateCheckedItems = [...preCheckedItems]
         updateCheckedItems[index] = !updateCheckedItems[index];
         
         return updateCheckedItems;
     })
-  }
-  const [isAllChecked, setIsAllChecked] = useState(!checkedItems.every((item)=> item));
-  // let isAllChecked = cartList.length === 0 ? checkedItems.every((item)=> item): 
-  //  false;
 
-  console.log('isAllChecked', isAllChecked);
+    for(let i=0; i < checkCartList.length; i++){
+      const cartPrice = checkCartList[i].price;
+      if(checkedItems === true){
+        setCheckPrice(cartPrice)
+      }
+      else{
+        setCheckPrice(0)
+      }
+    }
+    
+  }
+   console.log('checkPrice->', checkPrice);
+
+
+  const [isAllChecked, setIsAllChecked] = useState(!checkedItems.every((item)=> item)); // 전체체크
+
+  
 
   useEffect(()=>{
     dispatch(cartListAxios({userId}))
   },[userId])
 
-  console.log('cartlist',cartList);
+
 
   return(
 
@@ -145,13 +157,13 @@ export default function Cart() {
             </ul>
           </div>
           <div className='basic_btn'>
-            <button type='button' className='btn_border medium' >강좌 더보기</button>  
+            <button type='button' className='btn btn_border medium' onClick={handleMore}>강좌 더보기</button>  
           </div>
           
         </div>    
 
         {/* 하단고정 */}
-        <PayBottom />
+        <PayBottom cname={'cart'} cartList={cartList} checkPrice={checkPrice} />
         
       </div>
 

@@ -7,14 +7,16 @@ import { useSelector, useDispatch} from 'react-redux';
 import { cartListAxios } from '../../modules/reduxCartAxios';
 
 
-export default function OrderStep1({next, step}) {
+export default function OrderStep1({next, stepOrder}) {
   const userId = 'test';
   const cartList = useSelector(state => state.cart.list); // db리스트
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
     useEffect(()=>{
       dispatch(cartListAxios({userId}))
     },[])
+
 
 
   return(
@@ -23,14 +25,14 @@ export default function OrderStep1({next, step}) {
         <h2 className="heading">수강결제</h2>
       </div>
       <div className='min_inner'>
-        <Tab step={step} />  
+        <Tab stepOrder={stepOrder} />  
         <h2 className='htitle'>수강자 정보</h2>
         
         {/* 장바구니 리스트 시작 */}
         {
         cartList.length === 0 ? (
           <div className='cart_bin'>
-            <spna className='icon'></spna>
+            <span className='icon'></span>
             <h3>장바구니가 비었습니다.</h3>
           </div>
          ): (
@@ -140,7 +142,7 @@ export default function OrderStep1({next, step}) {
           </ul>
         </div>
         <div className='order_line check'>
-          <div class="form_checkbox">
+          <div className="form_checkbox">
             <input type='checkbox' 
                    id='a'
                    name='a'
@@ -153,7 +155,7 @@ export default function OrderStep1({next, step}) {
         </div>
       </div>
       {/* 하단고정 */}
-      <PayBottom cname={'order'} next={next} />
+      <PayBottom next={next} cname={'order'} stepOrder={stepOrder} />
     </div>
   );
 }

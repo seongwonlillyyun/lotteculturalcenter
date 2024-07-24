@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { act } from 'react';
 
  const initialState = {
     list : [],
     count : 0,
-    currentPos : 'order'
+    currentPos : 'cart'
  };
 
 
@@ -27,8 +28,9 @@ import { createSlice } from '@reduxjs/toolkit';
          alert('동일한 상품이 장바구니에 있습니다.')
        }
     }, 
+    // 페이지별
     setCurrentPos(state, action){
-      
+
     }
   }
  })

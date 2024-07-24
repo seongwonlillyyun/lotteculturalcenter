@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import ButtonBlack from '../components/cart/ButtonBlack.jsx';
 import { getUser } from '../util/localStorage.js'
 import { useDispatch } from 'react-redux';
 import { cartItemAdd } from '../modules/reduxCartAxios.js';
@@ -24,10 +23,10 @@ export default function ProductDetail({addCartCount}) {
   }, [id]);
 
 
-
   // 장바구니 추가
   const handleAddCart = (id) => {
     const userInfo = getUser();
+    // const userInfo = 'test';
 
     if(userInfo !== null){
       const userId = userInfo.userId;
@@ -48,7 +47,7 @@ export default function ProductDetail({addCartCount}) {
                 <span className='deco'>{product.status}</span>
                   <h2>{product.course_name}</h2>
                 <div className='basic_btn'>
-                  <ButtonBlack name='장바구니 담기' color='btn_black small' onClick={() => handleAddCart(product.id)}  />
+                  <button type='button' className='btn btn_black small' onClick={() => handleAddCart(product.id)}>장바구니 담기</button>
                 </div>
                 
               </li>
