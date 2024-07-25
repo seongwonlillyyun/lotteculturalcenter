@@ -295,11 +295,13 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
 export function CourseItem({ item }) {
   return (
     <div className="center_course_item">
-      <img
-        src={`//localhost:8080/${item.course_img}`}
-        alt="course_img"
-        className="center_course_item_img"
-      />
+      <div className="center_course_img_box">
+        <img
+          src={`//localhost:8080/${item.course_img}`}
+          alt="center_course_img"
+          className="center_course_item_img"
+        />
+      </div>
       <div className="center_course_item_status">
         <p className="center_course_item_status_apply">{item.status}</p>
         <p className="center_course_item_status_center">{item.name}</p>

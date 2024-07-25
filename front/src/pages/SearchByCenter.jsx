@@ -202,8 +202,10 @@ export default function SearchByCenter(){
                     ))}
 
                     {cntarr&&cntarr.length !== 0 ? 
+                        <div className="nomorecourse_div">
                             <button className="morebtn" type="button" onClick={()=>{setCurrentPage(currentPage+1)}}>강좌더보기+</button>
-                        :   <div><FontAwesomeIcon className='nocourse_icon' icon={faExclamation} /><p className="nocourse_text">진행중인 강좌가 없습니다.</p></div>
+                        </div>
+                        :   <div className="nomorecourse_div"><FontAwesomeIcon className='nocourse_icon' icon={faExclamation} /><p className="nocourse_text">진행중인 강좌가 없습니다.</p></div>
                     }
                 </div>
             </div>
