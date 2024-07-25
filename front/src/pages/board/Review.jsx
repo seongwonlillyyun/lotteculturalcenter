@@ -154,7 +154,7 @@ function ReviewList() {
   const navigate = useNavigate();
   const list = useSelector(state => state.review.list);
   const filterCount = useSelector(state => state.review.filter.count);
-  const totalCount = useSelector(state => state.review.count);
+  const totalCount = useSelector(state => state.review.totalCount);
 
   const linkHandler = (id) => {
     navigate("/board/review/" + id);

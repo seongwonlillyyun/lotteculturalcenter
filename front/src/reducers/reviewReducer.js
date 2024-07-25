@@ -7,7 +7,7 @@ const initialState = {
     count : 5,
   },
   list : [],
-  count : 0,
+  totalCount : 0,
 }
 
 const reviewReducer = createSlice({
