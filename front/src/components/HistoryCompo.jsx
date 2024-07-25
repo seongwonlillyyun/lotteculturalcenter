@@ -1,6 +1,7 @@
 
 import React, {useState, useEffect} from 'react'
 import DetailHistory from '../pages/DetailHistory'
+import { useNavigate } from 'react-router-dom'
 
 export function TopInfo(){
 
@@ -33,7 +34,7 @@ const handleTabClick = (value) => {
       setTab(   {"title": "취소내역 조회",
         "value" : "cancel"})
   }
-    console.log('tab->', tab);
+    // console.log('tab->', tab);
 }
 
 const typeList = [
@@ -101,10 +102,13 @@ for(let i=0; i<itemList.length; i+=2){
 
 export function HistoryItem({tab}){
 
-    const handleDetail = (e) => {
-    <DetailHistory/>
-    console.log(e.target);
+    const navigate = useNavigate()
+
+    const handleDetail = () => {
+    // <DetailHistory/>
+    navigate('/detailHistory')
     }
+
 
 
     return(

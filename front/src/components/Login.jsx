@@ -38,7 +38,7 @@ const handleSubmit =(e) =>{
     e.preventDefault() 
     // 리덕스연동 전 code 
     if(validationCheck()){
-        console.log('formData->', formData);
+        // console.log('formData->', formData);
         const url = "http://127.0.0.1:8080/member/login"
     
         axios({
@@ -47,11 +47,11 @@ const handleSubmit =(e) =>{
             data : formData,
         })
         .then((res)=>{
-            console.log('res.data->', res.data);
+            // console.log('res.data->', res.data);
             if(res.data.cnt ===1){
-                console.log('token->', res.data.token)
+                // console.log('token->', res.data.token)
 
-                cookie.setCookie('x-auto-jwt', res.data.token)
+                cookie.setCookie('x-auth-jwt', res.data.token)
                 
                 const userInfo = jwtDecode(res.data.token)
                 localStorage.setItem('userInfo', JSON.stringify(userInfo))

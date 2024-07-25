@@ -14,7 +14,7 @@ const [isOpen, setIsOpen] = useState(false);
 const handleToggle = (type) => {
     setToggleType(type)
     setIsOpen(!isOpen)
-    console.log('type->',type);
+    // console.log('type->',type);
     }
 
 const [toggleType, setToggleType] = useState('')

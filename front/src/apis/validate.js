@@ -1,5 +1,4 @@
 //! 회원가입 step1 약관동의
-
 export const validateCheckStep1 =(next, formData) => {
     if(!formData.membership){
         alert('필수항목인 회원약관에 동의해주세요')
@@ -52,6 +51,17 @@ export const validateCheckStep2 =(refs) => {
         refs.phoneNo2Ref.current.focus()
         checkFlag=false;
     }
+    else if(refs.branchRef.current.value===''){
+        alert('관심지점을 선택해 주세요')
+        refs.branchRef.current.focus()
+        checkFlag=false;
+    }
+    else if(refs.birthRef.current.value===''){
+        alert('생년월일을 입력해 주세요')
+        refs.birthRef.current.focus()
+        checkFlag=false;
+    }
+    
 return checkFlag
 }
 
@@ -81,7 +91,5 @@ if(value === 'self'){
     refs.emailDomainRef.current.focus()
 }else{
     refs.emailDomainRef.current.value=value; 
-    handleChange(e)
-}
-
+    handleChange(e)}
 }
