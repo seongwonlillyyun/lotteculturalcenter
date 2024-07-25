@@ -7,7 +7,7 @@ export const getCart = async(userId) => {
    select row_number() over(order by c.cdate desc) as rno, c.user_id,
       c.cart_id,l.loc_id,c.course_id,l.name loc,p.status, p.course_name, p.teacher_name,
       left(p.course_start, 10) course_start, left(p.course_end, 10) course_end, p.course_week,
-        left(p.start_time, 5) start_time, left(p.end_time, 5) end_time, p.num_of_course, p.price
+        left(p.start_time, 5) start_time, left(p.end_time, 5) end_time, p.num_of_course, p.price, format(p.price, 0) as allprice
         from product p, location l , cart c, member m
           where p.loc_id = l.loc_id
                 and p.course_id = c.course_id

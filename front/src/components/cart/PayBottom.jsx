@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector} from 'react-redux';
 
-export default function PayBottom({cname, next, stepOrder, cartList, checkPrice, checkNum}) {
+export default function PayBottom({cname, next, stepOrder,checkPrice, checkNum, checkedItems}) {
   const navigate = useNavigate();
   const currentPos = useSelector(state => state.cart.currentPos);
   const [isChecked, setIsChecked] = useState(false); // 결제페이지 체크박스
@@ -12,8 +12,13 @@ export default function PayBottom({cname, next, stepOrder, cartList, checkPrice,
 
   // 장바구니 다음버튼
   const handleNext = () => {
-    navigate('/order')
+    if(checkedItems.length === 0){
+      alert('1개 이상 강좌를 선택해주세요')
+    }else{
+      navigate('/order')
+    }
   }
+
 
   // 결제 체크여부
   const handleChange = (isChecked) => {
@@ -50,7 +55,7 @@ export default function PayBottom({cname, next, stepOrder, cartList, checkPrice,
             <span className='price'>{checkPrice}<span>원</span></span>
           </div>
         <div className='basic_btn'>
-        <button type='button' className='btn btn_black large' onClick={handleNext}>45,000원 결제</button>
+        <button type='button' className='btn btn_black large' onClick={handleNext}>{`${checkPrice}원 결제`}</button>
         </div> 
       </div>   
       ):

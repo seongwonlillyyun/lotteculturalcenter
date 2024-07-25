@@ -20,7 +20,7 @@ export default function Cart() {
 
 
 
-  
+
   const handleMore = () => {
     navigate('/'); //상품상세로 이동
   }
@@ -30,69 +30,83 @@ export default function Cart() {
     setCheckedItems(new Array(cartList.length).fill(!isAllChecked))
     setIsAllChecked(!isAllChecked)
     
+    // 총가격
     let totalPrice = 0;
     if(!isAllChecked) cartList.map((cart)=> totalPrice += cart.price)
     
-      totalPrice = totalPrice.toLocaleString('ko-KR');
-      setCheckPrice(totalPrice);
+    totalPrice = totalPrice.toLocaleString('ko-KR');
+    setCheckPrice(totalPrice);
+    // 총갯수
+    if(!isAllChecked) setCheckNum(cartList.length)
+      else setCheckNum(0)
+     
   }
 
   // 개별 체크박스
   const handleCheck = (id, index, checked) => {
-    alert('checked->'+id+index+checked)
-
-    // checkec가 true일때 추가
-    // 있는지 없는지 id 체크
-    // map으로 돌려서 딜리트 기존 id 값이 체크한 아이디 값이 같지 않을때 추가.
-
+    // 선택삭제
     const deleteId = {id: id}
     setDeleteList([...deleteList, deleteId])
 
+    // const cartDelete = cartList.map((item)=>{
+    //   if(checked){
+  
+  
+    //   }else{
+       
+    //   }
 
-
-
-    // if(deleteList.length === 0){
-    //   setDeleteList(deleteList[0] = id)
-    // }else{
-    //   setDeleteList([...deleteList, id])
+    //   return 0
     // }
- 
+    //   // deleteFilter = cartList.filter(item => item.course_id !== deleteId.id) // 아이디값 체크
+    // )
 
-    // let newDeleteList = [...deleteList, id]
-    // deleteList = newDeleteList;
-    // deleteList.splice(index, 1, id)
-    console.log('deleteList2->', deleteList);
+    // console.log('deleteList->', deleteList);
+
+    // check가 true일때 deleteList에 아이디 추가
+    // 아이디가 있는지 없는지 filter로 체크
+    // map으로 돌려서 딜리트 기존 id 값이 체크한 아이디 값이 같지 않을때 추가
+    // deleteList를 db로 보내서 db에서 delete 후 리스트
+
 
 
     setCheckedItems((preCheckedItems)=>{
       const updateCheckedItems = [...preCheckedItems]
       updateCheckedItems[index] = !updateCheckedItems[index];
       
+      // 총가격
       let totalPrice = 0;
-      let numPlus = index + 1
-      let numMinus = numPlus - 1
       updateCheckedItems.forEach((checked, idx) => {
-        if(checked){
-          totalPrice += cartList[idx].price
-          setCheckNum(numPlus)
-        }else{
-          setCheckNum(numMinus)
-        }
-      });
+        if(checked) totalPrice += cartList[idx].price}
+      );
+
       totalPrice = totalPrice.toLocaleString('ko-KR');
       setCheckPrice(totalPrice);
 
+      // 총갯수 - 카트리스트 아이디값이 체크한 아이디값과 같으면 1씩 증가 / 1씩 감소  
+      const numId = {id: id}
+      const numFilter = cartList.filter(item => item.course_id !== numId.id); // 아이디값 체크
+      if(checked && numFilter){
+        setCheckNum(checkNum+1)
+      }else{
+        setCheckNum(checkNum-1)
+      }
 
       return updateCheckedItems;
     })
     
   }
-        console.log('deleteList->', deleteList.length);
+  // console.log('deleteList->', deleteList);
 
 
   const handleDelete = () => {
 
     alert('111')
+  }
+
+  const handleAllDelete = () => {
+
+    alert('www')
   }
 
   
@@ -169,11 +183,11 @@ export default function Cart() {
               </dl>
               <dl>  
                 <dt>강좌료</dt>
-                <dd>{item.price}</dd>
+                <dd>{item.allprice}</dd>
               </dl>
               <dl className='total'>  
                 <dt>총금액</dt>
-                <dd><span className='price'>{item.price}</span>원</dd>
+                <dd><span className='price'>{item.allprice}</span>원</dd>
               </dl>
             </li>
           </ul>
@@ -187,7 +201,7 @@ export default function Cart() {
 
 
           <div className="remove_btn">
-            <button type='button'>장바구니 비우기</button>
+            <button type='button' onClick={handleAllDelete}>장바구니 비우기</button>
           </div>
           <div className='text_box'>
             <h3>알려드립니다!</h3>
@@ -204,7 +218,7 @@ export default function Cart() {
         </div>    
 
         {/* 하단고정 */}
-        <PayBottom cname={'cart'} cartList={cartList} checkPrice={checkPrice} checkNum={checkNum} />
+        <PayBottom cname={'cart'} checkPrice={checkPrice} checkNum={checkNum} checkedItems={checkedItems} />
         
       </div>
 
