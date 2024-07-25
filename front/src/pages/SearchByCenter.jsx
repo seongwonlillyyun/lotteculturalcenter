@@ -193,9 +193,7 @@ export default function SearchByCenter(){
                         <ul className="center_course_list">
                             {items.map((item, index)=>(
                                 <li key={index}>
-                                    <Link to={`/course/${item.course_id}`}>
                                         <CourseItem item={item}/>
-                                    </Link>
                                 </li>
                             ))}
                         </ul>
