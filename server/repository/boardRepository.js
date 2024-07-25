@@ -390,3 +390,54 @@ export const getReview = async(id) => {
   return db.execute(sql, [id])
     .then(([rows]) => rows[0]);
 }
+
+export const getReviewList = async(data) => {
+  let list = []
+  let count = {}
+  const sql = `
+    select
+      *
+    from (
+      select
+        row_number() over(order by r.reg_date desc) rno, 
+        rid,
+        star,
+        title,
+        content,
+        date_format(r.reg_date, "%Y-%m-%d") date,
+        l.name,
+        course_img,
+        course_name,
+        teacher_name,
+        concat(
+        left(user_name,1),
+        repeat("*",char_length(user_name) - 2),
+        right(user_name, 1)
+        ) user_name,
+        date_format(course_start, "%Y-%m-%d") course_start,
+        date_format(course_end, "%Y-%m-%d") course_end,
+        view	
+      from review r
+        inner join payment p on p.orderId = r.orderId
+        inner join location l on l.loc_id = p.loc_id
+    ) t1 where rno between 1 and 5;
+  `
+
+  list = await db.execute(sql)
+    .then(([rows]) => rows);
+
+  count = await getReviewTotalCount();
+
+  return {list, ...count};
+}
+
+const getReviewTotalCount = async() => {
+  const sql = `
+    select
+      count(*) count
+    from review;
+  `
+
+  return db.execute(sql)
+    .then(([rows]) => rows[0])
+}
