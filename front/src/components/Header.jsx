@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { updateActive } from "../modules/reduxMenuAxios.js";
 import { MypageModal, MyBranchModal } from "./MypageModal";
+import { getUser } from '../util/localStorage.js';
+import { getCount } from '../modules/reduxCartAxios.js';
+
 
 // svg
 import { ReactComponent as IconLogo } from "./../svg/logo.svg";
@@ -32,6 +35,15 @@ export default function Header() {
   const nextStep = () => {setStep(step+1)}
   const preStep = () => {setStep(step-1)}
   const [modalOpen, setModalOepn] = useState(false)
+  const dispatch = useDispatch();
+  const userInfo = getUser();
+  const count = useSelector(state => state.cart.count);
+
+  // 카트카운트
+  useEffect(()=>{  
+    const userId = userInfo.user_id;
+    dispatch(getCount(userId));
+  },[])
 
   const openModal = () => {
     setModalOepn(true)
@@ -49,9 +61,11 @@ export default function Header() {
 
     return () => {
       window.removeEventListener("scroll", scrollHandler);
-      window.removeEventListener("mouseover", gnbActiveHandler);
+      window.removeEventListener("mouseover", gnbActiveHandler);    
     }
   })
+
+
 
   return (
     <>
@@ -79,7 +93,7 @@ export default function Header() {
                     :null
                   }
                   <button type="button" onClick={openModal}><IconMyPage/></button>
-                  <Link className="mycart" to="/cart"><IconMyCart/><span className="cart_num">0</span></Link>
+                  <Link className="mycart" to="/cart"><IconMyCart/><span className="cart_num">{count}</span></Link>
                   <Link to="/login"><IconLogOut /></Link>
                 </>
                   : <Link to="/login"><IconLogIn /></Link>

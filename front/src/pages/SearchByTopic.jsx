@@ -18,8 +18,11 @@ import {
   ModalPage,
   CourseItem,
 } from "../components/SearchByTopicComponents";
+import { getUser } from '../util/localStorage.js'
+import { useDispatch } from 'react-redux';
+import { cartItemAdd } from '../modules/reduxCartAxios.js';
 
-export default function SearchByTopic() {
+export default function SearchByTopic({addCartCount}) {
   const { id } = useParams();
   const [showCourse, setShowCourse] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,13 +41,26 @@ export default function SearchByTopic() {
   const [test, setTest] = useState("");
   const [searchText, setSearchText] = useState("%%");
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
+  //장바구니 추가
+  const handleAddCart = (id) => {
+    const userInfo = getUser();
+    if(userInfo !== null){
+      const userId = userInfo.user_id;
+      dispatch(cartItemAdd(id, userId));
+      navigate('/cart');
+    }else {
+      alert('로그인이 필요한 기능입니다.');
+    }
+  }
+  
   const searchDetail = (value, selected) => {
     setDetail(value);
     setSelected(selected);
   };
-  console.log("selected=>", selected);
-  console.log("detail=>", detail);
+  // console.log("selected=>", selected);
+  // console.log("detail=>", detail);
   useEffect(() => {
     setDetail({
       day: [1, 2, 3, 4, 5, 6, 7],
@@ -194,7 +210,7 @@ export default function SearchByTopic() {
     setTest(value);
   };
   let cntarr = showCourse[0];
-  console.log( 'id=>', id)
+  // console.log( 'id=>', id)
   return (
     <>
       <div className="bycenter_title_part">
@@ -348,9 +364,7 @@ export default function SearchByTopic() {
             <ul className="topic_course_list">
               {items.map((item, index) => (
                 <li key={index}>
-                  <Link to={`/course/${item.course_id}`}>
-                    <CourseItem item={item} />
-                  </Link>
+                    <CourseItem item={item} handleAddCart={handleAddCart} />
                 </li>
               ))}
             </ul>

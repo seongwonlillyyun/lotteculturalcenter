@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider, useNavigate } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 // redux
@@ -12,9 +12,6 @@ import SearchByTopic from "./pages/SearchByTopic";
 import Test from "./pages/Test";
 import Cart from "./pages/Cart";
 import Order from "./pages/Order";
-
-import Product from "./pages/Product";
-import ProductDetail from "./pages/ProductDetail";
 
 
 // pages
@@ -83,21 +80,17 @@ export default function App() {
       {path : "/login", element : <Login/> },
       {path : "/join" , element : <Join/> },
       {path : '/center/:id', element:<SearchByCenter/>},
-      {path : '/center/:id', element:<SearchByCenter/>},
-      {path : '/center/:id', element:<SearchByCenter/>},
-      {path : '/topic/:id', element:<SearchByTopic/>},
+      {path : '/topic/:id', element:<SearchByTopic addCartCount={addCartCount} />},
       {path : '/test', element:<Test/>},
       {path : "/cart", element : <Cart/> },
       {path : "/order", element : <Order/> },
       {path : "/changememberinfo" , element : <ChangeMemberInfo/> },
-      {path :"/courseHistory", element : <CourseHistory/>},
-      {path :"/detailHistory", element : <DetailHistory/>}, // path 변경예정
+      {path : "/courseHistory", element : <CourseHistory/>},
+      {path : "/detailHistory", element : <DetailHistory/>}, // path 변경예정
       {path : "/board/notievent/:id", element : <NotiEventDetail/>},
       {path : "/board/review", element : <Review/>},
       {path : "/board/review/:id", element : <ReviewDetail/>},
       {path : "/review", element : <PersonalReview />},
-      {path : "/product", element : <Product /> },
-      {path : "/product/:id", element : <ProductDetail addCartCount={addCartCount} /> }
     ]
   }])
 

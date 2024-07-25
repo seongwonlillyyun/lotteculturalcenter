@@ -145,7 +145,7 @@ export default function SearchByCenter(){
                 </ul>
 
                 <ul className="small_category_items" 
-                style={{'border-bottom': cindex === 0 ? 
+                style={{'borderBottom': cindex === 0 ? 
                             "none":'1px solid #E3E1DE'}}>
                     {category[cindex].list.map((item,i)=>(
                             <li className="small_category_item">
@@ -193,9 +193,7 @@ export default function SearchByCenter(){
                         <ul className="center_course_list">
                             {items.map((item, index)=>(
                                 <li key={index}>
-                                    <Link to={`/course/${item.course_id}`}>
                                         <CourseItem item={item}/>
-                                    </Link>
                                 </li>
                             ))}
                         </ul>

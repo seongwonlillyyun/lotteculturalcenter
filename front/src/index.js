@@ -13,6 +13,7 @@ import menuReducer from './reducers/menuReducer.js';
 import notievtReducer from './reducers/notievtReducer.js';
 import PersonalQnAReducer from "./reducers/personalQnaReducer.js"
 import reviewReducer from './reducers/reviewReducer.js';
+import cartReducer from './reducers/cartReducer';
 
 // css
 import "./css/reset.css";
@@ -20,7 +21,7 @@ import "./css/style.css";
 import "./css/common.css";
 import './css/cart.css';
 import './css/order.css';
-import cartReducer from './reducers/cartReducer';
+
 
 
 const store = configureStore({
