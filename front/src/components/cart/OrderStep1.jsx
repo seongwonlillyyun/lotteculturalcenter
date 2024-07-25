@@ -1,29 +1,85 @@
-import React from 'react';
+import React, {useState, useEffect } from 'react';
 import PayBottom from './PayBottom';
 import Tab from './Tab';
-import CartList from './CartList';
-import Checkbox from './Checkbox';
+import { useNavigate, Link } from 'react-router-dom';
+import { getUser } from '../../util/localStorage.js';
+import { useSelector, useDispatch} from 'react-redux';
+import { cartListAxios } from '../../modules/reduxCartAxios';
+
+
+export default function OrderStep1({next, stepOrder}) {
+  const userId = 'test';
+  const cartList = useSelector(state => state.cart.list); // db리스트
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+    useEffect(()=>{
+      dispatch(cartListAxios({userId}))
+    },[])
 
 
 
-export default function OrderStep1({next, step}) {
   return(
     <div className='order type'>
       <div className="sub_visual">
         <h2 className="heading">수강결제</h2>
       </div>
       <div className='min_inner'>
-        <Tab step={step} />  
+        <Tab stepOrder={stepOrder} />  
         <h2 className='htitle'>수강자 정보</h2>
-        <CartList cname={'order'}/>
+        
+        {/* 장바구니 리스트 시작 */}
+        {
+        cartList.length === 0 ? (
+          <div className='cart_bin'>
+            <span className='icon'></span>
+            <h3>장바구니가 비었습니다.</h3>
+          </div>
+         ): (
+        cartList && cartList.map((item, index) => (
+          <div className='cart_list' key={item.course_id}>
+          <ul className='cart_list_box'>
+            <li className='title'>
+              <span className='deco'>{item.status}</span>
+              <span className='deco loc'>{item.loc}</span>
+              <Link to={'/'}>
+                <h2>{item.course_name}</h2>
+              </Link>
+            </li>
+            <li className='info'>
+              <dl>
+                <dt>강사명</dt>
+                <dd>{item.teacher_name}</dd>
+              </dl>  
+              <dl> 
+                <dt>강좌정보</dt>
+                <dd>{item.course_start} ~ {item.course_end} <span>({item.course_week})</span> {item.start_time} ~ {item.end_time} / <span>{item.num_of_course}</span>회</dd>
+              </dl>
+              <dl>  
+                <dt>강좌료</dt>
+                <dd>{item.price}</dd>
+              </dl>
+              <dl className='total'>  
+                <dt>총금액</dt>
+                <dd><span className='price'>{item.price}</span>원</dd>
+              </dl>
+            </li>
+          </ul>
+           
+        </div>
+        
+        ))
+      )
+    }
+    {/* 장바구니 리스트 끝 */}
 
         <div className='mid-line'></div>
 
         <h2 className='htitle'>할인혜택</h2>
         <div className='order_line'>
-            <h3>L.POINT<span>1000원</span></h3>
+            <h3>L.POINT<span>보유 :<span className='num'>47</span>점</span></h3>
             <label htmlFor=''></label>
-            <input type='text' id='' name='' />
+            <input type='text' id='' name='' placeholder='0점' />
             <button type='submit' className='submit_btn' >사용</button>
             <p>포인트 사용은 10점 단위로 사용 가능합니다.</p>
         </div>
@@ -86,12 +142,20 @@ export default function OrderStep1({next, step}) {
           </ul>
         </div>
         <div className='order_line check'>
-          <Checkbox />
-          <span>주문내역 확인 동의 <button type='button'>보기</button></span>
+          <div className="form_checkbox">
+            <input type='checkbox' 
+                   id='a'
+                   name='a'
+                   value='a' 
+                  //  checked={isChecked}
+            />
+            <label>주문내역 확인 동의</label>
+            <button type='button'>보기</button>
+            </div>
         </div>
       </div>
       {/* 하단고정 */}
-      <PayBottom cname={'order'} next={next} />
+      <PayBottom next={next} cname={'order'} stepOrder={stepOrder} />
     </div>
   );
 }

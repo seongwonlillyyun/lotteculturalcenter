@@ -35,8 +35,7 @@ const location = useLocation();
     :null} */}
 
       <Header />
-      <Outlet/>
-      {/* <button type="button" onClick={openModal}>Mypage이동 임시버튼</button> */}
+      <Outlet />
       <Footer />
     </>
   );

@@ -90,6 +90,46 @@
 .order .order_line.step2{
   margin-bottom: 80px;
 }
+.order .order_line h3{
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 26px;
+  letter-spacing: -.4px;
+  margin-bottom: 12px;
+}
+.order .order_line h3 span{
+  margin-left: 10px;
+  color: #009BFF;
+}
+.order .order_line h3 span.num{
+  margin-left: 3px;
+}
+.order .order_line input{
+  min-width: 400px;
+  padding: 14px 10px;
+  border: 1px solid #ddcdc5;
+  border-radius: 5px;
+  font-size: 15px;
+  color: #222;
+  text-align: right;
+}
+
+.order .order_line .submit_btn{
+  padding: 12px 20px;
+  text-align: center;
+  border-radius: 4px;
+  background-color: #222;
+  border: 1px solid #222;
+  color: #fff;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.order .order_line p {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #666;
+}
+
 /* 총 결제금액 */
 .order .all_pay{
   display: flex;
@@ -164,4 +204,16 @@
 .order .all_pay > li.cir .plus::after{
   top: 22px;
   left: 14px;
+}
+
+
+
+
+.footer{
+  position: relative;
+  text-align: center;
+  border: 1px solid red;
+  height: 491px;
+  background-color: #222;
+  color: #fff;
 }

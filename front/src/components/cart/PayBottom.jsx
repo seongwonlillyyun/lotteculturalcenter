@@ -1,55 +1,84 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ButtonBlack from './ButtonBlack';
-import ButtonWhite from './ButtonWhite';
-import Checkbox from './Checkbox';
+import { useSelector} from 'react-redux';
 
-
-
-export default function PaymentBottom({cname, next}) {
+export default function PayBottom({cname, next, stepOrder,checkPrice, checkNum, checkedItems}) {
   const navigate = useNavigate();
+  const currentPos = useSelector(state => state.cart.currentPos);
+  const [isChecked, setIsChecked] = useState(false); // 결제페이지 체크박스
+
+
+
+
+  // 장바구니 다음버튼
+  const handleNext = () => {
+    if(checkedItems.length === 0){
+      alert('1개 이상 강좌를 선택해주세요')
+    }else{
+      navigate('/order')
+    }
+  }
+
+
+  // 결제 체크여부
+  const handleChange = (isChecked) => {
+    if(isChecked){
+      setIsChecked(true)
+    }else{
+      setIsChecked(false)
+    }
+  }
+
+  // 결제 이전버튼
   const handlePrev = () => {
     navigate('/cart')
   }
-  const handleNext = () => {
-    next();
-  }
+
+  // 최종 결제버튼
   const handlePay = () => {
-    alert('선택한 강좌를 결제하시겠습니까?')
-    navigate('/order')
+    if(isChecked === true){
+      alert('선택한 강좌를 결제하시겠습니까?')
+      next(stepOrder);
+    }else{
+      alert('구매동의에 동의하셔야 결제가 가능합니다. 구매 동의하시겠습니까?')
+    }
   }
 
   return(
-    <div className='bottom-fix'>
+    <div className='bottom-fix '>
+    {
+    currentPos === cname ?  (
       <div className='min_inner'>
+        <div className='total_price'>
+            <span className='num'>{checkNum}<span>건</span></span>
+            <span className='txt'>결제 예정금액</span>
+            <span className='price'>{checkPrice}<span>원</span></span>
+          </div>
+        <div className='basic_btn'>
+        <button type='button' className='btn btn_black large' onClick={handleNext}>{`${checkPrice}원 결제`}</button>
+        </div> 
+      </div>   
+      ):
+      (
+        <div className='min_inner'>
           <div className='total_price'>
-            {
-              cname === 'order' ?
-              
-              <>
-                <Checkbox title='위 내용을 모두 확인하였으며, 결제에 동의합니다.' />
-              </>
-              :
-              <>
-                <span className='num'>1<span>건</span></span>
-                <span className='txt'>결제 예정금액</span>
-                <span className='price'>60000<span>원</span></span>
-              </>
-            }
-          </div>
+            <div class="form_checkbox">
+              <input type="checkbox"
+                    id='cartPay'
+                    name='cartPay'
+                    value='cartPay'
+                    onChange={(e)=>handleChange(e.target.checked)}
+              />
+              <label htmlFor='cartPay'>위 내용을 모두 확인하였으며, 결제에 동의합니다.</label>
+            </div>
+        </div>  
           <div className='basic_btn'>
-            {
-              cname === 'order' ? 
-                <>
-                   <ButtonWhite name='이전' color='btn_white medium' onClick={handlePrev} />
-                   <ButtonBlack name='45000원 결제' color='btn_black large' onClick={handleNext} />  
-                </>
-               
-              : 
-               <ButtonBlack name='결제하기' color='btn_black large' onClick={handlePay}/>
-            }
+            <button type='button' className='btn btn_white medium' onClick={handlePrev}>이전</button>
+            <button type='button' className='btn btn_black large' onClick={handlePay}>결제하기</button>
           </div>
-      </div>
+        </div>   
+      )
+      }
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 // redux
@@ -12,6 +12,9 @@ import SearchByTopic from "./pages/SearchByTopic";
 import Test from "./pages/Test";
 import Cart from "./pages/Cart";
 import Order from "./pages/Order";
+
+import Product from "./pages/Product";
+import ProductDetail from "./pages/ProductDetail";
 
 
 // pages
@@ -56,6 +59,15 @@ export default function App() {
 // }
 
 
+  const [cartCount, setCartCount] = useState(0);//카트갯수 카운트
+
+  // 카운트
+  const addCartCount = (result) =>{
+    if(result === 1) setCartCount(cartCount + 1);
+  }
+
+
+  
   const router = createBrowserRouter([{
     path : "/",
     element: <Root />,
@@ -83,7 +95,9 @@ export default function App() {
       {path : "/board/notievent/:id", element : <NotiEventDetail/>},
       {path : "/board/review", element : <Review/>},
       {path : "/board/review/:id", element : <ReviewDetail/>},
-      {path : "/review", element : <PersonalReview />}
+      {path : "/review", element : <PersonalReview />},
+      {path : "/product", element : <Product /> },
+      {path : "/product/:id", element : <ProductDetail addCartCount={addCartCount} /> }
     ]
   }])
 

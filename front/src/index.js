@@ -20,10 +20,12 @@ import "./css/style.css";
 import "./css/common.css";
 import './css/cart.css';
 import './css/order.css';
+import cartReducer from './reducers/cartReducer';
 
 
 const store = configureStore({
   reducer : {
+    cart : cartReducer,
     notievt : notievtReducer,
     qna : qnaReducer,
     menu : menuReducer,

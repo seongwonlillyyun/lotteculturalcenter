@@ -5,21 +5,21 @@ import OrderStep2 from '../components/cart/OrderStep2';
 
 
 export default function Order() {
-  const [step, setStep] = useState(1)
+  const [stepOrder, setStepOrder] = useState(1)
 
   const nextStep = () => {
-    setStep(step + 1);
+    setStepOrder(stepOrder + 1);
   }
 
   
 
   return(
     <div className=''>
-      { step === 1 && (
-        <OrderStep1 next={nextStep} step={step} />
+      { stepOrder === 1 && (
+        <OrderStep1 next={nextStep} stepOrder={stepOrder} />
       )}
-      { step === 2 && (
-        <OrderStep2 step={step} />
+      { stepOrder === 2 && (
+        <OrderStep2 stepOrder={stepOrder} />
       )}
     </div>
   );
