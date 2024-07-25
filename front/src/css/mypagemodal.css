@@ -60,7 +60,7 @@ font-size: 2rem;
 }
 .mypage_middle_top>div{
     /* border: 1px solid red; */
-    width: 90px; 
+    width: 130px; 
     text-align: center;
 }
 .mypage_middle_top_subject{
@@ -208,12 +208,41 @@ width: 20px;
     gap : 0.8rem;
 
 }
-.branch_name{
+
+.mypage_branch_btn, .mypage_branch_btn_active{
     border-radius: 4px;
-    background-color:  #f8f8f8;;
-    width: 50%;
-    height: 44px;
+    width: 84px;
+    height: 60px;
     padding: 13px 10px 13px 10px;
     text-align: center;
     align-items: center;
     }
+
+
+.mypage_branch_btn{
+background-color:  #f8f8f8;   
+}
+
+.mypage_branch_btn_active{
+background-color:  var(--point-color);
+}
+
+.branch_modal_btn_div{
+display: flex;
+justify-content: right;
+        }
+.branchsave_btn{
+width : 120px;
+height: 50px;
+padding: 13px 10px 13px 10px;
+text-align: center;
+align-items: center;
+border-radius: 6px;
+background-color: black;
+color : white;
+font-size: 15px;
+font-weight: 500;
+
+
+        }
+    

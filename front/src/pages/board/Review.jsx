@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 import { useDispatch, useSelector } from 'react-redux';
+import { getList, updateFilter } from '../../modules/reduxReview';
 
 // svg
 import {ReactComponent as IconStar} from "../../svg/icon-star.svg";
@@ -14,9 +15,20 @@ import 'swiper/css/pagination';
 import "../../css/board/review.css"
 
 export default function Review() {
+  const dispatch = useDispatch();
+  const filter = useSelector(state => state.review.filter)
+
+  useEffect(()=>{
+    dispatch(getList(filter));
+  },[filter])
+
+  const searchHandler = (keyword) => {
+    dispatch(updateFilter({keyword}))
+  }
+
   return (
     <div className="board_page">
-      <SearchVisual title="수강후기"/>
+      <SearchVisual title="수강후기" handler={searchHandler}/>
       <div className="board_review narrow_page">
         <div className="min_inner">
           <ReviewSwiper />
@@ -65,36 +77,7 @@ function ReviewSwiper() {
         >
           {
             list.map(v => (
-              <SwiperSlide className='review_item' onClick={()=>linkHandler(v.rid)}>
-                <div className="img_box">
-                  <img src={`//localhost:8080/${v.course_img}`} alt="" />
-                </div>
-                <div className="txt_box">
-                  <div className="tags">
-                    <p className='location'>{v.name}</p>
-                    <p className="stars">
-                      {
-                        Array.from(Array(v.star), (_, i) => i).map((_,i) => (
-                          <span key={i}><IconStar/></span>
-                        ))
-                      }
-                    </p>
-                  </div>
-                  <div className='title'>
-                    <h3>{v.title}</h3>
-                    <p>{v.course_name}</p>
-                  </div>
-                  <div className="info">
-                    <span>{v.user_name}</span>
-                    <span>{v.date}</span>
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))
-          }
-          {
-            list.map(v => (
-              <SwiperSlide className='review_item'>
+              <SwiperSlide key={v.rid} className='review_item' onClick={()=>linkHandler(v.rid)}>
                 <div className="img_box">
                   <img src={`//localhost:8080/${v.course_img}`} alt="" />
                 </div>
@@ -133,11 +116,13 @@ function ReviewSwiper() {
 function BoardUtils() {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
-  const location = "전체지점"
+  const location = useSelector(state => state.review.filter.location);
   const locationList = useSelector(state => state.menu.locationList);
+  const totalCount = useSelector(state => state.review.count);
 
   const listHandler = (e) => {
     let name = e.target.textContent;
+    dispatch(updateFilter({location : name}))
     setActive(false);
   }
 
@@ -147,12 +132,12 @@ function BoardUtils() {
 
   return (
     <div className="board_utils">
-      <p className="board_count">전체 <b>0개</b></p>
+      <p className="board_count">전체 <b>{totalCount}개</b></p>
       <div className={active ? "custom_select_wrap on" : "custom_select_wrap"}>
-        <p onClick={activeHandler}><span>{location}</span></p>
+        <p onClick={activeHandler}><span>{location ? location : "전체지점"}</span></p>
         <div className="custom_select">
           <ul>
-            <li className={location === "전체지점" ? "on" : ""} onClick={listHandler}>전체지점</li>
+            <li className={location === "" ? "on" : ""} onClick={listHandler}>전체지점</li>
             {
               locationList.map(v => (
                 <li className={location === v.name ? "on" : ""} key={v.loc_id} onClick={listHandler}>{v.name}</li>
@@ -167,14 +152,9 @@ function BoardUtils() {
 
 function ReviewList() {
   const navigate = useNavigate();
-  const [list, setList] = useState([]);
-
-  useEffect(()=>{
-    const url = "//localhost:8080/board/review/hits";
-
-    axios.get(url)
-      .then(result => setList(result.data))
-  },[])
+  const list = useSelector(state => state.review.list);
+  const filterCount = useSelector(state => state.review.filter.count);
+  const totalCount = useSelector(state => state.review.count);
 
   const linkHandler = (id) => {
     navigate("/board/review/" + id);
@@ -186,7 +166,7 @@ function ReviewList() {
         <ul>
           {
             list.map(v => (
-              <li className='item'>
+              <li key={v.rid} className='item' onClick={()=>linkHandler(v.rid)}>
                 <div className="img_box">
                   <img src={`//localhost:8080/${v.course_img}`} alt="" />
                 </div>
@@ -213,9 +193,12 @@ function ReviewList() {
           }
         </ul>
       </div>
-      <div className="btns">
-        <button type="button" className='more_btn'>더보기</button>
-      </div>
+      {
+        totalCount > filterCount &&
+        <div className="btns">
+          <button type="button" className='more_btn'>더보기</button>
+        </div>
+      }
     </>
   );
 }

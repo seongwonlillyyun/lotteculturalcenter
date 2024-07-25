@@ -12,6 +12,7 @@ import qnaReducer from './reducers/qnaReducer.js';
 import menuReducer from './reducers/menuReducer.js';
 import notievtReducer from './reducers/notievtReducer.js';
 import PersonalQnAReducer from "./reducers/personalQnaReducer.js"
+import reviewReducer from './reducers/reviewReducer.js';
 
 // css
 import "./css/reset.css";
@@ -27,6 +28,7 @@ const store = configureStore({
     qna : qnaReducer,
     menu : menuReducer,
     personal : PersonalQnAReducer,
+    review : reviewReducer,
   }
 })
 

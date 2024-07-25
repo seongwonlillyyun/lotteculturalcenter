@@ -7,10 +7,10 @@ import '../css/join.css'
 export default function Join(){
     const [step, setStep] = useState(1)
     const [formData, setFormData] =useState({
-        membership: false, personal : false, optional: false, // step1 용 
+        membership: false, personal : false, optional: false, 
         user_name : '', user_id : '' , user_pw : '', user_repw: '', emailId : '' , emailDomain : '', 
         phoneNo1 : '010', phoneNo2 : '', phoneNo3: '',  birth: '', zipcode : '' , address : '' , detailAddress : '' 
-        }
+        ,name: ''}
     )
 
     //! step1에서 체크박스 이벤트 발생하면 부모에서 처리 
@@ -36,6 +36,7 @@ export default function Join(){
         setFormData({...formData, zipcode : e.zipcode, address:e.address})
     }
 
+    // const handle
 
     return (
         <div>
@@ -51,7 +52,7 @@ export default function Join(){
                 <JoinStep1 next={nextStep} formData= {formData} handleCheck={handleCheck} />
             )}
             {step===2 && (
-                <JoinStep2 next={nextStep} pre={preStep} formData={formData} handleChange={handleChange}
+                <JoinStep2 pre={preStep} formData={formData} handleChange={handleChange}
                  handleAddress={handleAddress}/>
             )}
         </div>
