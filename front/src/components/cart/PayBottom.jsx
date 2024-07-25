@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector} from 'react-redux';
 
-export default function PayBottom({cname, next, stepOrder, cartList, checkPrice}) {
+export default function PayBottom({cname, next, stepOrder, cartList, checkPrice, checkNum}) {
   const navigate = useNavigate();
   const currentPos = useSelector(state => state.cart.currentPos);
   const [isChecked, setIsChecked] = useState(false); // 결제페이지 체크박스
@@ -45,7 +45,7 @@ export default function PayBottom({cname, next, stepOrder, cartList, checkPrice}
     currentPos === cname ?  (
       <div className='min_inner'>
         <div className='total_price'>
-            <span className='num'>{cartList.length}<span>건</span></span>
+            <span className='num'>{checkNum}<span>건</span></span>
             <span className='txt'>결제 예정금액</span>
             <span className='price'>{checkPrice}<span>원</span></span>
           </div>

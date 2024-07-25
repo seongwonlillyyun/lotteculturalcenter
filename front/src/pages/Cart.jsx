@@ -13,10 +13,14 @@ export default function Cart() {
 
   const cartList = useSelector(state => state.cart.list); // db리스트
   const [checkedItems, setCheckedItems] = useState(new Array(cartList.length).fill(false) ); // 개별체크
-  const [checkPrice, setCheckPrice] = useState(0) 
+  const [checkPrice, setCheckPrice] = useState(0) // 결제가격
+  const [checkNum, setCheckNum] = useState(0) // 결제갯수
+  const [isAllChecked, setIsAllChecked] = useState(!checkedItems.every((item)=> item)); // 전체체크
+  const [deleteList, setDeleteList] =useState([]) // 체크삭제
 
-  // console.log('checkedItems->', checkedItems);
 
+
+  
   const handleMore = () => {
     navigate('/'); //상품상세로 이동
   }
@@ -25,34 +29,71 @@ export default function Cart() {
   const handleAllCheck = () => {
     setCheckedItems(new Array(cartList.length).fill(!isAllChecked))
     setIsAllChecked(!isAllChecked)
+    
+    let totalPrice = 0;
+    if(!isAllChecked) cartList.map((cart)=> totalPrice += cart.price)
+    
+      totalPrice = totalPrice.toLocaleString('ko-KR');
+      setCheckPrice(totalPrice);
   }
 
   // 개별 체크박스
-  const handleCheck = (id, index) => {
-    const checkCartList = [...cartList];
+  const handleCheck = (id, index, checked) => {
+    alert('checked->'+id+index+checked)
+
+    // checkec가 true일때 추가
+    // 있는지 없는지 id 체크
+    // map으로 돌려서 딜리트 기존 id 값이 체크한 아이디 값이 같지 않을때 추가.
+
+    const deleteId = {id: id}
+    setDeleteList([...deleteList, deleteId])
+
+
+
+
+    // if(deleteList.length === 0){
+    //   setDeleteList(deleteList[0] = id)
+    // }else{
+    //   setDeleteList([...deleteList, id])
+    // }
+ 
+
+    // let newDeleteList = [...deleteList, id]
+    // deleteList = newDeleteList;
+    // deleteList.splice(index, 1, id)
+    console.log('deleteList2->', deleteList);
+
 
     setCheckedItems((preCheckedItems)=>{
-        const updateCheckedItems = [...preCheckedItems]
-        updateCheckedItems[index] = !updateCheckedItems[index];
-        
-        return updateCheckedItems;
-    })
+      const updateCheckedItems = [...preCheckedItems]
+      updateCheckedItems[index] = !updateCheckedItems[index];
+      
+      let totalPrice = 0;
+      let numPlus = index + 1
+      let numMinus = numPlus - 1
+      updateCheckedItems.forEach((checked, idx) => {
+        if(checked){
+          totalPrice += cartList[idx].price
+          setCheckNum(numPlus)
+        }else{
+          setCheckNum(numMinus)
+        }
+      });
+      totalPrice = totalPrice.toLocaleString('ko-KR');
+      setCheckPrice(totalPrice);
 
-    for(let i=0; i < checkCartList.length; i++){
-      const cartPrice = checkCartList[i].price;
-      if(checkedItems === true){
-        setCheckPrice(cartPrice)
-      }
-      else{
-        setCheckPrice(0)
-      }
-    }
+
+      return updateCheckedItems;
+    })
     
   }
-   console.log('checkPrice->', checkPrice);
+        console.log('deleteList->', deleteList.length);
 
 
-  const [isAllChecked, setIsAllChecked] = useState(!checkedItems.every((item)=> item)); // 전체체크
+  const handleDelete = () => {
+
+    alert('111')
+  }
 
   
 
@@ -73,7 +114,7 @@ export default function Cart() {
         <div className='min_inner'>
           <div className='cart_num'><span>목록</span><span className='num'>{cartList.length}개</span></div>
           <div className="utils_box">
-          <div class="form_checkbox">
+          <div className="form_checkbox">
   
               <input type='checkbox' 
                      id='all'
@@ -85,14 +126,14 @@ export default function Cart() {
               <label htmlFor='all' >전체선택</label>
             
             </div>
-            <button type='button' class="delete_btn"><span>선택삭제</span></button>
+            <button type='button' className="delete_btn" onClick={handleDelete}><span>선택삭제</span></button>
           </div>
 
     {/* 장바구니 리스트 시작 */}
         {
         cartList.length === 0 ? (
           <div className='cart_bin'>
-            <spna className='icon'></spna>
+            <span className='icon'></span>
             <h3>장바구니가 비었습니다.</h3>
           </div>
          ): (
@@ -100,11 +141,11 @@ export default function Cart() {
           <div className='cart_list' key={item.course_id}>
           <ul className='cart_list_box'>
             <li className=''>
-            <div class="form_checkbox">
+            <div className="form_checkbox">
                 <input type='checkbox' id={`${item.course_id}`} 
                           name={`list${index}`}
                           value={`${index}`}
-                          onChange={()=>handleCheck(item.course_id, index)}
+                          onChange={(e)=>handleCheck(item.course_id, index, e.target.checked)}
                           checked={checkedItems[index]}               
                 />  
                 <label htmlFor={`${item.course_id}`}></label>   
@@ -163,7 +204,7 @@ export default function Cart() {
         </div>    
 
         {/* 하단고정 */}
-        <PayBottom cname={'cart'} cartList={cartList} checkPrice={checkPrice} />
+        <PayBottom cname={'cart'} cartList={cartList} checkPrice={checkPrice} checkNum={checkNum} />
         
       </div>
 
