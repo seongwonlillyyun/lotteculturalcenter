@@ -335,6 +335,12 @@ function CourseItem({target}) {
 }
 
 function CourseSwiper({className, list}) {
+  const navigate = useNavigate();
+
+  const linkHandler = (id) => {
+    navigate("/course/" + id);
+  }
+
   return (
     <div className="course_swiper_wrapper">
       <Swiper
@@ -355,7 +361,7 @@ function CourseSwiper({className, list}) {
       >
         {
           list.map(v => (
-            <SwiperSlide className="course_item" key={v.course_id}>
+            <SwiperSlide className="course_item" key={v.course_id} onClick={() => linkHandler(v.course_id)}>
               <CourseItem target={v}/>
             </SwiperSlide>
           ))
