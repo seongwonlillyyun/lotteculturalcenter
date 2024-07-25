@@ -28,7 +28,8 @@ export const getBestCourse = async (req, res) => {
 }
 
 export const getNewCourse = async (req, res) => {
-  const result = await repository.getNewCourse();
+  const data = req.body;
+  const result = await repository.getNewCourse(data);
   res.json(result);
   res.end();
 }

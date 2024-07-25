@@ -7,14 +7,23 @@ import axios from 'axios';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import "../css/main.css";
+import { getUser } from './../util/localStorage';
 
 export default function Main() {
+  const userId = getUser() ? getUser().userId : "test";
+  const [location, setLocation] = useState();
+
+  useEffect(()=>{
+    axios.post("//localhost:8080/location/favorite", {userId})
+      .then(result => setLocation(result.data.name))
+  },[userId])
+
   return (
     <div className="main_page narrow_page">
       <MainVisual />
       <Recommend />
-      <Category />
-      <NewCourse />
+      <Category location={location}/>
+      <NewCourse location={location}/>
       <NotiEvent />
     </div>
   );
@@ -130,7 +139,7 @@ function Recommend() {
   );
 }
 
-function Category() {
+function Category({location}) {
   const navigate = useNavigate();
   const [active, setActive] = useState(0);
   const [data, setData] = useState();
@@ -146,7 +155,7 @@ function Category() {
         setData(result.data);
         getCourseList(result.data[ranNum].cid);
       })
-  },[])
+  },[location])
 
   const changeHandler = (e) => {
     const idx = e.target.value;
@@ -158,6 +167,7 @@ function Category() {
     const url = "//localhost:8080/course"
     const data = {
       cid,
+      location
     }
     axios.post(url, data)
       .then(result => setList(result.data.slice(0, 4)))
@@ -171,7 +181,12 @@ function Category() {
     <div className="main_category_wrap" style={{"--bg" : data[active].bg_color}}>
       <div className="main_title">
         <div className="inner">
-          <b>강좌 카테고리</b>
+          <b>
+            {
+              location && <span>{location} </span>
+            }
+            강좌 카테고리
+          </b>
           <h3>
             일상을 빛낼 취향을 <br />
             발견하세요!
@@ -223,21 +238,26 @@ function Category() {
   );
 }
 
-function NewCourse() {
+function NewCourse({location}) {
   const [list, setList] = useState([]);
 
   useEffect(()=>{
     const url = "//localhost:8080/course/new";
 
-    axios.get(url)
+    axios.post(url, {location})
       .then(result => setList(result.data))
-  },[])
+  },[location])
 
   return (
     <div className="new_course">
       <div className="inner">
         <div className="main_title">
-          <b>신규강좌</b>
+          <b>
+            {
+              location && <span>{location} </span>
+            }
+            신규강좌
+          </b>
           <h3>
             새롭게 개설된 강좌를 <br />
             지금 확인해보세요

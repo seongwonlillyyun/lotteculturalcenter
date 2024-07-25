@@ -77,3 +77,15 @@ export const getLocationSlide = async (id) => {
 
   return db.execute(sql, [id]).then(([rows]) => rows);
 }
+
+export const getFavoriteLocation = async(id) => {
+  const sql = `
+    select
+      name
+    from member
+    where user_id = ?;
+  `;
+
+  return db.execute(sql, [id])
+    .then(([rows]) => rows[0])
+}

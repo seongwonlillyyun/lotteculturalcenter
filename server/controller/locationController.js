@@ -20,3 +20,10 @@ export const getLocationSlide = async (req, res) => {
   res.json(result);
   res.end();
 }
+
+export const getFavoriteLocation = async(req, res) => {
+  const {userId} = req.body;
+  const result = await repository.getFavoriteLocation(userId);
+  res.json(result);
+  res.end();
+}
