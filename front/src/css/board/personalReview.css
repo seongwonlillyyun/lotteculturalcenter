@@ -1,0 +1,90 @@
+.personalReview .popup_wrap .bg {
+  cursor: default;
+}
+
+.personalReview .popup_top {
+  display: flex;
+  padding: 20px 40px;
+}
+
+.personalReview .popup_top h3 {
+  flex: 1;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.3em;
+}
+
+.personalReview .popup_content_wrap {
+  flex: 1;
+  padding: 30px 10px 60px 30px;
+  overflow: hidden;
+}
+
+.personalReview .scroll_wrap {
+  padding-left: 10px;
+  padding-right: 30px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.personalReview .popup_content .notice {
+  padding: 30px;
+  background-color: #f8f8f8;
+  font-size: 14px;
+  line-height: 1.55em;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.personalReview .popup_content .notice li {
+  position: relative;
+  padding-left: 10px;
+}
+
+.personalReview .popup_content .notice li + li {
+  margin-top: 10px;
+}
+
+.personalReview .popup_content .notice li::before {
+  content: '';
+  position: absolute;
+  top: 9px;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.personalReview .data_section > li + li {
+  margin-top: 40px;
+}
+
+.personalReview .data_section h4 {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.75em;
+  margin-bottom: 10px;
+}
+
+.personalReview .data_section input[type = "text"],
+.personalReview .data_section select,
+.personalReview .data_section textarea {
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.personalReview .data_section input[type = "text"]:focus,
+.personalReview .data_section select:focus,
+.personalReview .data_section textarea:focus {
+  border: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+.personalReview .data_section textarea {
+  resize: none;
+  height: 150px;
+}

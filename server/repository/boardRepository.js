@@ -297,3 +297,96 @@ export const getMyReview = async (data) => {
   return db.execute(sql, params)
     .then(([rows]) => rows)
 }
+
+export const setReview = async (data) => {
+  let result = false;
+
+  const sql = `
+    insert into review(orderId, star, title, content, reg_date)
+    values(?, ?, ?,?, now())
+  `;
+
+  const params = [
+    data.orderId,
+    data.star,
+    data.title,
+    data.content
+  ]
+
+  await db.execute(sql, params);
+  await updateIsReviewed(data.orderId)
+    .then(([rows]) => {
+      if(rows.affectedRows) result = true;
+    });
+
+  return result;
+}
+
+const updateIsReviewed = async (id) => {
+  const sql = `
+    update payment set isReviewed = true
+    where orderId = ?;
+  `
+
+  return db.execute(sql, [id]);
+}
+
+export const getHitsReview = async () => {
+  const sql = `
+    select 
+      rid,
+      star,
+      title,
+      content,
+      date_format(r.reg_date, "%Y-%m-%d") date,
+      l.name,
+      course_img,
+      course_name,
+      teacher_name,
+      concat(
+        left(user_name,1),
+        repeat("*",char_length(user_name) - 2),
+        right(user_name, 1)
+      ) user_name,
+      course_start,
+      course_end,
+      view
+    from review r
+      inner join payment p on p.orderId = r.orderId
+      inner join location l on l.loc_id = p.loc_id
+    order by view desc
+  `
+
+  return db.execute(sql)
+    .then(([rows]) => rows);
+}
+
+export const getReview = async(id) => {
+  const sql = `
+    select 
+      rid,
+      star,
+      title,
+      content,
+      date_format(r.reg_date, "%Y-%m-%d") date,
+      l.name,
+      course_img,
+      course_name,
+      teacher_name,
+      concat(
+        left(user_name,1),
+        repeat("*",char_length(user_name) - 2),
+        right(user_name, 1)
+      ) user_name,
+      date_format(course_start, "%Y-%m-%d") course_start,
+      date_format(course_end, "%Y-%m-%d") course_end,
+      view
+    from review r
+      inner join payment p on p.orderId = r.orderId
+      inner join location l on l.loc_id = p.loc_id
+    where rid = ?;
+  `
+
+  return db.execute(sql, [id])
+    .then(([rows]) => rows[0]);
+}

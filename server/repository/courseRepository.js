@@ -1,6 +1,8 @@
 import { db } from "../db/database_mysql80.js";
 
 export const getCategoryCourse = async (data) => {
+  const locationSql = data.location ? `and l.name = "${data.location}"` : ""
+
   const sql = `
     select 
       course_id,
@@ -18,7 +20,8 @@ export const getCategoryCourse = async (data) => {
       inner join category_sub cs on cs.csid = p.csid
       inner join category c on c.cid = cs.cid
       inner join location l on l.loc_id = p.loc_id
-    where c.cid = ${data.cid};
+    where c.cid = ${data.cid}
+    ${locationSql}
   `
 
   return db.execute(sql)
@@ -136,7 +139,9 @@ export const getBestCourse = async () => {
     .then(([rows]) => rows);
 }
 
-export const getNewCourse = async () => {
+export const getNewCourse = async (data) => {
+  const locationSql = data.location ? `where l.name = "${data.location}"` : "";
+
   const sql = `
     select
       course_id,
@@ -154,6 +159,7 @@ export const getNewCourse = async () => {
       inner join category_sub cs on cs.csid = p.csid
       inner join category c on c.cid = cs.cid
       inner join location l on l.loc_id = p.loc_id
+    ${locationSql}
     order by p.reg_date;
   `;
 

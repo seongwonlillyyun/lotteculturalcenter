@@ -16,5 +16,8 @@ router.get("/personal/delete/:id", controller.removePersonal);
 router.post("/personal/update", controller.updatePersonal);
 router.get("/personal/:id", controller.getPersonal);
 router.post("/myReview", controller.getMyReview);
+router.post("/review/add", controller.setReview);
+router.get("/review/hits", controller.getHitsReview);
+router.get("/review/:id", controller.getReview);
 
 export default router;
