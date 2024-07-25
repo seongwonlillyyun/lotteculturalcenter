@@ -178,7 +178,9 @@ width: 200px;
     height: 2rem;
     border: 1px solid gray;
 }
-
+.join_small_input{
+    width: 7rem;
+}
 
  .join_step2_email{
     display: flex;
@@ -221,6 +223,14 @@ margin-left: 1rem
     height: 2rem;
     text-align: center;
 }
+
+.join_step2_select_branch{
+    width: 10rem;
+    height: 2rem;
+    text-align: center;
+}
+
+
 .join_stpe2_select_domain{
     margin-left: 1rem;
 }
@@ -229,9 +239,7 @@ margin-left: 1rem
     font-weight: 500;
     margin: 0 .6rem 0 .6rem;
 }
-/* .join_stpe2_select_phone{
-    margin-right: .6rem;
-} */
+
 .join_step2_address_text{
  margin-right: 2rem;   
  font-size : .9rem;
