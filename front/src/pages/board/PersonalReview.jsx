@@ -18,7 +18,7 @@ export default function PersonalReview() {
     content : "",
   }
   const [formData, setFormData] = useState(initData);
-  const userId = getUser() ? getUser().userId : "test_soo";
+  const userId = getUser() ? getUser().user_id : "test_soo";
   const data = {
     userId,
   }
