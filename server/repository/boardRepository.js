@@ -394,6 +394,9 @@ export const getReview = async(id) => {
 export const getReviewList = async(data) => {
   let list = []
   let count = {}
+
+  console.log(data);
+
   const sql = `
     select
       *

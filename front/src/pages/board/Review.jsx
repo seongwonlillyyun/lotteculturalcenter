@@ -22,9 +22,13 @@ export default function Review() {
     dispatch(getList(filter));
   },[filter])
 
+  const searchHandler = (keyword) => {
+    dispatch(updateFilter({keyword}))
+  }
+
   return (
     <div className="board_page">
-      <SearchVisual title="수강후기"/>
+      <SearchVisual title="수강후기" handler={searchHandler}/>
       <div className="board_review narrow_page">
         <div className="min_inner">
           <ReviewSwiper />

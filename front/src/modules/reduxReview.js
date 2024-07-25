@@ -8,8 +8,6 @@ export const getList = (filter) => {
   return async(dispatch) => {
     const result = await axiosPost(url, data);
 
-    console.log(result);
-
     if(result) {
       dispatch(setList(result));
     }
