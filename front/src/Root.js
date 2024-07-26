@@ -27,11 +27,11 @@ const location = useLocation();
   return (
     <>
     { modalOpen === true && step ===1  
-    ?<MypageModal next={nextStep} close={closeModal} modalState={modalOpen}/>
+    ?<MypageModal next={nextStep} close={closeModal} setModalOepn={setModalOepn}/>
     :null}
 
     {modalOpen ===true && step===2 
-    ?<MyBranchModal pre={preStep} close={closeModal}/>
+    ?<MyBranchModal pre={preStep} close={closeModal} setModalOepn={setModalOepn}/>
     :null}
 
       <Header />

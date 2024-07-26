@@ -3,6 +3,7 @@ import cors from 'cors';
 import path from "path";
 
 import memberRouter from './router/memberRouter.js'
+import historyRouter from './router/historyRouter.js'
 
 const server = express();
 const port = 8080;
@@ -15,6 +16,7 @@ server.use('/uploads', express.static(path.join('uploads')));
 
 
 server.use('/member',memberRouter)
+server.use('/history', historyRouter)
 
 
 server.listen(port, ()=>{

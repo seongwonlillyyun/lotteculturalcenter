@@ -11,7 +11,7 @@ import axios from "axios";
 
 
 //! Mypage 모달! 
-export function MypageModal({next, close}){
+export function MypageModal({next, close, setModalOpen}){
 
     const navigate = useNavigate()
 
@@ -108,7 +108,7 @@ return (
     <p className="mypage_block_subject">장바구니</p>
     <p className="mypage_block_value">0</p>
     </button>
-</div>
+</div> 
 <div className="mypage_block">
     <button type="button" onClick={handleClickHistory} className="mypage_block_btns">
     <img src='/img/mypage/icon-mypage-class-history.png' alt='mypagecoursehistory'
@@ -145,17 +145,18 @@ return (
 
 
 //! 나의 관심지점 변경페이지
-export function MyBranchModal({pre, close}){
+export function MyBranchModal({pre, close, setModalOpen}){
     
-    //todo. toggle 
-    const [isOpen, setIsOpen] = useState({
+const navigate = useNavigate()
+
+const [isOpen, setIsOpen] = useState({
         'seoul' : true,
         'metro' : true,
         'etc' :true
     })
 
 // signup step1의 이벤트 부모에서 처리 부분에 있는 코드와 동일! 
-    const handleToggle =(type) => {
+const handleToggle =(type) => {
         setIsOpen(toggle=>({
             ...toggle, [type]:!toggle[type]
         }))  
@@ -218,14 +219,16 @@ const handleSubmit =()=>{
         method :'post',
         url :url, 
         data : { user_id :memberInfo.user_id,
-            name : btnData
-        }//  이게맞는지 모르겠어! 
+                name : btnData
+        } 
     })
 .then(result=>{
     if(result.data.cnt ===1)
         // console.log('update result->', result.data);
-        alert('관심지점이 변경되었습니다.')
-    close() // todo.  close 되고 다시 열었는데 관심지점변경 modal이 열림?!왜구랫??
+    alert('관심지점이 변경되었습니다.')
+    close()
+    setModalOpen(false)
+    navigate('/') 
 })
 .catch(error=>console.log(error))
 }
