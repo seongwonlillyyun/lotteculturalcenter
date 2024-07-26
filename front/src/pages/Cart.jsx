@@ -4,20 +4,19 @@ import { useNavigate, Link } from 'react-router-dom';
 import { getUser } from '../util/localStorage.js';
 import { useSelector, useDispatch} from 'react-redux';
 import { cartListAxios } from '../modules/reduxCartAxios';
-
+import axios from 'axios';
 
 export default function Cart() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userId = getUser().user_id;
+  const userId = getUser() ? getUser().user_id : "test";
 
   const cartList = useSelector(state => state.cart.list); // db리스트
   const [checkedItems, setCheckedItems] = useState(new Array(cartList.length).fill(false) ); // 개별체크
   const [checkPrice, setCheckPrice] = useState(0) // 결제가격
   const [checkNum, setCheckNum] = useState(0) // 결제갯수
   const [isAllChecked, setIsAllChecked] = useState(!checkedItems.every((item)=> item)); // 전체체크
-  const [deleteList, setDeleteList] =useState([]) // 체크삭제
-
+  const [deleteList, setDeleteList] =useState([]) // 삭제할 아이디
 
 
 
@@ -48,28 +47,6 @@ export default function Cart() {
     const deleteId = {id: id}
     setDeleteList([...deleteList, deleteId])
 
-    // const cartDelete = cartList.map((item)=>{
-    //   if(checked){
-  
-  
-    //   }else{
-       
-    //   }
-
-    //   return 0
-    // }
-    //   // deleteFilter = cartList.filter(item => item.course_id !== deleteId.id) // 아이디값 체크
-    // )
-
-    // console.log('deleteList->', deleteList);
-
-    // check가 true일때 deleteList에 아이디 추가
-    // 아이디가 있는지 없는지 filter로 체크
-    // map으로 돌려서 딜리트 기존 id 값이 체크한 아이디 값이 같지 않을때 추가
-    // deleteList를 db로 보내서 db에서 delete 후 리스트
-
-
-
     setCheckedItems((preCheckedItems)=>{
       const updateCheckedItems = [...preCheckedItems]
       updateCheckedItems[index] = !updateCheckedItems[index];
@@ -96,14 +73,34 @@ export default function Cart() {
     })
     
   }
-  // console.log('deleteList->', deleteList);
 
 
+  // 선택삭제
   const handleDelete = () => {
+    const did = deleteList.map((obj)=>(obj.id))
 
-    alert('111')
+      const url = 'http://127.0.0.1:8080/cart/remove'    
+      axios({
+        method: 'post',
+        url : url,
+        data: did
+      })
+      .then(dispatch(cartListAxios(userId)))
+      .catch(error=> console.log(error))
+
+     
+
+
+    // 삭제하고 남은 리스트 출력하기
+    // let deleteFilter = null
+    // deleteFilter = cartList.filter(item => item.course_id !== did.id);
+    // setDeleteCartList(deleteFilter)
+  
+  
   }
 
+
+  // 전체삭제
   const handleAllDelete = () => {
 
     alert('www')
@@ -113,7 +110,7 @@ export default function Cart() {
 
   useEffect(()=>{
     dispatch(cartListAxios({userId}))
-  },[userId])
+  },[userId, cartList])
 
 
 
@@ -168,7 +165,7 @@ export default function Cart() {
             <li className='title'>
               <span className='deco'>{item.status}</span>
               <span className='deco loc'>{item.loc}</span>
-              <Link to={'/'}>
+              <Link to={`/course/${item.course_id}`}>
                 <h2>{item.course_name}</h2>
               </Link>
             </li>
@@ -212,7 +209,9 @@ export default function Cart() {
             </ul>
           </div>
           <div className='basic_btn'>
-            <button type='button' className='btn btn_border medium' onClick={handleMore}>강좌 더보기</button>  
+            <Link to={'/'}>
+              <button type='button' className='btn btn_border medium' onClick={handleMore}>강좌 더보기</button>  
+            </Link>
           </div>
           
         </div>    

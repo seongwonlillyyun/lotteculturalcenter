@@ -13,7 +13,7 @@ import { ReactComponent as IconLogIn } from "./../svg/icon-login.svg";
 import { ReactComponent as IconLogOut } from "./../svg/icon-logout.svg";
 import { ReactComponent as IconMyPage } from "./../svg/icon-mypage.svg";
 import { ReactComponent as IconMyCart } from "./../svg/icon-cart.svg";
-// import { ReactComponent as IconSearch } from "./../svg/icon-search.svg";
+import { ReactComponent as IconSearch } from "./../svg/icon-search.svg";
 import { ReactComponent as IconClose } from "./../svg/icon-close-x.svg"; 
 
 // gnb
@@ -36,12 +36,12 @@ export default function Header() {
   const preStep = () => {setStep(step-1)}
   const [modalOpen, setModalOepn] = useState(false)
   const dispatch = useDispatch();
-  const userInfo = getUser();
+  // const userInfo = getUser();
   const count = useSelector(state => state.cart.count);
 
   // 카트카운트
-  useEffect(()=>{  
-    const userId = userInfo.user_id;
+  useEffect(()=>{ 
+    const userId = getUser() ? getUser().user_id : "test";
     dispatch(getCount(userId));
   },[])
 

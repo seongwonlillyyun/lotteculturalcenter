@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
  const initialState = {
     list : [],
     count : 0,
-    currentPos : 'cart'
+    currentPos : 'cart',
+    
  };
 
 

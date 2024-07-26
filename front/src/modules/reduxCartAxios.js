@@ -28,15 +28,15 @@ export function getCount(userId){
 }
 
 // 카트 추가
-export function cartItemAdd(id, userId){
-  const url =`http://127.0.0.1:8080/cart/add`;
-  const data = {
-    id : id, userId: userId
-  }
-  console.log('data->', data);
-  return async(dispatch) => {
-    const cnt = await axiosPost(url, data);
-    dispatch(setCartItem(cnt));
+// export function cartItemAdd(id, userId){
+//   const url =`http://127.0.0.1:8080/cart/add`;
+//   const data = {
+//     id : id, userId: userId
+//   }
+//   console.log('data->', data);
+//   return async(dispatch) => {
+//     const cnt = await axiosPost(url, data);
+//     dispatch(setCartItem(cnt));
     
-  }
-}
+//   }
+// }

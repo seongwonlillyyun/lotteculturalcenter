@@ -13,7 +13,6 @@ export const getCart = async(req, res) => {
 // 카운트
 export const getCount = async(req, res) => {
   const {userId} = req.body;
-  console.log('userId',userId);
   const result = await repository.getCount(userId);
   res.json(result);
   res.end();
@@ -22,12 +21,17 @@ export const getCount = async(req, res) => {
 // 카트 추가
 export const insert = async(req, res) => {
   const items = req.body;
-  console.log('items->', items);
   const result = await repository.insert(items);
+  console.log('controller', result);
   res.json(result);
   res.end();
 }
 
-
-
+// 카트 삭제
+// export const remove = async(req, res) => {
+//   const cdelete = req.body;
+//   const result = await repository.remove(cdelete);
+//   res.json(result);
+//   res.end();
+// }
 

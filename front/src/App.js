@@ -70,7 +70,7 @@ export default function App() {
     element: <Root />,
     children : [
       {path : "/", element : <Main/>},
-      {path : "/course/:id", element : <CourseDetail/> },
+      {path : "/course/:id", element : <CourseDetail />},
       {path : "/location", element : <Location/> },
       {path : "/board/qna", element : <QnA/>},
       {path : "/board/personal", element : <PersonalQnA/>},

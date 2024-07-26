@@ -43,11 +43,14 @@ export default function SearchByTopic({addCartCount}) {
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
+  
   //장바구니 추가
   const handleAddCart = (id) => {
-    const userInfo = getUser();
-    if(userInfo !== null){
-      const userId = userInfo.user_id;
+    // const userInfo = getUser();
+    const userId = getUser() ? getUser().user_id : "test";
+    
+    if(userId !== null){
+      // const userId = userInfo.user_id;
       dispatch(cartItemAdd(id, userId));
       navigate('/cart');
     }else {

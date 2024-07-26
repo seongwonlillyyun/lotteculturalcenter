@@ -55,8 +55,31 @@ export const insert = async(items) => {
         `
       const [result] = await db
                             .execute(sql, [items.id, items.userId])
-              result_rows = result.affectedRows;
+                            
+                            result_rows = result.affectedRows;
     }
 
     return {cnt : result_rows};
 }
+
+// 카트 삭제
+// export const remove = async(cdelete) => {
+//   console.log('cdelete',cdelete);
+
+//   let sql = `
+//     delete from cart where course_id = ? 
+//   `
+//   for (let i = 1; i < cdelete.length; i++) {
+//    sql = sql + 'or course_id = ? '
+    
+//   }
+//   return db
+//           .execute(sql, cdelete)
+// }
+ 
+
+
+
+
+
+
