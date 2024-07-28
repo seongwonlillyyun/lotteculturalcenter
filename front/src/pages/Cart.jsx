@@ -9,15 +9,16 @@ import axios from 'axios';
 export default function Cart() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userId = getUser() ? getUser().user_id : "test";
+  const userInfo = getUser();
+  const userId = userInfo && userInfo.user_id;
+  // const userId = getUser() ? getUser().user_id : "test";
 
   const cartList = useSelector(state => state.cart.list); // db리스트
   const [checkedItems, setCheckedItems] = useState(new Array(cartList.length).fill(false) ); // 개별체크
   const [checkPrice, setCheckPrice] = useState(0) // 결제가격
   const [checkNum, setCheckNum] = useState(0) // 결제갯수
   const [isAllChecked, setIsAllChecked] = useState(!checkedItems.every((item)=> item)); // 전체체크
-  const [deleteList, setDeleteList] =useState([]) // 삭제할 아이디
-
+  const [deleteList, setDeleteList] =useState([]) // 삭제 체크여부 id
 
 
   const handleMore = () => {
@@ -43,10 +44,6 @@ export default function Cart() {
 
   // 개별 체크박스
   const handleCheck = (id, index, checked) => {
-    // 선택삭제
-    const deleteId = {id: id}
-    setDeleteList([...deleteList, deleteId])
-
     setCheckedItems((preCheckedItems)=>{
       const updateCheckedItems = [...preCheckedItems]
       updateCheckedItems[index] = !updateCheckedItems[index];
@@ -69,34 +66,36 @@ export default function Cart() {
         setCheckNum(checkNum-1)
       }
 
+
       return updateCheckedItems;
     })
-    
-  }
+
+    // 선택삭제
+    const deleteId = {id: id}
+    if(checked){
+      setDeleteList([...deleteList, deleteId])
+    }else{
+      let idCheckFilter = deleteList.filter(item => item.id !== id)
+      setDeleteList(idCheckFilter)
+    }
+
+ }
 
 
   // 선택삭제
   const handleDelete = () => {
-    const did = deleteList.map((obj)=>(obj.id))
+    const jsonData = deleteList.map(item => item.id)
 
-      const url = 'http://127.0.0.1:8080/cart/remove'    
-      axios({
-        method: 'post',
-        url : url,
-        data: did
-      })
-      .then(dispatch(cartListAxios(userId)))
-      .catch(error=> console.log(error))
+    //서버전송
+    const url = 'http://127.0.0.1:8080/cart/remove'    
+    axios({
+      method: 'post',
+      url : url,
+      data: jsonData
+    })
+    .then(dispatch(cartListAxios(jsonData)))
+    .catch(error=> console.log(error))
 
-     
-
-
-    // 삭제하고 남은 리스트 출력하기
-    // let deleteFilter = null
-    // deleteFilter = cartList.filter(item => item.course_id !== did.id);
-    // setDeleteCartList(deleteFilter)
-  
-  
   }
 
 
@@ -112,11 +111,13 @@ export default function Cart() {
     dispatch(cartListAxios({userId}))
   },[userId, cartList])
 
-
-
   return(
-
-      <div className='cart type'>
+    <>
+      {
+        userInfo === null ? (
+          alert('로그인 후 사용이 가능합니다.')
+        ) : (
+          <div className='cart type'>
         <div className="sub_visual">
           <h2 className="heading">장바구니</h2>
           <p className='heading_sub'>장바구니에 담긴 강좌는 최대 30일까지 보관 됩니다.</p>
@@ -137,7 +138,11 @@ export default function Cart() {
               <label htmlFor='all' >전체선택</label>
             
             </div>
-            <button type='button' className="delete_btn" onClick={handleDelete}><span>선택삭제</span></button>
+            <button type='button'
+                    className="delete_btn" 
+                    onClick={handleDelete}>
+                    <span>선택삭제</span>
+            </button>
           </div>
 
     {/* 장바구니 리스트 시작 */}
@@ -221,6 +226,9 @@ export default function Cart() {
         
       </div>
 
-    
+        ) 
+      }
+      
+      </>
   );
 }

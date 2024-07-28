@@ -41,7 +41,8 @@ export default function Header() {
 
   // 카트카운트
   useEffect(()=>{ 
-    const userId = getUser() ? getUser().user_id : "test";
+    const userId = userInfo.user_id;
+    // const userId = getUser() ? getUser().user_id : "test";
     dispatch(getCount(userId));
   },[])
 
@@ -93,7 +94,7 @@ export default function Header() {
                     :null
                   }
                   <button type="button" onClick={openModal}><IconMyPage/></button>
-                  <Link className="mycart" to="/cart"><IconMyCart/><span className="cart_num">{count}</span></Link>
+                  <Link className="mycart" to="/"><IconMyCart/><span className="cart_num">{count}</span></Link>
                   <Link to="/login"><IconLogOut /></Link>
                 </>
                   : <Link to="/login"><IconLogIn /></Link>

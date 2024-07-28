@@ -22,16 +22,16 @@ export const getCount = async(req, res) => {
 export const insert = async(req, res) => {
   const items = req.body;
   const result = await repository.insert(items);
-  console.log('controller', result);
   res.json(result);
   res.end();
 }
 
 // 카트 삭제
-// export const remove = async(req, res) => {
-//   const cdelete = req.body;
-//   const result = await repository.remove(cdelete);
-//   res.json(result);
-//   res.end();
-// }
+export const remove = async(req, res) => {
+  const cdelete = req.body;
+  const result = await repository.remove(cdelete);
+  // console.log('controller-result', result);
+  res.json(result);
+  res.end();
+}
 

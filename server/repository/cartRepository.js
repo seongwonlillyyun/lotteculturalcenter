@@ -63,19 +63,14 @@ export const insert = async(items) => {
 }
 
 // 카트 삭제
-// export const remove = async(cdelete) => {
-//   console.log('cdelete',cdelete);
-
-//   let sql = `
-//     delete from cart where course_id = ? 
-//   `
-//   for (let i = 1; i < cdelete.length; i++) {
-//    sql = sql + 'or course_id = ? '
-    
-//   }
-//   return db
-//           .execute(sql, cdelete)
-// }
+export const remove = async(cdelete) => {
+  const deletArray = cdelete.map(() => '?').join(', ');
+  let sql = `
+    delete from cart where course_id in (${deletArray}) 
+  `
+  return db
+          .execute(sql, cdelete)
+}
  
 
 
