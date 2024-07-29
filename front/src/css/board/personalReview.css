@@ -87,4 +87,58 @@
 .personalReview .data_section textarea {
   resize: none;
   height: 150px;
+  font-size: 15px;
+  line-height: 1.73em;
+  color: #333;
+}
+
+.personalReview .start_box {
+  display: flex;
+  justify-content: center;
+}
+
+.personalReview .start_box .star {
+  width: 40px;
+  height: 40px;
+  background: url(../../svg/icon-star-large-on.svg) no-repeat center center / contain;
+  cursor: pointer;
+}
+
+.personalReview .start_box .star.blank {
+  background-image: url(../../svg/icon-star-large-off.svg);
+}
+
+.personalReview .popup .review_list {
+  margin-bottom: 40px;
+}
+
+.personalReview .popup .review_list .item .txt_box p {
+  font-size: 13px;
+  line-height: 1.46em;
+  letter-spacing: -0.025em;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.personalReview .popup .review_list .item .txt_box p span:not(:last-child) {
+  padding-right: 8px;
+  margin-right: 8px;
+  position: relative;
+}
+
+.personalReview .popup .review_list .item .txt_box p span:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 10px;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: #dfd9d5;
+}
+
+.personalReview .review_list .star span {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url(../../svg/icon-star.svg) no-repeat center center / contain;
 }
