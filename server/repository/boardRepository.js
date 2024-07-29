@@ -283,11 +283,20 @@ export const updatePersonal = async ({bid, answer}) => {
 export const getMyReview = async (data) => {
   const sql = `
     select
-      *
-    from payment
+      pay.orderId,
+      course_img,
+      course_name,
+      name,
+      teacher_name,
+      concat(course_start, " ~ ", course_end) course_date,
+      isReviewed,
+      star,
+      rid
+    from payment pay
+      inner join location l on l.loc_id = pay.loc_id
+      left outer join review on review.orderId = pay.orderId
     where user_id = ?
       and status = "결제완료"
-      and isReviewed = false
   `
 
   const params = [
