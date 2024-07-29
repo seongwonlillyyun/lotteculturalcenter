@@ -9,7 +9,7 @@ import { getCategoryList, getLocationList } from "./modules/reduxMenuAxios";
 import Root from "./Root";
 import SearchByCenter from "./pages/SearchByCenter";
 import SearchByTopic from "./pages/SearchByTopic";
-import Test from "./pages/Test";
+
 import Cart from "./pages/Cart";
 import Order from "./pages/Order";
 
@@ -83,10 +83,7 @@ export default function App() {
       {path : "/login", element : <Login/> },
       {path : "/join" , element : <Join/> },
       {path : '/center/:id', element:<SearchByCenter/>},
-      {path : '/center/:id', element:<SearchByCenter/>},
-      {path : '/center/:id', element:<SearchByCenter/>},
       {path : '/topic/:id', element:<SearchByTopic/>},
-      {path : '/test', element:<Test/>},
       {path : "/cart", element : <Cart/> },
       {path : "/order", element : <Order/> },
       {path : "/changememberinfo" , element : <ChangeMemberInfo/> },

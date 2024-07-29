@@ -5,5 +5,6 @@ const router = express.Router();
 router
    .get('/:id', controller.getCenter)
    .post('/:id/course', controller.getCoursesByCenter)
+   .post('/:id/count', controller.getCoursesByCenter)
 
    export default router

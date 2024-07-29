@@ -11,8 +11,9 @@ export const getCenter = async(req,res)=>{
 export const getCoursesByCenter = async(req,res) =>{
     const params = req.body
     const courses = await repository.getCoursesbyCenter(params);
+    const count = await repository.getCountByCenter(params);
     console.log('params=>', params)
     console.log('result=>', courses)
-    res.json(courses)
+    res.json({courses, count})
 }
 

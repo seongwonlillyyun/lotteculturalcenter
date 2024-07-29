@@ -4,6 +4,9 @@
     background-color: #F7F2EF;
     height: 180px;
 }
+.bycenter_title *{
+    vertical-align: middle;
+}
 .bycenter_title{
     padding-top: 3.5rem;
     text-align: center;
@@ -56,7 +59,6 @@
     margin-top: -1rem;
 }
 .small_category_items_topic{
-    margin-top: 40px;
     display: flex;
     justify-content: left;
     border-bottom: 1px solid rgb(227, 225, 222);
@@ -78,12 +80,24 @@
     cursor: pointer;
     color: black;
 }
-.search_part{
+.topic_search_part{
+    position: relative;
+    top: 23px;
+    height: 68px;
+}
+.topic_coursecount{
+    position: absolute;
+    font-size: .9rem;
+    color: rgba(0, 0, 0, .6);
+}
+.countnumber{
+    color:black;
+}
+.topic_search_part_btns{
     display: flex;
     justify-content: right;
     font-size: .9rem;
-    margin-top: 1rem;
-    /* border: 1px solid blue; */
+    align-items: center;
 }
 .search_part_detail{
     margin-right: 1.5rem;

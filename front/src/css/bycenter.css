@@ -9,6 +9,11 @@
     text-align: center;
     font-size: 2rem;
 }
+.bycenter_title *{
+    vertical-align: middle;
+}
+.center_arrow{
+    font-size: 2rem;}
 
 .dropdown_list_center{
     position:relative;
@@ -126,11 +131,26 @@
     cursor: pointer;
     color: black;
 }
-.search_part{
+.center_search_part{
+    position: relative;
+    height: 68px;
+}
+.center_coursecount{
+    position: absolute;
+    top: 23px;
+    font-size: .9rem;
+    color: rgba(0, 0, 0, .6);
+}
+.center_search_part_btns{
+    /* border: 1px solid blue; */
+    height: 68px;
     display: flex;
     justify-content: right;
     font-size: .9rem;
-    margin-top: 1rem;
+    align-items: center;
+}
+.countnumber{
+    color:black;
 }
 .search_part_detail{
     margin-right: 1.5rem;

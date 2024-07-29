@@ -295,6 +295,7 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
 export function CourseItem({ item }) {
   return (
     <div className="center_course_item">
+      <Link to={`/course/${item.course_id}`}>
       <div className="center_course_img_box">
         <img
           src={`//localhost:8080/${item.course_img}`}
@@ -315,6 +316,7 @@ export function CourseItem({ item }) {
           {item.num_of_course}회
         </p>
       </div>
+      </Link>
       <div className="center_course_item_price">
         <p>{item.price}원</p>
         <button className="center_course_item_cart">
