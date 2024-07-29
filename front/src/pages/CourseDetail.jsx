@@ -49,7 +49,12 @@ export default function CourseDetail() {
   }
 
   const orderHandler = () => {
-    navigate("/order", {state : {cartItemList : [id]}})
+    if(user_id){
+      navigate("/order", {state : {cartItemList : [id]}})
+    } else {
+      window.confirm("로그인이 필요한 서비스 입니다.") &&
+      navigate("/login");
+    }
   }
 
   return data && (
