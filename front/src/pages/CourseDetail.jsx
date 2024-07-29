@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios"
 
 // svg
@@ -7,10 +7,15 @@ import {ReactComponent as IconCart } from "../svg/icon-cart.svg";
 
 // css
 import "../css/courseDetail.css";
+import { getUser } from './../util/localStorage';
+
+// userID
+const user_id = getUser() ? getUser().user_id : "";
 
 export default function CourseDetail() {
   const {id} = useParams();
   const [data, setData] = useState();
+  const navigate = useNavigate();
 
   useEffect(()=>{
     const url = `//localhost:8080/course/${id}`;
@@ -20,6 +25,28 @@ export default function CourseDetail() {
         setData(result.data)
       })
   },[id])
+
+  const cartAddHandler = () => {
+    const formData = {
+      course_id : id,
+      user_id,
+    }
+
+    const url = "//localhost:8080/cart/add"
+
+    if(user_id){
+      axios.post(url, formData)
+        .then(result => {
+          if(result.data.cnt === 1){
+            window.confirm("장바구니에 담겼습니다. 확인하시겠습니까?") &&
+            navigate("/cart");  
+          }
+        })
+    } else {
+      window.confirm("로그인이 필요한 서비스 입니다.") &&
+      navigate("/login");
+    }
+  }
 
   return data && (
     <div className="course_detail basic_page">
@@ -128,7 +155,7 @@ export default function CourseDetail() {
               </div>
             </div>
             <div className="course_btns">
-              <Link to="/cart" className="cart_btn"><IconCart /></Link>
+              <button type="button" className="cart_btn" onClick={cartAddHandler}><IconCart /></button>
               <Link to="/order" className="purchase_btn">수강신청</Link>
             </div>
           </div>
