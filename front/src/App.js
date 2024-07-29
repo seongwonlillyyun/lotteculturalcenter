@@ -16,7 +16,6 @@ export default function App() {
     children : [
       {path:'/center/:id', element:<SearchByCenter/>},
       {path:'/topic/:id', element:<SearchByTopic/>},
-      {path:'/test', element:<Test/>},
     ]
   }])
 
