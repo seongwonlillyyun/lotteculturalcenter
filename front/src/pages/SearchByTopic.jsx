@@ -38,6 +38,7 @@ export default function SearchByTopic() {
   const [test, setTest] = useState("");
   const [searchText, setSearchText] = useState("%%");
   const navigate = useNavigate();
+  const [courseCount, setCourseCount] = useState(0);
 
   const searchDetail = (value, selected) => {
     setDetail(value);
@@ -52,7 +53,6 @@ export default function SearchByTopic() {
       center: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     });
     setCurrentPage(1);
-    /* setSmallCategory(id); */
     setSearchText("%%");
     axios({
       method: "get",
@@ -82,7 +82,7 @@ export default function SearchByTopic() {
         sort: sort,
       },
     })
-      .then((response) => setShowCourse([response.data]))
+      .then((response) => {setShowCourse([response.data.courses]);setCourseCount({ ...response.data.count}[0].count)})
       .catch((error) => console.log(error));
   }, [id, detail, searchText, endIndex, sort]);
 
@@ -195,6 +195,7 @@ export default function SearchByTopic() {
   };
   let cntarr = showCourse[0];
   console.log( 'id=>', id)
+  console.log('cntarr->', cntarr)
   return (
     <>
       <div className="bycenter_title_part">
@@ -204,7 +205,7 @@ export default function SearchByTopic() {
             setView(!view);
           }}
         >
-          {topic.middlename}
+          <span>{topic.middlename}</span>
           {""}
           {view ? (
             <FontAwesomeIcon icon={faAngleUp} className="title_arrow" />
@@ -218,7 +219,7 @@ export default function SearchByTopic() {
           )}
         </p>
       </div>
-      <div className="bycenter_list min_inner">
+      <div className="bycenter_list min_inner narrow_page">
         <ul className="small_category_items_topic">
           {category[cindex - 1].list.map((item, i) => (
             <li
@@ -245,8 +246,11 @@ export default function SearchByTopic() {
           ))}
         </ul>
 
-        <div className="search_part">
-          <div className="search_part_btns">
+        <div className="topic_search_part">
+            <p className="topic_coursecount">
+              <span className="countnumber">{courseCount}개</span>의 강좌
+            </p>
+          <div className="topic_search_part_btns">
             <button className="search_part_detail" onClick={openModal}>
               <FontAwesomeIcon icon={faMagnifyingGlass} />
               <span style={{ marginLeft: ".4rem" }}>상세검색</span>
@@ -344,6 +348,39 @@ export default function SearchByTopic() {
         ) : null}
 
         <div className="course_list_content">
+          {cntarr && cntarr.length !== 0 ? (
+            <>
+              {showCourse.map((items, index) => (
+                <ul className="center_course_list">
+                  {items.map((item, index) => (
+                    <li key={index}>
+                      <CourseItem item={item} />
+                    </li>
+                  ))}
+                </ul>
+              ))}
+              {courseCount > endIndex && (
+                <div className="nomorecourse_div">
+                  <button
+                    className="morebtn"
+                    type="button"
+                    onClick={() => {
+                      setCurrentPage(currentPage + 1);
+                    }}
+                  >
+                    강좌더보기+
+                  </button>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="nomorecourse_div">
+              <FontAwesomeIcon className="nocourse_icon" icon={faExclamation} />
+              <p className="nocourse_text">진행중인 강좌가 없습니다.</p>
+            </div>
+          )}
+        </div>
+        {/* <div className="course_list_content">
           {showCourse.map((items, index) => (
             <ul className="topic_course_list">
               {items.map((item, index) => (
@@ -365,13 +402,14 @@ export default function SearchByTopic() {
                 강좌더보기+
                 </button>
             </div>
-          ) : (
+          ) : cntarr&&cntarr.length-1 === 0 ?  (null)
+            : (
             <div className="nomorecourse_div">
               <FontAwesomeIcon className="nocourse_icon" icon={faExclamation} />
               <p className="nocourse_text">진행중인 강좌가 없습니다.</p>
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </>
   );
