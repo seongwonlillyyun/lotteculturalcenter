@@ -48,6 +48,10 @@ export default function CourseDetail() {
     }
   }
 
+  const orderHandler = () => {
+    navigate("/order", {state : {cartItemList : [id]}})
+  }
+
   return data && (
     <div className="course_detail basic_page">
       <div className="min_inner flex_wrap">
@@ -156,7 +160,7 @@ export default function CourseDetail() {
             </div>
             <div className="course_btns">
               <button type="button" className="cart_btn" onClick={cartAddHandler}><IconCart /></button>
-              <Link to="/order" className="purchase_btn">수강신청</Link>
+              <button type="button" className="purchase_btn" onClick={orderHandler}>수강신청</button>
             </div>
           </div>
         </div>

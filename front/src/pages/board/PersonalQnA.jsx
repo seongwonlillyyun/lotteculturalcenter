@@ -5,6 +5,7 @@ import axios from "axios";
 
 import { getUser } from './../../util/localStorage';
 import { getPersonalList } from './../../modules/reduxPersonalQnA';
+import LoginError from "../../components/LoginError";
 
 // css
 import "../../css/board/boardCommon.css";
@@ -72,7 +73,7 @@ function BoardUtils({status, setStatus}) {
 function BoardList({status, update}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userId = getUser() ? getUser().user_id : "test_soo";
+  const userId = getUser() ? getUser().user_id : "";
   const list = useSelector(state => state.personal.list);
 
   useEffect(()=>{
@@ -130,7 +131,7 @@ function NoData() {
 
 function PopupWrite({setUpdate}) {
   const location = useSelector(state => state.menu.locationList);
-  const userId = getUser() ? getUser().user_id : "test_soo";
+  const userId = getUser() ? getUser().user_id : "";
   const initData = {
     user_id : userId,
     title : "",

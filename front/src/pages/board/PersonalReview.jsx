@@ -7,7 +7,9 @@ import LoginError from '../../components/LoginError';
 
 // svg
 import {ReactComponent as IconClose} from "../../svg/icon-close-x.svg";
+import {ReactComponent as IconNoData} from "../../svg/icon-no-srch.svg";
 
+// css
 import "../../css/board/personalReview.css"
 
 export default function PersonalReview() {
@@ -54,36 +56,40 @@ export default function PersonalReview() {
           <div className="board_utils">
             <p className="board_count">전체 <b>{list.length}</b>개</p>
           </div>
-          <div className="review_list">
-            <ul>
-            {
-              list.map(v => (
-                <li key={v.orderId} className='item' onClick={v.isReviewed ? () => linkHandler(v.rid) : ()=>popupOpen(v.orderId)}>
-                  <div className="img_box">
-                    <img src={"//localhost:8080/" + v.course_img} alt="" />
-                  </div>
-                  <div className="txt_box">
-                    <span className='tag'>{v.name}</span>
-                    <h3>{v.course_name}</h3>
-                  </div>
-                  <div className="etc_box">
-                    {
-                      v.isReviewed ?
-                      <div className="star">
-                        {
-                          Array.from(new Array(v.star), (_,i) => i).map(v => (
-                            <span></span>
-                          ))
-                        }
-                      </div> :
-                      <button type="button" className='write_btn' onClick={()=>popupOpen(v.orderId)}>후기작성</button>
-                    }
-                  </div>
-                </li>
-              ))
-            }
-            </ul>
-          </div>
+          {
+            list.length > 0 ?
+            <div className="review_list">
+              <ul>
+              {
+                list.map(v => (
+                  <li key={v.orderId} className='item' onClick={v.isReviewed ? () => linkHandler(v.rid) : ()=>popupOpen(v.orderId)}>
+                    <div className="img_box">
+                      <img src={"//localhost:8080/" + v.course_img} alt="" />
+                    </div>
+                    <div className="txt_box">
+                      <span className='tag'>{v.name}</span>
+                      <h3>{v.course_name}</h3>
+                    </div>
+                    <div className="etc_box">
+                      {
+                        v.isReviewed ?
+                        <div className="star">
+                          {
+                            Array.from(new Array(v.star), (_,i) => i).map(v => (
+                              <span></span>
+                            ))
+                          }
+                        </div> :
+                        <button type="button" className='write_btn' onClick={()=>popupOpen(v.orderId)}>후기작성</button>
+                      }
+                    </div>
+                  </li>
+                ))
+              }
+              </ul>
+            </div> :
+            <NoData />
+          }
         </div>
       </div>
       <PopupWrite initData={initData} data={formData} setData={setFormData} target={target}/>
@@ -191,5 +197,14 @@ function PopupWrite ({initData, data, setData, target}) {
         </div>
       </div>
     </form>
+  );
+}
+
+function NoData() {
+  return (
+    <div className="board_nodata">
+      <IconNoData />
+      <h3>수강 후기가 없습니다.</h3>
+    </div>
   );
 }
