@@ -28,10 +28,18 @@ export const insert = async(req, res) => {
 
 // 카트 삭제
 export const remove = async(req, res) => {
-  const cdelete = req.body;
-  const result = await repository.remove(cdelete);
-  // console.log('controller-result', result);
+  const {cartItemList} = req.body;
+  // console.log('cartItemList', cartItemList);
+  const result = await repository.remove(cartItemList);
   res.json(result);
   res.end();
 }
 
+
+// 카트 전체삭제
+export const removeAll = async(req, res) => {
+  const cdelete = req.body;
+  const result = await repository.removeAll(cdelete);
+  res.json(result);
+  res.end();
+}

@@ -63,16 +63,31 @@ export const insert = async(items) => {
 }
 
 // 카트 삭제
-export const remove = async(cdelete) => {
-  const deletArray = cdelete.map(() => '?').join(', ');
+export const remove = async(cartItemList) => {
+  // console.log('cartItemList repository->', cartItemList);
+  let sql = `delete from cart where course_id in ( `
+   cartItemList.map((item, index) => {
+    (cartItemList.length-1 !== index) ? 
+      sql += item.id + ',' : sql += item.id
+   })
+   sql += ')';
+  //  console.log('sql->', sql);
+  //   let sql = `
+  //   delete from cart where course_id in (${deleteArray}) 
+  // `
+  return db
+          .execute(sql)
+}
+ 
+// 카트 전체삭제
+export const removeAll = async(cdelete) => {
   let sql = `
-    delete from cart where course_id in (${deletArray}) 
+    delete from cart
   `
+  // delete from cart where user_id = ?
   return db
           .execute(sql, cdelete)
 }
- 
-
 
 
 

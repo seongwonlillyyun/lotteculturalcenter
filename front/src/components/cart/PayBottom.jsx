@@ -2,27 +2,27 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector} from 'react-redux';
 
-export default function PayBottom({cname, next, stepOrder,checkPrice, checkNum, checkedItems}) {
+export default function PayBottom({cname, next, stepOrder,checkPrice, checkNum, cartItemList,
+    isChecked, setIsChecked}) {
   const navigate = useNavigate();
   const currentPos = useSelector(state => state.cart.currentPos);
-  const [isChecked, setIsChecked] = useState(false); // 결제페이지 체크박스
+  const [allIsChecked, setAllIsChecked] = useState(false); // 결제 체크박스
 
 
 
-
-  // 장바구니 다음버튼
+  // 장바구니 결제버튼
   const handleNext = () => {
-    if(checkedItems.length === 0){
+    if(cartItemList.length === 0){
       alert('1개 이상 강좌를 선택해주세요')
     }else{
-      navigate('/order')
+      navigate('/order', { state: {cartItemList} })
     }
   }
 
-
   // 결제 체크여부
-  const handleChange = (isChecked) => {
-    if(isChecked){
+  const handleChange = (checked) => {
+    if(checked){
+      setAllIsChecked(!allIsChecked)
       setIsChecked(true)
     }else{
       setIsChecked(false)
@@ -33,14 +33,29 @@ export default function PayBottom({cname, next, stepOrder,checkPrice, checkNum, 
   const handlePrev = () => {
     navigate('/cart')
   }
+  console.log('isChecked', isChecked);
+  console.log('allIsChecked', allIsChecked);
 
   // 최종 결제버튼
   const handlePay = () => {
-    if(isChecked === true){
+    if(allIsChecked === true && isChecked === true){
       alert('선택한 강좌를 결제하시겠습니까?')
       next(stepOrder);
     }else{
       alert('구매동의에 동의하셔야 결제가 가능합니다. 구매 동의하시겠습니까?')
+      
+      
+      // 서버전송
+      // const point = parseInt(inputPoint)
+  
+      // const url = 'http://127.0.0.1:8080/order/pointset'    
+      // axios({
+      //   method: 'post',
+      //   url : url,
+      //   data: {point : point}
+      // })
+      // .then(res => res.data)
+      // .catch(error=> console.log(error))
     }
   }
 
@@ -62,14 +77,14 @@ export default function PayBottom({cname, next, stepOrder,checkPrice, checkNum, 
       (
         <div className='min_inner'>
           <div className='total_price'>
-            <div class="form_checkbox">
+            <div className="form_checkbox">
               <input type="checkbox"
-                    id='cartPay'
-                    name='cartPay'
-                    value='cartPay'
+                    id='orderPay'
+                    name='orderPay'
+                    value='orderPay'
                     onChange={(e)=>handleChange(e.target.checked)}
               />
-              <label htmlFor='cartPay'>위 내용을 모두 확인하였으며, 결제에 동의합니다.</label>
+              <label htmlFor='orderPay'>위 내용을 모두 확인하였으며, 결제에 동의합니다.</label>
             </div>
         </div>  
           <div className='basic_btn'>

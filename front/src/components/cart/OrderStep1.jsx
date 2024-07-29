@@ -5,21 +5,81 @@ import { useNavigate, Link } from 'react-router-dom';
 import { getUser } from '../../util/localStorage.js';
 import { useSelector, useDispatch} from 'react-redux';
 import { cartListAxios } from '../../modules/reduxCartAxios';
+import axios from 'axios';
 
 
-export default function OrderStep1({next, stepOrder}) {
+export default function OrderStep1({next, stepOrder, cartItemList}) {
   const userInfo = getUser();
-  const userId = userInfo && userInfo.user_id;
-  // const userId = getUser() ? getUser().user_id : "test";
+  // const userId = userInfo && userInfo.user_id;
+  const userId = getUser() ? getUser().user_id : "test";
   const cartList = useSelector(state => state.cart.list); // db리스트
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [point, setPoint] = useState({}); // db 포인트 불러오기 {point : 0}
+  const [inputPoint, setInputPoint] = useState(0) // 입력한 포인트
+  const [isChecked, setIsChecked] = useState(false) // 체크박스 동의
+
+  let orderItemList = [];
+  let orderPrice = 0;
+            
+  if(cartItemList.length !== 0 ){
+    cartItemList.map(item => {
+      cartList.filter((cart)=>{ 
+        if(cart.course_id === item.id ){
+          orderItemList = [...orderItemList, cart]
+          orderPrice += cart.price
+        }
+      })  
+    })
+    
+  }// end of if
+  
+  const orderPriceAll = orderPrice.toLocaleString();
+  // 총 결제금액
+  let orderPricePay = orderPrice - inputPoint;
+  const orderPriceAllPay = orderPricePay.toLocaleString();
+
+    
+    useEffect(()=>{
+      // 포인트 db데이터 받기
+      const url = 'http://127.0.0.1:8080/order/pointget'    
+      axios({
+        method: 'post',
+        url : url,
+        // data: point
+      })
+      .then(res => {
+        setPoint(res.data)
+        }
+      )
+      .catch(error=> console.log(error))
+    
+    },[])
+
+    // 포인트 입력
+    const handlePoint = (e) => {
+      setInputPoint(e.target.value)
+    }
+
+    // 포인트 사용
+    const handleClick = () => {
+      alert('사용한 포인트만큼 차감됩니다.')
+    }
+
+    // 체크박스 동의
+    const handleChange = (checked) => {
+      if(checked){
+        setIsChecked(!isChecked)
+      }
+    }
+    // console.log('isChecked', isChecked);
+   
 
     useEffect(()=>{
       dispatch(cartListAxios({userId}))
-    },[])
-
-
+    },[userId])
+  
+  
 
   return(
     <>
@@ -35,15 +95,8 @@ export default function OrderStep1({next, stepOrder}) {
             <Tab stepOrder={stepOrder} />  
             <h2 className='htitle'>수강자 정보</h2>
             
-            {/* 장바구니 리스트 시작 */}
-            {
-            cartList.length === 0 ? (
-              <div className='cart_bin'>
-                <span className='icon'></span>
-                <h3>장바구니가 비었습니다.</h3>
-              </div>
-            ): (
-            cartList && cartList.map((item, index) => (
+            {/* 리스트 시작 */}
+            { orderItemList && orderItemList.map((item, index) => (
               <div className='cart_list' key={item.course_id}>
               <ul className='cart_list_box'>
                 <li className='title'>
@@ -64,30 +117,30 @@ export default function OrderStep1({next, stepOrder}) {
                   </dl>
                   <dl>  
                     <dt>강좌료</dt>
-                    <dd>{item.price}</dd>
+                    <dd>{item.allprice}</dd>
                   </dl>
                   <dl className='total'>  
                     <dt>총금액</dt>
-                    <dd><span className='price'>{item.price}</span>원</dd>
+                    <dd><span className='price'>{item.allprice}</span>원</dd>
                   </dl>
                 </li>
               </ul>
               
-            </div>
+             </div>
             
-            ))
-          )
-        }
-        {/* 장바구니 리스트 끝 */}
+              ))
+            }
+            {/* 리스트 끝 */}
 
             <div className='mid-line'></div>
 
             <h2 className='htitle'>할인혜택</h2>
             <div className='order_line'>
-                <h3>L.POINT<span>보유 :<span className='num'>47</span>점</span></h3>
-                <label htmlFor=''></label>
-                <input type='text' id='' name='' placeholder='0점' />
-                <button type='submit' className='submit_btn' >사용</button>
+                <h3>L.POINT<span>보유 :<span className='num'>{point.point}</span>점 </span></h3>
+                <label htmlFor='point'></label>
+                <input type='number' id='point' name='point' placeholder='0점' onChange={handlePoint} />
+                <button type='submit' className='submit_btn' onClick={handleClick} >사용</button>
+                {/* 사용버튼 누르면 할인금액에 반영됨, 사용버튼 또 누르면 취소버튼으로 바뀌고 0으로 변경됨 */}
                 <p>포인트 사용은 10점 단위로 사용 가능합니다.</p>
             </div>
 
@@ -96,7 +149,7 @@ export default function OrderStep1({next, stepOrder}) {
               <ul className='all_pay'>
                 <li>
                     <h4>강좌료 합계</h4>
-                    <span><span className=''>45000</span>원</span>
+                    <span><span className=''>{orderPriceAll}</span>원</span>
                     <p>* 재료비 또는 대여료 옵션 금액을 제외한 원 강좌료 금액이 표시 됩니다.</p>
                 </li>
                 <li className='cir'>
@@ -104,15 +157,15 @@ export default function OrderStep1({next, stepOrder}) {
                 </li>
                 <li>
                     <h4>할인금액 합계</h4>
-                    <span className='red'>(-)<span className=''> 1000</span> 원</span>
-                    <p>* 강좌료에서 할인받은 할인금액이 표시 됩니다.</p>
+                    <span className='red'>(-)<span className=''> {inputPoint}</span> 원</span>
+                    <p>* 포인트 금액이 차감됩니다.</p>
                 </li>
                 <li className='cir'>
                   <span className='plus'></span>
                 </li>
                 <li>
                     <h4 className='bold'>총 결제금액</h4>
-                    <span><span className='num'>45000</span>원</span>
+                    <span><span className='num'>{orderPriceAllPay}</span>원</span>
                 </li>
               </ul>
             </div>
@@ -151,18 +204,19 @@ export default function OrderStep1({next, stepOrder}) {
             <div className='order_line check'>
               <div className="form_checkbox">
                 <input type='checkbox' 
-                      id='a'
-                      name='a'
-                      value='a' 
-                      //  checked={isChecked}
+                      id='orderCheck'
+                      name='orderCheck'
+                      value='orderCheck' 
+                      onChange={(e)=>handleChange(e.target.value)}
+                      checked={isChecked}
                 />
-                <label>주문내역 확인 동의</label>
-                <button type='button'>보기</button>
-                </div>
+                <label htmlFor='orderCheck'>주문내역 확인 동의</label>
+              </div>
             </div>
           </div>
           {/* 하단고정 */}
-          <PayBottom next={next} cname={'order'} stepOrder={stepOrder} />
+          <PayBottom next={next} cname={'order'} stepOrder={stepOrder} isChecked={isChecked} 
+            setIsChecked={setIsChecked} />
         </div>
         )
       }

@@ -10,15 +10,15 @@ export default function Cart() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = getUser();
-  const userId = userInfo && userInfo.user_id;
-  // const userId = getUser() ? getUser().user_id : "test";
+  // const userId = userInfo && userInfo.user_id;
+  const userId = getUser() ? getUser().user_id : "test";
 
   const cartList = useSelector(state => state.cart.list); // db리스트
   const [checkedItems, setCheckedItems] = useState(new Array(cartList.length).fill(false) ); // 개별체크
   const [checkPrice, setCheckPrice] = useState(0) // 결제가격
   const [checkNum, setCheckNum] = useState(0) // 결제갯수
   const [isAllChecked, setIsAllChecked] = useState(!checkedItems.every((item)=> item)); // 전체체크
-  const [deleteList, setDeleteList] =useState([]) // 삭제 체크여부 id
+  const [cartItemList, setCartItemList] = useState([]) // 체크여부 id
 
 
   const handleMore = () => {
@@ -33,13 +33,23 @@ export default function Cart() {
     // 총가격
     let totalPrice = 0;
     if(!isAllChecked) cartList.map((cart)=> totalPrice += cart.price)
-    
+  
     totalPrice = totalPrice.toLocaleString('ko-KR');
     setCheckPrice(totalPrice);
+
     // 총갯수
     if(!isAllChecked) setCheckNum(cartList.length)
       else setCheckNum(0)
-     
+
+    // 전체삭제
+    if(!isAllChecked) {
+      let cartId = cartList.map(item=> item.course_id) 
+      let cartIdObj = cartId.map(id=> ({id})) 
+      setCartItemList(cartIdObj)
+    }else{
+      setCartItemList([])
+    }
+
   }
 
   // 개별 체크박스
@@ -66,50 +76,60 @@ export default function Cart() {
         setCheckNum(checkNum-1)
       }
 
-
       return updateCheckedItems;
     })
 
-    // 선택삭제
-    const deleteId = {id: id}
+    // 체크아이템 선택
+    const cartItemId = {id:id}
     if(checked){
-      setDeleteList([...deleteList, deleteId])
+      setCartItemList([...cartItemList, cartItemId])
     }else{
-      let idCheckFilter = deleteList.filter(item => item.id !== id)
-      setDeleteList(idCheckFilter)
+      let idCheckFilter = cartItemList.filter(item => item.id !== id)
+      setCartItemList(idCheckFilter)
     }
 
  }
 
-
   // 선택삭제
   const handleDelete = () => {
-    const jsonData = deleteList.map(item => item.id)
+    alert('정말 삭제하시겠습니까?')
 
     //서버전송
     const url = 'http://127.0.0.1:8080/cart/remove'    
     axios({
       method: 'post',
       url : url,
-      data: jsonData
+      data: {cartItemList: cartItemList}
     })
-    .then(dispatch(cartListAxios(jsonData)))
+    .then(dispatch(cartListAxios(cartItemList)))
     .catch(error=> console.log(error))
 
   }
 
+  // 장바구니 비우기
+  const handleAllDelete = () => {   
+    //서버전송
+    const url = 'http://127.0.0.1:8080/cart/removeall'    
+    axios({
+      method: 'post',
+      url : url,
+      data: cartList
+    })
+    .then(dispatch(cartListAxios(cartList)))
+    .catch(error=> console.log(error))
 
-  // 전체삭제
-  const handleAllDelete = () => {
-
-    alert('www')
   }
 
-  
-
   useEffect(()=>{
+    // 장바구니 비었을때 
+    if(cartList.length === 0) {
+      setCheckNum(0)
+      setCheckPrice(0)
+    }
+    
     dispatch(cartListAxios({userId}))
   },[userId, cartList])
+
 
   return(
     <>
@@ -222,7 +242,7 @@ export default function Cart() {
         </div>    
 
         {/* 하단고정 */}
-        <PayBottom cname={'cart'} checkPrice={checkPrice} checkNum={checkNum} checkedItems={checkedItems} />
+        <PayBottom cname={'cart'} checkPrice={checkPrice} checkNum={checkNum} cartItemList={cartItemList} cartList={cartList} />
         
       </div>
 

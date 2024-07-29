@@ -41,8 +41,8 @@ export default function Header() {
 
   // 카트카운트
   useEffect(()=>{ 
-    const userId = userInfo.user_id;
-    // const userId = getUser() ? getUser().user_id : "test";
+    // const userId = userInfo.user_id;
+    const userId = getUser() ? getUser().user_id : "test";
     dispatch(getCount(userId));
   },[])
 
