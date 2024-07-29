@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getUser } from './../../util/localStorage';
 import { useNavigate } from 'react-router-dom';
+import LoginError from '../../components/LoginError';
 
 // svg
 import {ReactComponent as IconClose} from "../../svg/icon-close-x.svg";
@@ -20,7 +21,7 @@ export default function PersonalReview() {
     content : "",
   }
   const [formData, setFormData] = useState(initData);
-  const userId = getUser() ? getUser().user_id : "test_soo";
+  const userId = getUser() ? getUser().user_id : "";
   const data = {
     userId,
   }
@@ -43,7 +44,7 @@ export default function PersonalReview() {
     navigate("/board/review/" + id);
   }
 
-  return (
+  return userId ? (
     <div className='board_page board_review personalReview'>
       <div className="sub_visual">
         <h2 className="heading">나의 수강후기</h2>
@@ -87,6 +88,8 @@ export default function PersonalReview() {
       </div>
       <PopupWrite initData={initData} data={formData} setData={setFormData} target={target}/>
     </div>
+  ) : (
+    <LoginError />
   );
 }
 

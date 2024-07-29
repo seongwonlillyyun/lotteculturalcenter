@@ -1,0 +1,54 @@
+.login_error {
+  background: var(--bg) no-repeat center center / cover;
+}
+
+.login_error .min_inner {
+  min-height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.login_error .center {
+  text-align: center;
+}
+
+.login_error h2 {
+  font-size: 54px;
+  line-height: 1.2em;
+  letter-spacing: -0.075em;
+  font-weight: 200;
+}
+
+.login_error p {
+  margin-top: 40px;
+}
+
+.login_error .btns {
+  margin-top: 80px;
+}
+
+.login_error .btns > * {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-width: 160px;
+  padding: 15px 10px;
+  border-radius: 8px;
+  background-color: #000;
+  font-size: 15px;
+  line-height: 1.6em;
+  letter-spacing: -0.05em;
+  font-weight: 700;
+}
+
+.login_error .btns > * + * {
+  margin-left: 10px;
+}
+
+.login_error .btns .white {
+  background-color: #fff;
+  color: #222;
+}

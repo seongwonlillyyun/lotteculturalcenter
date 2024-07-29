@@ -10,7 +10,7 @@ import "../css/main.css";
 import { getUser } from './../util/localStorage';
 
 export default function Main() {
-  const userId = getUser() ? getUser().user_id : "test";
+  const userId = getUser() ? getUser().user_id : "";
   const [location, setLocation] = useState();
 
   useEffect(()=>{

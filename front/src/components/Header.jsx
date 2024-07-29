@@ -18,13 +18,14 @@ import { gnb } from "./gnb.js";
 // utils
 import { gnbActiveHandler, headerScroll } from "../utils/headerUtils.js";
 import { openPopup, closePopup } from "../utils/popupUtils.js";
+import { getUser, removeUser } from './../util/localStorage';
 
 // css
 import "../css/header.css";
 import "../css/popup.css";
 
 export default function Header() {
-  const isLogin = true;
+  const userId = getUser() ? getUser().user_id : "";
   const [activeDepth, setActiveDepth] = useState("applicate")
   const [prevScrollY, setPrevScrollY] = useState(0);
 
@@ -55,11 +56,11 @@ export default function Header() {
             <Gnb setActiveDepth={setActiveDepth}/>
             <div className="users">
               {
-                isLogin ?
+                userId ?
                 <>
                   <Link className="mypage" to="/"><IconMyPage/></Link>
                   <Link className="mycart" to="/cart"><IconMyCart/><span className="cart_num">0</span></Link>
-                  <Link to="/login"><IconLogOut /></Link>
+                  <button type="button" onClick={removeUser}><IconLogOut /></button>
                 </>
                   : <Link to="/login"><IconLogIn /></Link>
               }
