@@ -14,7 +14,6 @@ import "../../css/board/personalQna.css";
 // svg
 import {ReactComponent as IconNoData} from "../../svg/icon-no-srch.svg";
 import {ReactComponent as IconClose} from "../../svg/icon-close-x.svg";
-import LoginError from './../../components/LoginError';
 
 export default function PersonalQnA() {
   const userId = getUser() ? getUser().user_id : "";
