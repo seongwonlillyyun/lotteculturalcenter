@@ -138,14 +138,14 @@ function NoData() {
 
 function PersonalQnA() {
   const navigate = useNavigate();
-  const userId = getUser() ? getUser().user_id : "test_soo";
+  const userId = getUser() ? getUser().user_id : "";
 
   const linkHandler = () => {
     if(userId){
       navigate("/board/personal")
     } else {
       window.confirm("로그인 후 이용 가능합니다.") &&
-      navigate("/");
+      navigate("/login");
     }
   }
 

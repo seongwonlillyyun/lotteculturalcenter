@@ -13,12 +13,14 @@ import "../../css/board/personalQna.css";
 // svg
 import {ReactComponent as IconNoData} from "../../svg/icon-no-srch.svg";
 import {ReactComponent as IconClose} from "../../svg/icon-close-x.svg";
+import LoginError from './../../components/LoginError';
 
 export default function PersonalQnA() {
+  const userId = getUser() ? getUser().user_id : "";
   const [status, setStatus] = useState("");
   const [update, setUpdate] = useState(true);
 
-  return (
+  return userId ? (
     <>
       <div className="board_page board_personal">
         <div className="sub_visual">
@@ -33,7 +35,7 @@ export default function PersonalQnA() {
         <PopupWrite setUpdate={setUpdate} />
       </div>
     </>
-  );
+  ) : <LoginError />;
 }
 
 function BoardUtils({status, setStatus}) {
