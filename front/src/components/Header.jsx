@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { updateActive } from "../modules/reduxMenuAxios.js";
+import { updateUser } from './../modules/reduxMain';
 
 // svg
 import { ReactComponent as IconLogo } from "./../svg/logo.svg";
@@ -24,9 +25,11 @@ import { getUser, removeUser } from './../util/localStorage';
 import "../css/header.css";
 import "../css/popup.css";
 
-export default function Header() {
-  const userId = getUser() ? getUser().user_id : "";
+export default function Header({setUserUpdate}) {
+  const dispatch = useDispatch();
+  let userId = getUser() ? getUser().user_id : "";
   const [activeDepth, setActiveDepth] = useState("applicate")
+  const userState = useSelector(state => state.main.userState);
   const [prevScrollY, setPrevScrollY] = useState(0);
 
   const scrollHandler = () => {
@@ -42,6 +45,16 @@ export default function Header() {
       window.removeEventListener("mouseover", gnbActiveHandler);
     }
   })
+
+  useEffect(()=>{
+    userId = getUser() ? getUser().userId : "";
+  },[userState])
+
+  const logOutHandler = () => {
+    alert("안전하게 로그아웃 되었습니다.")
+    removeUser()
+    dispatch(updateUser())
+  }
 
   return (
     <>
@@ -60,7 +73,7 @@ export default function Header() {
                 <>
                   <Link className="mypage" to="/"><IconMyPage/></Link>
                   <Link className="mycart" to="/cart"><IconMyCart/><span className="cart_num">0</span></Link>
-                  <button type="button" onClick={removeUser}><IconLogOut /></button>
+                  <button type="button" onClick={logOutHandler}><IconLogOut /></button>
                 </>
                   : <Link to="/login"><IconLogIn /></Link>
               }

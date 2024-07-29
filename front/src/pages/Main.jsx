@@ -2,21 +2,27 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from "swiper/modules"
+import { getUser } from './../util/localStorage';
+import { useSelector } from "react-redux";
 import axios from 'axios';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import "../css/main.css";
-import { getUser } from './../util/localStorage';
 
 export default function Main() {
   const userId = getUser() ? getUser().user_id : "";
+  const userState = useSelector(state => state.main.userState);
   const [location, setLocation] = useState();
 
   useEffect(()=>{
-    axios.post("//localhost:8080/location/favorite", {userId})
-      .then(result => setLocation(result.data.name))
-  },[userId])
+    if(userId){
+      axios.post("//localhost:8080/location/favorite", {userId})
+        .then(result => setLocation(result.data.name))
+    } else {
+      setLocation();
+    }
+  },[userId, userState])
 
   return (
     <div className="main_page narrow_page">

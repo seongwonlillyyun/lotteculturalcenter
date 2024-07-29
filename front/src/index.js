@@ -13,6 +13,7 @@ import menuReducer from './reducers/menuReducer.js';
 import notievtReducer from './reducers/notievtReducer.js';
 import PersonalQnAReducer from "./reducers/personalQnaReducer.js"
 import reviewReducer from './reducers/reviewReducer.js';
+import mainReducer from './reducers/mainReducer.js';
 
 // css
 import "./css/reset.css";
@@ -26,6 +27,7 @@ const store = configureStore({
     menu : menuReducer,
     personal : PersonalQnAReducer,
     review : reviewReducer,
+    main : mainReducer,
   }
 })
 

@@ -28,8 +28,8 @@ export default function CourseDetail() {
 
   const cartAddHandler = () => {
     const formData = {
-      course_id : id,
-      user_id,
+      id : id,
+      userId : user_id,
     }
 
     const url = "//localhost:8080/cart/add"
