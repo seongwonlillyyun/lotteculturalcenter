@@ -12,7 +12,7 @@ left(start_time,5) start_time,
 left(end_time,5) end_time,
 cnumber,
 format(price,0) price, 
-name, user_name, status
+name, user_name, status, isReviewed
 from location lo, payment pa where lo.loc_id = pa.loc_id and user_id=? and status='결제완료'
 `
 return db.execute(sql, [user_id])
@@ -32,7 +32,7 @@ left(start_time,5) start_time,
 left(end_time,5) end_time,
 cnumber,
 format(price,0) price, 
-name, user_name, status
+name, user_name, status, isReviewed
 from location lo, payment pa where lo.loc_id = pa.loc_id and user_id=? and status='결제취소'
 `
 
@@ -54,7 +54,7 @@ left(order_date,10) order_date,
 		left(end_time,5) end_time,
 		cnumber,
 		format(price,0) price,  
-		user_name, status, 
+		user_name, status, isReviewed
         cancel_info, 
         left(cancel_date,10) cancel_date
 from location lo, payment pa where orderId=? and lo.loc_id = pa.loc_id`
@@ -69,7 +69,7 @@ from location lo, payment pa where orderId=? and lo.loc_id = pa.loc_id`
     // console.log('repository : result_rows->', result_rows);
     
     const sql = ` 
-update order set status = '결제취소', cancel_info=?, cancel_date= now() where orderId = ?
+update payment set status = '결제취소', cancel_info=?, cancel_date= now() where orderId = ?
 `
 
     let result_rows = 0
@@ -107,7 +107,6 @@ return db.execute(sql,[searchInfo.user_id])
 
 
   //! 취소내역 조회 검색창~
-
   export const searchCancelHistory = async(searchInfo)=>{
     // console.log('repository-->', searchInfo.course_name);
     // console.log('repository-->', searchInfo.user_id);

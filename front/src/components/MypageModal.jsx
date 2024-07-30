@@ -66,7 +66,7 @@ useEffect(()=>{
     .catch(error=>console.log(error))
 },[])
 
-//! courseInfo => 수강후기수량, 수강내역수량 표시
+//! courseInfo => 수강내역수량 표시
 const[courseInfo, setCourseInfo] =useState([])
 useEffect(()=>{
     const url ='http://127.0.0.1:8080/history/list'
@@ -80,7 +80,17 @@ useEffect(()=>{
 },[])
 
 // console.log('mypage => courseInfo.lenght',courseInfo.length);
-// console.log('mypage => courseInfo',courseInfo);
+console.log('mypage => courseInfo',courseInfo);
+
+//! review count
+const [reviewNo, setReviewNo]= useState('')
+useEffect(()=>{
+    const url ='http://127.0.0.1:8080/history/reviewNo'
+    axios({
+        method :'axios',
+        url : url, 
+    })
+})
 
 
 
