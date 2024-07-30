@@ -1,20 +1,43 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../css/cancelmodal.css'
+import axios from 'axios'
 
 
-export function CancelModal({closeModal, handleChange, selectValue}){
-    
+export function CancelModal({closeModal, handleChange, selectValue, orderId}){
+    // console.log('cancel Modal->', orderId);
+    console.log('cancleModal->', selectValue);
     const navigate = useNavigate()
+
     const handleSubmit = () => {
+
+        if(!selectValue){
+            alert('취소 사유를 선택해주세요!')
+            return
+        }
+    const url = 'http://127.0.0.1:8080/history/cancel'
+
+    axios({
+            method :'post',
+            url : url,
+            data : {orderId : orderId,
+                 cancel_info : selectValue}
+        })
+        .then(result=>{
+            if(result.data.cnt ===1 )
+    
         alert('선택하신 강좌의 결제가 취소되었습니다.')
-        navigate('/courseHistory',{state:  {"title": "취소내역 조회",
-                                                 "value" : "cancel"}})
-    }
+        closeModal()
+        navigate(`/courseHistory/${orderId}`)
+        // navigate('/courseHistory',
+        //     {state: {"title": "취소내역 조회",
+        //             "value" : "cancel"}})
+        })
+        .catch(error=>console.log(error))
+        }
+  
 
-    return(
-        <div className='cancel_modal_out'>
-
+return(<div className='cancel_modal_out'>
 <div className='cancel_modal'>
     <div className='cancel_modal_top'>
         <div className='cancel_modal_head'>
@@ -43,8 +66,8 @@ export function CancelModal({closeModal, handleChange, selectValue}){
         <li>· 1개월 이내 강좌 기준 + 잔여월 수강료 전액 환급</li>
         </ul>
     </div>
-    <div className='cancel_modal_info'>
-        <p className='cancel_modal_info_subject'>결제 취소(환불)에 대한 사유를 선택해 주세요.</p>
+<div className='cancel_modal_info'>
+    <p className='cancel_modal_info_subject'>결제 취소(환불)에 대한 사유를 선택해 주세요.</p>
 
             <select value={selectValue} onChange={handleChange} className='cancel_modal_select'>
                 <option value="" disable hidden>선택</option>
@@ -67,7 +90,7 @@ export function CancelModal({closeModal, handleChange, selectValue}){
             onClick={closeModal}>
         아니오</button>
     <button type='button' className='cancel_modal_btn modal_btn_yes'
-            onClick={handleSubmit}>
+            onClick={handleSubmit} >
         예</button>
     </div>
 </div>
