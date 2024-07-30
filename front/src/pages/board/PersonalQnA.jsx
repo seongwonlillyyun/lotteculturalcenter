@@ -16,7 +16,7 @@ import {ReactComponent as IconNoData} from "../../svg/icon-no-srch.svg";
 import {ReactComponent as IconClose} from "../../svg/icon-close-x.svg";
 
 export default function PersonalQnA() {
-  const userId = getUser() ? getUser().user_id : "";
+  const userId = getUser() ? getUser().user_id : "test_soo";
   const [status, setStatus] = useState("");
   const [update, setUpdate] = useState(true);
 
@@ -72,7 +72,7 @@ function BoardUtils({status, setStatus}) {
 function BoardList({status, update}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userId = getUser() ? getUser().user_id : "";
+  const userId = getUser() ? getUser().user_id : "test_soo";
   const list = useSelector(state => state.personal.list);
 
   useEffect(()=>{
@@ -130,7 +130,7 @@ function NoData() {
 
 function PopupWrite({setUpdate}) {
   const location = useSelector(state => state.menu.locationList);
-  const userId = getUser() ? getUser().user_id : "";
+  const userId = getUser() ? getUser().user_id : "test_soo";
   const initData = {
     user_id : userId,
     title : "",
@@ -138,7 +138,32 @@ function PopupWrite({setUpdate}) {
     loc_id : "",
     content : "",
   }
+  const dataTitle = {
+    title : "제목",
+    type : "문의 유형",
+    loc_id : "지점",
+    content : "문의 내용",
+  }
   const [data, setData] = useState(initData);
+  let errorMsg = "";
+
+  const validation = () => {
+    let result = true;
+
+    Object.keys(data).forEach(key => {
+      if(!data[key].toString().trim()){
+        errorMsg += errorMsg ? `, ${dataTitle[key]}` : dataTitle[key];
+        result = false;
+      }
+    });
+
+    const lastCharCode = errorMsg.charCodeAt(errorMsg.length - 1);
+    const isJongSong = (lastCharCode - 0xAC00) % 28;
+
+    errorMsg += `${isJongSong ? "을" : "를"} 입력해 주세요`;
+
+    return result;
+  }
 
   const changeHandler = (e) => {
     const {name, value} = e.target;
@@ -153,15 +178,20 @@ function PopupWrite({setUpdate}) {
   const submitHandler = (e) => {
     e.preventDefault();
     const url = "//localhost:8080/board/personal/add"
-    axios({method : "post", url, data})
-      .then(result => {
-        if(result.data){
-          alert("정상적으로 등록되었습니다.")
-          popupClose();
-          setUpdate(prev => !prev);
-          setData(initData);
-        }
-      });
+
+    if(validation()){
+      axios({method : "post", url, data})
+        .then(result => {
+          if(result.data){
+            alert("정상적으로 등록되었습니다.")
+            popupClose();
+            setUpdate(prev => !prev);
+            setData(initData);
+          }
+        });
+    } else {
+      alert(errorMsg);
+    }
   }
 
   return(

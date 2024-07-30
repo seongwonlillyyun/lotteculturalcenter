@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { getUser } from './../util/localStorage';
 import axios from "axios"
 
 // svg
@@ -7,12 +8,10 @@ import {ReactComponent as IconCart } from "../svg/icon-cart.svg";
 
 // css
 import "../css/courseDetail.css";
-import { getUser } from './../util/localStorage';
-
-// userID
-const user_id = getUser() ? getUser().user_id : "";
 
 export default function CourseDetail() {
+  // userID
+  const user_id = getUser() ? getUser().user_id : "";
   const {id} = useParams();
   const [data, setData] = useState();
   const navigate = useNavigate();
@@ -50,7 +49,7 @@ export default function CourseDetail() {
 
   const orderHandler = () => {
     if(user_id){
-      navigate("/order", {state : {cartItemList : [id]}})
+      navigate("/order", {state : {cartItemList : [{id : parseInt(id)}]}})
     } else {
       window.confirm("로그인이 필요한 서비스 입니다.") &&
       navigate("/login");

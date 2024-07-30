@@ -30,7 +30,7 @@ export default function ReviewDetail() {
           <div className="stars">
             {
               Array.from(Array(data.star), (_, i)=> i).map(v => (
-                <IconStar />
+                <IconStar key={v} />
               ))
             }
           </div>

@@ -132,7 +132,8 @@ export const getBestCourse = async () => {
       inner join category c on c.cid = cs.cid
       inner join location l on l.loc_id = p.loc_id
     where price < 100000
-    order by price;
+    order by price
+    limit 10;
   `
 
   return db.execute(sql)
@@ -160,7 +161,8 @@ export const getNewCourse = async (data) => {
       inner join category c on c.cid = cs.cid
       inner join location l on l.loc_id = p.loc_id
     ${locationSql}
-    order by p.reg_date;
+    order by p.reg_date
+    limit 10;
   `;
 
   return db.execute(sql)
