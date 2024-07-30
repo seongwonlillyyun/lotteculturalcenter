@@ -8,6 +8,8 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons/faArrowLeft";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../modules/reduxMain";
 
 
 //! Mypage 모달! 
@@ -83,16 +85,14 @@ useEffect(()=>{
 console.log('mypage => courseInfo',courseInfo);
 
 //! review count
-const [reviewNo, setReviewNo]= useState('')
-useEffect(()=>{
-    const url ='http://127.0.0.1:8080/history/reviewNo'
-    axios({
-        method :'axios',
-        url : url, 
-    })
-})
-
-
+// const [reviewNo, setReviewNo]= useState('')
+// useEffect(()=>{
+//     const url ='http://127.0.0.1:8080/history/reviewNo'
+//     axios({
+//         method :'axios',
+//         url : url, 
+//     })
+// })
 
 return (
 <div className="mypage_modal_out">
@@ -194,6 +194,7 @@ const [btnData, setBtnData] =useState() // 초기관심지점용?
 // console.log('memberInfo->', memberInfo);
 const userInfo = getUser();
 // console.log('userInfo->', userInfo);
+const dispatch = useDispatch();
 
 useEffect(()=>{
     const url='http://127.0.0.1:8080/member/mypage'
@@ -258,6 +259,7 @@ const handleSubmit =()=>{
     close()
     setStep(1)
     navigate('/') 
+    dispatch(updateUser());
 })
 .catch(error=>console.log(error))
 }

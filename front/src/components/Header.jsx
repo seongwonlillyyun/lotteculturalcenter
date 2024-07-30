@@ -94,16 +94,6 @@ export default function Header({setUserUpdate}) {
               {
                 userId ?
                 <>
-                  {
-                    modalOpen === true && step ===1  
-                    ?<MypageModal next={nextStep} close={closeModal}/>
-                    :null
-                  }
-                  {
-                    modalOpen ===true && step===2 
-                    ? <MyBranchModal pre={preStep} close={closeModal} setStep={setStep}/>
-                    :null
-                  }
                   <button type="button" onClick={openModal}><IconMyPage/></button>
                   <Link className="mycart" to="/cart"><IconMyCart/><span className="cart_num">{count}</span></Link>
                   <button type="button" onClick={logOutHandler}><IconLogOut /></button>
@@ -116,6 +106,16 @@ export default function Header({setUserUpdate}) {
         <GnbChild activeDepth={activeDepth}/>
       </div>
       <CategoryPopup />
+      {
+        modalOpen === true && step ===1  
+        ?<MypageModal next={nextStep} close={closeModal}/>
+        :null
+      }
+      {
+        modalOpen ===true && step===2 
+        ? <MyBranchModal pre={preStep} close={closeModal} setStep={setStep}/>
+        :null
+      }
     </>
   );
 }
