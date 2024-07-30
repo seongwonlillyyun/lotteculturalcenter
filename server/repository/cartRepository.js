@@ -5,12 +5,12 @@ import { db } from '../db/database_mysql80.js';
 export const getCart = async(userId) => {
   const sql = `
    select row_number() over(order by c.cdate desc) as rno, c.user_id,
-      c.cart_id,l.loc_id,c.course_id,l.name loc,p.status, p.course_name, p.teacher_name,
-      left(p.course_start, 10) course_start, left(p.course_end, 10) course_end, p.course_week,
-        left(p.start_time, 5) start_time, left(p.end_time, 5) end_time, p.num_of_course, p.price, format(p.price, 0) as allprice
-        from product p, location l , cart c, member m
-          where p.loc_id = l.loc_id
-                and p.course_id = c.course_id
+      c.cart_id,l.loc_id,c.course_id,l.name loc,cs.status, cs.course_name, cs.teacher_name,
+      left(cs.course_start, 10) course_start, left(cs.course_end, 10) course_end, cs.course_week,
+      left(cs.start_time, 5) start_time, left(cs.end_time, 5) end_time, cs.num_of_course, cs.price, format(cs.price, 0) as allprice
+        from course cs, location l , cart c, member m
+            where cs.loc_id = l.loc_id
+                and cs.course_id = c.course_id
                 and c.user_id = m.user_id
   `
   return db
@@ -55,42 +55,41 @@ export const insert = async(items) => {
         `
       const [result] = await db
                             .execute(sql, [items.id, items.userId])
-              result_rows = result.affectedRows;
+                            
+                            result_rows = result.affectedRows;
     }
 
     return {cnt : result_rows};
 }
 
-
-
-
-
-// 상품리스트
-export const getProduct = async(product) => {
-  const sql = `
-   select course_id, status, course_name, teacher_name,
-				left(course_start, 10) course_start, 
-                left(course_end, 10) course_end, 
-                course_week,
-                left(start_time, 5) start_time, 
-                left(end_time, 5) end_time, 
-                num_of_course, 
-                price
-    from product
-  `
+// 카트 삭제
+export const remove = async(cartItemList) => {
+  // console.log('cartItemList repository->', cartItemList);
+  let sql = `delete from cart where course_id in ( `
+   cartItemList.map((item, index) => {
+    (cartItemList.length-1 !== index) ? 
+      sql += item.id + ',' : sql += item.id
+   })
+   sql += ')';
+  //  console.log('sql->', sql);
+  //   let sql = `
+  //   delete from cart where course_id in (${deleteArray}) 
+  // `
   return db
-          .execute(sql, [product])
-          .then(result => result[0])
+          .execute(sql)
+}
+ 
+// 카트 전체삭제
+export const removeAll = async(cdelete) => {
+  let sql = `
+    delete from cart
+  `
+  // delete from cart where user_id = ?
+  return db
+          .execute(sql, cdelete)
 }
 
-// 디테일
-export const getProductDetail = async(id) => {
-  const sql = `
-    select course_id as id, course_name
-      from product
-        where course_id = ? 
-  `
-  return db
-          .execute(sql, [id])
-          .then(result => result[0][0]);
-}
+
+
+
+

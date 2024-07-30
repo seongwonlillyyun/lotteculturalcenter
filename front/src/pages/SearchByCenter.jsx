@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate,useParams } from "react-router-dom";
 import "../css/bycenter.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,8 +19,11 @@ import {
   ModalPage,
   CourseItem,
 } from "../components/SearchByCenterComponents";
+import { getUser } from '../util/localStorage.js'
+import { useDispatch } from 'react-redux';
+import { cartItemAdd } from '../modules/reduxCartAxios.js';
 
-export default function SearchByCenter() {
+export default function SearchByCenter({addCartCount}) {
   const { id } = useParams();
   const [showCourse, setShowCourse] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,6 +41,24 @@ export default function SearchByCenter() {
   const [test, setTest] = useState("");
   const [searchText, setSearchText] = useState("%%");
   const [courseCount, setCourseCount] = useState(0);
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+  //장바구니 추가
+  const handleAddCart = (id) => {
+    const userInfo = getUser();
+    
+    if(userInfo !== null){
+    const userId = userInfo.user_id;
+    // const userId = getUser() ? getUser().user_id : "test";
+    dispatch(cartItemAdd(id, userId));
+    navigate('/cart');
+    }else {
+    alert('로그인이 필요한 기능입니다.');
+    }
+}
+
+
 
   const searchDetail = (value, selected) => {
     setDetail(value);
@@ -329,7 +350,7 @@ export default function SearchByCenter() {
                 <ul className="center_course_list">
                   {items.map((item, index) => (
                     <li key={index}>
-                      <CourseItem item={item} />
+                      <CourseItem item={item} handleAddCart={handleAddCart} />
                     </li>
                   ))}
                 </ul>

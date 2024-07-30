@@ -26,22 +26,20 @@ export const insert = async(req, res) => {
   res.end();
 }
 
-
-
-
-
-
-// 상품리스트
-export const getProduct = async(req, res) => {
-  const product = req.body;
-  const result = await repository.getProduct({product})
+// 카트 삭제
+export const remove = async(req, res) => {
+  const {cartItemList} = req.body;
+  // console.log('cartItemList', cartItemList);
+  const result = await repository.remove(cartItemList);
   res.json(result);
   res.end();
-
 }
 
-// 디테일
-export const getProductDetail = async(req, res) => {
-  const detail = await repository.getProductDetail(req.params.id);
-  res.json(detail);
+
+// 카트 전체삭제
+export const removeAll = async(req, res) => {
+  const cdelete = req.body;
+  const result = await repository.removeAll(cdelete);
+  res.json(result);
+  res.end();
 }

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -326,10 +326,10 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
   );
 }
 
-export function CourseItem({ item }) {
+export function CourseItem({ item, handleAddCart }) {  
   return (
     <div className="topic_course_item">
-      <Link to={`/course/${item.course_id}`}>
+    <Link to={`/course/${item.course_id}`}>
       <div className="topic_course_img_box">
         <img
           src={`//localhost:8080/${item.course_img}`}
@@ -353,7 +353,7 @@ export function CourseItem({ item }) {
       </Link>
       <div className="topic_course_item_price">
         <p>{item.price}원</p>
-        <button className="topic_course_item_cart">
+        <button className="topic_course_item_cart" onClick={()=>handleAddCart(item.course_id)}>
           <FontAwesomeIcon icon={faCartShopping} />
         </button>
       </div>

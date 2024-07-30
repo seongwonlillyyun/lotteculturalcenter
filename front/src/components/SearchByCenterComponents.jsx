@@ -292,7 +292,7 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
   );
 }
 
-export function CourseItem({ item }) {
+export function CourseItem({ item, handleAddCart }) {
   return (
     <div className="center_course_item">
       <Link to={`/course/${item.course_id}`}>
@@ -319,7 +319,7 @@ export function CourseItem({ item }) {
       </Link>
       <div className="center_course_item_price">
         <p>{item.price}원</p>
-        <button className="center_course_item_cart">
+        <button className="center_course_item_cart" onClick={()=>handleAddCart(item.course_id)}>
           <FontAwesomeIcon icon={faCartShopping} />
         </button>
       </div>

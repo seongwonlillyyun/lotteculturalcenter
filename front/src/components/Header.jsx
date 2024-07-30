@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { updateActive } from "../modules/reduxMenuAxios.js";
 import { MypageModal, MyBranchModal } from "./MypageModal";
+import { getCount } from '../modules/reduxCartAxios.js';
 import { updateUser } from './../modules/reduxMain';
 
 // svg
@@ -11,7 +12,7 @@ import { ReactComponent as IconLogIn } from "./../svg/icon-login.svg";
 import { ReactComponent as IconLogOut } from "./../svg/icon-logout.svg";
 import { ReactComponent as IconMyPage } from "./../svg/icon-mypage.svg";
 import { ReactComponent as IconMyCart } from "./../svg/icon-cart.svg";
-// import { ReactComponent as IconSearch } from "./../svg/icon-search.svg";
+import { ReactComponent as IconSearch } from "./../svg/icon-search.svg";
 import { ReactComponent as IconClose } from "./../svg/icon-close-x.svg"; 
 
 // gnb
@@ -36,6 +37,15 @@ export default function Header({setUserUpdate}) {
   const nextStep = () => {setStep(step+1)}
   const preStep = () => {setStep(step-1)}
   const [modalOpen, setModalOepn] = useState(false)
+  // const userInfo = getUser();
+  const count = useSelector(state => state.cart.count);
+
+  // 카트카운트
+  useEffect(()=>{ 
+    // const userId = userInfo.user_id;
+    const userId = getUser() ? getUser().user_id : "test";
+    dispatch(getCount(userId));
+  },[])
 
   const openModal = () => {
     setModalOepn(true)
@@ -55,7 +65,7 @@ export default function Header({setUserUpdate}) {
 
     return () => {
       window.removeEventListener("scroll", scrollHandler);
-      window.removeEventListener("mouseover", gnbActiveHandler);
+      window.removeEventListener("mouseover", gnbActiveHandler);    
     }
   })
 
@@ -95,7 +105,7 @@ export default function Header({setUserUpdate}) {
                     :null
                   }
                   <button type="button" onClick={openModal}><IconMyPage/></button>
-                  <Link className="mycart" to="/cart"><IconMyCart/><span className="cart_num">0</span></Link>
+                  <Link className="mycart" to="/"><IconMyCart/><span className="cart_num">{count}</span></Link>
                   <button type="button" onClick={logOutHandler}><IconLogOut /></button>
                 </>
                   : <Link to="/login"><IconLogIn /></Link>

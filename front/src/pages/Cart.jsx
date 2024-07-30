@@ -4,21 +4,21 @@ import { useNavigate, Link } from 'react-router-dom';
 import { getUser } from '../util/localStorage.js';
 import { useSelector, useDispatch} from 'react-redux';
 import { cartListAxios } from '../modules/reduxCartAxios';
-
+import axios from 'axios';
 
 export default function Cart() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userId = getUser().user_id;
+  const userInfo = getUser();
+  // const userId = userInfo && userInfo.user_id;
+  const userId = getUser() ? getUser().user_id : "test";
 
   const cartList = useSelector(state => state.cart.list); // db리스트
   const [checkedItems, setCheckedItems] = useState(new Array(cartList.length).fill(false) ); // 개별체크
   const [checkPrice, setCheckPrice] = useState(0) // 결제가격
   const [checkNum, setCheckNum] = useState(0) // 결제갯수
   const [isAllChecked, setIsAllChecked] = useState(!checkedItems.every((item)=> item)); // 전체체크
-  const [deleteList, setDeleteList] =useState([]) // 체크삭제
-
-
+  const [cartItemList, setCartItemList] = useState([]) // 체크여부 id
 
 
   const handleMore = () => {
@@ -33,43 +33,27 @@ export default function Cart() {
     // 총가격
     let totalPrice = 0;
     if(!isAllChecked) cartList.map((cart)=> totalPrice += cart.price)
-    
+  
     totalPrice = totalPrice.toLocaleString('ko-KR');
     setCheckPrice(totalPrice);
+
     // 총갯수
     if(!isAllChecked) setCheckNum(cartList.length)
       else setCheckNum(0)
-     
+
+    // 전체삭제
+    if(!isAllChecked) {
+      let cartId = cartList.map(item=> item.course_id) 
+      let cartIdObj = cartId.map(id=> ({id})) 
+      setCartItemList(cartIdObj)
+    }else{
+      setCartItemList([])
+    }
+
   }
 
   // 개별 체크박스
   const handleCheck = (id, index, checked) => {
-    // 선택삭제
-    const deleteId = {id: id}
-    setDeleteList([...deleteList, deleteId])
-
-    // const cartDelete = cartList.map((item)=>{
-    //   if(checked){
-  
-  
-    //   }else{
-       
-    //   }
-
-    //   return 0
-    // }
-    //   // deleteFilter = cartList.filter(item => item.course_id !== deleteId.id) // 아이디값 체크
-    // )
-
-    // console.log('deleteList->', deleteList);
-
-    // check가 true일때 deleteList에 아이디 추가
-    // 아이디가 있는지 없는지 filter로 체크
-    // map으로 돌려서 딜리트 기존 id 값이 체크한 아이디 값이 같지 않을때 추가
-    // deleteList를 db로 보내서 db에서 delete 후 리스트
-
-
-
     setCheckedItems((preCheckedItems)=>{
       const updateCheckedItems = [...preCheckedItems]
       updateCheckedItems[index] = !updateCheckedItems[index];
@@ -94,32 +78,66 @@ export default function Cart() {
 
       return updateCheckedItems;
     })
-    
-  }
-  // console.log('deleteList->', deleteList);
 
+    // 체크아이템 선택
+    const cartItemId = {id:id}
+    if(checked){
+      setCartItemList([...cartItemList, cartItemId])
+    }else{
+      let idCheckFilter = cartItemList.filter(item => item.id !== id)
+      setCartItemList(idCheckFilter)
+    }
 
+ }
+
+  // 선택삭제
   const handleDelete = () => {
+    alert('정말 삭제하시겠습니까?')
 
-    alert('111')
+    //서버전송
+    const url = 'http://127.0.0.1:8080/cart/remove'    
+    axios({
+      method: 'post',
+      url : url,
+      data: {cartItemList: cartItemList}
+    })
+    .then(dispatch(cartListAxios(cartItemList)))
+    .catch(error=> console.log(error))
+
   }
 
-  const handleAllDelete = () => {
+  // 장바구니 비우기
+  const handleAllDelete = () => {   
+    //서버전송
+    const url = 'http://127.0.0.1:8080/cart/removeall'    
+    axios({
+      method: 'post',
+      url : url,
+      data: cartList
+    })
+    .then(dispatch(cartListAxios(cartList)))
+    .catch(error=> console.log(error))
 
-    alert('www')
   }
-
-  
 
   useEffect(()=>{
+    // 장바구니 비었을때 
+    if(cartList.length === 0) {
+      setCheckNum(0)
+      setCheckPrice(0)
+    }
+    
     dispatch(cartListAxios({userId}))
-  },[userId])
-
+  },[userId, cartList])
 
 
   return(
-
-      <div className='cart type'>
+    <>
+      {
+        userInfo === null ? (
+          alert('로그인 후 사용이 가능합니다.')
+        ) : (
+          <div className='cart type'>
         <div className="sub_visual">
           <h2 className="heading">장바구니</h2>
           <p className='heading_sub'>장바구니에 담긴 강좌는 최대 30일까지 보관 됩니다.</p>
@@ -140,7 +158,11 @@ export default function Cart() {
               <label htmlFor='all' >전체선택</label>
             
             </div>
-            <button type='button' className="delete_btn" onClick={handleDelete}><span>선택삭제</span></button>
+            <button type='button'
+                    className="delete_btn" 
+                    onClick={handleDelete}>
+                    <span>선택삭제</span>
+            </button>
           </div>
 
     {/* 장바구니 리스트 시작 */}
@@ -168,7 +190,7 @@ export default function Cart() {
             <li className='title'>
               <span className='deco'>{item.status}</span>
               <span className='deco loc'>{item.loc}</span>
-              <Link to={'/'}>
+              <Link to={`/course/${item.course_id}`}>
                 <h2>{item.course_name}</h2>
               </Link>
             </li>
@@ -212,16 +234,21 @@ export default function Cart() {
             </ul>
           </div>
           <div className='basic_btn'>
-            <button type='button' className='btn btn_border medium' onClick={handleMore}>강좌 더보기</button>  
+            <Link to={'/'}>
+              <button type='button' className='btn btn_border medium' onClick={handleMore}>강좌 더보기</button>  
+            </Link>
           </div>
           
         </div>    
 
         {/* 하단고정 */}
-        <PayBottom cname={'cart'} checkPrice={checkPrice} checkNum={checkNum} checkedItems={checkedItems} />
+        <PayBottom cname={'cart'} checkPrice={checkPrice} checkNum={checkNum} cartItemList={cartItemList} cartList={cartList} />
         
       </div>
 
-    
+        ) 
+      }
+      
+      </>
   );
 }

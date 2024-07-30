@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { act } from 'react';
+
 
  const initialState = {
     list : [],
     count : 0,
-    currentPos : 'cart'
+    currentPos : 'cart',
+    
  };
 
 

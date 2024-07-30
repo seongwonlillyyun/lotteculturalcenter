@@ -7,7 +7,6 @@ import { setCartList, setCount, setCartItem } from '../reducers/cartReducer';
 export function cartListAxios(userId) {
   const url = 'http://127.0.0.1:8080/cart';
   const data = {'userId':userId};
-  
   return async(dispatch) => {
     const clist = await axiosPost(url, data);
     dispatch(setCartList({clist}));
@@ -28,7 +27,7 @@ export function getCount(userId){
 }
 
 // 카트 추가
-export function cartItemAdd({id, userId}){
+export function cartItemAdd(id, userId){
   const url =`http://127.0.0.1:8080/cart/add`;
   const data = {
     id : id, userId: userId
