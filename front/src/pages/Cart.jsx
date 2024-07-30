@@ -5,19 +5,16 @@ import { getUser } from '../util/localStorage.js';
 import { useSelector, useDispatch} from 'react-redux';
 import { cartListAxios } from '../modules/reduxCartAxios';
 import axios from 'axios';
-<<<<<<< HEAD
 import LoginError from '../components/LoginError'
 
-=======
-import LoginError from '../components/LoginError.jsx';
->>>>>>> main
+
 
 export default function Cart() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = getUser();
-  // const userId = userInfo && userInfo.user_id;
-  const userId = getUser() ? getUser().user_id : "test";
+  const userId = userInfo && userInfo.user_id;
+
 
   const cartList = useSelector(state => state.cart.list); // db리스트
   const [checkedItems, setCheckedItems] = useState(new Array(cartList.length).fill(false) ); // 개별체크

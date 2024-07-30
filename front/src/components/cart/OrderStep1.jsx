@@ -11,8 +11,7 @@ import LoginError from '../../components/LoginError'
 
 export default function OrderStep1({next, stepOrder, cartItemList}) {
   const userInfo = getUser();
-  // const userId = userInfo && userInfo.user_id;
-  const userId = getUser() ? getUser().user_id : "test";
+  const userId = userInfo && userInfo.user_id;
   const cartList = useSelector(state => state.cart.list); // db리스트
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,8 +45,7 @@ export default function OrderStep1({next, stepOrder, cartItemList}) {
       const url = 'http://127.0.0.1:8080/order/pointget'    
       axios({
         method: 'post',
-        url : url,
-        // data: point
+        url : url
       })
       .then(res => {
         setPoint(res.data)

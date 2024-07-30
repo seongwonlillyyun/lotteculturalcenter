@@ -22,7 +22,6 @@ export function getCount(userId){
     const carts = await axiosPost(url, data);
     const count = carts.count;
     dispatch(setCount({count}));
-    // console.log('count->', count);
   }
 }
 
@@ -36,6 +35,6 @@ export function cartItemAdd(id, userId){
   return async(dispatch) => {
     const cnt = await axiosPost(url, data);
     dispatch(setCartItem(cnt));
-    
+    dispatch()
   }
 }

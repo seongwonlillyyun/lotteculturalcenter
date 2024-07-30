@@ -47,8 +47,7 @@ export default function SearchByTopic() {
   
   //장바구니 추가
   const handleAddCart = (id) => {
-    const userInfo = getUser();      // const userId = getUser() ? getUser().user_id : "test";
-    
+    const userInfo = getUser(); 
     if(userInfo !== null){
       const userId = userInfo.user_id;
 
