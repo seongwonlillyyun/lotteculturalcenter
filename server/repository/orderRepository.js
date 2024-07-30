@@ -10,17 +10,19 @@ export const getPoint = async() => {
         .then(result => result[0][0])
 } 
 
-export const setPoint = async({point}) => {
+export const setPoint = async(orderPriceAllPay, inputPoint) => {
   // 주문번호 랜덤생성 8자리
-  // let orderNum = Math.trunc(Math.random()* 9999)
-  // console.log('orderNum', '2024'+orderNum);
+  let orderNum = '2024'+ Math.trunc(Math.random()* 9999)
+  
+  
 
+  console.log('orderNum', orderNum);
+  console.log('order repository', orderPriceAllPay, inputPoint);
 
-  console.log('point repository', point);  
   const sql = `
      update member set point = ?
       where user_id = 'test'
   `
   return db
-        .execute(sql, [point])
+        .execute(sql, [orderPriceAllPay, inputPoint, orderNum])
 } 

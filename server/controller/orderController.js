@@ -11,9 +11,8 @@ export const getPoint = async(req, res) => {
 
 
 export const setPoint = async(req, res) => {
-  const point = req.body;
-  // console.log('point controller', point);
-  const result = await repository.setPoint(point)
+  const {orderPriceAllPay, inputPoint} = req.body;
+  const result = await repository.setPoint(orderPriceAllPay, inputPoint)
   res.json(result)
   res.end()
 } 

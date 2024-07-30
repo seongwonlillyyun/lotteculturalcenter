@@ -27,9 +27,9 @@ import { getUser, removeUser } from './../util/localStorage';
 import "../css/header.css";
 import "../css/popup.css";
 
-export default function Header({setUserUpdate}) {
+export default function Header() {
   const dispatch = useDispatch();
-  let userId = getUser() ? getUser().user_id : "";
+  const count = useSelector(state => state.cart.count);
   const [activeDepth, setActiveDepth] = useState("applicate")
   const userState = useSelector(state => state.main.userState);
   const [prevScrollY, setPrevScrollY] = useState(0);
@@ -37,15 +37,14 @@ export default function Header({setUserUpdate}) {
   const nextStep = () => {setStep(step+1)}
   const preStep = () => {setStep(step-1)}
   const [modalOpen, setModalOepn] = useState(false)
-  // const userInfo = getUser();
-  const count = useSelector(state => state.cart.count);
+  const userInfo = getUser();
+  const userId = userInfo && userInfo.user_id;
 
+  
   // 카트카운트
   useEffect(()=>{ 
-    // const userId = userInfo.user_id;
-    const userId = getUser() ? getUser().user_id : "test";
     dispatch(getCount(userId));
-  },[])
+  },[userId])
 
   const openModal = () => {
     setModalOepn(true)
@@ -70,7 +69,7 @@ export default function Header({setUserUpdate}) {
   })
 
   useEffect(()=>{
-    userId = getUser() ? getUser().userId : "";
+    // userId = getUser() ? getUser().userId : "";
   },[userState])
 
   const logOutHandler = () => {
@@ -92,7 +91,7 @@ export default function Header({setUserUpdate}) {
             <Gnb setActiveDepth={setActiveDepth}/>
             <div className="users">
               {
-                userId ?
+                userInfo ?
                 <>
                   {
                     modalOpen === true && step ===1  

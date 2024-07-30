@@ -13,12 +13,14 @@ export default function OrderStep1({next, stepOrder, cartItemList}) {
   const userInfo = getUser();
   const userId = userInfo && userInfo.user_id;
   const cartList = useSelector(state => state.cart.list); // db리스트
+  const count = useSelector(state => state.cart.count);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [point, setPoint] = useState({}); // db 포인트 불러오기 {point : 0}
   const [inputPoint, setInputPoint] = useState(0) // 입력한 포인트
   const [isChecked, setIsChecked] = useState(false) // 체크박스 동의
 
+  
   let orderItemList = [];
   let orderPrice = 0;
             
@@ -74,8 +76,8 @@ export default function OrderStep1({next, stepOrder, cartItemList}) {
    
 
     useEffect(()=>{
-      dispatch(cartListAxios({userId}))
-    },[userId])
+      dispatch(cartListAxios(userId))
+    },[count])
   
   
 

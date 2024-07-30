@@ -1,5 +1,5 @@
 import { axiosGet, axiosPost} from './reduxAxios';
-import { setCartList, setCount, setCartItem } from '../reducers/cartReducer';
+import { setCartList, setCount, setCartItem, removeCartItem } from '../reducers/cartReducer';
 
 
 
@@ -10,6 +10,17 @@ export function cartListAxios(userId) {
   return async(dispatch) => {
     const clist = await axiosPost(url, data);
     dispatch(setCartList({clist}));
+  }
+}
+
+// 선택삭제
+export function cartCheckRemoveAxios(cartItemList) {
+  const url = 'http://127.0.0.1:8080/cart/remove';
+  const data = {'cartItemList':cartItemList};
+  return async(dispatch) => {
+    const result = await axiosPost(url, data);
+  
+    dispatch(removeCartItem({result}));
   }
 }
 

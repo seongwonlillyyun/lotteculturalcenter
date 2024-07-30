@@ -3,6 +3,7 @@ import { db } from '../db/database_mysql80.js';
 
 // 리스트
 export const getCart = async(userId) => {
+  // console.log('reposuitory user_id->', userId);
   const sql = `
    select row_number() over(order by c.cdate desc) as rno, c.user_id,
       c.cart_id,l.loc_id,c.course_id,l.name loc,cs.status, cs.course_name, cs.teacher_name,
@@ -12,7 +13,8 @@ export const getCart = async(userId) => {
             where cs.loc_id = l.loc_id
                 and cs.course_id = c.course_id
                 and c.user_id = m.user_id
-  `
+                and m.user_id = ?
+  `;
   return db
           .execute(sql, [userId])
           .then(result => result[0])
