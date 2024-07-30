@@ -35,6 +35,10 @@ server.use('/center', CourseCenterRouter);
 server.use("/board", boardRouter);
 server.use('/topic', TopicRouter);
 server.use('/member',memberRouter)
+server.use("/main", mainRouter);
+server.use('/cart', cartRouter);
+server.use('/order', orderRouter);
+server.use('/history', historyRouter)
 
 
 server.listen(port, ()=>{
