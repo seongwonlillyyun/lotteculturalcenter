@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector} from 'react-redux';
+import axios from 'axios';
+
 
 export default function PayBottom({cname, next, stepOrder,checkPrice, checkNum, cartItemList,
-    isChecked, setIsChecked}) {
+    isChecked, setIsChecked, orderPriceAllPay, inputPoint}) {
   const navigate = useNavigate();
   const currentPos = useSelector(state => state.cart.currentPos);
   const [allIsChecked, setAllIsChecked] = useState(false); // 결제 체크박스
@@ -33,8 +35,7 @@ export default function PayBottom({cname, next, stepOrder,checkPrice, checkNum, 
   const handlePrev = () => {
     navigate('/cart')
   }
-  console.log('isChecked', isChecked);
-  console.log('allIsChecked', allIsChecked);
+
 
   // 최종 결제버튼
   const handlePay = () => {
@@ -44,18 +45,19 @@ export default function PayBottom({cname, next, stepOrder,checkPrice, checkNum, 
     }else{
       alert('구매동의에 동의하셔야 결제가 가능합니다. 구매 동의하시겠습니까?')
       
-      
-      // 서버전송
-      // const point = parseInt(inputPoint)
-  
-      // const url = 'http://127.0.0.1:8080/order/pointset'    
-      // axios({
-      //   method: 'post',
-      //   url : url,
-      //   data: {point : point}
-      // })
-      // .then(res => res.data)
-      // .catch(error=> console.log(error))
+    // 서버전송
+    const url = 'http://127.0.0.1:8080/order/pointset'    
+    axios({
+      method: 'post',
+      url : url,
+      data: {
+        orderPriceAllPay : orderPriceAllPay,
+        inputPoint : inputPoint
+      }
+    })
+    .then(res => res.data)
+    .catch(error=> console.log(error))
+    
     }
   }
 

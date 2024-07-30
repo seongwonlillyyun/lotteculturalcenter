@@ -72,7 +72,6 @@ export default function OrderStep1({next, stepOrder, cartItemList}) {
         setIsChecked(!isChecked)
       }
     }
-    // console.log('isChecked', isChecked);
    
 
     useEffect(()=>{
@@ -216,7 +215,7 @@ export default function OrderStep1({next, stepOrder, cartItemList}) {
           </div>
           {/* 하단고정 */}
           <PayBottom next={next} cname={'order'} stepOrder={stepOrder} isChecked={isChecked} 
-            setIsChecked={setIsChecked} />
+            setIsChecked={setIsChecked} orderPriceAllPay={orderPriceAllPay} inputPoint={inputPoint} />
         </div>
         )
       }
