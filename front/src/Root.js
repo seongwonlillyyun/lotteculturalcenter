@@ -16,7 +16,8 @@ const openModal = () => {
   setModalOepn(true)
 }
 const closeModal = () => {
-  setModalOepn(false)}
+  setModalOepn(false)
+  setStep(1)}
 
 const location = useLocation();
 
@@ -27,11 +28,11 @@ const location = useLocation();
   return (
     <>
     { modalOpen === true && step ===1  
-    ?<MypageModal next={nextStep} close={closeModal} setModalOepn={setModalOepn}/>
+    ?<MypageModal next={nextStep} close={closeModal} />
     :null}
 
     {modalOpen ===true && step===2 
-    ?<MyBranchModal pre={preStep} close={closeModal} setModalOepn={setModalOepn}/>
+    ?<MyBranchModal pre={preStep} close={closeModal} setStep={setStep}/>
     :null}
 
       <Header />

@@ -61,3 +61,8 @@ UNLOCK TABLES;
 -- Dump completed on 2024-07-25 13:52:44
 
 select * from member;
+ 
+-- point 바꾸기 
+update member set point = 2000 where user_id= 'test';
+
+

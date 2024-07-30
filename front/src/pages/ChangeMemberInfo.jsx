@@ -9,7 +9,7 @@ export default function ChangeMemberInfo(){
 const [memberInfo, setMemberInfo]= useState({})
 
 const userInfo = getUser();
-console.log('userInfo->', userInfo);
+// console.log('userInfo->', userInfo);
 
 
 useEffect(()=>{
@@ -27,10 +27,13 @@ const url = 'http://127.0.0.1:8080/member/mypage'
 // const birth = birthData.substring(0,10)
 
 // console.log('birth->',birth);
-console.log(memberInfo);
+// console.log(memberInfo);
 
+const handleChange = () =>{
+    
+}
 
-    return (
+return (
         <div className=''>
         <div className="sub_visual">
             <h2 className="heading">회원정보변경</h2>
@@ -67,7 +70,9 @@ console.log(memberInfo);
 </div>
         </div>
         <div className='change_member_btn_div'>
-            <button type='button' className='change_memeber_btn'>회원정보 변경</button>
+        <button type='button' className='change_memeber_btn'
+                onClick={handleChange}>
+            회원정보 변경</button>
         </div>
 
                 </div>
