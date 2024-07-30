@@ -14,6 +14,7 @@ import "../../css/board/personalReview.css"
 
 export default function PersonalReview() {
   const navigate = useNavigate();
+  const [update, setUpdate] = useState(false);
   const [target, setTarget] = useState();
   const [list, setList] = useState([]);
   const initData = {
@@ -33,7 +34,7 @@ export default function PersonalReview() {
 
     axios.post(url, data)
       .then(result => setList(result.data))
-  },[])
+  },[update])
 
   const popupOpen = (id) => {
     document.querySelector(".popup_wrap").classList.add("on");
@@ -92,14 +93,14 @@ export default function PersonalReview() {
           }
         </div>
       </div>
-      <PopupWrite initData={initData} data={formData} setData={setFormData} target={target}/>
+      <PopupWrite initData={initData} data={formData} setUpdate={setUpdate} setData={setFormData} target={target}/>
     </div>
   ) : (
     <LoginError />
   );
 }
 
-function PopupWrite ({initData, data, setData, target}) {
+function PopupWrite ({initData, data, setUpdate, setData, target}) {
 
   let errorMsg = "";
 
@@ -152,6 +153,7 @@ function PopupWrite ({initData, data, setData, target}) {
           if(result.data){
             alert("정상적으로 등록되었습니다.");
             setData(initData);
+            setUpdate(prev => !prev);
             popupClose();
           }
         })
