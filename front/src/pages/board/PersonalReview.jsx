@@ -76,7 +76,7 @@ export default function PersonalReview() {
                         <div className="star">
                           {
                             Array.from(new Array(v.star), (_,i) => i).map(v => (
-                              <span></span>
+                              <span key={v}></span>
                             ))
                           }
                         </div> :
@@ -101,6 +101,31 @@ export default function PersonalReview() {
 
 function PopupWrite ({initData, data, setData, target}) {
 
+  let errorMsg = "";
+
+  const dataTitle = {
+    title : "제목",
+    content : "후기",
+  }
+
+  const validation = () => {
+    let result = true;
+
+    Object.keys(data).forEach(key => {
+      if(!data[key].toString().trim()){
+        errorMsg += errorMsg ? `, ${dataTitle[key]}` : dataTitle[key];
+        result = false;
+      }
+    });
+
+    const lastCharCode = errorMsg.charCodeAt(errorMsg.length - 1);
+    const isJongSong = (lastCharCode - 0xAC00) % 28;
+
+    errorMsg += `${isJongSong ? "을" : "를"} 입력해 주세요`;
+
+    return result;
+  }
+
   const changeHandler = (e) => {
     const {name, value} = e.target;
     setData(prev => ({...prev, [name] : value}));
@@ -120,14 +145,20 @@ function PopupWrite ({initData, data, setData, target}) {
   const submitHandler = (e) => {
     e.preventDefault();
     const url = "//localhost:8080/board/review/add"
-    axios.post(url, data)
-      .then(result => {
-        if(result.data){
-          alert("정상적으로 등록되었습니다.");
-          setData(initData);
-          popupClose();
-        }
-      })
+
+    if(validation()){
+      axios.post(url, data)
+        .then(result => {
+          if(result.data){
+            alert("정상적으로 등록되었습니다.");
+            setData(initData);
+            popupClose();
+          }
+        })
+    } else {
+      alert(errorMsg)
+    }
+
   }
 
   return (
@@ -168,7 +199,7 @@ function PopupWrite ({initData, data, setData, target}) {
                   <div className="start_box">
                     {
                       Array.from(new Array(5), (_,i) => i+1).map(v => (
-                        <span data-idx={v} className={v <= data.star ? "star" : "star blank"} onClick={starHandler}></span>
+                        <span key={v} data-idx={v} className={v <= data.star ? "star" : "star blank"} onClick={starHandler}></span>
                       ))
                     }
                   </div>
