@@ -63,8 +63,6 @@ export default function SearchByTopic({addCartCount}) {
     setDetail(value);
     setSelected(selected);
   };
-  // console.log("selected=>", selected);
-  // console.log("detail=>", detail);
   useEffect(() => {
     setDetail({
       day: [1, 2, 3, 4, 5, 6, 7],
@@ -199,7 +197,6 @@ export default function SearchByTopic({addCartCount}) {
       let centerarr = detail.center.filter(
         (item) => item !== centerId.toString()
       );
-      console.log(centerarr)
       if(centerarr.length === 0){
           setDetail({...detail, center:[1,2,3,4,5,6,7,8,9,10,11,12]})
         } else {
@@ -213,7 +210,7 @@ export default function SearchByTopic({addCartCount}) {
     setTest(value);
   };
   let cntarr = showCourse[0];
-  console.log( 'id=>', id)
+
   return (
     <>
       <div className="bycenter_title_part">
@@ -398,38 +395,6 @@ export default function SearchByTopic({addCartCount}) {
             </div>
           )}
         </div>
-        {/* <div className="course_list_content">
-          {showCourse.map((items, index) => (
-            <ul className="topic_course_list">
-              {items.map((item, index) => (
-                <li key={index}>
-                  <Link to={`/course/${item.course_id}`}>
-                    <CourseItem item={item} />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ))}
-          {cntarr && cntarr.length !== 0 ? (
-            <div className="nomorecourse_div">
-                <button
-                className="morebtn"
-                type="button"
-                onClick={() => {
-                    setCurrentPage(currentPage + 1);
-                }}
-                >
-                강좌더보기+
-                </button>
-            </div>
-          ) : cntarr&&cntarr.length-1 === 0 ?  (null)
-            : (
-            <div className="nomorecourse_div">
-              <FontAwesomeIcon className="nocourse_icon" icon={faExclamation} />
-              <p className="nocourse_text">진행중인 강좌가 없습니다.</p>
-            </div>
-          )}
-        </div> */}
       </div>
     </>
   );

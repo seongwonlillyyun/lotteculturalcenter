@@ -64,7 +64,6 @@ export default function SearchByCenter({addCartCount}) {
     setDetail(value);
     setSelected(selected);
   };
-  console.log(courseCount);
   useEffect(() => {
     setCindex(0);
     setSmallCategory(0);
@@ -192,7 +191,6 @@ export default function SearchByCenter({addCartCount}) {
     setTest(value);
   };
   let cntarr = showCourse[0];
-  console.log("cntarr->", cntarr);
   return (
     <>
       <div className="bycenter_title_part">

@@ -129,7 +129,6 @@ export function CategoryMiddleMenu({ item, cindex, index }) {
 
 export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
   const [info, setInfo] = useState({ day: [1,2,3,4,5,6,7], time: "" });
-/*   const [isActive, setIsActive] = useState({ day: false, time: false }); */
   const [selected, setSelected] = useState({ day: "", time: "" });
   const [searchText, setSearchText] = useState("");
   const [dayActive, setDayActive] = useState({weekday:false, weekend:false });
@@ -138,7 +137,6 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
   const handleActive = (txt, e) => {
     const { name, value } = e.target;
     if (selected.day === "" || selected.time === "") {
-     /*  setIsActive({ ...isActive, [name]: true }); */
       setSelected({ ...selected, [name]: txt });
       if (name === "day") {
         setInfo({ ...info, [name]: [...value] });
@@ -153,7 +151,6 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
         setSelected({ ...selected, [name]: txt });
         setInfo({ ...info, [name]: value });
       }
-      /* setIsActive({ ...isActive, [name]: false }); */
     }
   };
   const handleDetail = () => {
@@ -162,7 +159,6 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
   };
   const handleReset = () => {
     setInfo({ day: "", time: "" });
-   /*  setIsActive({ day: false, time: false }); */
     setSelected({ day: "", time: "" });
     setSearchText('')
   };
@@ -174,9 +170,6 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
     search(searchText);
     closeModal();
   };
-  console.log('select=>', selected)
-  console.log('info=>', info)
-  console.log('dayactive=>', dayActive)
   return (
     <div className="modal_out" onClick={closeModal}>
       <div className="modal_container" onClick={(e) => e.stopPropagation()}>

@@ -83,7 +83,6 @@
 }
 .middle_category_div{
     position: relative;
-    /* border: 1px solid red; */
     height: 128px;
     text-align: center;
 }
@@ -142,7 +141,6 @@
     color: rgba(0, 0, 0, .6);
 }
 .center_search_part_btns{
-    /* border: 1px solid blue; */
     height: 68px;
     display: flex;
     justify-content: right;
@@ -263,7 +261,6 @@
     width: 283px;
     height: 480px;
     position: relative;
-    /* border: 1px solid red; */
     align-items: end;
 }
 .center_course_img_box img{
@@ -318,7 +315,6 @@
 .center_course_item_info{
     position: absolute;
     bottom: 3rem;
-    /* border: 1px solid blue; */
     margin-top: .5rem;
     display: flex;
     align-items: center;
@@ -330,7 +326,6 @@
 }
 .center_course_item_price{
     position: absolute;
-    /* border: 1px solid blue; */
     width: 280px;
     bottom: .5rem;
     margin-top: .5rem;
@@ -353,7 +348,6 @@
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-    /* border: 1px solid red; */
 }
 .morebtn{
     border: 1px solid #000;
@@ -394,12 +388,10 @@
     position: absolute;
     margin-top: 2px;
     margin-left: 6px;
-    /* border: 1px solid red; */
     font-size: .7rem;
     color: #7E7D7B;
 }
 .nomorecourse_div{
-    /* border: 1px solid red; */
     text-align: center;
 }
 .nocourse_icon{
