@@ -9,7 +9,7 @@ import { getCategoryList, getLocationList } from "./modules/reduxMenuAxios";
 import Root from "./Root";
 import SearchByCenter from "./pages/SearchByCenter";
 import SearchByTopic from "./pages/SearchByTopic";
-import Test from "./pages/Test";
+
 import Cart from "./pages/Cart";
 import Order from "./pages/Order";
 
@@ -20,7 +20,6 @@ import Login from "../src/components/Login.jsx"
 import Join from "./pages/Join.jsx";
 import CourseHistory from "./pages/CourseHistory.jsx";
 import DetailHistory from "./pages/DetailHistory.jsx";
-import {MypageModal}  from "./components/MypageModal.jsx";
 import ChangeMemberInfo from "./pages/ChangeMemberInfo.jsx";
 import Location from "./pages/Location";
 import QnA from "./pages/board/QnA";
@@ -32,6 +31,7 @@ import Main from './pages/Main';
 import Review from './pages/board/Review';
 import PersonalReview from "./pages/board/PersonalReview";
 import ReviewDetail from "./pages/board/ReviewDetail";
+
 
 export default function App() {
   const dispatch = useDispatch();
@@ -56,13 +56,6 @@ export default function App() {
 // }
 
 
-  const [cartCount, setCartCount] = useState(0);//카트갯수 카운트
-
-  // 카운트
-  const addCartCount = (result) =>{
-    if(result === 1) setCartCount(cartCount + 1);
-  }
-
 
   
   const router = createBrowserRouter([{
@@ -80,17 +73,18 @@ export default function App() {
       {path : "/login", element : <Login/> },
       {path : "/join" , element : <Join/> },
       {path : '/center/:id', element:<SearchByCenter/>},
-      {path : '/topic/:id', element:<SearchByTopic addCartCount={addCartCount} />},
-      {path : '/test', element:<Test/>},
+      {path : '/topic/:id', element:<SearchByTopic />},
       {path : "/cart", element : <Cart/> },
       {path : "/order", element : <Order/> },
       {path : "/changememberinfo" , element : <ChangeMemberInfo/> },
       {path : "/courseHistory", element : <CourseHistory/>},
-      {path : "/detailHistory", element : <DetailHistory/>}, // path 변경예정
+  
       {path : "/board/notievent/:id", element : <NotiEventDetail/>},
       {path : "/board/review", element : <Review/>},
       {path : "/board/review/:id", element : <ReviewDetail/>},
       {path : "/review", element : <PersonalReview />},
+      {path :"/courseHistory", element : <CourseHistory/>},
+      {path :"/courseHistory/:orderId", element : <DetailHistory/>}, 
     ]
   }])
 

@@ -9,6 +9,11 @@
     text-align: center;
     font-size: 2rem;
 }
+.bycenter_title *{
+    vertical-align: middle;
+}
+.center_arrow{
+    font-size: 2rem;}
 
 .dropdown_list_center{
     position:relative;
@@ -78,7 +83,6 @@
 }
 .middle_category_div{
     position: relative;
-    /* border: 1px solid red; */
     height: 128px;
     text-align: center;
 }
@@ -126,11 +130,25 @@
     cursor: pointer;
     color: black;
 }
-.search_part{
+.center_search_part{
+    position: relative;
+    height: 68px;
+}
+.center_coursecount{
+    position: absolute;
+    top: 23px;
+    font-size: .9rem;
+    color: rgba(0, 0, 0, .6);
+}
+.center_search_part_btns{
+    height: 68px;
     display: flex;
     justify-content: right;
     font-size: .9rem;
-    margin-top: 1rem;
+    align-items: center;
+}
+.countnumber{
+    color:black;
 }
 .search_part_detail{
     margin-right: 1.5rem;
@@ -243,7 +261,6 @@
     width: 283px;
     height: 480px;
     position: relative;
-    /* border: 1px solid red; */
     align-items: end;
 }
 .center_course_img_box img{
@@ -298,7 +315,6 @@
 .center_course_item_info{
     position: absolute;
     bottom: 3rem;
-    /* border: 1px solid blue; */
     margin-top: .5rem;
     display: flex;
     align-items: center;
@@ -310,7 +326,6 @@
 }
 .center_course_item_price{
     position: absolute;
-    /* border: 1px solid blue; */
     width: 280px;
     bottom: .5rem;
     margin-top: .5rem;
@@ -333,7 +348,6 @@
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-    /* border: 1px solid red; */
 }
 .morebtn{
     border: 1px solid #000;
@@ -374,12 +388,10 @@
     position: absolute;
     margin-top: 2px;
     margin-left: 6px;
-    /* border: 1px solid red; */
     font-size: .7rem;
     color: #7E7D7B;
 }
 .nomorecourse_div{
-    /* border: 1px solid red; */
     text-align: center;
 }
 .nocourse_icon{

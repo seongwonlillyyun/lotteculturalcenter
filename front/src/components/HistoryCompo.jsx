@@ -1,10 +1,15 @@
 
-import React, {useState, useEffect} from 'react'
-import DetailHistory from '../pages/DetailHistory'
+import React, { useState, useRef} from 'react'
+import { getUser } from '../util/localStorage';
 import { useNavigate } from 'react-router-dom'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
+import { faExclamation } from "@fortawesome/free-solid-svg-icons/faExclamation";
+
+import axios from 'axios';
+
 
 export function TopInfo(){
-
 return(
     <>
     <ul className="topinfo_texts">
@@ -18,165 +23,274 @@ return(
 )
 }
 
-export function HistoryForm(){
-// console.log('tvalue->',tvalue);
-const [itemList, setItemList] = useState([])
-const [tab, setTab]=useState({"title": "수강내역 조회",
-                                "value" : "register"})
-// const [tab, setTab] = useState(tvalue)
 
-const handleTabClick = (value) => {
-  if(value==='register'){
-    setTab( {"title": "수강내역 조회",
-        "value" : "register"
-        })
-  }else{
-      setTab(   {"title": "취소내역 조회",
-        "value" : "cancel"})
-  }
-    // console.log('tab->', tab);
+
+export function HistoryForm({courseInfo, cancelInfo, setCancelInfo, setCourseInfo}){
+    
+    // console.log('status->', courseInfo.length)
+    // console.log('tvalue->',tvalue);
+    // const [itemList, setItemList] = useState([])
+    const [tab, setTab]=useState({"title": "수강내역 조회",
+                                    "value" : "register"})
+    // const [tab, setTab] = useState(tvalue)
+
+    const handleTabClick = (value) => {
+    if(value==='register'){
+        setTab( {"title": "수강내역 조회",
+                 "value" : "register"})
+    }else{
+        setTab({"title": "취소내역 조회",
+              "value" : "cancel"})
+    }
+        // console.log('tab->', tab);
+        }
+
+    const typeList = [
+                {"title": "수강내역 조회",
+                "value" : "register"
+                },
+                {"title": "취소내역 조회",
+                "value" : "cancel"}]
+
+const refs = {searchRef : useRef(null)}
+
+const [searchInfo, setSearchInfo] = useState("")
+
+const handleChange =(e) =>{
+setSearchInfo(e.target.value)}
+
+const userInfo = getUser();
+
+const handleSearch =(e)=>{
+    e.preventDefault()
+  
+    const url = 'http://127.0.0.1:8080/history/search'
+    axios({
+        method : 'post',
+        url : url,
+        data : {course_name : searchInfo, 
+                user_id : userInfo.user_id}
+    })
+    .then(result=>{
+        setCourseInfo(result.data)
+        refs.searchRef.current.value=''})
+    .catch(error=>console.log(error))
 }
 
-const typeList = [
-            {"title": "수강내역 조회",
-            "value" : "register"
-            },
-            {"title": "취소내역 조회",
-            "value" : "cancel"}]
+const handleCancleSearch =(e)=>{
+    e.preventDefault()
 
-
-//todo 이것도 안먹혔음^^ 해결하세요
-const rows = [] 
-for(let i=0; i<itemList.length; i+=2){
-    rows.push(itemList.slice(i,i+2))
+    const url = 'http://127.0.0.1:8080/history/searchcancel'
+    axios({
+        method : 'post',
+        url : url,
+        data : {course_name : searchInfo, 
+                user_id : userInfo.user_id}
+    })
+    .then(result=>{
+        setCancelInfo(result.data)
+        refs.searchRef.current.value=''})
+    .catch(error=>console.log(error))
 }
 
-    return(<div className="coursehistory_form">
+
+
+return(
+<div className="coursehistory_form">
 <div className='history_mid_center'>
 <nav className="history_btns">
-{typeList.map(item=>(
-<button className={item.value === tab.value ?'history_btn_active' :'history_btn'}
-        type='button' value={item.value} onClick={()=>handleTabClick(item.value)}>
-            {item.title}</button>
-))}
-</nav>
-<input type="text" className="history_search" 
-    placeholder="주문번호/강좌명으로 검색하세요"/>
-</div>
+    {typeList.map(item=>(
+    <button className={item.value === tab.value ?'history_btn_active' :'history_btn'}
+            type='button' value={item.value} onClick={()=>handleTabClick(item.value)}>
+                {item.title}</button>
+    ))}
+    </nav>
+
+
+{tab.value ==='register' &&
+    <form className='history_search_div' onSubmit={handleSearch}>
+         <input type="text" className="history_search" 
+            placeholder="주문번호/강좌명으로 검색하세요" 
+            onChange={handleChange} ref={refs.searchRef}/>
+    <FontAwesomeIcon icon={faMagnifyingGlass} className='history_search_icon' 
+                    onClick={handleSearch}/></form> }
+
+{tab.value ==='cancel' &&
+    <form className='history_search_div' onSubmit={handleCancleSearch}>
+         <input type="text" className="history_search" 
+            placeholder="주문번호/강좌명으로 검색하세요" 
+            onChange={handleChange} ref={refs.searchRef}/>
+    <FontAwesomeIcon icon={faMagnifyingGlass} className='history_search_icon' 
+                    onClick={handleCancleSearch}/></form>
+                }
+    </div>
+
 
 <div className="">
     <div className="history_mid">
-        <div>        
-            <span>전체</span>
-            <span>1</span>
+        <div> <span>전체</span>
+            {tab.value ==='register' &&
+                 <span> {courseInfo.length}</span>}
+          {tab.value ==='cancel' &&
+                 <span> {cancelInfo.length}</span>}
             <span>개</span></div>
-        <select className="history_yearfilter">
-            <option value="all">전체연도</option>
-            <option value="2024">2024년</option>
-            <option value="2023">2023년</option>
-            <option value="2022">2022년</option>
-        </select>
-</div>
+    </div>
+    
+
+
     <div className="history_content">
-        {tab.value === 'register' && <div> 수강내역 content
-            <HistoryItem tab={tab}/>
-            {/* <HistoryItem tab={tab}/> */}
-            {/* <ul>
-                {rows.map((items)=>(
-                    <li>
-                        {items.map((item)=>(
-                   
-                        ))}
-                    </li>
-                ))}
-            </ul> */}
-            </div>}
-        {tab.value === 'cancel' && <div> 취소내역 content
-            <HistoryItem tab={tab}/>
-            </div>}
+
+
+        {tab.value === 'register' && (!courseInfo.length
+        ?<div className='noresult_div'><FontAwesomeIcon icon={faExclamation} className='noresult_icon'/>
+             <p className='noresult_text'>검색결과가 없습니다.</p></div>
+  
+        :<><HistoryItem courseInfo={courseInfo} tab={tab}/></>)}
+
+        {tab.value === 'cancel' && (!cancelInfo.length
+       ?<div><FontAwesomeIcon icon={faExclamation} />
+             <p>검색결과가 없습니다.</p></div>
+        :<><HistoryItem cancelInfo={cancelInfo} tab={tab}/></>)}
     </div>
 </div>
         </div>
     )
 }
 
-export function HistoryItem({tab}){
+
+
+
+
+export function HistoryItem({tab, courseInfo, cancelInfo}){
 
     const navigate = useNavigate()
 
-    const handleDetail = () => {
-    // <DetailHistory/>
-    navigate('/detailHistory')
+    const handleDetail = (e) => {
+        const btnNo = e.target.name
+        // console.log('btnNo->', btnNo);
+        navigate(`/courseHistory/${btnNo}`)
+        // navigate(`/courseHistory/${courseInfo.orderId}`)
     }
 
+// console.log('course.length=>',courseInfo.length);
+// console.log('cancel.length=>',cancelInfo);
+
+  return(
+<div className='history_item_total'>
 
 
-    return(
-        // <>
-        <div className="history_item">
-            <div className="history_item_top">
-                <div className="history_item_top_left">
-                <ul>
-                    <li>
-                        <span>주문번호</span>
-                        <span>test1 </span>
-                        </li>
-                    <li>
-                        <span>결제일 </span>
-                        <span>test2</span>
-                        </li>
-                </ul>
+ {tab.value === 'register' && 
+ <>{courseInfo.map((info,index)=>(
+         <div className="history_item" key={index}>
+             <div className="history_item_top">
+                 <div className="history_item_top_left">
+                 <ul>
+                     <li>
+                         <p className='history_item_top_subject'>주문번호</p>
+                         <span>{info.orderId}</span></li>
+                     <li>
+                         <p className='history_item_top_subject'>결제일</p>
+                         <span>{info.order_date}</span></li>
+                 </ul>
                 </div>
                 <button type="button" className="history_detail_btn"
-                        onClick={(e)=>handleDetail(e)} >내역보기</button>
+                        onClick={handleDetail} name={info.orderId} >내역보기</button>
             </div>
+
             <div className="history_item_mid">
                 <ul>
-                    <li className="history_item_branch">강남점</li>
-                    <li className="history_item_coursename">[7/13]윤주코치의 바른자세를 만드는 다리 찢기 스트레칭</li>
-                    <li className="history_item_info">
-                        <span>옥윤주</span> / 
-                        <span>2024년 여름학기</span>
-                        </li>
-                    <li className="history_item_info">2024.07.13~2024.07.13(토) 18:00~19:00 / 1회</li>
-                    <li className="history_item_info">
-                        <span>강좌료 : </span>
-                        <span>10,000원</span></li>
+                <li className="history_item_branch">{info.name}</li>
+                <li className="history_item_coursename">{info.course_name}</li>
+                <li className="history_item_info">
+                <span>{info.teacher_name}</span>
+                </li>
+                <li className="history_item_info">
+                <span className='history_item_info2'>{info.course_start}~{info.course_end}
+                </span>   
+                <span className=''>{info.start_time}~{info.end_time} 
+                / {info.cnumber}회
+                    </span> 
+                  </li>
+                <li className="history_item_info">
+                    <span>강좌료 : </span>
+                    <span>{info.price}원</span></li>
                 </ul>
             </div>
-            <div className="history_item_bottom">
-
-    {tab.value === 'register' && 
+            
+    <div className="history_item_bottom">          
         <ul className="history_item_bottom_ul">
-            <li className="history_item_bottom_name">테스트씨</li>
+            <li className="history_item_bottom_name">{info.user_name}</li>
             <li className="history_item_bottom_state">
             <span>접수상태</span>
             <span>결제완료</span>
             </li>
             <li className="history_item_bottom_price">
             <span>주문금액</span>
-            <span>10,000원</span>
+            <span>{info.price}원</span>
             </li>
         </ul>
-            }
+           </div>
+           </div>
+           ))}
+           </>
+           }
 
-    {tab.value === 'cancel' && 
-                <ul className="history_item_bottom_ul">
-        <li className="history_item_bottom_name">테스트씨</li>
+ {tab.value === 'cancel' && 
+ <>{cancelInfo.map((info,index)=>(
+        <div className="history_item" key={index}>
+            <div className="history_item_top">
+                <div className="history_item_top_left">
+                <ul>
+                    <li>
+                        <p className='history_item_top_subject'>주문번호</p>
+                        <span>{info.orderId}</span></li>
+                    <li>
+                        <p className='history_item_top_subject'>결제일 </p>
+                        <span>{info.order_date}</span></li>
+                </ul>
+                </div>
+                <button type="button" className="history_detail_btn"
+                        onClick={handleDetail} name={info.orderId} >내역보기</button>
+            </div>
+
+            <div className="history_item_mid">
+                <ul>
+                <li className="history_item_branch">{info.name}</li>
+                <li className="history_item_coursename">{info.course_name}</li>
+                <li className="history_item_info">
+                <span>{info.teacher_name}</span>
+                </li>
+                <li className="history_item_info">
+                <span className='history_item_info2'>{info.course_start}~{info.course_end}
+                </span>   
+                <span className=''>{info.start_time}~{info.end_time} 
+                / {info.cnumber}회
+                    </span> 
+                  </li>
+                <li className="history_item_info">
+                    <span>강좌료 : </span>
+                    <span>{info.price}원</span></li>
+                </ul>
+            </div>
+            
+    <div className="history_item_bottom">   
+        <ul className="history_item_bottom_ul">
+        <li className="history_item_bottom_name">{info.user_name}</li>
         <li className="history_item_bottom_state">
         <span>접수상태</span>
         <span>취소완료</span>
         </li>
         <li className="history_item_bottom_price">
         <span>취소(환불)금액</span>
-        <span>10,000원</span>
+        <span>{info.price}원</span>
         </li>
-    </ul>
-                    }
+        </ul>
+           </div>
+           </div>
+           ))}
+           </>
+           }
 
-            </div>
-        </div>
-        // </>
+     </div>
     )
 }
-

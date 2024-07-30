@@ -30,7 +30,7 @@ export default function ReviewDetail() {
           <div className="stars">
             {
               Array.from(Array(data.star), (_, i)=> i).map(v => (
-                <IconStar />
+                <IconStar key={v} />
               ))
             }
           </div>
@@ -59,7 +59,7 @@ export default function ReviewDetail() {
           </div>
         </div>
         <div className="detail_bot">
-          <Link className="basic_btn" to="/board/review">목록으로</Link>
+          <Link className="basic_btn" to={-1}>목록으로</Link>
         </div>
       </div>
     </div>

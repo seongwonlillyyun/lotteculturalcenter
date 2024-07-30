@@ -5,8 +5,12 @@ import { getUser } from '../util/localStorage.js';
 import { useSelector, useDispatch} from 'react-redux';
 import { cartListAxios } from '../modules/reduxCartAxios';
 import axios from 'axios';
+<<<<<<< HEAD
 import LoginError from '../components/LoginError'
 
+=======
+import LoginError from '../components/LoginError.jsx';
+>>>>>>> main
 
 export default function Cart() {
   const navigate = useNavigate();

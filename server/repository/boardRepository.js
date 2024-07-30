@@ -283,11 +283,20 @@ export const updatePersonal = async ({bid, answer}) => {
 export const getMyReview = async (data) => {
   const sql = `
     select
-      *
-    from payment
+      pay.orderId,
+      course_img,
+      course_name,
+      name,
+      teacher_name,
+      concat(course_start, " ~ ", course_end) course_date,
+      isReviewed,
+      star,
+      rid
+    from payment pay
+      inner join location l on l.loc_id = pay.loc_id
+      left outer join review on review.orderId = pay.orderId
     where user_id = ?
       and status = "결제완료"
-      and isReviewed = false
   `
 
   const params = [
@@ -391,11 +400,15 @@ export const getReview = async(id) => {
     .then(([rows]) => rows[0]);
 }
 
-export const getReviewList = async(data) => {
+export const getReviewList = async({location, keyword, count}) => {
   let list = []
-  let count = {}
+  let totalCount = {}
 
-  console.log(data);
+  const locationSql = location ? `where type = "${location}"` : ""
+  const keywordSql = keyword ? 
+  location ? `and (title like "%${keyword}%" or content like "%${keyword}%")` 
+    : `where (title like "%${keyword}%" or course_name like "%${keyword}%")` 
+    : ""
 
   const sql = `
     select
@@ -423,22 +436,28 @@ export const getReviewList = async(data) => {
       from review r
         inner join payment p on p.orderId = r.orderId
         inner join location l on l.loc_id = p.loc_id
-    ) t1 where rno between 1 and 5;
+      ${locationSql}
+      ${keywordSql}
+    ) t1 where rno between 1 and ${count};
   `
 
   list = await db.execute(sql)
     .then(([rows]) => rows);
 
-  count = await getReviewTotalCount();
+  totalCount = await getReviewTotalCount(locationSql, keywordSql);
 
-  return {list, ...count};
+  return {list, ...totalCount};
 }
 
-const getReviewTotalCount = async() => {
+const getReviewTotalCount = async(locationSql, keywordSql) => {
   const sql = `
     select
       count(*) count
-    from review;
+    from review r
+      inner join payment p on p.orderId = r.orderId
+      inner join location l on l.loc_id = p.loc_id
+    ${locationSql}
+    ${keywordSql};
   `
 
   return db.execute(sql)

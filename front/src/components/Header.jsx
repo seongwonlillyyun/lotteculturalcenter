@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { updateActive } from "../modules/reduxMenuAxios.js";
 import { MypageModal, MyBranchModal } from "./MypageModal";
-import { getUser } from '../util/localStorage.js';
 import { getCount } from '../modules/reduxCartAxios.js';
-
+import { updateUser } from './../modules/reduxMain';
 
 // svg
 import { ReactComponent as IconLogo } from "./../svg/logo.svg";
@@ -22,20 +21,22 @@ import { gnb } from "./gnb.js";
 // utils
 import { gnbActiveHandler, headerScroll } from "../utils/headerUtils.js";
 import { openPopup, closePopup } from "../utils/popupUtils.js";
+import { getUser, removeUser } from './../util/localStorage';
 
 // css
 import "../css/header.css";
 import "../css/popup.css";
 
-export default function Header() {
-  const isLogin = true;
+export default function Header({setUserUpdate}) {
+  const dispatch = useDispatch();
+  let userId = getUser() ? getUser().user_id : "";
   const [activeDepth, setActiveDepth] = useState("applicate")
+  const userState = useSelector(state => state.main.userState);
   const [prevScrollY, setPrevScrollY] = useState(0);
   const [step, setStep] =useState(1)
   const nextStep = () => {setStep(step+1)}
   const preStep = () => {setStep(step-1)}
   const [modalOpen, setModalOepn] = useState(false)
-  const dispatch = useDispatch();
   // const userInfo = getUser();
   const count = useSelector(state => state.cart.count);
 
@@ -50,7 +51,9 @@ export default function Header() {
     setModalOepn(true)
   }
   const closeModal = () => {
-    setModalOepn(false)}
+    setModalOepn(false)
+    setStep(1)
+  }
 
   const scrollHandler = () => {
     headerScroll(prevScrollY, setPrevScrollY);
@@ -66,7 +69,15 @@ export default function Header() {
     }
   })
 
+  useEffect(()=>{
+    userId = getUser() ? getUser().userId : "";
+  },[userState])
 
+  const logOutHandler = () => {
+    alert("안전하게 로그아웃 되었습니다.")
+    removeUser()
+    dispatch(updateUser())
+  }
 
   return (
     <>
@@ -81,21 +92,21 @@ export default function Header() {
             <Gnb setActiveDepth={setActiveDepth}/>
             <div className="users">
               {
-                isLogin ?
+                userId ?
                 <>
                   {
                     modalOpen === true && step ===1  
-                    ?<MypageModal next={nextStep} close={closeModal} modalState={modalOpen}/>
+                    ?<MypageModal next={nextStep} close={closeModal}/>
                     :null
                   }
                   {
                     modalOpen ===true && step===2 
-                    ? <MyBranchModal pre={preStep} close={closeModal}/>
+                    ? <MyBranchModal pre={preStep} close={closeModal} setStep={setStep}/>
                     :null
                   }
                   <button type="button" onClick={openModal}><IconMyPage/></button>
-                  <Link className="mycart" to="/"><IconMyCart/><span className="cart_num">{count}</span></Link>
-                  <Link to="/login"><IconLogOut /></Link>
+                  <Link className="mycart" to="/cart"><IconMyCart/><span className="cart_num">{count}</span></Link>
+                  <button type="button" onClick={logOutHandler}><IconLogOut /></button>
                 </>
                   : <Link to="/login"><IconLogIn /></Link>
               }

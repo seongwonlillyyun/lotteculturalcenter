@@ -229,3 +229,23 @@
   height: 10px;
   background-color: #dfd9d5;
 }
+
+.board_review .review_list .etc_box .write_btn {
+  font-size: 15px;
+  line-height: 1.6em;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  padding-right: 16px;
+  position: relative;
+}
+
+.board_review .review_list .etc_box .write_btn::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: url(../../svg/icon-right-arrow.svg) no-repeat center center / contain;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { getUser } from './../util/localStorage';
 import axios from "axios"
 
 // svg
@@ -9,8 +10,11 @@ import {ReactComponent as IconCart } from "../svg/icon-cart.svg";
 import "../css/courseDetail.css";
 
 export default function CourseDetail() {
+  // userID
+  const user_id = getUser() ? getUser().user_id : "";
   const {id} = useParams();
   const [data, setData] = useState();
+  const navigate = useNavigate();
 
   useEffect(()=>{
     const url = `//localhost:8080/course/${id}`;
@@ -20,6 +24,37 @@ export default function CourseDetail() {
         setData(result.data)
       })
   },[id])
+
+  const cartAddHandler = () => {
+    const formData = {
+      id : id,
+      userId : user_id,
+    }
+
+    const url = "//localhost:8080/cart/add"
+
+    if(user_id){
+      axios.post(url, formData)
+        .then(result => {
+          if(result.data.cnt === 1){
+            window.confirm("장바구니에 담겼습니다. 확인하시겠습니까?") &&
+            navigate("/cart");  
+          }
+        })
+    } else {
+      window.confirm("로그인이 필요한 서비스 입니다.") &&
+      navigate("/login");
+    }
+  }
+
+  const orderHandler = () => {
+    if(user_id){
+      navigate("/order", {state : {cartItemList : [{id : parseInt(id)}]}})
+    } else {
+      window.confirm("로그인이 필요한 서비스 입니다.") &&
+      navigate("/login");
+    }
+  }
 
   return data && (
     <div className="course_detail basic_page">
@@ -128,8 +163,8 @@ export default function CourseDetail() {
               </div>
             </div>
             <div className="course_btns">
-              <Link to="/cart" className="cart_btn"><IconCart /></Link>
-              <Link to="/order" className="purchase_btn">수강신청</Link>
+              <button type="button" className="cart_btn" onClick={cartAddHandler}><IconCart /></button>
+              <button type="button" className="purchase_btn" onClick={orderHandler}>수강신청</button>
             </div>
           </div>
         </div>

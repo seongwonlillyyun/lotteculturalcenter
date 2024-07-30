@@ -22,7 +22,7 @@ import { getUser } from '../util/localStorage.js'
 import { useDispatch } from 'react-redux';
 import { cartItemAdd } from '../modules/reduxCartAxios.js';
 
-export default function SearchByTopic({addCartCount}) {
+export default function SearchByTopic() {
   const { id } = useParams();
   const [showCourse, setShowCourse] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,30 +40,29 @@ export default function SearchByTopic({addCartCount}) {
   const [selected, setSelected] = useState({ day: "", time: "", center: [] });
   const [test, setTest] = useState("");
   const [searchText, setSearchText] = useState("%%");
+  const [courseCount, setCourseCount] = useState(0);
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
   
   //장바구니 추가
   const handleAddCart = (id) => {
-    const userInfo = getUser();
+    const userInfo = getUser();      // const userId = getUser() ? getUser().user_id : "test";
     
     if(userInfo !== null){
       const userId = userInfo.user_id;
-      // const userId = getUser() ? getUser().user_id : "test";
+
       dispatch(cartItemAdd(id, userId));
       navigate('/cart');
     }else {
       alert('로그인이 필요한 기능입니다.');
     }
   }
-  
+
   const searchDetail = (value, selected) => {
     setDetail(value);
     setSelected(selected);
   };
-  // console.log("selected=>", selected);
-  // console.log("detail=>", detail);
   useEffect(() => {
     setDetail({
       day: [1, 2, 3, 4, 5, 6, 7],
@@ -71,7 +70,6 @@ export default function SearchByTopic({addCartCount}) {
       center: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     });
     setCurrentPage(1);
-    /* setSmallCategory(id); */
     setSearchText("%%");
     axios({
       method: "get",
@@ -101,7 +99,7 @@ export default function SearchByTopic({addCartCount}) {
         sort: sort,
       },
     })
-      .then((response) => setShowCourse([response.data]))
+      .then((response) => {setShowCourse([response.data.courses]);setCourseCount({ ...response.data.count}[0].count)})
       .catch((error) => console.log(error));
   }, [id, detail, searchText, endIndex, sort]);
 
@@ -199,7 +197,6 @@ export default function SearchByTopic({addCartCount}) {
       let centerarr = detail.center.filter(
         (item) => item !== centerId.toString()
       );
-      console.log(centerarr)
       if(centerarr.length === 0){
           setDetail({...detail, center:[1,2,3,4,5,6,7,8,9,10,11,12]})
         } else {
@@ -213,7 +210,7 @@ export default function SearchByTopic({addCartCount}) {
     setTest(value);
   };
   let cntarr = showCourse[0];
-  // console.log( 'id=>', id)
+
   return (
     <>
       <div className="bycenter_title_part">
@@ -223,7 +220,7 @@ export default function SearchByTopic({addCartCount}) {
             setView(!view);
           }}
         >
-          {topic.middlename}
+          <span>{topic.middlename}</span>
           {""}
           {view ? (
             <FontAwesomeIcon icon={faAngleUp} className="title_arrow" />
@@ -237,7 +234,7 @@ export default function SearchByTopic({addCartCount}) {
           )}
         </p>
       </div>
-      <div className="bycenter_list min_inner">
+      <div className="bycenter_list min_inner narrow_page">
         <ul className="small_category_items_topic">
           {category[cindex - 1].list.map((item, i) => (
             <li
@@ -264,8 +261,11 @@ export default function SearchByTopic({addCartCount}) {
           ))}
         </ul>
 
-        <div className="search_part">
-          <div className="search_part_btns">
+        <div className="topic_search_part">
+            <p className="topic_coursecount">
+              <span className="countnumber">{courseCount}개</span>의 강좌
+            </p>
+          <div className="topic_search_part_btns">
             <button className="search_part_detail" onClick={openModal}>
               <FontAwesomeIcon icon={faMagnifyingGlass} />
               <span style={{ marginLeft: ".4rem" }}>상세검색</span>
@@ -363,27 +363,31 @@ export default function SearchByTopic({addCartCount}) {
         ) : null}
 
         <div className="course_list_content">
-          {showCourse.map((items, index) => (
-            <ul className="topic_course_list">
-              {items.map((item, index) => (
-                <li key={index}>
-                    <CourseItem item={item} handleAddCart={handleAddCart} />
-                </li>
-              ))}
-            </ul>
-          ))}
           {cntarr && cntarr.length !== 0 ? (
-            <div className="nomorecourse_div">
-                <button
-                className="morebtn"
-                type="button"
-                onClick={() => {
-                    setCurrentPage(currentPage + 1);
-                }}
-                >
-                강좌더보기+
-                </button>
-            </div>
+            <>
+              {showCourse.map((items, index) => (
+                <ul className="center_course_list">
+                  {items.map((item, index) => (
+                    <li key={index}>
+                      <CourseItem item={item} handleAddCart={handleAddCart} />
+                    </li>
+                  ))}
+                </ul>
+              ))}
+              {courseCount > endIndex && (
+                <div className="nomorecourse_div">
+                  <button
+                    className="morebtn"
+                    type="button"
+                    onClick={() => {
+                      setCurrentPage(currentPage + 1);
+                    }}
+                  >
+                    강좌더보기+
+                  </button>
+                </div>
+              )}
+            </>
           ) : (
             <div className="nomorecourse_div">
               <FontAwesomeIcon className="nocourse_icon" icon={faExclamation} />
