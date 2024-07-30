@@ -189,7 +189,6 @@
     font-size: 1.5rem;
 }
 .modal_search_text{
-    position: relative;
     margin: 4rem 0;
     width: 360px;
     height: 50px;
@@ -198,10 +197,13 @@
     padding: 0 1rem;
     border-radius: 100px;
 }
-.modal_searc_text_btn{
+.center_div{
+    position: relative;
+}
+.modal_searc_text_btn_center{
     position: absolute;
-    top: 11.3rem;
-    right: 2.4rem;
+    top: 4.6rem;
+    right: 1rem;
     font-size: 1.2rem;
 }
 .modal_search_std{

@@ -178,21 +178,23 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
         </button>
         <div className="modal_content_search">
           <p className="modal_search_title">상세검색</p>
-          <input
-            type="text"
-            name="searchtxt"
-            onChange={writingText}
-            value={searchText}
-            placeholder="강좌명 or 강사명으로 검색"
-            className="modal_search_text"
-          />
-          <button
-            className="modal_searc_text_btn"
-            type="button"
-            onClick={handleSearch}
-          >
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-          </button>
+          <div className="center_div">
+            <input
+              type="text"
+              name="searchtxt"
+              onChange={writingText}
+              value={searchText}
+              placeholder="강좌명 or 강사명으로 검색"
+              className="modal_search_text"
+            />
+            <button
+              className="modal_searc_text_btn_center"
+              type="button"
+              onClick={handleSearch}
+            >
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </button>
+          </div>
           <ul className="modal_search_std modal_search_day">
             <li className="modal_search_std_title">
               <p className="std_title">요일</p>
