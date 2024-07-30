@@ -178,21 +178,23 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
         </button>
         <div className="modal_content_search">
           <p className="modal_search_title">상세검색</p>
-          <input
-            type="text"
-            name="searchtxt"
-            onChange={writingText}
-            value={searchText}
-            placeholder="강좌명 or 강사명으로 검색"
-            className="modal_search_text"
-          />
-          <button
-            className="modal_searc_text_btn"
-            type="button"
-            onClick={handleSearch}
-          >
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-          </button>
+          <div className="topic_search_div">
+            <input
+              type="text"
+              name="searchtxt"
+              onChange={writingText}
+              value={searchText}
+              placeholder="강좌명 or 강사명으로 검색"
+              className="modal_search_text"
+            />
+            <button
+              className="modal_searc_text_btn"
+              type="button"
+              onClick={handleSearch}
+            >
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </button>
+          </div>
           <ul className="modal_search_std_topic modal_search_center">
             <li className="modal_search_std_title_topic">
               <p className="std_title">
@@ -306,7 +308,7 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
               <span className="reset_title">초기화</span>
             </button>
             <button
-              className="modal_btn_last modal_btn_result"
+              className="modal_btn_last modal_btn_result_topic"
               type="button"
               onClick={handleDetail}
             >

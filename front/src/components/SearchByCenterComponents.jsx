@@ -263,7 +263,7 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
               </button>
             </li>
           </ul>
-          <div className="modal_btn_last_list">
+          <div className="center_modal_btn_last_list">
             <button
               className="modal_btn_last modal_btn_reset"
               onClick={handleReset}
