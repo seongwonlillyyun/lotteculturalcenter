@@ -9,5 +9,6 @@ router.get('/:orderId', controller.getHistoryDetail)
 router.post('/cancel', controller.cancelHistory)
 router.post('/search', controller.searchHistory)
 router.post('/searchcancel', controller.searchCancelHistory)
+// router.post('/reviewNo', controller.reviewNo)
 
 export default router;

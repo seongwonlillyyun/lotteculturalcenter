@@ -142,14 +142,16 @@ return(
 
 
         {tab.value === 'register' && (!courseInfo.length
-        ?<div className='noresult_div'><FontAwesomeIcon icon={faExclamation} className='noresult_icon'/>
+        ?<div className='noresult_div'>
+            <FontAwesomeIcon icon={faExclamation} className='noresult_icon'/>
              <p className='noresult_text'>검색결과가 없습니다.</p></div>
   
         :<><HistoryItem courseInfo={courseInfo} tab={tab}/></>)}
 
         {tab.value === 'cancel' && (!cancelInfo.length
-       ?<div><FontAwesomeIcon icon={faExclamation} />
-             <p>검색결과가 없습니다.</p></div>
+       ?<div className='noresult_div'>
+        <FontAwesomeIcon icon={faExclamation}  className='noresult_icon'/>
+        <p className='noresult_text'>검색결과가 없습니다.</p></div>
         :<><HistoryItem cancelInfo={cancelInfo} tab={tab}/></>)}
     </div>
 </div>

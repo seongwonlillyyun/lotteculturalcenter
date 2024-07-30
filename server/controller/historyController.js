@@ -63,3 +63,7 @@ export const searchCancelHistory = async(req,res)=>{
         res.json(result)
         res.end()
     }
+
+//     //! 수강후기 수량 부르기
+// export const reviewNo = async (req,res) =>{
+//     const 
