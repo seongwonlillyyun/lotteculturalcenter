@@ -20,7 +20,6 @@ import Login from "../src/components/Login.jsx"
 import Join from "./pages/Join.jsx";
 import CourseHistory from "./pages/CourseHistory.jsx";
 import DetailHistory from "./pages/DetailHistory.jsx";
-import {MypageModal}  from "./components/MypageModal.jsx";
 import ChangeMemberInfo from "./pages/ChangeMemberInfo.jsx";
 import Location from "./pages/Location";
 import QnA from "./pages/board/QnA";
@@ -86,11 +85,13 @@ export default function App() {
       {path : "/order", element : <Order/> },
       {path : "/changememberinfo" , element : <ChangeMemberInfo/> },
       {path : "/courseHistory", element : <CourseHistory/>},
-      {path : "/detailHistory", element : <DetailHistory/>}, // path 변경예정
+  
       {path : "/board/notievent/:id", element : <NotiEventDetail/>},
       {path : "/board/review", element : <Review/>},
       {path : "/board/review/:id", element : <ReviewDetail/>},
       {path : "/review", element : <PersonalReview />},
+      {path :"/courseHistory", element : <CourseHistory/>},
+      {path :"/courseHistory/:orderId", element : <DetailHistory/>}, 
     ]
   }])
 

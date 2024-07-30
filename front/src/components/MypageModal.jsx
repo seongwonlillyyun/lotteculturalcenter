@@ -53,6 +53,7 @@ const userInfo = getUser() ? getUser() : {user_id : ""};
 // console.log('userInfo->', userInfo);
 
 useEffect(()=>{
+
     const url='http://127.0.0.1:8080/member/mypage'
     axios({
         method : 'post',
@@ -65,7 +66,21 @@ useEffect(()=>{
     .catch(error=>console.log(error))
 },[])
 
-// console.log('mypage memberInfo->',memberInfo);
+//! courseInfo => 수강후기수량, 수강내역수량 표시
+const[courseInfo, setCourseInfo] =useState([])
+useEffect(()=>{
+    const url ='http://127.0.0.1:8080/history/list'
+    axios({
+        method : 'post',
+        url : url,
+        data : {user_id : userInfo.user_id }
+    })
+    .then(res =>setCourseInfo(res.data))
+    .catch(error=>console.log(error))
+},[])
+
+// console.log('mypage => courseInfo.lenght',courseInfo.length);
+// console.log('mypage => courseInfo',courseInfo);
 
 
 
@@ -87,6 +102,7 @@ return (
 
         <FontAwesomeIcon icon={faAngleRight} className="mypage_name_arrow" /></button>
     </div>
+
 <div className="mypage_middle">
     <div className="mypage_middle_top">
     <div className="mypage_mybranch" onClick={next}>
@@ -108,13 +124,14 @@ return (
     <p className="mypage_block_subject">장바구니</p>
     <p className="mypage_block_value">0</p>
     </button>
-</div>
+</div> 
 <div className="mypage_block">
     <button type="button" onClick={handleClickHistory} className="mypage_block_btns">
     <img src='/img/mypage/icon-mypage-class-history.png' alt='mypagecoursehistory'
             className="mypage_img"/>
+            
     <p className="mypage_block_subject">수강내역</p>
-    <p className="mypage_block_value">0</p>
+    <p className="mypage_block_value">{courseInfo.length}</p>
             </button>
 </div>
 <div className="mypage_block">
@@ -145,17 +162,18 @@ return (
 
 
 //! 나의 관심지점 변경페이지
-export function MyBranchModal({pre, close}){
+export function MyBranchModal({pre, close, setStep}){
     
-    //todo. toggle 
-    const [isOpen, setIsOpen] = useState({
+const navigate = useNavigate()
+
+const [isOpen, setIsOpen] = useState({
         'seoul' : true,
         'metro' : true,
         'etc' :true
     })
 
 // signup step1의 이벤트 부모에서 처리 부분에 있는 코드와 동일! 
-    const handleToggle =(type) => {
+const handleToggle =(type) => {
         setIsOpen(toggle=>({
             ...toggle, [type]:!toggle[type]
         }))  
@@ -182,6 +200,8 @@ useEffect(()=>{
 },[])
 
 // console.log('mypage memberInfo->',memberInfo);
+
+
 
 
 //! location table에서 location 정보불러서 버튼이름!보여주기
@@ -218,14 +238,16 @@ const handleSubmit =()=>{
         method :'post',
         url :url, 
         data : { user_id :memberInfo.user_id,
-            name : btnData
-        }//  이게맞는지 모르겠어! 
+                name : btnData
+        } 
     })
 .then(result=>{
     if(result.data.cnt ===1)
         // console.log('update result->', result.data);
-        alert('관심지점이 변경되었습니다.')
-    close() // todo.  close 되고 다시 열었는데 관심지점변경 modal이 열림?!왜구랫??
+    alert('관심지점이 변경되었습니다.')
+    close()
+    setStep(1)
+    navigate('/') 
 })
 .catch(error=>console.log(error))
 }

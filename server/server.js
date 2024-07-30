@@ -15,6 +15,7 @@ import memberRouter from './router/memberRouter.js'
 import mainRouter from "./router/mainRouter.js";
 import cartRouter from "./router/cartRouter.js"
 import orderRouter from "./router/orderRouter.js"
+import historyRouter from './router/historyRouter.js'
 
 const server = express();
 const port = 8080;
@@ -37,6 +38,8 @@ server.use('/member',memberRouter)
 server.use("/main", mainRouter);
 server.use('/cart', cartRouter);
 server.use('/order', orderRouter);
+server.use('/history', historyRouter)
+
 
 server.listen(port, ()=>{
   console.log("server start");
