@@ -265,14 +265,14 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
           </ul>
           <div className="center_modal_btn_last_list">
             <button
-              className="modal_btn_last modal_btn_reset"
+              className="modal_btn_last_center modal_btn_reset"
               onClick={handleReset}
             >
               <FontAwesomeIcon icon={faRotateRight} />
               <span className="reset_title">초기화</span>
             </button>
             <button
-              className="modal_btn_last modal_btn_result"
+              className="modal_btn_last_center modal_btn_result"
               type="button"
               onClick={handleDetail}
             >
