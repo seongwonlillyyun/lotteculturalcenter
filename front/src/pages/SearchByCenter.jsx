@@ -23,7 +23,7 @@ import { getUser } from '../util/localStorage.js'
 import { useDispatch } from 'react-redux';
 import { cartItemAdd } from '../modules/reduxCartAxios.js';
 
-export default function SearchByCenter({addCartCount}) {
+export default function SearchByCenter() {
   const { id } = useParams();
   const [showCourse, setShowCourse] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);

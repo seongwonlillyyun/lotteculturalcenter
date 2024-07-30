@@ -22,7 +22,7 @@ import { getUser } from '../util/localStorage.js'
 import { useDispatch } from 'react-redux';
 import { cartItemAdd } from '../modules/reduxCartAxios.js';
 
-export default function SearchByTopic({addCartCount}) {
+export default function SearchByTopic() {
   const { id } = useParams();
   const [showCourse, setShowCourse] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,11 +47,11 @@ export default function SearchByTopic({addCartCount}) {
   
   //장바구니 추가
   const handleAddCart = (id) => {
-    const userInfo = getUser();
+    const userInfo = getUser();      // const userId = getUser() ? getUser().user_id : "test";
     
     if(userInfo !== null){
       const userId = userInfo.user_id;
-      // const userId = getUser() ? getUser().user_id : "test";
+
       dispatch(cartItemAdd(id, userId));
       navigate('/cart');
     }else {

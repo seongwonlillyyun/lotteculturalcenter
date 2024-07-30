@@ -105,7 +105,7 @@ export default function Header({setUserUpdate}) {
                     :null
                   }
                   <button type="button" onClick={openModal}><IconMyPage/></button>
-                  <Link className="mycart" to="/"><IconMyCart/><span className="cart_num">{count}</span></Link>
+                  <Link className="mycart" to="/cart"><IconMyCart/><span className="cart_num">{count}</span></Link>
                   <button type="button" onClick={logOutHandler}><IconLogOut /></button>
                 </>
                   : <Link to="/login"><IconLogIn /></Link>

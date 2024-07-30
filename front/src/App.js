@@ -56,13 +56,6 @@ export default function App() {
 // }
 
 
-  const [cartCount, setCartCount] = useState(0);//카트갯수 카운트
-
-  // 카운트
-  const addCartCount = (result) =>{
-    if(result === 1) setCartCount(cartCount + 1);
-  }
-
 
   
   const router = createBrowserRouter([{
@@ -80,7 +73,7 @@ export default function App() {
       {path : "/login", element : <Login/> },
       {path : "/join" , element : <Join/> },
       {path : '/center/:id', element:<SearchByCenter/>},
-      {path : '/topic/:id', element:<SearchByTopic addCartCount={addCartCount} />},
+      {path : '/topic/:id', element:<SearchByTopic />},
       {path : "/cart", element : <Cart/> },
       {path : "/order", element : <Order/> },
       {path : "/changememberinfo" , element : <ChangeMemberInfo/> },

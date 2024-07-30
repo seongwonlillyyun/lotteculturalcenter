@@ -5,6 +5,7 @@ import { getUser } from '../util/localStorage.js';
 import { useSelector, useDispatch} from 'react-redux';
 import { cartListAxios } from '../modules/reduxCartAxios';
 import axios from 'axios';
+import LoginError from '../components/LoginError.jsx';
 
 export default function Cart() {
   const navigate = useNavigate();
@@ -135,7 +136,7 @@ export default function Cart() {
     <>
       {
         userInfo === null ? (
-          alert('로그인 후 사용이 가능합니다.')
+          <LoginError/>
         ) : (
           <div className='cart type'>
         <div className="sub_visual">
