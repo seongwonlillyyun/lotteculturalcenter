@@ -6,6 +6,7 @@ import { getUser } from '../../util/localStorage.js';
 import { useSelector, useDispatch} from 'react-redux';
 import { cartListAxios } from '../../modules/reduxCartAxios';
 import axios from 'axios';
+import LoginError from '../../components/LoginError'
 
 
 export default function OrderStep1({next, stepOrder, cartItemList}) {
@@ -84,7 +85,7 @@ export default function OrderStep1({next, stepOrder, cartItemList}) {
     <>
       {
         userInfo === null ? (
-          alert('로그인 후 사용이 가능합니다.')
+          <LoginError/>
         ):(
         <div className='order type'>
           <div className="sub_visual">

@@ -332,7 +332,7 @@ export function CourseItem({ item, handleAddCart }) {
     <Link to={`/course/${item.course_id}`}>
       <div className="topic_course_img_box">
         <img
-          src={`/localhost:8080/${item.course_img}`}
+          src={`//localhost:8080/${item.course_img}`}
           alt="course_img"
           className="topic_course_item_img"
         />
