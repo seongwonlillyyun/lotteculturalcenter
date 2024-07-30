@@ -13,7 +13,7 @@ left(end_time,5) end_time,
 cnumber,
 format(price,0) price, 
 name, user_name, status
-from location lo, order_ms od where lo.loc_id = od.loc_id and user_id=? and status='결제완료'
+from location lo, order od where lo.loc_id = od.loc_id and user_id=? and status='결제완료'
 `
 return db.execute(sql, [user_id])
                 .then(result=>result[0])
@@ -33,7 +33,7 @@ left(end_time,5) end_time,
 cnumber,
 format(price,0) price, 
 name, user_name, status
-from location lo, order_ms od where lo.loc_id = od.loc_id and user_id=? and status='결제취소'
+from location lo, order od where lo.loc_id = od.loc_id and user_id=? and status='결제취소'
 `
 
 return db.execute(sql, [user_id])
@@ -57,7 +57,7 @@ left(order_date,10) order_date,
 		user_name, status, 
         cancel_info, 
         left(cancel_date,10) cancel_date
-from location lo, order_ms od where orderId=? and lo.loc_id = od.loc_id`
+from location lo, order od where orderId=? and lo.loc_id = od.loc_id`
 
     return db.execute(sql,[orderId])
             .then(result=>result[0][0])
@@ -69,7 +69,7 @@ from location lo, order_ms od where orderId=? and lo.loc_id = od.loc_id`
     // console.log('repository : result_rows->', result_rows);
     
     const sql = ` 
-update order_ms set status = '결제취소', cancel_info=?, cancel_date= now() where orderId = ?
+update order set status = '결제취소', cancel_info=?, cancel_date= now() where orderId = ?
 `
 
     let result_rows = 0
@@ -98,7 +98,7 @@ left(end_time,5) end_time,
 cnumber,
 format(price,0) price, 
 name, user_name, status
-from location lo, order_ms od where lo.loc_id = od.loc_id and course_name like "%${searchInfo.course_name}%"
+from location lo, order od where lo.loc_id = od.loc_id and course_name like "%${searchInfo.course_name}%"
 and od.status ='결제완료' and od.user_id=?
 `
 return db.execute(sql,[searchInfo.user_id])
@@ -124,7 +124,7 @@ left(end_time,5) end_time,
 cnumber,
 format(price,0) price, 
 name, user_name, status
-from location lo, order_ms od where lo.loc_id = od.loc_id and course_name like "%${searchInfo.course_name}%"
+from location lo, order od where lo.loc_id = od.loc_id and course_name like "%${searchInfo.course_name}%"
 and od.status ='결제취소' and od.user_id=?
 `
 return db.execute(sql,[searchInfo.user_id])

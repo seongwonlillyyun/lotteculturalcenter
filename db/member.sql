@@ -45,7 +45,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES ('test','$2a$07$CQh49jH1W3W9OUkhOV8oDuVLE8rRpI7Wavqgj8jj03evvbgUGm2kS','이미자','010-1234-5678','mijalee','gmail.com','본점','서울 중랑구 구리포천고속도로 3 101호','02263','1955-06-05',0,'2024-07-25 12:15:46');
+INSERT INTO `member` VALUES ('gong','$2a$07$TD6HuwD18/p1URdk9jqpj.fdGJycwm0QQSefuCcuav3NLdxfPUEzW','공유','010-9877-5678','yoo','naver.com','부산본점','경기 수원시 영통구 광교마을로 156 A동 1403호','16510','1979-07-17',0,'2024-07-25 15:07:03'),('hong','$2a$07$or31T7eoJFSDAQxYO/sJL.hlY6r7Xik8VKefAwUKd0IKyXsRzFv0K','홍길동','010-1234-7866','hong','gmail.com','대구점',' ','','1943-01-11',0,'2024-07-26 16:01:49'),('test','$2a$07$CQh49jH1W3W9OUkhOV8oDuVLE8rRpI7Wavqgj8jj03evvbgUGm2kS','이미자','010-1234-5678','mijalee','gmail.com','강남점','서울 중랑구 구리포천고속도로 3 101호','02263','1955-06-05',2000,'2024-07-25 12:15:46');
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,11 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-25 13:52:44
-
-select * from member;
- 
--- point 바꾸기 
-update member set point = 2000 where user_id= 'test';
-
-
+-- Dump completed on 2024-07-30 11:09:39
