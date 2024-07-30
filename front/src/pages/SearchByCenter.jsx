@@ -43,7 +43,6 @@ export default function SearchByCenter() {
     setDetail(value);
     setSelected(selected);
   };
-  console.log(courseCount);
   useEffect(() => {
     setCindex(0);
     setSmallCategory(0);
@@ -171,7 +170,6 @@ export default function SearchByCenter() {
     setTest(value);
   };
   let cntarr = showCourse[0];
-  console.log("cntarr->", cntarr);
   return (
     <>
       <div className="bycenter_title_part">

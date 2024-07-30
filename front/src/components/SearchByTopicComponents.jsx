@@ -119,8 +119,6 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
 
   const handleActive = (txt, e) => {
     const { name, value } = e.target;
-    console.log(name, value, txt);
-    console.log("include=>,", info.center.includes(value));
     if (selected.day === "" || selected.time === "") {
       setIsActive({ ...isActive, [name]: true });
       if (name === "day") {
@@ -172,10 +170,6 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
     search(searchText);
     closeModal();
   };
-
-  console.log("selected=>", selected);
-  console.log("info=>", info);
-  console.log(addCenter);
   return (
     <div className="modal_out" onClick={closeModal}>
       <div className="modal_container" onClick={(e) => e.stopPropagation()}>
@@ -203,7 +197,6 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
             <li className="modal_search_std_title_topic">
               <p className="std_title">
                 지점
-                {/*  <span className={info.center.length !== 0?'topic_cnt_active':'topic_cnt'}>{info.center.length}</span> */}
               </p>
             </li>
             {center.map((items) => (

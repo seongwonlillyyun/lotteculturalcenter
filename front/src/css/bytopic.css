@@ -181,7 +181,6 @@
 .center_btn_list{
     display: flex;
     gap: .5rem;
-    /* border: 1px solid red; */
     margin-bottom: 1.5rem;
 }
 .center_btn{
@@ -247,7 +246,6 @@
     width: 283px;
     height: 480px;
     position: relative;
-    /* border: 1px solid red; */
     align-items: end;
 }
 .topic_course_item_img{
@@ -303,7 +301,6 @@
 .topic_course_item_info{
     position: absolute;
     bottom: 3rem;
-    /* border: 1px solid blue; */
     margin-top: .5rem;
     display: flex;
     align-items: center;
@@ -315,7 +312,6 @@
 }
 .topic_course_item_price{
     position: absolute;
-    /* border: 1px solid blue; */
     width: 280px;
     bottom: .5rem;
     margin-top: .5rem;
@@ -339,7 +335,6 @@
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-    /* border: 1px solid red; */
 }
 .morebtn{
     border: 1px solid #000;
