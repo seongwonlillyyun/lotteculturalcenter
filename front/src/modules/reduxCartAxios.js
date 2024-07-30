@@ -35,6 +35,5 @@ export function cartItemAdd(id, userId){
   return async(dispatch) => {
     const cnt = await axiosPost(url, data);
     dispatch(setCartItem(cnt));
-    dispatch()
   }
 }
