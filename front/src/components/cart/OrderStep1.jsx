@@ -6,19 +6,21 @@ import { getUser } from '../../util/localStorage.js';
 import { useSelector, useDispatch} from 'react-redux';
 import { cartListAxios } from '../../modules/reduxCartAxios';
 import axios from 'axios';
+import LoginError from '../../components/LoginError'
 
 
 export default function OrderStep1({next, stepOrder, cartItemList}) {
   const userInfo = getUser();
-  // const userId = userInfo && userInfo.user_id;
-  const userId = getUser() ? getUser().user_id : "test";
+  const userId = userInfo && userInfo.user_id;
   const cartList = useSelector(state => state.cart.list); // db리스트
+  const count = useSelector(state => state.cart.count);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [point, setPoint] = useState({}); // db 포인트 불러오기 {point : 0}
   const [inputPoint, setInputPoint] = useState(0) // 입력한 포인트
   const [isChecked, setIsChecked] = useState(false) // 체크박스 동의
 
+  
   let orderItemList = [];
   let orderPrice = 0;
             
@@ -46,7 +48,7 @@ export default function OrderStep1({next, stepOrder, cartItemList}) {
       axios({
         method: 'post',
         url : url,
-        // data: point
+        data: {userId}
       })
       .then(res => {
         setPoint(res.data)
@@ -75,8 +77,8 @@ export default function OrderStep1({next, stepOrder, cartItemList}) {
    
 
     useEffect(()=>{
-      dispatch(cartListAxios({userId}))
-    },[userId])
+      dispatch(cartListAxios(userId))
+    },[count])
   
   
 
@@ -84,7 +86,7 @@ export default function OrderStep1({next, stepOrder, cartItemList}) {
     <>
       {
         userInfo === null ? (
-          alert('로그인 후 사용이 가능합니다.')
+          <LoginError/>
         ):(
         <div className='order type'>
           <div className="sub_visual">

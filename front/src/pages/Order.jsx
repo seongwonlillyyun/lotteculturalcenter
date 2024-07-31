@@ -7,14 +7,13 @@ import { useLocation } from 'react-router-dom';
 export default function Order() {
   const location = useLocation();
   const {cartItemList} = location.state
-
   const [stepOrder, setStepOrder] = useState(1)
+
 
   const nextStep = () => {
     setStepOrder(stepOrder + 1);
   }
 
-  
 
   return(
     <div className=''>
@@ -24,6 +23,6 @@ export default function Order() {
       { stepOrder === 2 && (
         <OrderStep2 stepOrder={stepOrder} />
       )}
-    </div>
+    </div>  
   );
 }

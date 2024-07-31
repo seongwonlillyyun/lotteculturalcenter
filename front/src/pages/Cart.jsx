@@ -3,23 +3,38 @@ import PayBottom from '../components/cart/PayBottom';
 import { useNavigate, Link } from 'react-router-dom';
 import { getUser } from '../util/localStorage.js';
 import { useSelector, useDispatch} from 'react-redux';
-import { cartListAxios } from '../modules/reduxCartAxios';
+import { cartListAxios, cartCheckRemoveAxios } from '../modules/reduxCartAxios';
 import axios from 'axios';
-import LoginError from '../components/LoginError.jsx';
+import LoginError from '../components/LoginError'
+
+
 
 export default function Cart() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = getUser();
-  // const userId = userInfo && userInfo.user_id;
-  const userId = getUser() ? getUser().user_id : "test";
+  const userId = userInfo && userInfo.user_id;
+
 
   const cartList = useSelector(state => state.cart.list); // db리스트
+  const count = useSelector(state => state.cart.count);
   const [checkedItems, setCheckedItems] = useState(new Array(cartList.length).fill(false) ); // 개별체크
   const [checkPrice, setCheckPrice] = useState(0) // 결제가격
   const [checkNum, setCheckNum] = useState(0) // 결제갯수
   const [isAllChecked, setIsAllChecked] = useState(!checkedItems.every((item)=> item)); // 전체체크
   const [cartItemList, setCartItemList] = useState([]) // 체크여부 id
+
+
+  
+  useEffect(()=>{
+    // 장바구니 비었을때 
+    if(count === 0) {
+      setCheckNum(0)
+      setCheckPrice(0)
+    }
+    
+    dispatch(cartListAxios(userId))
+  },[count])
 
 
   const handleMore = () => {
@@ -95,15 +110,18 @@ export default function Cart() {
   const handleDelete = () => {
     alert('정말 삭제하시겠습니까?')
 
-    //서버전송
-    const url = 'http://127.0.0.1:8080/cart/remove'    
-    axios({
-      method: 'post',
-      url : url,
-      data: {cartItemList: cartItemList}
-    })
-    .then(dispatch(cartListAxios(cartItemList)))
-    .catch(error=> console.log(error))
+
+    dispatch(cartCheckRemoveAxios(cartItemList))
+    // console.log('remove result->', result);
+    // //서버전송
+    // const url = 'http://127.0.0.1:8080/cart/remove'    
+    // axios({
+    //   method: 'post',
+    //   url : url,
+    //   data: {cartItemList: cartItemList}
+    // })
+    // .then(dispatch(cartListAxios(cartItemList)))
+    // .catch(error=> console.log(error))
 
   }
 
@@ -121,15 +139,6 @@ export default function Cart() {
 
   }
 
-  useEffect(()=>{
-    // 장바구니 비었을때 
-    if(cartList.length === 0) {
-      setCheckNum(0)
-      setCheckPrice(0)
-    }
-    
-    dispatch(cartListAxios({userId}))
-  },[userId, cartList])
 
 
   return(
@@ -236,7 +245,7 @@ export default function Cart() {
           </div>
           <div className='basic_btn'>
             <Link to={'/'}>
-              <button type='button' className='btn btn_border medium' onClick={handleMore}>강좌 더보기</button>  
+              <button type='button' className='btn btn_border medium' onClick={handleMore}>홈으로</button>  
             </Link>
           </div>
           

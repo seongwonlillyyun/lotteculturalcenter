@@ -1,5 +1,5 @@
 import { axiosGet, axiosPost} from './reduxAxios';
-import { setCartList, setCount, setCartItem } from '../reducers/cartReducer';
+import { setCartList, setCount, setCartItem, removeCartItem } from '../reducers/cartReducer';
 
 
 
@@ -13,6 +13,17 @@ export function cartListAxios(userId) {
   }
 }
 
+// 선택삭제
+export function cartCheckRemoveAxios(cartItemList) {
+  const url = 'http://127.0.0.1:8080/cart/remove';
+  const data = {'cartItemList':cartItemList};
+  return async(dispatch) => {
+    const result = await axiosPost(url, data);
+  
+    dispatch(removeCartItem({result}));
+  }
+}
+
 // 카운트 
 export function getCount(userId){
   const url = 'http://127.0.0.1:8080/cart/count'
@@ -22,7 +33,6 @@ export function getCount(userId){
     const carts = await axiosPost(url, data);
     const count = carts.count;
     dispatch(setCount({count}));
-    // console.log('count->', count);
   }
 }
 
@@ -36,6 +46,5 @@ export function cartItemAdd(id, userId){
   return async(dispatch) => {
     const cnt = await axiosPost(url, data);
     dispatch(setCartItem(cnt));
-    
   }
 }
