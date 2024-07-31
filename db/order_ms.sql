@@ -151,5 +151,5 @@ update payment set isReviewed2 = 0 where user_id='test';
 desc payment;
 alter table payment add (isReviewed2 int);
 set sql_safe_updates = 0;
-
+select * from course;
 commit;
