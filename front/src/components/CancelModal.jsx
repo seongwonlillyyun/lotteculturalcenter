@@ -6,7 +6,7 @@ import axios from 'axios'
 
 export function CancelModal({closeModal, handleChange, selectValue, orderId}){
     // console.log('cancel Modal->', orderId);
-    console.log('cancleModal->', selectValue);
+    // console.log('cancleModal->', selectValue);
     const navigate = useNavigate()
 
     const handleSubmit = () => {
@@ -35,9 +35,12 @@ export function CancelModal({closeModal, handleChange, selectValue, orderId}){
         })
         .catch(error=>console.log(error))
         }
-  
 
-return(<div className='cancel_modal_out' onClick={closeModal}>
+return(
+<div className='cancel_modal_out' >
+    
+<div className='cancel_modal_bg' onClick={closeModal}></div>
+    
 <div className='cancel_modal'>
     <div className='cancel_modal_top'>
         <div className='cancel_modal_head'>
