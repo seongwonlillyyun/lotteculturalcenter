@@ -8,6 +8,7 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons/faArrowLeft";
 import axios from "axios";
+//! 수민씨 내용 추가 건 있음 
 
 
 //! Mypage 모달! 
@@ -80,17 +81,23 @@ useEffect(()=>{
 },[])
 
 // console.log('mypage => courseInfo.lenght',courseInfo.length);
-console.log('mypage => courseInfo',courseInfo);
+// console.log('mypage => courseInfo',courseInfo);
 
 //! review count
-const [reviewNo, setReviewNo]= useState('')
+const [reviewNum, setReviewNum]= useState({})
 useEffect(()=>{
     const url ='http://127.0.0.1:8080/history/reviewNo'
+
     axios({
-        method :'axios',
+        method :'post',
         url : url, 
+        data : {user_id : userInfo.user_id }
     })
-})
+    .then(res=>setReviewNum(res.data))
+    .catch(error=>console.log(error))
+},[])
+
+// console.log('mypage : reviewNum->', reviewNum);
 
 
 
@@ -149,7 +156,7 @@ return (
     <img src='/img/mypage/icon-mypage-class-review-course.png' alt='mypage review'
             className="mypage_img"/>
     <p className="mypage_block_subject">수강후기</p>
-    <p className="mypage_block_value">0</p>
+    <p className="mypage_block_value">{reviewNum.reviewNum}</p>
  </button>
 </div>
 
@@ -194,6 +201,7 @@ const [btnData, setBtnData] =useState() // 초기관심지점용?
 // console.log('memberInfo->', memberInfo);
 const userInfo = getUser();
 // console.log('userInfo->', userInfo);
+//! 수민씨 dispatch 있음 
 
 useEffect(()=>{
     const url='http://127.0.0.1:8080/member/mypage'
@@ -235,7 +243,6 @@ const etc = branchList.filter((data) => data.type === "지방점");
 // console.log("etc ==> ", etc);
 
 //! 버튼 클릭시 색상변경및 지점변경 
-
  const handleClick= (name) => {
     //  console.log('Clicked branchName->', name);
      setBtnData(name)
@@ -258,6 +265,7 @@ const handleSubmit =()=>{
     close()
     setStep(1)
     navigate('/') 
+    // 수민씨 업데이트내용있음 
 })
 .catch(error=>console.log(error))
 }

@@ -12,7 +12,7 @@ export const validateCheckStep1 =(next, formData) => {
 }
 
 
-//! 회원가입 step2 정보입력 
+//!  회원가입 step2 정보입력 
 export const validateCheckStep2 =(refs) => {
     let checkFlag = true;
     if(refs.idRef.current.value === ''){

@@ -141,4 +141,15 @@ select * from payment where user_id ='test' and status='결제취소';
 -- 결재완료 내역 보기 
 select * from payment where user_id='test' and status ='결제완료';
 
--- 수강후기 수량 표시
+select * from payment where user_id ='mija';
+select * from payment;
+-- 수강후기 수량 표시 0의 갯수 카운트
+select count(*) reviewNum from payment where user_id ='test' and status='결제완료' and  isReviewed2= 0;
+
+update payment set isReviewed2 = 0 where user_id='test';
+
+desc payment;
+alter table payment add (isReviewed2 int);
+set sql_safe_updates = 0;
+
+commit;

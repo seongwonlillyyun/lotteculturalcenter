@@ -59,3 +59,9 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2024-07-30 11:09:39
+
+select * from member;
+update member set point = 4200 where user_id ='mija';
+
+update member set address = '강원도', phone = '010-1234-5541'
+where user_id ='hong';

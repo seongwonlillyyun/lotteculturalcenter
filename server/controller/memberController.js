@@ -35,6 +35,20 @@ export const memberInfoCheck = async(req,res)=>{
     res.end()
 }
 
+//! 회원정보 변경
+export const memberInfoUpdate = async (req,res)=>{
+    const formData = req.body
+    const result = await repository.memberInfoUpdate(formData)
+    
+        // console.log('controller-> update ->>', result);
+    
+    res.json(result)
+    res.end()
+}
+
+
+
+
 //! 지점이름 부르기~~
 export const branchCheck =async(req,res)=>{
     const name = req.body;
@@ -46,8 +60,9 @@ export const branchCheck =async(req,res)=>{
  //! 관심지점 변경~
  export const branchUpdate =async(req,res)=>{
     const memberInfo  = req.body;
-    console.log('controller memberInfo_user_id->', memberInfo.user_id);
+    // console.log('controller memberInfo_user_id->', memberInfo.user_id);
     const result = await repository.branchUpdate(memberInfo)
     res.json(result)
     res.end()
  }
+

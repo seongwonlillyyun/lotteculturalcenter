@@ -1,7 +1,7 @@
 
 import React, { useState, useRef} from 'react'
 import { getUser } from '../util/localStorage';
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import { faExclamation } from "@fortawesome/free-solid-svg-icons/faExclamation";
@@ -110,7 +110,7 @@ return(
 {tab.value ==='register' &&
     <form className='history_search_div' onSubmit={handleSearch}>
          <input type="text" className="history_search" 
-            placeholder="주문번호/강좌명으로 검색하세요" 
+            placeholder="강좌명으로 검색하세요" 
             onChange={handleChange} ref={refs.searchRef}/>
     <FontAwesomeIcon icon={faMagnifyingGlass} className='history_search_icon' 
                     onClick={handleSearch}/></form> }
@@ -118,7 +118,7 @@ return(
 {tab.value ==='cancel' &&
     <form className='history_search_div' onSubmit={handleCancleSearch}>
          <input type="text" className="history_search" 
-            placeholder="주문번호/강좌명으로 검색하세요" 
+            placeholder="강좌명으로 검색하세요" 
             onChange={handleChange} ref={refs.searchRef}/>
     <FontAwesomeIcon icon={faMagnifyingGlass} className='history_search_icon' 
                     onClick={handleCancleSearch}/></form>
@@ -183,41 +183,38 @@ export function HistoryItem({tab, courseInfo, cancelInfo}){
 
  {tab.value === 'register' && 
  <>{courseInfo.map((info,index)=>(
-         <div className="history_item" key={index}>
-             <div className="history_item_top">
-                 <div className="history_item_top_left">
-                 <ul>
-                     <li>
-                         <p className='history_item_top_subject'>주문번호</p>
-                         <span>{info.orderId}</span></li>
-                     <li>
-                         <p className='history_item_top_subject'>결제일</p>
-                         <span>{info.order_date}</span></li>
-                 </ul>
-                </div>
-                <button type="button" className="history_detail_btn"
-                        onClick={handleDetail} name={info.orderId} >내역보기</button>
-            </div>
+    <div className="history_item" key={index}>
+    <div className="history_item_top">
+        <div className="history_item_top_left">
+        <ul>
+        <li><p className='history_item_top_subject'>주문번호</p>
+             <span>{info.orderId}</span></li>
+         <li> <p className='history_item_top_subject'>결제일</p>
+             <span>{info.order_date}</span></li>
+         </ul>
+        </div>
+    <button type="button" className="history_detail_btn"
+            onClick={handleDetail} name={info.orderId} >내역보기</button>
+    </div>
 
-            <div className="history_item_mid">
-                <ul>
-                <li className="history_item_branch">{info.name}</li>
-                <li className="history_item_coursename">{info.course_name}</li>
-                <li className="history_item_info">
-                <span>{info.teacher_name}</span>
-                </li>
-                <li className="history_item_info">
-                <span className='history_item_info2'>{info.course_start}~{info.course_end}
-                </span>   
-                <span className=''>{info.start_time}~{info.end_time} 
-                / {info.cnumber}회
-                    </span> 
-                  </li>
-                <li className="history_item_info">
-                    <span>강좌료 : </span>
-                    <span>{info.price}원</span></li>
-                </ul>
-            </div>
+     <div className="history_item_mid">
+    <ul>
+    <li className="history_item_branch">{info.name}</li>
+    <Link to> <li className="history_item_coursename" >
+    {info.course_name}</li></Link>
+    <li className="history_item_info">
+    <span>{info.teacher_name}</span>
+    </li>
+    <li className="history_item_info">
+    <span className='history_item_info2'>{info.course_start}~{info.course_end}
+    </span>   
+    <span className=''>{info.start_time}~{info.end_time} 
+                / {info.cnumber}회</span>  </li>
+    <li className="history_item_info">
+    <span>강좌료 : </span>
+    <span>{info.price}원</span></li>
+     </ul>
+    </div>
             
     <div className="history_item_bottom">          
         <ul className="history_item_bottom_ul">

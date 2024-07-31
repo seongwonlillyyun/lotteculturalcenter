@@ -9,6 +9,8 @@ router.post('/join', controller.getJoin)
 router.post('/mypage', controller.memberInfoCheck)
 router.post('/branch', controller.branchCheck)
 router.post('/branchupdate', controller.branchUpdate)
+router.post('/memberinfoupdate', controller.memberInfoUpdate)
+
 
 
 

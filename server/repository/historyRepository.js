@@ -35,7 +35,6 @@ format(price,0) price,
 name, user_name, status, isReviewed
 from location lo, payment pa where lo.loc_id = pa.loc_id and user_id=? and status='결제취소'
 `
-
 return db.execute(sql, [user_id])
         .then(result=>result[0])
 }
@@ -128,4 +127,14 @@ and pa.status ='결제취소' and pa.user_id=?
 `
 return db.execute(sql,[searchInfo.user_id])
      .then(result=>result[0])
+ }
+
+
+ //! 수강후기 수량 불러오기
+export const reviewNo = async(user_id) =>{
+    const sql =`
+    select count(*) reviewNum from payment where user_id =? and status='결제완료' and isReviewed= 0
+    `
+    return db.execute(sql, [user_id])
+            .then(result=>result[0][0])
  }

@@ -36,7 +36,7 @@ export default function Join(){
         setFormData({...formData, zipcode : e.zipcode, address:e.address})
     }
 
-    // const handle
+
 
     return (
         <div>
