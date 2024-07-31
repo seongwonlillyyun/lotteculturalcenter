@@ -104,8 +104,8 @@
 }
 .close{
     position: absolute;
-    right: -.3rem;
-    top: -.3rem;
+    right: 5px;
+    top: 0;
     border-radius: 100%;
     width: 50px;
     height: 50px;
@@ -115,7 +115,7 @@
     position:fixed;
     right: 0;
     top: 0;
-    transition: all 300ms ease;
+    height: 100vh;
 }
 .modal_out{
     background-color: rgba(0,0,0,0.2);
@@ -129,16 +129,19 @@
 .modal_content_search{
     background-color: white;
     width: 400px;
-    max-height: 100%;
+    height: 100%;
     padding: 1.5rem 1.4rem;
+    overflow-y: auto;
 }
 .modal_search_title{
-    margin-top: 1.5rem;
+    margin-top: 3rem;
     font-size: 1.5rem;
 }
-.modal_search_text{
+.topic_search_div{
     position: relative;
-    margin: 3rem 0;
+}
+.modal_search_text{
+    margin: 4rem 0;
     width: 360px;
     height: 50px;
     border: none;
@@ -148,8 +151,8 @@
 }
 .modal_searc_text_btn{
     position: absolute;
-    top: 8.8rem;
-    right: 2.4rem;
+    top: 4.7rem;
+    right:0;
     font-size: 1.2rem;
 }
 .modal_search_std_topic{
@@ -185,13 +188,13 @@
 }
 .center_btn{
     background-color: rgb(245, 245, 245);
-    padding: .4rem .8rem;
+    padding: .5rem .7rem;
     border-radius: 4px;
     margin: 6px 6px 0 0;
 }
 .center_btn_active{
     background-color: var(--point-color);
-    padding: .4rem .8rem;
+    padding: .5rem .7rem;
     border-radius: 4px;
     margin: 6px 6px 0 0;
 }
@@ -220,8 +223,8 @@
 .reset_title{
     margin-left: .2rem;
 }
-.modal_btn_result{
-    padding: .7rem 5.9rem;
+.modal_btn_result_topic{
+    padding: .7rem 5rem;
     margin-left: 1rem;
     background-color: black;
     color:white;
@@ -360,12 +363,12 @@
 .handle_search_day, .handle_search_time, .handle_search_text{
     position: relative;
     border: 1px solid #CAC8C6;
-    width: 75px;
     height: 30px;
     background-color: #FDFAF7;
     border-radius: 20px;
     font-size: .8rem;
     text-align: center;
+    padding: 0 1rem;
     padding-top: .3rem;
 }
 .handle_search_li{

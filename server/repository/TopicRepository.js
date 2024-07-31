@@ -34,12 +34,12 @@ export const getCoursesbyTopic = async(params) =>{
 							loc_id in (select distinct loc_id from location where loc_id in (?)) and
                             dayofweek(course_start) in (select distinct dayofweek(course_start) from course where dayofweek(course_start) in (?)) and 
                             date_format(start_time, '%p') = all(select distinct date_format(start_time,'%p') from course where date_format(start_time,'%p') = ? ) and
-                            (course_name,teacher_name) in (select distinct course_name, teacher_name from course where course_name or teacher_name like ?) 
+                            (course_name,teacher_name) in (select distinct course_name, teacher_name from course where course_name like ? or teacher_name like ?) 
                             order by 9 desc
                             limit ?`
                         return db
                             .query(sql,[params.csid, params.loc_id, params.day, params.time,
-                                        params.text,params.end])
+                                        params.text,params.text,params.end])
                             .then(result=>result[0])
     } else {
         sql = `select course_id, status, loc_id, cid, csid,course_img,
@@ -64,12 +64,12 @@ export const getCoursesbyTopic = async(params) =>{
 							loc_id in (select distinct loc_id from location where loc_id in (?)) and
                             dayofweek(course_start) in (select distinct dayofweek(course_start) from course where dayofweek(course_start) in (?)) and 
                             date_format(start_time, '%p') = all(select distinct date_format(start_time,'%p') from course where date_format(start_time,'%p') =? ) and
-                            (course_name,teacher_name) in (select distinct course_name, teacher_name from course where course_name or teacher_name like ?) 
+                            (course_name,teacher_name) in (select distinct course_name, teacher_name from course where course_name like ? or teacher_name like ?) 
                             order by ?
                             limit ?`
                         return db
                             .query(sql,[params.csid, params.loc_id, params.day, params.time, 
-                                        params.text,params.sort,params.end])
+                                        params.text,params.text,params.sort,params.end])
                             .then(result=>result[0])
     }
 }
@@ -95,10 +95,10 @@ export const getCountbyTopic = async(params) =>{
 							loc_id in (select distinct loc_id from location where loc_id in (?)) and
                             dayofweek(course_start) in (select distinct dayofweek(course_start) from course where dayofweek(course_start) in (?)) and 
                             date_format(start_time, '%p') = all(select distinct date_format(start_time,'%p') from course where date_format(start_time,'%p') = ? ) and
-                            (course_name,teacher_name) in (select distinct course_name, teacher_name from course where course_name or teacher_name like ?)`
+                            (course_name,teacher_name) in (select distinct course_name, teacher_name from course where course_name like ? or teacher_name like ?)`
                         return db
                             .query(sql,[params.csid, params.loc_id, params.day, params.time,
-                                        params.text,params.end])
+                                        params.text,params.text,params.end])
                             .then(result=>result[0])
     } else {
         sql = `select count(*) as count
@@ -120,10 +120,10 @@ export const getCountbyTopic = async(params) =>{
 							loc_id in (select distinct loc_id from location where loc_id in (?)) and
                             dayofweek(course_start) in (select distinct dayofweek(course_start) from course where dayofweek(course_start) in (?)) and 
                             date_format(start_time, '%p') = all(select distinct date_format(start_time,'%p') from course where date_format(start_time,'%p') =? ) and
-                            (course_name,teacher_name) in (select distinct course_name, teacher_name from course where course_name or teacher_name like ?)`
+                            (course_name,teacher_name) in (select distinct course_name, teacher_name from course where course_name like ? or teacher_name like ?)`
                         return db
                             .query(sql,[params.csid, params.loc_id, params.day, params.time, 
-                                        params.text,params.sort,params.end])
+                                        params.text,params.text,params.sort,params.end])
                             .then(result=>result[0])
     }
 }

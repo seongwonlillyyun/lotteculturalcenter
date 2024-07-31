@@ -166,7 +166,7 @@
     position:fixed;
     right: 0;
     top: 0;
-    transition: all 500ms ease;
+    height: 100vh;
 }
 .modal_out{
     background-color: rgba(0,0,0,0.2);
@@ -180,16 +180,16 @@
 .modal_content_search{
     background-color: white;
     width: 400px;
-    max-height: 100%;
+    height: 100%;
     padding: 1.5rem 1.4rem;
+    overflow-y: auto;
 }
 .modal_search_title{
-    margin-top: 1.5rem;
+    margin-top: 3rem;
     font-size: 1.5rem;
 }
 .modal_search_text{
-    position: relative;
-    margin: 3rem 0;
+    margin: 4rem 0;
     width: 360px;
     height: 50px;
     border: none;
@@ -197,16 +197,19 @@
     padding: 0 1rem;
     border-radius: 100px;
 }
-.modal_searc_text_btn{
+.center_div{
+    position: relative;
+}
+.modal_searc_text_btn_center{
     position: absolute;
-    top: 8.8rem;
-    right: 2.4rem;
+    top: 4.6rem;
+    right: 1rem;
     font-size: 1.2rem;
 }
 .modal_search_std{
     border-top: 1px solid #F7F2EF;
     border-bottom: 1px solid #F7F2EF;
-    padding: 2rem 0;
+    padding: 3rem 0;
 }
 .std_title{
     font-size: 1.1rem;
@@ -228,7 +231,10 @@
     border-radius: 4px;
     background-color: var(--point-color);
 }
-.modal_btn_last{
+.center_modal_btn_last_list{
+    margin-top: 5rem;
+}
+.modal_btn_last_center{
     margin-top: 2.3rem;
     padding: 1.5rem 1.2rem;
 }

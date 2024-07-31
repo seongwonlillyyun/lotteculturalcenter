@@ -178,21 +178,23 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
         </button>
         <div className="modal_content_search">
           <p className="modal_search_title">상세검색</p>
-          <input
-            type="text"
-            name="searchtxt"
-            onChange={writingText}
-            value={searchText}
-            placeholder="강좌명 or 강사명으로 검색"
-            className="modal_search_text"
-          />
-          <button
-            className="modal_searc_text_btn"
-            type="button"
-            onClick={handleSearch}
-          >
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-          </button>
+          <div className="center_div">
+            <input
+              type="text"
+              name="searchtxt"
+              onChange={writingText}
+              value={searchText}
+              placeholder="강좌명 or 강사명으로 검색"
+              className="modal_search_text"
+            />
+            <button
+              className="modal_searc_text_btn_center"
+              type="button"
+              onClick={handleSearch}
+            >
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </button>
+          </div>
           <ul className="modal_search_std modal_search_day">
             <li className="modal_search_std_title">
               <p className="std_title">요일</p>
@@ -263,16 +265,16 @@ export function ModalPage({ openModal, closeModal, click, searchstd, search }) {
               </button>
             </li>
           </ul>
-          <div className="modal_btn_last_list">
+          <div className="center_modal_btn_last_list">
             <button
-              className="modal_btn_last modal_btn_reset"
+              className="modal_btn_last_center modal_btn_reset"
               onClick={handleReset}
             >
               <FontAwesomeIcon icon={faRotateRight} />
               <span className="reset_title">초기화</span>
             </button>
             <button
-              className="modal_btn_last modal_btn_result"
+              className="modal_btn_last_center modal_btn_result"
               type="button"
               onClick={handleDetail}
             >
