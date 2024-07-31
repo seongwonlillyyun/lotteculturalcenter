@@ -40,8 +40,7 @@ const handleSubmit =() =>{
                 }else{alert('회원가입에 실패하셨습니다')
                 }
         }).catch(error=>console.log(error))
-                }
-                }
+                }}
 }
 
 //todo. ID 중복체크 하려면 또 서버연동.. {cnt :1 } 
@@ -145,7 +144,7 @@ const refs = {
         <p className="join_step2_category">아이디</p>
         </div>
         <div>
-        <input type="text" name="user_id" placeholder="4~12자, 영어, 숫자" 
+        <input type="text" name="user_id" placeholder="아이디" 
                 className="join_step2_input"
                 value={formData.user_id} onChange={handleChange} ref={refs.idRef}/>
         <button type="button" className="join_step2_dupli_btn" onClick={handleIdCheck}

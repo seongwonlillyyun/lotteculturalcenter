@@ -64,6 +64,14 @@ export const searchCancelHistory = async(req,res)=>{
         res.end()
     }
 
-//     //! 수강후기 수량 부르기
-// export const reviewNo = async (req,res) =>{
-//     const 
+//! 수강후기 수량 부르기
+export const reviewNo = async (req,res) =>{
+    const {user_id} = req.body;
+    const result = await repository.reviewNo(user_id)
+    
+    // console.log('controller->result', result);
+
+
+    res.json(result)
+    res.end()
+}

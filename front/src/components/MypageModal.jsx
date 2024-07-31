@@ -8,8 +8,10 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons/faArrowLeft";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../modules/reduxMain";
+import { getCount } from '../modules/reduxCartAxios.js';
+
 
 
 //! Mypage 모달! 
@@ -52,7 +54,7 @@ export function MypageModal({next, close}){
 //! 서버연동 
 const [memberInfo, setMemberInfo]= useState({})
 const userInfo = getUser() ? getUser() : {user_id : ""};
-// console.log('userInfo->', userInfo);
+const userId = userInfo && userInfo.user_id;
 
 useEffect(()=>{
 
@@ -82,17 +84,28 @@ useEffect(()=>{
 },[])
 
 // console.log('mypage => courseInfo.lenght',courseInfo.length);
-console.log('mypage => courseInfo',courseInfo);
+// console.log('mypage => courseInfo',courseInfo);
 
 //! review count
-// const [reviewNo, setReviewNo]= useState('')
-// useEffect(()=>{
-//     const url ='http://127.0.0.1:8080/history/reviewNo'
-//     axios({
-//         method :'axios',
-//         url : url, 
-//     })
-// })
+const [reviewNum, setReviewNum]= useState({})
+useEffect(()=>{
+    const url ='http://127.0.0.1:8080/history/reviewNo'
+
+    axios({
+        method :'post',
+        url : url, 
+        data : {user_id : userInfo.user_id }
+    })
+    .then(res=>setReviewNum(res.data))
+    .catch(error=>console.log(error))
+},[])
+
+// console.log('mypage : reviewNum->', reviewNum);
+const dispatch = useDispatch()
+const count = useSelector(state => state.cart.count);
+useEffect(()=>{ 
+    dispatch(getCount(userId));
+  },[userId])
 
 return (
 <div className="mypage_modal_out">
@@ -132,7 +145,7 @@ return (
             className="mypage_img"
             alt ='mypagecart'/>
     <p className="mypage_block_subject">장바구니</p>
-    <p className="mypage_block_value">0</p>
+    <p className="mypage_block_value">{count}</p>
     </button>
 </div> 
 <div className="mypage_block">
@@ -149,7 +162,7 @@ return (
     <img src='/img/mypage/icon-mypage-class-review-course.png' alt='mypage review'
             className="mypage_img"/>
     <p className="mypage_block_subject">수강후기</p>
-    <p className="mypage_block_value">0</p>
+    <p className="mypage_block_value">{reviewNum.reviewNum}</p>
  </button>
 </div>
 
@@ -236,7 +249,6 @@ const etc = branchList.filter((data) => data.type === "지방점");
 // console.log("etc ==> ", etc);
 
 //! 버튼 클릭시 색상변경및 지점변경 
-
  const handleClick= (name) => {
     //  console.log('Clicked branchName->', name);
      setBtnData(name)

@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-between;
     width: 1118px;
-    height:  200px;
+    height:  340px;
     border-bottom: 1px solid rgba(0, 0, 0, .14);
 }
 
@@ -53,4 +53,43 @@ margin-left: 1rem;
     padding: .6rem 1.3rem 0.6rem 1.3rem;
     margin-top: 2rem;
     /* margin-right: 10rem; */
+}
+
+.change_memeber_btn_save{
+    color: white;
+    background-color: black;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    padding: .6rem 1.3rem 0.6rem 1.3rem;
+    margin-top: 2rem;
+    margin-left: 20px;
+
+}
+
+.member_info_update{
+    display: flex;
+    flex-direction: column;
+}
+
+.memeberinfo_update_input{
+    width: 300px;
+}
+.member_info_update_phone{
+width: 160px;
+}
+
+.memeberinfo_update_input_zipcode{
+    width: 120px;
+}
+
+.member_info_zipcode_btn{
+    color : white;
+    background-color: gray;
+    width: 100px;
+    border-radius: 5rem;
+    padding : 0.3rem 0.7rem 0.3rem 0.7rem;
+    margin-left: 1rem;
+    font-size : 13px;
+
 }

@@ -37,7 +37,7 @@ export function CancelModal({closeModal, handleChange, selectValue, orderId}){
         }
   
 
-return(<div className='cancel_modal_out'>
+return(<div className='cancel_modal_out' onClick={closeModal}>
 <div className='cancel_modal'>
     <div className='cancel_modal_top'>
         <div className='cancel_modal_head'>

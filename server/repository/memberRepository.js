@@ -105,17 +105,46 @@ return {cnt : result_rows}
 
     }
 
-//! 회원정보변경, mypage, 관심지점 정보 부르기  
+//!  mypage, 관심지점 정보 부르기  
 export const memberInfoCheck = async(user_id)=>{
 
     const sql =`
     select user_name, user_id, emailId, emailDomain, left(birth,10) birth, address, phone, 
-    name, point
+    name, point, zipcode 
     from member where user_id =?
     `
     return db.execute(sql,[user_id])
         .then(result=>result[0][0])
 }
+
+//! 회원정보 변경 
+export const memberInfoUpdate = async(formData)=>{
+// console.log('reposi->',formData.address);
+// console.log('reposi->',formData.detailAddress);
+const updateAddress = formData.address.concat(' ',formData.detailAddress)
+
+    const sql = `
+    update member set zipcode=?, address =?, phone =? where user_id =?
+    `
+    const params = [
+        formData.zipcode,
+        updateAddress,
+        formData.phone, 
+        formData.user_id
+    ]
+
+    let result_rows = 0;
+
+    try{
+       const [result] = await db.execute(sql, params);
+       result_rows = result.affectedRows;
+       // console.log('rows->', result.affectedRows);  
+    }catch(error){
+       console.log(error);
+    }return {cnt : result_rows} 
+
+}
+
 
 //! 지점이름 호출! 
 export const branchCheck = async(name)=>{

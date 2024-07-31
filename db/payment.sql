@@ -45,7 +45,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES ('gong','$2a$07$TD6HuwD18/p1URdk9jqpj.fdGJycwm0QQSefuCcuav3NLdxfPUEzW','공유','010-9877-5678','yoo','naver.com','부산본점','경기 수원시 영통구 광교마을로 156 A동 1403호','16510','1979-07-17',0,'2024-07-25 15:07:03'),('hong','$2a$07$or31T7eoJFSDAQxYO/sJL.hlY6r7Xik8VKefAwUKd0IKyXsRzFv0K','홍길동','010-1234-5541','hong','gmail.com','대구점','강원도','','1943-01-11',0,'2024-07-26 16:01:49'),('mija','$2a$07$Ue5gLPUz4pGr1nNnKGfpJ.DwBncIDO1n/jJ.OtskWShDppKvFlkfy','사미자','010-4441-1234','mija4','gmail.com','부산본점','부산 해운대구 동백로 67 101호','48100','1936-03-23',4200,'2024-07-30 12:23:30'),('test','$2a$07$CQh49jH1W3W9OUkhOV8oDuVLE8rRpI7Wavqgj8jj03evvbgUGm2kS','이미자','010-9811-1250','mijalee','gmail.com','건대스타시티점','대전 동구 판교1길 4 101호','34672','1955-06-05',2000,'2024-07-25 12:15:46');
+INSERT INTO `member` VALUES ('gong','$2a$07$TD6HuwD18/p1URdk9jqpj.fdGJycwm0QQSefuCcuav3NLdxfPUEzW','공유','010-9877-5678','yoo','naver.com','부산본점','경기 수원시 영통구 광교마을로 156 A동 1403호','16510','1979-07-17',0,'2024-07-25 15:07:03'),('hong','$2a$07$or31T7eoJFSDAQxYO/sJL.hlY6r7Xik8VKefAwUKd0IKyXsRzFv0K','홍길동','010-1234-7866','hong','gmail.com','대구점',' ','','1943-01-11',0,'2024-07-26 16:01:49'),('mija','$2a$07$Ue5gLPUz4pGr1nNnKGfpJ.DwBncIDO1n/jJ.OtskWShDppKvFlkfy','사미자','010-4441-1234','mija4','gmail.com','부산본점','부산 해운대구 동백로 67 101호','48100','1936-03-23',4200,'2024-07-30 12:23:30'),('test','$2a$07$CQh49jH1W3W9OUkhOV8oDuVLE8rRpI7Wavqgj8jj03evvbgUGm2kS','이미자','010-1234-5678','mijalee','gmail.com','건대스타시티점','서울 중랑구 구리포천고속도로 3 101호','02263','1955-06-05',2000,'2024-07-25 12:15:46');
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,7 +78,6 @@ CREATE TABLE `payment` (
   `cancel_date` datetime DEFAULT NULL,
   `cancel_info` varchar(100) DEFAULT NULL,
   `isReviewed` tinyint(1) DEFAULT (false),
-  `isReviewed2` int DEFAULT NULL,
   PRIMARY KEY (`orderId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=425 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -89,9 +88,13 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES (1,20240730,'2024-07-30',2,NULL,'집밥만들기','백종원','2024-08-01','2024-08-02','16:00:00','17:30:00',2,22000,NULL,NULL,'이미자','test','결제취소','2024-07-30 14:01:45','컴플레인',0,0),(2,20240730,'2024-07-30',3,NULL,'일식 만들기','정호영 쉐프','2024-08-11','2024-08-22','13:00:00','17:30:00',5,45000,NULL,NULL,'이미자','test','결제완료',NULL,NULL,0,0),(114,20240730,'2024-07-30',4,NULL,'테니스 중급','이형택','2024-08-01','2024-08-29','09:00:00','12:30:00',18,1982000,NULL,NULL,'이미자','test','결제완료',NULL,NULL,0,0),(178,NULL,'2024-07-30',1,NULL,'요가 고급','이효리','2024-08-01','2024-08-01','06:00:00','07:30:00',1,12000,NULL,NULL,'공유','test','결제취소','2024-07-30 12:19:48','이사',0,0),(215,NULL,'2024-07-30',6,NULL,'테니스 고급','조코비치','2024-08-27','2024-08-29','09:00:00','12:30:00',3,545000,NULL,NULL,'이미자','test','결제완료',NULL,NULL,1,0),(424,NULL,'2024-07-30',3,NULL,'테니스 초급','이형택','2024-08-01','2024-08-29','13:00:00','17:30:00',20,932000,NULL,NULL,'이미자','test','결제완료',NULL,NULL,1,0);
+INSERT INTO `payment` VALUES (1,20240730,'2024-07-30',2,NULL,'집밥만들기','백종원','2024-08-01','2024-08-02','16:00:00','17:30:00',2,22000,NULL,NULL,'이미자','test','결제취소','2024-07-30 14:01:45','컴플레인',0),(2,20240730,'2024-07-30',3,NULL,'일식 만들기','정호영 쉐프','2024-08-11','2024-08-22','13:00:00','17:30:00',5,45000,NULL,NULL,'이미자','test','결제완료',NULL,NULL,0),(114,20240730,'2024-07-30',4,NULL,'테니스 중급','이형택','2024-08-01','2024-08-29','09:00:00','12:30:00',18,1982000,NULL,NULL,'이미자','test','결제완료',NULL,NULL,0),(178,NULL,'2024-07-30',1,NULL,'요가 고급','이효리','2024-08-01','2024-08-01','06:00:00','07:30:00',1,12000,NULL,NULL,'공유','test','결제취소','2024-07-30 12:19:48','이사',0),(215,NULL,'2024-07-30',6,NULL,'테니스 고급','조코비치','2024-08-27','2024-08-29','09:00:00','12:30:00',3,545000,NULL,NULL,'이미자','test','결제완료',NULL,NULL,1),(424,NULL,'2024-07-30',3,NULL,'테니스 초급','이형택','2024-08-01','2024-08-29','13:00:00','17:30:00',20,932000,NULL,NULL,'이미자','test','결제완료',NULL,NULL,1);
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'hrdb2019'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -102,4 +105,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-31 10:47:30
+-- Dump completed on 2024-07-30 15:15:14
