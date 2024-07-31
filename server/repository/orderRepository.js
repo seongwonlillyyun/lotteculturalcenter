@@ -21,10 +21,10 @@ export const setPoint = async(orderPriceAllPay, inputPoint) => {
   console.log('orderNum', orderNum);
   console.log('order repository', orderPriceAllPay, inputPoint);
 
-  const sql = `
-     update member set point = ?
-      where user_id = 'test'
-  `
-  return db
-        .execute(sql, [orderPriceAllPay, inputPoint, orderNum])
+  // const sql = `
+  //    update member set point = ?
+  //     where user_id = 'test'
+  // `
+  // return db
+  //       .execute(sql, [orderPriceAllPay, inputPoint, orderNum])
 } 
