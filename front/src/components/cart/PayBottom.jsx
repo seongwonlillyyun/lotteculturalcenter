@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector} from 'react-redux';
-import axios from 'axios';
+import { cartPaymentAxios } from '../../modules/reduxCartAxios';
 
 
 export default function PayBottom({cname, next, stepOrder,checkPrice, checkNum, cartItemList,
@@ -41,21 +41,31 @@ export default function PayBottom({cname, next, stepOrder,checkPrice, checkNum, 
 
   // 최종 결제버튼
   const handlePay = () => {
+    console.log('cartItemList 결제->', cartItemList);
+    console.log('totla 결제->', orderPriceAllPay);
+    console.log('point 결제->', inputPoint);
     if(allIsChecked === true && isChecked === true){
       alert('선택한 강좌를 결제하시겠습니까?')
       next(stepOrder);
+      const data = {
+        cartItemList: cartItemList,
+        total_price: orderPriceAllPay,
+        point: inputPoint
+      }
+      cartPaymentAxios(data)
+
        // 서버전송
-       const url = 'http://127.0.0.1:8080/order/pointset'    
-       axios({
-         method: 'post',
-         url : url,
-         data: {
-           orderPriceAllPay : orderPriceAllPay,
-           inputPoint : inputPoint
-         }
-       })
-       .then(res => res.data)
-       .catch(error=> console.log(error))
+      //  const url = 'http://127.0.0.1:8080/order/pointset'    
+      //  axios({
+      //    method: 'post',
+      //    url : url,
+      //    data: {
+      //      orderPriceAllPay : orderPriceAllPay,
+      //      inputPoint : inputPoint
+      //    }
+      //  })
+      //  .then(res => res.data)
+      //  .catch(error=> console.log(error))
     }else{
       alert('구매동의에 동의하셔야 결제가 가능합니다. 구매 동의하시겠습니까?')
       }

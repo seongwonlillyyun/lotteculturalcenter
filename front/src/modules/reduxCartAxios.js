@@ -3,6 +3,14 @@ import { setCartList, setCount, setCartItem, removeCartItem } from '../reducers/
 
 
 
+// 결제 insert
+export async function cartPaymentAxios(data){
+  const url =`http://127.0.0.1:8080/order/add`;
+  const payInsert = await axiosPost(url, data);
+  
+}
+
+
 // 리스트
 export function cartListAxios(userId) {
   const url = 'http://127.0.0.1:8080/cart';
@@ -48,3 +56,4 @@ export function cartItemAdd(id, userId){
     dispatch(setCartItem(cnt));
   }
 }
+
