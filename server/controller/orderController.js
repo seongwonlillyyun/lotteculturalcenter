@@ -3,8 +3,9 @@ import * as repository from '../repository/orderRepository.js'
 
 
 export const getPoint = async(req, res) => {
-  // const point = req.body;
-  const result = await repository.getPoint()
+  const {userId} = req.body;
+  console.log('point controller', userId);
+  const result = await repository.getPoint(userId)
   res.json(result)
   res.end()
 } 

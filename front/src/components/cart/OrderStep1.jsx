@@ -47,7 +47,8 @@ export default function OrderStep1({next, stepOrder, cartItemList}) {
       const url = 'http://127.0.0.1:8080/order/pointget'    
       axios({
         method: 'post',
-        url : url
+        url : url,
+        data: {userId}
       })
       .then(res => {
         setPoint(res.data)

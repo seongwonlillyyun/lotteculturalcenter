@@ -1,13 +1,15 @@
 import { db } from "../db/database_mysql80.js";
 
 
-export const getPoint = async() => {
+export const getPoint = async(userId) => {
   const sql = `
     select point from member
+      where user_id = ?
   `
   return db
-        .execute(sql)
-        .then(result => result[0][0])
+        .execute(sql, [userId])
+        .then(result =>  result[0][0]
+        )
 } 
 
 export const setPoint = async(orderPriceAllPay, inputPoint) => {

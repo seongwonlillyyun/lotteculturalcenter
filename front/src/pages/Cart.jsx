@@ -245,7 +245,7 @@ export default function Cart() {
           </div>
           <div className='basic_btn'>
             <Link to={'/'}>
-              <button type='button' className='btn btn_border medium' onClick={handleMore}>강좌 더보기</button>  
+              <button type='button' className='btn btn_border medium' onClick={handleMore}>홈으로</button>  
             </Link>
           </div>
           
