@@ -1,34 +1,33 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import '../css/cancelmodal.css'
 import axios from 'axios'
 
 
-export function CancelModal({closeModal, handleChange, selectValue, orderId}){
+export function CancelModal({closeModal, handleChange, selectValue, orderId, setUpdate}){
     // console.log('cancel Modal->', orderId);
     // console.log('cancleModal->', selectValue);
-    const navigate = useNavigate()
+
 
     const handleSubmit = () => {
 
         if(!selectValue){
             alert('취소 사유를 선택해주세요!')
-            return
-        }
+            return}
     const url = 'http://127.0.0.1:8080/history/cancel'
 
     axios({
             method :'post',
             url : url,
             data : {orderId : orderId,
-                 cancel_info : selectValue}
+                    cancel_info : selectValue}
         })
         .then(result=>{
-            if(result.data.cnt ===1 )
-    
+        if(result.data.cnt ===1 )
+
         alert('선택하신 강좌의 결제가 취소되었습니다.')
+        setUpdate(prev=>!prev)
         closeModal()
-        navigate(`/courseHistory/${orderId}`)
+        // navigate(`/courseHistory/${orderId}`)
         // navigate('/courseHistory',
         //     {state: {"title": "취소내역 조회",
         //             "value" : "cancel"}})

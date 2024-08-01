@@ -36,11 +36,11 @@ course_end,start_time,
 end_time, cnumber, 
 price, user_name, user_id, status ) 
 values(
-178, now(), 1,
-'요가 고급', '이효리',
-'2024-08-01', '2024-08-01',
-'06:00', '07:30', 1, 12000,
-'공유', 'test','결제완료'
+152, now(), 1,
+'모델 워킹 기초', '한혜진',
+'2024-08-16', '2024-08-19',
+'08:00', '11:30', 1, 12000,
+'이미자', 'test','결제완료'
 );
 select * from payment;
 select * from payment where user_id='test';
@@ -153,3 +153,9 @@ alter table payment add (isReviewed2 int);
 set sql_safe_updates = 0;
 select * from course;
 commit;
+
+select * from payment;
+select * from review;
+delete from payment where orderId = 178;
+select * from noti_event;
+delete from noti_event where bid=15;
