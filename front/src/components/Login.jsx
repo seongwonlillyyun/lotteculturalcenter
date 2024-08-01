@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from "react";
+import React, {useState, useRef } from "react";
 import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 import "../css/login.css"
@@ -8,27 +8,15 @@ import * as cookie from '../util/cookies.js'
 import {jwtDecode} from 'jwt-decode'
 
 //! 리덕스 용 
-import {useSelector, useDispatch} from 'react-redux';
+// import {useSelector, useDispatch} from 'react-redux';
 
 export default function Login(){
     const userIdRef = useRef(null)
     const userPwRef = useRef(null)
     const [formData, setFormData] = useState({user_id: '', user_pw:''})
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch(); 
 
-//! 로그인 결과 받아오기 
-// const isLogin = useSelector(state => state.memeber.isLogin )
-// console.log('isLogin->', isLogin);
-
-// useEffect(()=>{
-//     if(isLogin){
-//     alert('로그인이 성공하셨습니다.')
-//     navigate('/')
-//     }
-// },[isLogin])
-
-//! 로그인버튼클릭 -> 서버연동 
     const handleChange =(event) => {
         const{name, value} =event.target                
         setFormData({...formData, [name]: value})
@@ -36,7 +24,6 @@ export default function Login(){
 
 const handleSubmit =(e) =>{
     e.preventDefault() 
-    // 리덕스연동 전 code 
     if(validationCheck()){
         // console.log('formData->', formData);
         const url = "http://127.0.0.1:8080/member/login"
@@ -47,12 +34,9 @@ const handleSubmit =(e) =>{
             data : formData,
         })
         .then((res)=>{
-            // console.log('res.data->', res.data);
             if(res.data.cnt ===1){
-                // console.log('token->', res.data.token)
-
                 cookie.setCookie('x-auth-jwt', res.data.token)
-                
+
                 const userInfo = jwtDecode(res.data.token)
                 localStorage.setItem('userInfo', JSON.stringify(userInfo))
                 alert('로그인 성공')
@@ -67,8 +51,8 @@ const handleSubmit =(e) =>{
     }
 }
 
- //! validationCheck 추후 이동예정  
-    const validationCheck =() =>{
+
+ const validationCheck =() =>{
     let checkFlag = true;
 
     if(!formData.user_id.trim()){
@@ -80,16 +64,11 @@ const handleSubmit =(e) =>{
         alert('비번을 입력해주세요')
         userPwRef.current.focus()
         checkFlag=false
-    }else{
-        // alert('임시로그인완료!')
-        // navigate('/')
-        return checkFlag}
-    }
+    }else{ return checkFlag} }
 
     const navigate = useNavigate()
     const handleClick = () => {
-        navigate('/join')
-    }
+        navigate('/join')}
 
 return(
 <div className="login main wrap">
