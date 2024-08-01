@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getUser } from './../util/localStorage';
 import axios from "axios"
+import { cartItemAdd, cartListAxios} from '../modules/reduxCartAxios.js';
+import { useSelector, useDispatch} from 'react-redux';
 
 // svg
 import {ReactComponent as IconCart } from "../svg/icon-cart.svg";
@@ -10,6 +12,8 @@ import {ReactComponent as IconCart } from "../svg/icon-cart.svg";
 import "../css/courseDetail.css";
 
 export default function CourseDetail() {
+  const dispatch = useDispatch();
+  const cartList = useSelector(state => state.cart.list); // db리스트
   // userID
   const user_id = getUser() ? getUser().user_id : "";
   const {id} = useParams();
@@ -23,24 +27,20 @@ export default function CourseDetail() {
       .then(result => {
         setData(result.data)
       })
-  },[id])
+    dispatch(cartListAxios(user_id))
+  },[id,user_id])
 
   const cartAddHandler = () => {
-    const formData = {
-      id : id,
-      userId : user_id,
-    }
-
-    const url = "//localhost:8080/cart/add"
-
     if(user_id){
-      axios.post(url, formData)
-        .then(result => {
-          if(result.data.cnt === 1){
-            window.confirm("장바구니에 담겼습니다. 확인하시겠습니까?") &&
-            navigate("/cart");  
-          }
-        })
+      const isCart = cartList.filter(v => v.course_id == id);
+console.log('ddd',cartList);
+
+      if(isCart.length === 0){
+        dispatch(cartItemAdd(id, user_id));
+        window.confirm('장바구니에 추가되었습니다.') && navigate('/cart');
+      } else {
+        alert('동일한 상품이 장바구니에 있습니다.')
+      }
     } else {
       window.confirm("로그인이 필요한 서비스 입니다.") &&
       navigate("/login");

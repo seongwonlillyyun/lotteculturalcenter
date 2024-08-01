@@ -2,14 +2,14 @@ import React, {useState, useEffect } from 'react';
 import PayBottom from './PayBottom';
 import Tab from './Tab';
 import { useNavigate, Link } from 'react-router-dom';
-import { getUser } from '../../util/localStorage.js';
+import { getUser, removeUser } from '../../util/localStorage.js';
 import { useSelector, useDispatch} from 'react-redux';
-import { cartListAxios } from '../../modules/reduxCartAxios';
+import { cartListAxios, cartUsePoint } from '../../modules/reduxCartAxios';
 import axios from 'axios';
 import LoginError from '../../components/LoginError'
 
 
-export default function OrderStep1({next, stepOrder, cartItemList}) {
+export default function OrderStep1({next, stepOrder, courseList, cartItemList, setFinalData}) {
   const userInfo = getUser();
   const userId = userInfo && userInfo.user_id;
   const cartList = useSelector(state => state.cart.list); // db리스트
@@ -22,19 +22,26 @@ export default function OrderStep1({next, stepOrder, cartItemList}) {
 
   
   let orderItemList = [];
-  let orderPrice = 0;
+  let orderPrice = courseList.reduce((acc, cur) => {
+    acc += parseInt(cur.allprice.replace(",",""))
+    return acc
+  }, 0);
+
+  useEffect(()=>{
+    setFinalData(prev => ({...prev, orderPriceAll : orderPrice.toLocaleString()}))
+  },[orderPrice])
             
-  if(cartItemList.length !== 0 ){
-    cartItemList.map(item => {
-      cartList.filter((cart)=>{ 
-        if(cart.course_id === item.id ){
-          orderItemList = [...orderItemList, cart]
-          orderPrice += cart.price
-        }
-      })  
-    })
+  // if(cartItemList.length !== 0 ){
+  //   cartItemList.map(item => {
+  //     cartList.filter((cart)=>{ 
+  //       if(cart.course_id === item.id ){
+  //         orderItemList = [...orderItemList, cart]
+  //         orderPrice += cart.price
+  //       }
+  //     })  
+  //   })
     
-  }// end of if
+  // }// end of if
   
   const orderPriceAll = orderPrice.toLocaleString();
   // 총 결제금액
@@ -64,8 +71,16 @@ export default function OrderStep1({next, stepOrder, cartItemList}) {
     }
 
     // 포인트 사용
-    const handleClick = () => {
-      alert('사용한 포인트만큼 차감됩니다.')
+    const handleClick = async() => {
+      const data = {
+        userId : userId,
+        point : inputPoint
+      }
+      
+      const result = await cartUsePoint(data);
+
+      result.cnt === 1 ? alert('사용한 포인트만큼 차감되었습니다.') : alert('실패')
+
     }
 
     // 체크박스 동의
@@ -97,7 +112,7 @@ export default function OrderStep1({next, stepOrder, cartItemList}) {
             <h2 className='htitle'>수강자 정보</h2>
             
             {/* 리스트 시작 */}
-            { orderItemList && orderItemList.map((item, index) => (
+            { courseList.map((item, index) => (
               <div className='cart_list' key={item.course_id}>
               <ul className='cart_list_box'>
                 <li className='title'>
@@ -141,8 +156,7 @@ export default function OrderStep1({next, stepOrder, cartItemList}) {
                 <label htmlFor='point'></label>
                 <input type='number' id='point' name='point' placeholder='0점' onChange={handlePoint} />
                 <button type='submit' className='submit_btn' onClick={handleClick} >사용</button>
-                {/* 사용버튼 누르면 할인금액에 반영됨, 사용버튼 또 누르면 취소버튼으로 바뀌고 0으로 변경됨 */}
-                <p>포인트 사용은 10점 단위로 사용 가능합니다.</p>
+                {/* <p>포인트 사용은 10점 단위로 사용 가능합니다.</p> */}
             </div>
 
             <h2 className='htitle'>총 결제금액</h2>
@@ -217,7 +231,8 @@ export default function OrderStep1({next, stepOrder, cartItemList}) {
           </div>
           {/* 하단고정 */}
           <PayBottom next={next} cname={'order'} stepOrder={stepOrder} isChecked={isChecked} 
-            setIsChecked={setIsChecked} orderPriceAllPay={orderPriceAllPay} inputPoint={inputPoint} />
+            setIsChecked={setIsChecked} orderPriceAllPay={orderPriceAllPay} inputPoint={inputPoint}
+            cartItemList={cartItemList} setFinalData={setFinalData}/>
         </div>
         )
       }

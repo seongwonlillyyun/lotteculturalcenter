@@ -1,7 +1,7 @@
 import { db } from '../db/database_mysql80.js';
 
 
-// 리스트
+// 카트리스트
 export const getCart = async(userId) => {
   // console.log('reposuitory user_id->', userId);
   const sql = `
@@ -82,13 +82,14 @@ export const remove = async(cartItemList) => {
 }
  
 // 카트 전체삭제
-export const removeAll = async(cdelete) => {
+export const removeAll = async(userId) => {
+  console.log('userId', userId);
   let sql = `
-    delete from cart
+    delete from cart where user_id = ?
   `
-  // delete from cart where user_id = ?
   return db
-          .execute(sql, cdelete)
+          .execute(sql, [userId])
+          .then(result=> result[0].affectedRows)
 }
 
 

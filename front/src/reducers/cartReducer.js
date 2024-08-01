@@ -25,10 +25,7 @@ import { createSlice } from '@reduxjs/toolkit';
     // 카트 추가
     setCartItem(state, action) {
       if(action.payload.cnt === 1) {
-        alert('장바구니에 추가되었습니다.');
         state.count += 1;
-       } else{
-         alert('동일한 상품이 장바구니에 있습니다.')
        }
     }, 
     // 카트 삭제
@@ -38,6 +35,7 @@ import { createSlice } from '@reduxjs/toolkit';
         state.count -= deleteCount;
       }
     }, 
+ 
     // 페이지별
     setCurrentPos(state, action){
 

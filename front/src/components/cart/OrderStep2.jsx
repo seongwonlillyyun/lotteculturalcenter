@@ -1,13 +1,27 @@
-import React from 'react';
+import React,{ useState, useEffect } from 'react';
 import Tab from './Tab';
+import { getUser } from '../../util/localStorage.js';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch} from 'react-redux';
+import { cartPayList } from '../../modules/reduxCartAxios';
 
 
-export default function OrderStep2({stepOrder}) {
+export default function OrderStep2({stepOrder, finalData}) {
   const navigate = useNavigate();
+  const userInfo = getUser();
+  const userId = userInfo && userInfo.user_id;
+  const [orderList, setOrderList] = useState([]);
+  
+
+  console.log(finalData);
+
+
   const handleClick = () => {
     navigate('/courseHistory')
   }
+
+  console.log(finalData);
+
 
   return(
     <div className='order type'>
@@ -29,7 +43,7 @@ export default function OrderStep2({stepOrder}) {
           <ul className='all_pay'>
             <li>
                 <h4>강좌료 합계</h4>
-                <span><span className=''>45000</span>원</span>
+                <span><span className=''>{finalData.orderPriceAll}</span>원</span>
                 <p>* 재료비 또는 대여료 옵션 금액을 제외한 원 강좌료 금액이 표시 됩니다.</p>
             </li>
             <li className='cir'>
@@ -37,7 +51,7 @@ export default function OrderStep2({stepOrder}) {
             </li>
             <li>
                 <h4>할인금액 합계</h4>
-                <span className='red'>(-)<span className=''> 1000</span> 원</span>
+                <span className='red'>(-)<span className=''>{finalData.inputPoint}</span> 원</span>
                 <p>* 강좌료에서 할인받은 할인금액이 표시 됩니다.</p>
             </li>
             <li className='cir'>
@@ -45,7 +59,7 @@ export default function OrderStep2({stepOrder}) {
             </li>
             <li>
                 <h4 className='bold'>총 결제금액</h4>
-                <span><span className='num'>45000</span>원</span>
+                <span><span className='num'> {finalData.orderPriceAllPay}</span>원</span>
             </li>
           </ul>
         </div>
