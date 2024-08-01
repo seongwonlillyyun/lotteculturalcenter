@@ -9,6 +9,7 @@ import { CancelModal } from '../components/CancelModal.jsx';
 //! 전체페이지에서 내역보기 눌렀을때 나오는 상세페이지
 
 export default function DetailHistory(){
+    const [update, setUpdate] = useState(false)
     const [courseInfo, setCourseInfo] = useState({})
     const {orderId} = useParams() // 주문번호! 
     // console.log('detail->useParams(orderId)->', orderId);
@@ -16,7 +17,7 @@ export default function DetailHistory(){
     useEffect(()=>{
         axios.get(`http://127.0.0.1:8080/history/${orderId}`)
         .then(result=> setCourseInfo(result.data))
-    },[orderId])
+    },[orderId, update])
 
 
     // console.log('detailHistory->', courseInfo);
@@ -24,8 +25,8 @@ export default function DetailHistory(){
     //todo. 이전버튼 눌렀을때
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate('/courseHistory')
-        // window.history.back() // 취소내역으로는 안가는거 같은데..?
+        // navigate('/courseHistory')
+        window.history.back() // 취소내역으로는 안가는거 같은데..?
     }
 
     //todo. 모달 오픈 
@@ -81,7 +82,7 @@ const handleChange = (e) => {
 {modalOpen ==true &&(
     <CancelModal closeModal={closeModal} 
                 handleChange={handleChange} selectValue={selectValue}
-                orderId={orderId}/>)}
+                orderId={orderId} setUpdate={setUpdate} />)}
 </div>
     </div>
 

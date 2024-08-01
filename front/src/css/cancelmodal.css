@@ -17,7 +17,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    
 }
 
 .cancel_modal{
@@ -55,7 +54,6 @@
     align-items: center;
     border-top: 1px solid black;
     padding: 1.3rem 0.4rem 0 0.4rem;
- 
 }
 
 .cancel_modal_bottom_info{
@@ -72,28 +70,25 @@ font-size : 15px;
     font-size: 15px;
 }
 
-.cancel_modal_middle{
-    /* border : 1px solid red; */
-}
+
 .modal_btn_no{
     border : 1px solid rgba(0, 0, 0, .14);
     color: black;
     background-color: white;
     /* margin-right: 0.3rem; */
 }
+
 .modal_btn_yes{
     color: white;
     background-color: black;
 }
+
 .cancel_modal_info{
     font-size: 13px;
     background-color: rgb(247,242,239);
     border-radius: 8px;
     padding: 1.2rem 1.5rem 1.2rem 1.5rem;
 }
-/* .cancel_modal_info>ul>li:not(:last-child){
-    margin-bottom: 0.5rem;
-} */
 
 
 .cancel_modal_info:first-child{
