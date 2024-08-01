@@ -43,8 +43,8 @@ return db.execute(sql, [user_id])
 // get방식 : params 
 export const getHistoryDetail = async(orderId)=>{
     // console.log('orderId->', orderId);
-    const sql =`select 
-left(order_date,10) order_date, 
+const sql =`select 
+    left(order_date,10) order_date, 
     course_name, teacher_name, 
 		name, 
 		left(course_start,10) course_start, 
@@ -53,10 +53,10 @@ left(order_date,10) order_date,
 		left(end_time,5) end_time,
 		cnumber,
 		format(price,0) price,  
-		user_name, status, isReviewed
+		user_name, status, isReviewed,
         cancel_info, 
         left(cancel_date,10) cancel_date
-from location lo, payment pa where orderId=? and lo.loc_id = pa.loc_id`
+    from location lo, payment pa where orderId=? and lo.loc_id = pa.loc_id`
 
     return db.execute(sql,[orderId])
             .then(result=>result[0][0])

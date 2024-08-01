@@ -2,7 +2,7 @@ import React from 'react';
 
 export function DetailHistoryItem({courseInfo}){
     
-// console.log('detail : courseInfo->',courseInfo);
+console.log('detail : courseInfo->',courseInfo);
 
 return(
 

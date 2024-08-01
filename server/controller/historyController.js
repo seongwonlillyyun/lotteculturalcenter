@@ -23,7 +23,7 @@ res.end()
 //! 내역보기 눌렀을때 상세페이지 (get방식! )
 export const getHistoryDetail = async(req,res)=>{
     const orderId = req.params.orderId
-    // console.log('controller->',req.params);
+
 
 const result = await repository.getHistoryDetail(orderId)
 res.json(result)
