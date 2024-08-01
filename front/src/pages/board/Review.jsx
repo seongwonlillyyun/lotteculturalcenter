@@ -118,10 +118,10 @@ function BoardUtils() {
   const [active, setActive] = useState(false);
   const location = useSelector(state => state.review.filter.location);
   const locationList = useSelector(state => state.menu.locationList);
-  const totalCount = useSelector(state => state.review.count);
+  const totalCount = useSelector(state => state.review.totalCount);
 
   const listHandler = (e) => {
-    let name = e.target.textContent;
+    let name = (e.target.textContent === "전체지점") ? "" : e.target.textContent;
     dispatch(updateFilter({location : name}))
     setActive(false);
   }
@@ -152,12 +152,17 @@ function BoardUtils() {
 
 function ReviewList() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const list = useSelector(state => state.review.list);
   const filterCount = useSelector(state => state.review.filter.count);
   const totalCount = useSelector(state => state.review.totalCount);
 
   const linkHandler = (id) => {
     navigate("/board/review/" + id);
+  }
+
+  const moreHandler = () => {
+    dispatch(updateFilter({count : filterCount + 10}))
   }
 
   return (
@@ -196,7 +201,7 @@ function ReviewList() {
       {
         totalCount > filterCount &&
         <div className="btns">
-          <button type="button" className='more_btn'>더보기</button>
+          <button type="button" className='more_btn' onClick={moreHandler}>더보기</button>
         </div>
       }
     </>

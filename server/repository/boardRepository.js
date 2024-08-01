@@ -404,7 +404,7 @@ export const getReviewList = async({location, keyword, count}) => {
   let list = []
   let totalCount = {}
 
-  const locationSql = location ? `where type = "${location}"` : ""
+  const locationSql = location ? `where l.name = "${location}"` : ""
   const keywordSql = keyword ? 
   location ? `and (title like "%${keyword}%" or content like "%${keyword}%")` 
     : `where (title like "%${keyword}%" or course_name like "%${keyword}%")` 
@@ -446,7 +446,7 @@ export const getReviewList = async({location, keyword, count}) => {
 
   totalCount = await getReviewTotalCount(locationSql, keywordSql);
 
-  return {list, ...totalCount};
+  return {list, totalCount : totalCount.count};
 }
 
 const getReviewTotalCount = async(locationSql, keywordSql) => {

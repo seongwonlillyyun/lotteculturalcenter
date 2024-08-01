@@ -115,6 +115,7 @@ export const getReview = async (req, res) => {
 export const getReviewList = async(req, res) => {
   const data = req.body;
   const result = await repository.getReviewList(data);
+  console.log(result);
   res.json(result)
   res.end()
 }
