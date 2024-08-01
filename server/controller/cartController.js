@@ -39,8 +39,8 @@ export const remove = async(req, res) => {
 
 // 카트 전체삭제
 export const removeAll = async(req, res) => {
-  const cdelete = req.body;
-  const result = await repository.removeAll(cdelete);
+  const {userId} = req.body;
+  const result = await repository.removeAll(userId);
   res.json(result);
   res.end();
 }

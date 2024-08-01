@@ -2,6 +2,22 @@ import * as repository from '../repository/orderRepository.js'
 
 
 
+
+export const getPayList = async(req, res) => {
+  const {userId} = req.body;
+  const result = await repository.getPayList(userId)
+   console.log('controller->', result);
+  res.json(result)
+  res.end()
+} 
+
+export const usePoint = async(req, res) => {
+  const data = req.body;
+  const result = await repository.usePoint(data)
+  res.json(result)
+  res.end()
+} 
+
 export const getPoint = async(req, res) => {
   const {userId} = req.body;
   const result = await repository.getPoint(userId)

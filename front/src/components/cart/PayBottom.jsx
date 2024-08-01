@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector} from 'react-redux';
-import { cartPaymentAxios } from '../../modules/reduxCartAxios';
+import { cartPaymentAxios, cartPayList } from '../../modules/reduxCartAxios';
 
 
 export default function PayBottom({cname, next, stepOrder,checkPrice, checkNum, cartItemList,
-    isChecked, setIsChecked, orderPriceAllPay, inputPoint}) {
+    isChecked, setIsChecked, orderPriceAllPay, inputPoint, setFinalData}) {
   const navigate = useNavigate();
   const currentPos = useSelector(state => state.cart.currentPos);
   const [allIsChecked, setAllIsChecked] = useState(false); // 결제 체크박스
@@ -40,10 +40,9 @@ export default function PayBottom({cname, next, stepOrder,checkPrice, checkNum, 
 
 
   // 최종 결제버튼
-  const handlePay = () => {
-    console.log('cartItemList 결제->', cartItemList);
-    console.log('totla 결제->', orderPriceAllPay);
-    console.log('point 결제->', inputPoint);
+  const handlePay = async() => {
+    
+
     if(allIsChecked === true && isChecked === true){
       alert('선택한 강좌를 결제하시겠습니까?')
       next(stepOrder);
@@ -52,20 +51,14 @@ export default function PayBottom({cname, next, stepOrder,checkPrice, checkNum, 
         total_price: orderPriceAllPay,
         point: inputPoint
       }
-      cartPaymentAxios(data)
+      const dbResult = await cartPaymentAxios(data)
 
-       // 서버전송
-      //  const url = 'http://127.0.0.1:8080/order/pointset'    
-      //  axios({
-      //    method: 'post',
-      //    url : url,
-      //    data: {
-      //      orderPriceAllPay : orderPriceAllPay,
-      //      inputPoint : inputPoint
-      //    }
-      //  })
-      //  .then(res => res.data)
-      //  .catch(error=> console.log(error))
+      console.log(dbResult);
+
+      if(dbResult.result){
+        setFinalData(prev => ({...prev, orderPriceAllPay, inputPoint, order_no : dbResult.orderNum}))
+      }
+          
     }else{
       alert('구매동의에 동의하셔야 결제가 가능합니다. 구매 동의하시겠습니까?')
       }

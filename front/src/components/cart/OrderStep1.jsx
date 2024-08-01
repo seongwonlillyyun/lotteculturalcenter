@@ -2,14 +2,14 @@ import React, {useState, useEffect } from 'react';
 import PayBottom from './PayBottom';
 import Tab from './Tab';
 import { useNavigate, Link } from 'react-router-dom';
-import { getUser } from '../../util/localStorage.js';
+import { getUser, removeUser } from '../../util/localStorage.js';
 import { useSelector, useDispatch} from 'react-redux';
-import { cartListAxios } from '../../modules/reduxCartAxios';
+import { cartListAxios, cartUsePoint } from '../../modules/reduxCartAxios';
 import axios from 'axios';
 import LoginError from '../../components/LoginError'
 
 
-export default function OrderStep1({next, stepOrder, courseList, cartItemList}) {
+export default function OrderStep1({next, stepOrder, courseList, cartItemList, setFinalData}) {
   const userInfo = getUser();
   const userId = userInfo && userInfo.user_id;
   const cartList = useSelector(state => state.cart.list); // db리스트
@@ -26,6 +26,10 @@ export default function OrderStep1({next, stepOrder, courseList, cartItemList}) 
     acc += parseInt(cur.allprice.replace(",",""))
     return acc
   }, 0);
+
+  useEffect(()=>{
+    setFinalData(prev => ({...prev, orderPriceAll : orderPrice.toLocaleString()}))
+  },[orderPrice])
             
   // if(cartItemList.length !== 0 ){
   //   cartItemList.map(item => {
@@ -67,8 +71,16 @@ export default function OrderStep1({next, stepOrder, courseList, cartItemList}) 
     }
 
     // 포인트 사용
-    const handleClick = () => {
-      alert('사용한 포인트만큼 차감됩니다.')
+    const handleClick = async() => {
+      const data = {
+        userId : userId,
+        point : inputPoint
+      }
+      
+      const result = await cartUsePoint(data);
+
+      result.cnt === 1 ? alert('사용한 포인트만큼 차감되었습니다.') : alert('실패')
+
     }
 
     // 체크박스 동의
@@ -220,7 +232,7 @@ export default function OrderStep1({next, stepOrder, courseList, cartItemList}) 
           {/* 하단고정 */}
           <PayBottom next={next} cname={'order'} stepOrder={stepOrder} isChecked={isChecked} 
             setIsChecked={setIsChecked} orderPriceAllPay={orderPriceAllPay} inputPoint={inputPoint}
-            cartItemList={cartItemList} />
+            cartItemList={cartItemList} setFinalData={setFinalData}/>
         </div>
         )
       }

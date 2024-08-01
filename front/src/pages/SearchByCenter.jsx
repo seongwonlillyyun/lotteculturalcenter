@@ -20,7 +20,7 @@ import {
   CourseItem,
 } from "../components/SearchByCenterComponents";
 import { getUser } from '../util/localStorage.js'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { cartItemAdd } from '../modules/reduxCartAxios.js';
 
 export default function SearchByCenter() {
@@ -43,20 +43,37 @@ export default function SearchByCenter() {
   const [courseCount, setCourseCount] = useState(0);
   const navigate = useNavigate();
   const dispatch = useDispatch()
+  const cartList = useSelector(state => state.cart.list);
+  const userId = getUser() ? getUser().user_id : "";
 
-  //장바구니 추가
-  const handleAddCart = (id) => {
-    const userInfo = getUser();
+//장바구니 추가
+//   const handleAddCart = (id) => {
+//     const userInfo = getUser();
     
-    if(userInfo !== null){
-    const userId = userInfo.user_id;
-    // const userId = getUser() ? getUser().user_id : "test";
-    dispatch(cartItemAdd(id, userId));
-    navigate('/cart');
+//     if(userInfo !== null){
+//     const userId = userInfo.user_id;
+//     // const userId = getUser() ? getUser().user_id : "test";
+//     dispatch(cartItemAdd(id, userId));
+//     navigate('/cart');
+//     }else {
+//     alert('로그인이 필요한 기능입니다.');
+//     }
+// }
+   //장바구니 추가
+   const handleAddCart = (id) => {
+    
+    if(userId !== null){
+      const isCart = cartList.filter(v => v.course_id === id);
+      if(isCart.length === 0){
+        dispatch(cartItemAdd(id, userId));
+        window.confirm('장바구니에 추가되었습니다.') && navigate('/cart');
+      } else {
+        alert('동일한 상품이 장바구니에 있습니다.')
+      }
     }else {
-    alert('로그인이 필요한 기능입니다.');
+      alert('로그인이 필요한 기능입니다.');
     }
-}
+  }
 
 
 

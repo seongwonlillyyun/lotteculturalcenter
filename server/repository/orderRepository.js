@@ -1,6 +1,33 @@
 import { db } from "../db/database_mysql80.js";
 
 
+
+// 결제내역 
+export const getPayList = async(userId) => {
+  const sql = `
+    select price, total_price, point, order_no from payment
+	    where user_id = ?
+      order by order_date desc
+  `;
+  return db.execute(sql, [userId])
+           .then(result => result[0])
+}
+
+
+// 회원 포인트 업데이트
+export const usePoint = async(data) => {
+  const sql = `
+    update member set point = point-?
+      where user_id = ?
+  `;
+  const [result] = await db.execute(sql, [data.point, data.userId]);
+  const result_rows = result.affectedRows;
+  // console.log('result_rows->', result_rows);
+  return {'cnt' : result_rows};
+        
+} 
+
+// 회원 포인트 가져오기
 export const getPoint = async(userId) => {
   const sql = `
     select point from member
@@ -13,20 +40,20 @@ export const getPoint = async(userId) => {
 } 
 
 export const setPayment = async(cartItemList, total_price, point) => {
+  let data = {};
   // 주문번호 랜덤생성 8자리
   let orderNum = '2024'+ Math.trunc(Math.random()* 9999)
-
-
+  data.orderNum = orderNum;
 
   let sql = 
   `insert into payment (
     order_no , order_date, cart_id, loc_id, course_img, course_name, teacher_name,
     course_start, course_end, start_time, end_time, cnumber, price, total_price,
-    point, user_name, user_id, status
+    point, user_name, user_id
 )
 select order_no , order_date, cart_id, loc_id, course_img, course_name, teacher_name,
     course_start, course_end, start_time, end_time, cnumber, price, total_price,
-    point, user_name, user_id, status
+    point, user_name, user_id
 from view_cart where course_id in ( `;
 
   cartItemList.map((item, index) => {
@@ -35,7 +62,7 @@ from view_cart where course_id in ( `;
   })
   sql += ')';
 
-  console.log('repository sql1111->', sql);
+  // console.log('repository sql1111->', sql);
 
   const [resultStep1] = await db.execute(sql, []);
   const resultStep1Count = resultStep1.affectedRows; 
@@ -49,36 +76,38 @@ from view_cart where course_id in ( `;
     `
     const orderIdList = await db.execute(sql2, [endRows])
                             .then(res => res[0]);
-      console.log('orderIdList->', orderIdList);
+
+      // console.log('orderIdList->', orderIdList);
       if(orderIdList.length !== 0) {
         let sql3 = `
         update payment set total_price = ${parseInt(total_price.replace(',',""))}, point = ${point}, order_no = ${orderNum}
             where orderId in (
       `;
-      orderIdList.map((item, index) => {
-        (orderIdList.length-1 !== index) ? 
-          sql += item.orderId + ',' : sql += item.orderId
+        orderIdList.map((item, index) => {
+          (orderIdList.length-1 !== index) ? 
+           sql3 += item.orderId + ',' : sql3 += item.orderId
         })
-        
-        sql += ')';
+
+        sql3 += ')';
     
-        console.log('order repository', cartItemList, total_price, point, orderNum);
-        console.log('sql->', sql);
+        // console.log('order repository', cartItemList, total_price, point, orderNum);
   
-      const [resultStep2] = await db.execute(sql3);
-      const resultStep2Count = resultStep2.affectedRows; 
-      console.log('resultStep2Count fff->', resultStep2Count);
+      const resultStep2 = await db.execute(sql3)
+        .then(([rows]) => rows.affectedRows);
+      // const resultStep2Count = resultStep2.affectedRows;
+      // console.log('resultStep2Count fff->', resultStep2);
+
+      data.result = (resultStep2 === cartItemList.length) ? true : false;
 
       }
 
-  }             
-  
-  
-  
-  // return db
-  //       .execute(sql, [orderPriceAllPay, inputPoint, orderNum])
+  }
+
+  return data;
 } 
 
+
+// 수강결제 리스트 (상세페이지에서 바로 결제)
 export const getCourseList = async(cartItemList) => {
   let list = [];
 
